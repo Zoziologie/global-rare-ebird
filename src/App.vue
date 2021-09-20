@@ -2,9 +2,9 @@
 <b-container fluid class="h-100 d-flex flex-column">
   
   <b-row id="map-div" class="flex-grow-1">
-    <l-map :bounds="boundsImg">
+    <l-map :bounds="bounds" :options="{zoomControl: false}">
       <l-control-layers position="topright"></l-control-layers>
-      <l-control position="topright" >
+      <l-control position="topleft" >
         <b-button v-b-toggle.sidebar-1>Toggle Sidebar</b-button>
       </l-control>
       <l-tile-layer
@@ -15,6 +15,7 @@
         :url="tileProvider.url"
         :attribution="tileProvider.attribution"
         layer-type="base"/>
+        <l-control-zoom position="bottomright"  ></l-control-zoom>
     </l-map>
     <b-sidebar id="sidebar-1" title="Global Rare eBird" shadow>
       <div class="px-3 py-2">
@@ -22,7 +23,8 @@
           Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
           in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
         </p>
-        
+        <multiselect v-model="regionSelected" :options="regionSearch" :multiple="true" label="name" placeholder="Select a region">
+        </multiselect>
       </div>
     </b-sidebar>
   </b-row>
@@ -30,18 +32,22 @@
 </template>
 
 <script>
-import { latLng } from "leaflet";
-import { LMap, LTileLayer, LControlLayers } from "vue2-leaflet";
+import { latLngBounds } from "leaflet";
+import { LMap, LTileLayer, LControlLayers, LControl, LControlZoom } from "vue2-leaflet";
 export default {
   components: {
     LMap,
     LTileLayer,
-    LControlLayers
+    LControlLayers,
+    LControl,
+    LControlZoom,
   },
   data() {
     return {
-      zoom: 0,
-      center: latLng(0, 0),
+      bounds:latLngBounds([
+        [0, 10],
+        [0,20]
+      ]),
       tileProviders: [
         {
           name: 'Mapbox.Streets',
@@ -68,18 +74,35 @@ export default {
           attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
         }
       ],
+      regionSearch: [], 
+      regionSelected:[],
     };
   },
   methods: {
   },
   computed: {
+  },
+  mounted() {
+    this.$http.get('https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt')
+      .then(response => {
+        response.data = response.data.filter(function( obj ) {
+          return !["US","CA"].includes(obj.code)
+        });
+        this.regionSearch.push(...response.data);
+        })
+
+    this.$http.get('https://api.ebird.org/v2/ref/region/list/subnational1/US?key=vcs68p4j67pt')
+      .then(response => (this.regionSearch.push(...response.data)))
+    this.$http.get('https://api.ebird.org/v2/ref/region/list/subnational1/CA?key=vcs68p4j67pt')
+      .then(response => (this.regionSearch.push(...response.data)))
   }
 };
 </script>
 
-<style>
+<style lang="scss">
 html, body{
   height: 100%;
   margin:0;
 }
 </style>
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
