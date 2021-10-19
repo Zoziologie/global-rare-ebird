@@ -15,7 +15,7 @@
         :url="tileProvider.url"
         :attribution="tileProvider.attribution"
         layer-type="base"/>
-        <l-control-zoom position="bottomright"  ></l-control-zoom>
+        <l-control-zoom position="bottomright"></l-control-zoom>
     </l-map>
     <b-sidebar id="sidebar-1" title="Global Rare eBird" shadow>
       <div class="px-3 py-2">
@@ -23,8 +23,9 @@
           Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
           in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
         </p>
-        <multiselect v-model="regionSelected" :options="regionSearch" :multiple="true" label="name" placeholder="Select a region">
-        </multiselect>
+        <multiselect v-model="regionSelected" :options="regionSearch" :multiple="true" label="name" track-by="name" 
+        placeholder="Select a region" :select-label="''" :deselect-label="''" 
+        @remove="removeRegion" @select="AddRegion"></multiselect>
       </div>
     </b-sidebar>
   </b-row>
@@ -76,11 +77,29 @@ export default {
       ],
       regionSearch: [], 
       regionSelected:[],
+      observations:[],
     };
   },
   methods: {
+    AddRegion(selectedOption){
+      this.$http.get('https://api.ebird.org/v2/data/obs/'+selectedOption.code+'/recent/notable?key=vcs68p4j67pt')
+      .then(response => {
+        this.observations.push(...response.data.map(e => {
+          e.regionCode=selectedOption.code 
+          return e
+          }));
+        })
+    },
+    removeRegion(removedOption){
+      console.log(removedOption.code )
+      console.log(this.observations.filter(e => e.regionCode!=removedOption.code ))
+      this.observations = this.observations.filter(e => e.regionCode!=removedOption.code )
+    }
   },
   computed: {
+    observationsFiltered : function(){
+      return this.observations
+    }
   },
   mounted() {
     this.$http.get('https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt')
@@ -88,13 +107,17 @@ export default {
         response.data = response.data.filter(function( obj ) {
           return !["US","CA"].includes(obj.code)
         });
-        this.regionSearch.push(...response.data);
+        this.regionSearch = [...this.regionSearch,...response.data ].sort((a, b) => (a.name > b.name) ? 1 : -1);
         })
 
     this.$http.get('https://api.ebird.org/v2/ref/region/list/subnational1/US?key=vcs68p4j67pt')
-      .then(response => (this.regionSearch.push(...response.data)))
+      .then(response => {
+        this.regionSearch = [...this.regionSearch,...response.data ].sort((a, b) => (a.name > b.name) ? 1 : -1);
+      })
     this.$http.get('https://api.ebird.org/v2/ref/region/list/subnational1/CA?key=vcs68p4j67pt')
-      .then(response => (this.regionSearch.push(...response.data)))
+      .then(response => {
+        this.regionSearch = [...this.regionSearch,...response.data ].sort((a, b) => (a.name > b.name) ? 1 : -1);
+      })
   }
 };
 </script>
