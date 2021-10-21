@@ -1,6 +1,8 @@
 <template>
 <b-container fluid class="h-100 d-flex flex-column">
-  <b-row id="map-div" class="flex-grow-1">
+  
+  <b-row class="flex-grow-1">
+    
     <l-map :bounds="bounds" @update:bounds="boundsUpdated" :options="{zoomControl: false}" ref="map">
       <l-control-layers position="topright"></l-control-layers>
       <l-control position="topleft" >
@@ -16,13 +18,51 @@
         layer-type="base"/>
         <l-control-zoom position="bottomright"></l-control-zoom>
         <v-marker-cluster>
-          <l-marker v-for="obs in observationsFiltered" :key="obs.speciesCode+obs.subId" :lat-lng="obs.latLng" ></l-marker>
+          <l-marker ref="markers" :name="obs.speciesCode+obs.subId" v-for="obs in observationsFiltered" :key="obs.speciesCode+obs.subId" :lat-lng="obs.latLng" >
+            <l-popup>
+              <b-card>
+              <b-card-title>{{obs.howMany}} {{obs.comName}}</b-card-title>
+              <b-card-sub-title class="mb-2">{{obs.sciName}}</b-card-sub-title>
+              <b-card-text>
+                <a v-bind:href="'https://ebird.org/checklist/'+obs.subId+'#'+obs.speciesCode" target="_blank">{{obs.locName}}</a>
+
+                  <span v-if="obs.hasRichMedia==0">
+                        <b-icon-camera-fill></b-icon-camera-fill>
+                  </span>
+                  <span v-if="obs.hasComments==0">
+                        <b-icon-chat-square-text-fill></b-icon-chat-square-text-fill>
+                  </span>
+                  by {{obs.userDisplayName}}
+
+                </b-card-text>
+
+                <template #footer>
+        <small>
+                      <span v-if="obs.daysAgo==0">
+                        today 
+                      </span>
+                      <span v-else-if="obs.daysAgo==1">
+                        yesterday
+                      </span>
+                      <span v-else-if="obs.daysAgo<6">
+                        {{obs.daysAgo}} days ago
+                      </span>
+                      <span v-else>
+                        {{obs.obsDt}} days ago
+                      </span>
+                    </small>
+      </template>
+              
+</b-card>
+            </l-popup>
+          </l-marker>
         </v-marker-cluster>
     </l-map>
-    <b-sidebar id="sidebar-1" title="Global Rare eBird" shadow>
+    
+    <b-sidebar id="sidebar-1" title="Global Rare eBird" visible shadow>
+      <b-overlay :show="showOverlay" rounded="sm" >
       <div class="px-3 py-2">
-        <p>
-          Query rare sightings per countries (or states for US and CA). Filter per date, location and species name.</p>
+        <p>Query rare sightings per countries (or states for US and CA). Filter per date, location and species name.</p>
 
         
         <label>Select countries or states:</label>
@@ -32,29 +72,25 @@
 
 
          <label class="mt-2">Filter:</label>
-
+<b-form inline class="justify-content-between">
         <b-input-group append="days ago" class="mb-2 mr-sm-2 mb-sm-0">
         <b-form-input v-model="dateSelected" type="number" min="0" max="15" step="1"></b-form-input>
         </b-input-group>
 
         <!--b-form-checkbox v-model="mediaSelected"> only with media</b-form-checkbox>-->
 
-        <b-form-group class="m-2">
-          <b-form-checkbox-group>
-          <b-form-checkbox switch v-model="mapSelected"> only on map</b-form-checkbox>
-          </b-form-checkbox-group>
-        </b-form-group>
+        <b-form-checkbox v-model="mapSelected" switch><b-icon-map class="cursor-pointer"></b-icon-map></b-form-checkbox>
 
         <!--<multiselect v-model="speciesSelected" :options="speciesSearch" :multiple="true"
         placeholder="Select species" :select-label="''" :deselect-label="''"></multiselect>-->
-        <b-input-group>
-        <b-form-input v-model="filterSearch" type="search" placeholder="Filter by species, locations, observers"></b-form-input>
+        <b-input-group class="w-100" >
+        <b-form-input v-model="filterSearch" type="search" placeholder="Search..."></b-form-input>
 <template #append>
         <b-dropdown>
           <template #button-content>
             <b-icon-gear></b-icon-gear>
           </template>
-            <b-form-group label="Using options array:" v-slot="{ ariaDescribedby }">
+            <b-form-group label="Search by:" v-slot="{ ariaDescribedby }" class="p-1 py-0">
               <b-form-checkbox-group
                 v-model="filterSearchOptionsSelected"
                 :options="filterSearchOptions"
@@ -65,9 +101,11 @@
         </template>
         </b-input-group>
 
+        </b-form>
+        <label class="mt-2">Sightings:</label>
         <div class="accordion" role="tablist">
-          <b-card no-body class="mb-1" v-for="spe in speciesFiltered" :key="spe.speciesCode" >
-            <b-card-header header-tag="header" role="tab" v-b-toggle="'accordion-'+spe.speciesCode" class="p-1 d-flex justify-content-between align-items-center">
+          <b-card no-body class="mb-1" v-for="spe in speciesFiltered" :key="spe.speciesCode">
+            <b-card-header  header-tag="header" role="tab" v-b-toggle="'accordion-'+spe.speciesCode" class="p-1 d-flex justify-content-between align-items-center cursor-pointer" @mouseover="mouseOverListHeader(spe.speciesCode)" @mouseout="mouseOutList">
               {{spe.comName}}
               <b-badge pill style="background-color: #343a40;">{{spe.count}}</b-badge>
             </b-card-header>
@@ -76,31 +114,38 @@
                 <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
               </b-card-body>-->
               <b-list-group>
-                <b-list-group-item v-for="obs in spe.obs" :key="obs.subId">
-                  <b-icon-clock-history></b-icon-clock-history>{{obs.howMany}}
-                  
-                  
-                  <b-icon-clock-history></b-icon-clock-history> 
-                  <span v-if="obs.daysAgo==0">
-                    today 
+                <b-list-group-item v-for="obs in spe.obs" :key="spe.speciesCode+obs.subId" class="py-2 px-2 hover-darken" @mouseover="mouseOverListItem(spe.speciesCode+obs.subId)" @mouseout="mouseOutList">
+                  <div class="d-flex w-100 justify-content-between">
+                    <a v-bind:href="'https://ebird.org/checklist/'+obs.subId+'#'+obs.speciesCode" target="_blank">{{obs.locName}}</a>
+                    <!--<b-icon-clock-history></b-icon-clock-history>{{obs.howMany}}<b-icon-geo-alt></b-icon-geo-alt>  -->
+                    <small>
+                      <span v-if="obs.daysAgo==0">
+                        today 
+                      </span>
+                      <span v-else-if="obs.daysAgo==1">
+                        yesterday
+                      </span>
+                      <span v-else-if="obs.daysAgo<6">
+                        {{obs.daysAgo}} days ago
+                      </span>
+                      <span v-else>
+                        {{obs.obsDt}} days ago
+                      </span>
+                    </small>
+                  </div>
+                  <span v-if="obs.hasRichMedia==0">
+                        <b-icon-camera-fill></b-icon-camera-fill>
                   </span>
-                  <span v-else-if="obs.daysAgo==1">
-                    yesterday
+                  <span v-if="obs.hasComments==0">
+                        <b-icon-chat-square-text-fill></b-icon-chat-square-text-fill>
                   </span>
-                  <span v-else-if="obs.daysAgo<6">
-                    {{obs.daysAgo}} days ago
-                  </span>
-                  <span v-else>
-                    {{obs.obsDt}} days ago
-                  </span>
-                  <br>
-                  <b-icon-geo-alt></b-icon-geo-alt>  <a v-bind:href="'https://ebird.org/checklist/'+obs.subId+'#'+obs.speciesCode" target="_blank">{{obs.locName}}</a>
                 </b-list-group-item>
               </b-list-group>
             </b-collapse>
           </b-card>
         </div>
       </div>
+    </b-overlay>
     </b-sidebar>
   </b-row>
 </b-container>
@@ -117,11 +162,11 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 import { latLngBounds, latLng } from "leaflet";
-import { LMap, LTileLayer, LControlLayers, LControl, LControlZoom, LMarker } from "vue2-leaflet";
+import { LMap, LTileLayer, LControlLayers, LControl, LControlZoom, LMarker, LPopup } from "vue2-leaflet";
 import moment from 'moment';
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 
-import 'leaflet-defaulticon-compatibility';
+import 'leaflet-defaulticon-compatibility/';
 
 export default {
   components: {
@@ -131,13 +176,14 @@ export default {
     LControl,
     LControlZoom,
     LMarker,
+    LPopup,
     'v-marker-cluster': Vue2LeafletMarkerCluster
   },
   data() {
     return {
       bounds:latLngBounds([
-        [0, 10],
-        [0,20]
+        [90, 180],
+        [-90,-180]
       ]),
       tileProviders: [
         {
@@ -166,11 +212,10 @@ export default {
         }
       ],
       regionSearch: [], 
-      regionSelected:[],
-      observations:[],
+      regionSelected: [],
+      observations: [],
       speciesSelected:[],
       dateSelected: 5,
-      mediaSelected: false,
       mapSelected:true,
       filterSearch:"",
       filterSearchOptions:[
@@ -179,7 +224,8 @@ export default {
         {text:'Region Code',value:'regionCode'},
         {text:'Location Name',value:'locName'},
         ],
-      filterSearchOptionsSelected:['comName']
+      filterSearchOptionsSelected:['comName'],
+      showOverlay:false,
     };
   },
   methods: {
@@ -187,20 +233,55 @@ export default {
       this.bounds = bounds;
     },
     AddRegion(selectedOption){
-      this.$http.get('https://api.ebird.org/v2/data/obs/'+selectedOption.code+'/recent/notable?key=vcs68p4j67pt')
+      this.showOverlay=true;
+      this.$http.get('https://api.ebird.org/v2/data/obs/'+selectedOption.code+'/recent/notable?detail=full&key=vcs68p4j67pt')
       .then(response => {
-        this.observations.push(...response.data.map(e => {
+        var observations = response.data
+        var id = observations.map(item => item.obsId);
+        observations = observations.filter( (val,index) => id.indexOf(val.obsId) === index )
+        response.data
+
+        this.observations.push(...observations.map(e => {
           e.regionCode=selectedOption.code 
           e.daysAgo = moment().startOf('day').diff(moment(e.obsDt).startOf('day'), 'days');
           e.latLng = latLng(e.lat, e.lng)
           return e
           }));
-        this.$refs.map.mapObject.fitBounds(this.observations.map(m=>([m.lat, m.lng])))
+        if (this.observations.length>0){
+          this.$refs.map.mapObject.fitBounds(this.observations.map(m=>([m.lat, m.lng])))
+        }
+        this.showOverlay=false
+        
         })
     },
     removeRegion(removedOption){
       this.observations = this.observations.filter(e => e.regionCode!=removedOption.code )
-      this.$refs.map.mapObject.fitBounds(this.observations.map(m=>([m.lat, m.lng])))
+      if (this.observations.length>0){
+          this.$refs.map.mapObject.fitBounds(this.observations.map(m=>([m.lat, m.lng])))
+        }
+    },
+    mouseOverListItem(markerID){
+      this.$refs.markers.forEach(function(m){
+        if (m.name==markerID){
+          m.setVisible(true)   
+        } else {
+          m.setVisible(false)   
+        }
+      })
+    },
+    mouseOverListHeader(markerID){
+      this.$refs.markers.forEach(function(m){
+        if (m.name.includes(markerID)){
+          m.setVisible(true)   
+        } else {
+          m.setVisible(false)   
+        }
+      })
+    },
+    mouseOutList(){
+      this.$refs.markers.forEach(function(m){
+        m.setVisible(true)   
+      })
     }
   },
   computed: {
@@ -217,10 +298,7 @@ export default {
         obsfiltered = obsfiltered.filter(x => this.bounds.contains(x.latLng))
       }
       obsfiltered =  obsfiltered.filter(o => this.filterSearchOptionsSelected.some(k => o[k].toLowerCase().includes(this.filterSearch.toLowerCase())));
-      
-
-      
-      return obsfiltered
+      return obsfiltered.sort((a, b) => (a.comName > b.comName) ? 1 : -1);
     },
     /*speciesSearch : function(){
       return [...new Set(this.observations.map(x=>x.comName))].sort()
@@ -259,6 +337,12 @@ export default {
 html, body{
   height: 100%;
   margin:0;
+}
+.cursor-pointer{
+  cursor: pointer;
+}
+.hover-darken:hover{
+  background-color:rgba(95, 95, 95, 0.1); 
 }
 </style>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
