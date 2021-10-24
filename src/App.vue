@@ -62,30 +62,47 @@
     <b-sidebar id="sidebar-1" title="Global Rare eBird" visible shadow>
       <b-overlay :show="showOverlay" rounded="sm" >
       <div class="px-3 py-2">
-        <p>Query rare sightings per countries (or states for US and CA). Filter per date, location and species name.</p>
-
         
-        <label>Select countries or states:</label>
-        <multiselect v-model="regionSelected" :options="regionSearch" :multiple="true" label="name" track-by="name" 
-        placeholder="Select a region" :select-label="''" :deselect-label="''" 
-        @remove="removeRegion" @select="AddRegion"></multiselect>
+          <b-input-group >
+            <template #prepend>
+              <b-input-group-text >
+                <b-icon-globe></b-icon-globe>
+              </b-input-group-text>
+            </template>
+           <multiselect v-model="regionSelected" :options="regionSearch" :multiple="true" label="name" track-by="name" 
+        placeholder="Select a region " :select-label="''" :deselect-label="''" 
+        @remove="removeRegion" @select="AddRegion" style="border-top-left-radius: 0;
+    border-bottom-left-radius: 0;flex: 1 1;">
+        </multiselect>
+  </b-input-group>
+
 
 
          <label class="mt-2">Filter:</label>
-<b-form inline class="justify-content-between">
+        <b-form inline class="justify-content-between">
         <b-input-group append="days ago" class="mb-2 mr-sm-2 mb-sm-0">
-        <b-form-input v-model="dateSelected" type="number" min="0" max="15" step="1"></b-form-input>
+        <b-form-input v-model="dateSelected" type="number" min="0" :max=backTime step="1"></b-form-input>
         </b-input-group>
 
         <!--b-form-checkbox v-model="mediaSelected"> only with media</b-form-checkbox>-->
 
-        <b-form-checkbox v-model="mapSelected" switch><b-icon-map class="cursor-pointer"></b-icon-map></b-form-checkbox>
+  <b-input-group>
+    <b-input-group-prepend is-text>
+      <b-form-checkbox switch class="mr-n2" v-model="mapSelected">
+        <span class="sr-only">Switch for following text input</span>
+      </b-form-checkbox>
+    </b-input-group-prepend>
+                 <b-input-group-text >
+                Sync with vie<b-icon-map class="cursor-pointer"></b-icon-map>
+              </b-input-group-text>
+    
+  </b-input-group>
 
         <!--<multiselect v-model="speciesSelected" :options="speciesSearch" :multiple="true"
         placeholder="Select species" :select-label="''" :deselect-label="''"></multiselect>-->
         <b-input-group class="w-100" >
         <b-form-input v-model="filterSearch" type="search" placeholder="Search..."></b-form-input>
-<template #append>
+        <template #append>
         <b-dropdown>
           <template #button-content>
             <b-icon-gear></b-icon-gear>
@@ -145,9 +162,28 @@
           </b-card>
         </div>
       </div>
+
     </b-overlay>
+          <template #footer>
+       <div class="d-flex bg-dark text-light align-items-center px-3 py-2">
+       <a v-b-modal.modal-instruction> <b-icon-info></b-icon-info></a>
+       <a href="https://github.com/Zoziologie/global-rare-ebird/" target="_blank"> <b-icon-github></b-icon-github></a>
+       <a href="https://documenter.getpostman.com/view/664302/S1ENwy59" target="_blank"> <b-img src="/ebird.svg" style="height: 16px;"></b-img></a>
+       <a href="https://zoziologie.raphaelnussbaumer.com/" target="_blank"> made by <b-img src="/logo.png" style="height: 16px;"></b-img></a>
+       </div>
+      </template>
     </b-sidebar>
   </b-row>
+  <b-modal id="modal-instruction" title="How to use the app?">
+    <p class="my-4">Hello from modal!</p>
+    <p>Query rare sightings per countries (or states for US and CA). Filter per date, location and species name.</p>
+    How is it made?
+
+    Report and issue?
+
+    Get in touch?
+
+  </b-modal>
 </b-container>
 </template>
 
@@ -211,6 +247,7 @@ export default {
           attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
         }
       ],
+      backTime:10,
       regionSearch: [], 
       regionSelected: [],
       observations: [],
@@ -223,6 +260,7 @@ export default {
         {text:'Latin Name',value:'sciName'},
         {text:'Region Code',value:'regionCode'},
         {text:'Location Name',value:'locName'},
+        {text:'Observer Name',value:'userDisplayName'},
         ],
       filterSearchOptionsSelected:['comName'],
       showOverlay:false,
@@ -234,12 +272,11 @@ export default {
     },
     AddRegion(selectedOption){
       this.showOverlay=true;
-      this.$http.get('https://api.ebird.org/v2/data/obs/'+selectedOption.code+'/recent/notable?detail=full&key=vcs68p4j67pt')
+      this.$http.get('https://api.ebird.org/v2/data/obs/'+selectedOption.code+'/recent/notable?detail=full&key=vcs68p4j67pt&back='+this.backTime)
       .then(response => {
         var observations = response.data
         var id = observations.map(item => item.obsId);
         observations = observations.filter( (val,index) => id.indexOf(val.obsId) === index )
-        response.data
 
         this.observations.push(...observations.map(e => {
           e.regionCode=selectedOption.code 
