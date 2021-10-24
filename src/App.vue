@@ -18,7 +18,12 @@
         layer-type="base"/>
         <l-control-zoom position="bottomright"></l-control-zoom>
         <v-marker-cluster>
-          <l-marker ref="markers" :name="obs.speciesCode+obs.subId" v-for="obs in observationsFiltered" :key="obs.speciesCode+obs.subId" :lat-lng="obs.latLng" >
+          <l-marker ref="markers" :name="obs.speciesCode+obs.subId" v-for="obs in observationsFiltered" :key="obs.speciesCode+obs.subId" :lat-lng="obs.latLng">
+            <l-icon
+              :popup-anchor="[0, -19]"
+              :icon-anchor="[15, 19]"
+              :icon-url="obs.locationPrivate ? assets.iconPersonal : assets.iconHotspot"
+            />
             <l-popup>
               <b-card>
               <b-card-title>{{obs.howMany}} {{obs.comName}}</b-card-title>
@@ -168,8 +173,8 @@
        <div class="d-flex bg-dark text-light align-items-center px-3 py-2">
        <a v-b-modal.modal-instruction> <b-icon-info></b-icon-info></a>
        <a href="https://github.com/Zoziologie/global-rare-ebird/" target="_blank"> <b-icon-github></b-icon-github></a>
-       <a href="https://documenter.getpostman.com/view/664302/S1ENwy59" target="_blank"> <b-img src="/ebird.svg" style="height: 16px;"></b-img></a>
-       <a href="https://zoziologie.raphaelnussbaumer.com/" target="_blank"> made by <b-img src="/logo.png" style="height: 16px;"></b-img></a>
+       <a href="https://documenter.getpostman.com/view/664302/S1ENwy59" target="_blank"> <b-img :src=assets.ebird style="height: 16px;"></b-img></a>
+       <a href="https://zoziologie.raphaelnussbaumer.com/" target="_blank"> made by <b-img :src=assets.logo style="height: 16px;"></b-img></a>
        </div>
       </template>
     </b-sidebar>
@@ -198,7 +203,7 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 import { latLngBounds, latLng } from "leaflet";
-import { LMap, LTileLayer, LControlLayers, LControl, LControlZoom, LMarker, LPopup } from "vue2-leaflet";
+import { LMap, LTileLayer, LControlLayers, LControl, LControlZoom, LMarker, LPopup, LIcon } from "vue2-leaflet";
 import moment from 'moment';
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 
@@ -213,10 +218,12 @@ export default {
     LControlZoom,
     LMarker,
     LPopup,
+    LIcon,
     'v-marker-cluster': Vue2LeafletMarkerCluster
   },
   data() {
     return {
+      location:null,
       bounds:latLngBounds([
         [90, 180],
         [-90,-180]
@@ -264,6 +271,12 @@ export default {
         ],
       filterSearchOptionsSelected:['comName'],
       showOverlay:false,
+      assets:{
+        logo: require('./assets/logo.png'),
+        ebird: require('./assets/ebird.svg'),
+        iconPersonal: require('./assets/hotspot-icon_perso_small.png'),
+        iconHotspot: require('./assets/hotspot-icon-hotspot.png'),
+      }
     };
   },
   methods: {
@@ -366,6 +379,16 @@ export default {
       .then(response => {
         this.regionSearch = [...this.regionSearch,...response.data ].sort((a, b) => (a.name > b.name) ? 1 : -1);
       })
+  },
+  created() {
+    //do we support geolocation
+    if("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(pos => {
+        this.location = pos;
+      }, err => {
+        this.location = err.message;
+      })
+    }
   }
 };
 </script>

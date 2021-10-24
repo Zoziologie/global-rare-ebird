@@ -1,7 +1,7 @@
 {
   "name": "global-rare-ebird",
   "version": "0.1.0",
-  "title": "Global Rare-eBird",
+  "title": "Global Rare eBird",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zoziologie/global-rare-ebird.git"
