@@ -6,7 +6,7 @@
     <l-map :bounds="bounds" @update:bounds="boundsUpdated" :options="{zoomControl: false}" ref="map">
       <l-control-layers position="topright"></l-control-layers>
       <l-control position="topleft" >
-        <b-button v-b-toggle.sidebar-1>Toggle Sidebar</b-button>
+        <b-button v-b-toggle.sidebar-1><b-icon-layout-sidebar-inset></b-icon-layout-sidebar-inset> Sidebar</b-button>
       </l-control>
       <l-tile-layer
         v-for="tileProvider in tileProviders"
@@ -62,55 +62,56 @@
             </l-popup>
           </l-marker>
         </v-marker-cluster>
+        
+        <l-circle-marker v-if="isMylocation"
+          :lat-lng="[location.latitude, location.longitude]"
+          :radius="20"
+        />
     </l-map>
     
     <b-sidebar id="sidebar-1" title="Global Rare eBird" visible shadow>
       <b-overlay :show="showOverlay" rounded="sm" >
       <div class="px-3 py-2">
         
+
+        <b-form>
+          <b-form-group>
           <b-input-group >
             <template #prepend>
-              <b-input-group-text >
-                <b-icon-globe></b-icon-globe>
-              </b-input-group-text>
-            </template>
-           <multiselect v-model="regionSelected" :options="regionSearch" :multiple="true" label="name" track-by="name" 
-        placeholder="Select a region " :select-label="''" :deselect-label="''" 
-        @remove="removeRegion" @select="AddRegion" style="border-top-left-radius: 0;
-    border-bottom-left-radius: 0;flex: 1 1;">
-        </multiselect>
-  </b-input-group>
-
-
-
-         <label class="mt-2">Filter:</label>
-        <b-form inline class="justify-content-between">
-        <b-input-group append="days ago" class="mb-2 mr-sm-2 mb-sm-0">
-        <b-form-input v-model="dateSelected" type="number" min="0" :max=backTime step="1"></b-form-input>
-        </b-input-group>
-
-        <!--b-form-checkbox v-model="mediaSelected"> only with media</b-form-checkbox>-->
-
-  <b-input-group>
-    <b-input-group-prepend is-text>
-      <b-form-checkbox switch class="mr-n2" v-model="mapSelected">
-        <span class="sr-only">Switch for following text input</span>
-      </b-form-checkbox>
-    </b-input-group-prepend>
-                 <b-input-group-text >
-                Sync with vie<b-icon-map class="cursor-pointer"></b-icon-map>
-              </b-input-group-text>
-    
-  </b-input-group>
-
-        <!--<multiselect v-model="speciesSelected" :options="speciesSearch" :multiple="true"
-        placeholder="Select species" :select-label="''" :deselect-label="''"></multiselect>-->
-        <b-input-group class="w-100" >
-        <b-form-input v-model="filterSearch" type="search" placeholder="Search..."></b-form-input>
-        <template #append>
         <b-dropdown>
           <template #button-content>
-            <b-icon-gear></b-icon-gear>
+            <b-icon-globe font-scale="1" v-if="!isMylocation"></b-icon-globe>
+            <b-icon-geo-alt font-scale="1" v-if="isMylocation"></b-icon-geo-alt>
+          </template>
+          <b-dropdown-item @click="isMylocation = false"><b-icon-globe></b-icon-globe> Countries</b-dropdown-item>
+          <b-dropdown-divider></b-dropdown-divider>
+          <b-dropdown-item @click="myLocation();"><b-icon-geo-alt></b-icon-geo-alt> My location</b-dropdown-item>
+        </b-dropdown>
+        </template>
+
+           <multiselect v-model="regionSelected" :options="regionSearch" :multiple="true" label="name" track-by="name" 
+        placeholder="Select a region " :select-label="''" :deselect-label="''" 
+        @remove="removeRegion" @select="AddRegion" style="flex: 1 1;" :disabled="isMylocation">
+        </multiselect>
+  </b-input-group>
+          </b-form-group>
+
+<b-form-group>
+        <b-input-group append="days ago">
+          <b-input-group-prepend is-text>
+            <b-icon-calendar-date></b-icon-calendar-date>
+          </b-input-group-prepend>
+          <b-form-input v-model="dateSelected" type="number" min="0" :max=backTime step="1"></b-form-input>
+        </b-input-group>
+</b-form-group>
+
+<b-form-group>
+        <b-input-group>
+        <b-form-input v-model="filterSearch" type="search" placeholder="Search..."></b-form-input>
+        <template #prepend>
+        <b-dropdown>
+          <template #button-content>
+            <b-icon-filter font-scale="1"></b-icon-filter>
           </template>
             <b-form-group label="Search by:" v-slot="{ ariaDescribedby }" class="p-1 py-0">
               <b-form-checkbox-group
@@ -122,7 +123,7 @@
         </b-dropdown>
         </template>
         </b-input-group>
-
+</b-form-group>
         </b-form>
         <label class="mt-2">Sightings:</label>
         <div class="accordion" role="tablist">
@@ -188,6 +189,19 @@
 
     Get in touch?
 
+
+<b-form-checkbox v-model="mapSelected"> sync observations list with map view</b-form-checkbox>
+
+ <b-form-checkbox v-model="mediaSelected"> only with media</b-form-checkbox>
+
+ <b-form-checkbox v-model="hotspot"> only at hotspot</b-form-checkbox>
+
+ <b-form-input v-model="distDist" type="number" min="0" max="50" step="1"></b-form-input>
+
+ <b-form-input v-model="backTime" type="number" min="0" max="30" step="1"></b-form-input>
+
+
+
   </b-modal>
 </b-container>
 </template>
@@ -203,7 +217,7 @@ import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 import { latLngBounds, latLng } from "leaflet";
-import { LMap, LTileLayer, LControlLayers, LControl, LControlZoom, LMarker, LPopup, LIcon } from "vue2-leaflet";
+import { LMap, LTileLayer, LControlLayers, LControl, LControlZoom, LMarker, LPopup, LIcon, LCircleMarker } from "vue2-leaflet";
 import moment from 'moment';
 import Vue2LeafletMarkerCluster from 'vue2-leaflet-markercluster'
 
@@ -219,10 +233,12 @@ export default {
     LMarker,
     LPopup,
     LIcon,
+    LCircleMarker,
     'v-marker-cluster': Vue2LeafletMarkerCluster
   },
   data() {
     return {
+      isMylocation : false,
       location:null,
       bounds:latLngBounds([
         [90, 180],
@@ -255,12 +271,16 @@ export default {
         }
       ],
       backTime:10,
+      distDist:20,
+      hotspot:false,
       regionSearch: [], 
       regionSelected: [],
-      observations: [],
+      observationsRegion: [],
+      observationsMylocation:[],
       speciesSelected:[],
       dateSelected: 5,
       mapSelected:true,
+      mediaSelected:false,
       filterSearch:"",
       filterSearchOptions:[
         {text:'Common Name',value:'comName'},
@@ -283,31 +303,66 @@ export default {
     boundsUpdated (bounds) {
       this.bounds = bounds;
     },
+    myLocation(){
+      if (this.observationsMylocation.length>0){
+        this.isMylocation = true; 
+        return
+      }
+      if (this.location =="User denied Geolocation"){
+        alert("Your location is not enabled in your broweser")
+        return
+      }
+      if (this.location == null){
+        alert("Issue with location")
+        return
+      }
+        console.log(this.location)
+        this.isMylocation = true; 
+      this.showOverlay=true;
+      this.$http.get('https://api.ebird.org/v2/data/obs/geo/recent/notable?lat='+this.location.latitude+'&lng='+this.location.longitude+'&detail=full&key=vcs68p4j67pt&back='+this.backTime+'&dist='+this.distDist+'&hotspot='+this.hotspot)
+      .then(response => {
+        console.log(response)
+        var obstmp = response.data
+        var id = obstmp.map(item => item.obsId);
+        obstmp = obstmp.filter( (val,index) => id.indexOf(val.obsId) === index )
+
+        this.observationsMylocation.push(...obstmp.map(e => {
+          e.daysAgo = moment().startOf('day').diff(moment(e.obsDt).startOf('day'), 'days');
+          e.latLng = latLng(e.lat, e.lng)
+          return e
+          }));
+        if (this.observationsMylocation.length>0){
+          this.$refs.map.mapObject.fitBounds(this.observationsMylocation.map(m=>([m.lat, m.lng])))
+        }
+        this.showOverlay=false
+        })
+      
+    },
     AddRegion(selectedOption){
       this.showOverlay=true;
-      this.$http.get('https://api.ebird.org/v2/data/obs/'+selectedOption.code+'/recent/notable?detail=full&key=vcs68p4j67pt&back='+this.backTime)
+      this.$http.get('https://api.ebird.org/v2/data/obs/'+selectedOption.code+'/recent/notable?detail=full&key=vcs68p4j67pt&back='+this.backTime+'&hotspot='+this.hotspot)
       .then(response => {
-        var observations = response.data
-        var id = observations.map(item => item.obsId);
-        observations = observations.filter( (val,index) => id.indexOf(val.obsId) === index )
+        var obstmp = response.data
+        var id = obstmp.map(item => item.obsId);
+        obstmp = obstmp.filter( (val,index) => id.indexOf(val.obsId) === index )
 
-        this.observations.push(...observations.map(e => {
+        this.observationsRegion.push(...obstmp.map(e => {
           e.regionCode=selectedOption.code 
           e.daysAgo = moment().startOf('day').diff(moment(e.obsDt).startOf('day'), 'days');
           e.latLng = latLng(e.lat, e.lng)
           return e
           }));
-        if (this.observations.length>0){
-          this.$refs.map.mapObject.fitBounds(this.observations.map(m=>([m.lat, m.lng])))
+        if (this.observationsRegion.length>0){
+          this.$refs.map.mapObject.fitBounds(this.observationsRegion.map(m=>([m.lat, m.lng])))
         }
         this.showOverlay=false
         
         })
     },
     removeRegion(removedOption){
-      this.observations = this.observations.filter(e => e.regionCode!=removedOption.code )
-      if (this.observations.length>0){
-          this.$refs.map.mapObject.fitBounds(this.observations.map(m=>([m.lat, m.lng])))
+      this.observationsRegion = this.observationsRegion.filter(e => e.regionCode!=removedOption.code )
+      if (this.observationsRegion.length>0){
+          this.$refs.map.mapObject.fitBounds(this.observationsRegion.map(m=>([m.lat, m.lng])))
         }
     },
     mouseOverListItem(markerID){
@@ -336,7 +391,8 @@ export default {
   },
   computed: {
     observationsFiltered : function(){
-      var obsfiltered = this.observations
+      var obsfiltered = this.isMylocation ? this.observationsMylocation : this.observationsRegion
+  
       /*if (this.speciesSearch.length>0){
         obsfiltered = obsfiltered.filter(x=> this.speciesSearch.includes(x.comName) )
       }*/
@@ -384,7 +440,7 @@ export default {
     //do we support geolocation
     if("geolocation" in navigator) {
           navigator.geolocation.getCurrentPosition(pos => {
-        this.location = pos;
+        this.location = pos.coords;
       }, err => {
         this.location = err.message;
       })
@@ -403,6 +459,10 @@ html, body{
 }
 .hover-darken:hover{
   background-color:rgba(95, 95, 95, 0.1); 
+}
+.multiselect__tags{
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
 }
 </style>
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
