@@ -15,6 +15,9 @@
     "deploy": "sh deploy.sh"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/vue-fontawesome": "^2.0.6",
     "axios": "^0.21.4",
     "bootstrap": "^4.0.0",
     "bootstrap-vue": "^2.21.2",
@@ -23,6 +26,7 @@
     "leaflet-defaulticon-compatibility": "^0.1.1",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
+    "vue-cookie": "^1.1.4",
     "vue-multiselect": "^2.1.6",
     "vue2-leaflet": "^2.7.1",
     "vue2-leaflet-markercluster": "^3.1.0"

@@ -12,7 +12,17 @@ Vue.prototype.$http = axios
 
 import Multiselect from 'vue-multiselect'
 Vue.component('multiselect', Multiselect)
-    
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faDirections, faClone } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(faDirections,faClone)
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+var VueCookie = require('vue-cookie');
+Vue.use(VueCookie);
+
 new Vue({
     el: '#app',
     template: '<App/>',
