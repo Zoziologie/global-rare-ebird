@@ -26,23 +26,14 @@
               :icon-url="obs.locationPrivate ? assets.iconPersonal : assets.iconHotspot"
             />
             <l-popup>
-              <b-card>
-              
-               <div class="d-flex w-100 justify-content-between">
-                  <a v-bind:href="'https://ebird.org/hotspot/'+obs.locId" target="_blank" title="eBird hotspot" v-if="!obs.locationPrivate">{{obs.locName}}</a>
+              <b-row class="mb-2">
+                <b-col>
+                <a v-bind:href="'https://ebird.org/hotspot/'+obs.locId" target="_blank" title="eBird hotspot" v-if="!obs.locationPrivate">{{obs.locName}}</a>
                   <span v-else>{{ obs.locName }}</span>
-                  <span style="flex: none;">
-                    <a v-bind:href="'https://ebird.org/checklist/'+obs.subId+'#'+obs.speciesCode" target="_blank" title="eBird checklist" class="mr-1">
-                      <font-awesome-icon icon="clone" />
-                    </a>
-                    <a v-bind:href="'https://www.google.com/maps?saddr=My+Location&daddr='+obs.lat+','+obs.lng" target="_blank" title="direction on google map">
-                    <font-awesome-icon icon="directions" />
-                    </a>
-                  </span>
-                    
-                  
-                  </div>
-                  <div class="d-flex w-100 justify-content-between">
+                  </b-col>
+                    </b-row>
+                    <b-row class="mb-2">
+                  <b-col class="d-flex w-100 justify-content-between">
                     <small>{{obs.daysAgoFmt}}</small>
                     <small>Count: {{obs.howMany}}</small>
                     <span v-if="obs.hasRichMedia|obs.hasComments">
@@ -53,10 +44,18 @@
                           <small><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill></small>
                     </span>
                   </span>
-                    
-                  </div>
-
-</b-card>
+                  </b-col>
+                  </b-row>
+                  <b-row class="mb-2">
+<b-col class="d-flex w-100 bg-green">
+                  <b-button v-bind:href="'https://ebird.org/checklist/'+obs.subId+'#'+obs.speciesCode" target="_blank" title="eBird checklist" class="mr-1 flex-grow-1">
+                      <font-awesome-icon icon="clone" />
+                    </b-button>
+                    <b-button  v-bind:href="'https://www.google.com/maps?saddr=My+Location&daddr='+obs.lat+','+obs.lng" target="_blank" title="direction on google map" class="flex-grow-1">
+                    <font-awesome-icon icon="directions" />
+                    </b-button >
+</b-col>
+</b-row>
             </l-popup>
           </l-marker>
         </v-marker-cluster>
@@ -204,7 +203,7 @@
        <a v-b-modal.modal-instruction title="instruction/setting"> <b-icon-gear-fill></b-icon-gear-fill></a>
        <a href="https://github.com/Zoziologie/global-rare-ebird/" target="_blank" title="github"> <b-icon-github style="color:white;"></b-icon-github></a>
        <!--<a href="https://documenter.getpostman.com/view/664302/S1ENwy59" target="_blank"> <b-img :src=assets.ebird style="height: 16px;"></b-img></a>-->
-       <a href="https://zoziologie.raphaelnussbaumer.com/" target="_blank" title="zoziologie.com"><b-img :src=assets.logo style="height: 16px;"></b-img></a>
+       <a href="https://zoziologie.raphaelnussbaumer.com/" target="_blank" title="zoziologie.com"><b-img :src=assets.logo class="zozio"></b-img></a>
        </div>
       </template>
     </b-sidebar>
@@ -272,7 +271,7 @@ export default {
   },
   data() {
     return {
-      isMylocation : false,
+      isMylocation : true,
       location:null,
       bounds:latLngBounds([
         [90, 180],
@@ -362,7 +361,7 @@ export default {
       .then(response => {
         this.observationsMylocation.push(...this.processObs(response.data));
         if (this.observationsMylocation.length>0){
-          this.$refs.map.mapObject.fitBounds(this.observationsMylocation.map(m=>([m.lat, m.lng])))
+          this.$refs.map.mapObject.fitBounds(this.observationsMylocation.map(m=>(m.latLng)))
         }
         this.showOverlay=false
         })
@@ -374,10 +373,9 @@ export default {
       .then(response => {
         this.observationsRegion.push(...this.processObs(response.data));
         if (this.observationsRegion.length>0){
-          this.$refs.map.mapObject.fitBounds(this.observationsRegion.map(m=>([m.lat, m.lng])))
+          this.$refs.map.mapObject.fitBounds(this.observationsRegion.map(m=>(m.latLng)))
         }
         this.showOverlay=false
-        
         })
     },
     removeRegion(removedOption){
@@ -389,13 +387,25 @@ export default {
     processObs(obs){
         var id = obs.map(item => item.obsId);
         return obs.filter( (val,index) => id.indexOf(val.obsId) === index ).map(e => {
+          let o={};
+          o.comName = e.comName
+          o.sciName = e.sciName
+          o.speciesCode = e.speciesCode
+          o.hasComments = e.hasComments
+          o.hasRichMedia = e.hasRichMedia
+          o.howMany = e.howMany
+          o.locName = e.locName
+          o.locId = e.locId
+          o.locationPrivate = e.locationPrivate
+          o.subId = e.subId
+          o.userDisplayName = e.userDisplayName
           if (this.location){
-            e.distToMe = this.calcCrow(e.lat, e.lng, this.location.latitude, this.location.longitude)
+            o.distToMe = this.calcCrow(e.lat, e.lng, this.location.latitude, this.location.longitude)
           }
-          e.daysAgo = moment().startOf('day').diff(moment(e.obsDt).startOf('day'), 'days');
-          e.daysAgoFmt = e.daysAgo==0 ? "today" : (e.daysAgo==1 ? "yesterday" : e.daysAgo+" days ago")
-          e.latLng = latLng(e.lat, e.lng)
-          return e
+          o.daysAgo = moment().startOf('day').diff(moment(e.obsDt).startOf('day'), 'days');
+          o.daysAgoFmt = o.daysAgo==0 ? "today" : (o.daysAgo==1 ? "yesterday" : o.daysAgo+" days ago")
+          o.latLng = latLng(e.lat, e.lng)
+          return o
           })
     },
     mouseOverListItem(markerID){
@@ -471,8 +481,13 @@ export default {
   mounted() {
     let uri = window.location.search.substring(1); 
     let params = new URLSearchParams(uri);
-    this.dateSelected = params.get('back');
-    this.distSelected = params.get('dist')
+        if (params.get('back')){
+      this.dateSelected = params.get('back')
+    }
+    if (params.get('dist')){
+      this.distSelected = params.get('dist')
+    }
+    
     this.$http.get('https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt')
       .then(response => {
         response.data = response.data.filter(function( obj ) {
@@ -486,7 +501,7 @@ export default {
       .then(response => {
         this.regionSearch = [...this.regionSearch,...response.data ].sort((a, b) => (a.name > b.name) ? 1 : -1);
         
-              if (params.get('mylocation')){
+              if (params.get('mylocation') | this.isMylocation){
       this.myLocation();
     } else {
             var temp = this.regionSearch.filter(x=>params.get('r')==x.code);
@@ -515,7 +530,7 @@ export default {
   }
 };
 </script>
-
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <style lang="scss">
 html, body{
   height: 100%;
@@ -541,6 +556,30 @@ html, body{
 .bg-green > .btn{
   background-color: #4ca800 !important;
   border-color: #4ca800 !important;
+  color: white;
+}
+.bg-green > .btn:hover{
+  background-color: #367900 !important;
+  border-color: #367900 !important;
+  color: white;
+}
+.leaflet-popup-close-button{
+  color: #4ca800 !important;
+}
+.leaflet-container{
+  font:inherit;
+}
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #4ca800;
+}
+.b-sidebar-footer .b-icon:hover {
+  color: #4ca800 !important;
+}
+.zozio{
+  height: 16px;
+}
+.zozio:hover{
+  filter: invert(46%) sepia(92%) saturate(491%) hue-rotate(49deg) brightness(97%) contrast(102%);
 }
 </style>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
