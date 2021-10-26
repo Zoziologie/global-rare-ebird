@@ -113,6 +113,9 @@
            <multiselect v-model="regionSelected" :options="regionSearch" :multiple="true" label="name" track-by="name" 
         placeholder="Select a region " :select-label="''" :deselect-label="''" 
         @remove="removeRegion" @select="AddRegion" style="flex: 1 1;" v-if="!isMylocation">
+        <template slot="option" slot-scope="props">
+          {{ props.option.name }} <small>{{ props.option.code }}</small>
+        </template>
         </multiselect>
         <b-form-input v-model="distSelected" type="number" min="0" :max=distDist step="1" v-if="isMylocation"></b-form-input>
         <b-input-group-append is-text v-if="isMylocation">
@@ -170,7 +173,7 @@
                     <a v-bind:href="'https://ebird.org/checklist/'+obs.subId+'#'+obs.speciesCode" target="_blank" title="eBird checklist" class="mr-1">
                       <font-awesome-icon icon="clone" />
                     </a>
-                    <a v-bind:href="'https://www.google.fr/maps/dir//'+obs.lat+','+obs.lng+'/'" target="_blank" title="direction on google map">
+                    <a v-bind:href="'https://www.google.com/maps?saddr=My+Location&daddr='+obs.lat+','+obs.lng" target="_blank" title="direction on google map">
                     <font-awesome-icon icon="directions" />
                     </a>
                   </span>
@@ -180,13 +183,13 @@
                   <div class="d-flex w-100 justify-content-between">
                     <small>{{obs.daysAgoFmt}}</small>
                     <small>Count: {{obs.howMany}}</small>
-                    <span>
-                    <span v-if="obs.hasRichMedia">
-                        <small><b-icon-camera-fill class="mr-1"></b-icon-camera-fill></small>
-                  </span>
-                  <span v-if="obs.hasComments">
-                        <small><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill></small>
-                  </span>
+                    <span v-if="obs.hasRichMedia|obs.hasComments">
+                      <span v-if="obs.hasRichMedia">
+                          <small><b-icon-camera-fill class="mr-1"></b-icon-camera-fill></small>
+                    </span>
+                    <span v-if="obs.hasComments">
+                          <small><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill></small>
+                    </span>
                   </span>
                     
                   </div>
@@ -216,7 +219,11 @@
 
     Report and issue?
 
-    Get in touch?
+
+<h2>Bookmark</h2>
+You can create a bookmark and share a link using the following URL
+?r=CH&back=4&mylocation=1&dist=20
+
 <h2>Setting</h2>
 <p>The following settings can affect the performance of the website.</p>
 <b-form-checkbox v-model="mapSelected"> sync observations list with map view</b-form-checkbox>
@@ -344,7 +351,11 @@ export default {
         return
       }
       if (this.location == null){
-        alert("Issue with location. Try again")
+        var r = confirm("Issue with location. Try again?")
+        if (r == true) {
+          
+          setTimeout(() => { this.myLocation(); }, 1000);
+        }
         return
       }
         console.log(this.location)
@@ -461,22 +472,39 @@ export default {
     },
   },
   mounted() {
+    let uri = window.location.search.substring(1); 
+    let params = new URLSearchParams(uri);
+    this.dateSelected = params.get('back');
+    this.distSelected = params.get('dist')
     this.$http.get('https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt')
       .then(response => {
         response.data = response.data.filter(function( obj ) {
           return !["US","CA"].includes(obj.code)
         });
+        this.regionSearch = [...this.regionSearch,...response.data ]
+        this.$http.get('https://api.ebird.org/v2/ref/region/list/subnational1/US?key=vcs68p4j67pt')
+          .then(response => {
+        this.regionSearch = [...this.regionSearch,...response.data ];
+            this.$http.get('https://api.ebird.org/v2/ref/region/list/subnational1/CA?key=vcs68p4j67pt')
+      .then(response => {
         this.regionSearch = [...this.regionSearch,...response.data ].sort((a, b) => (a.name > b.name) ? 1 : -1);
+        
+              if (params.get('mylocation')){
+      this.myLocation();
+    } else {
+            var temp = this.regionSearch.filter(x=>params.get('r')==x.code);
+        if (temp.length>0){
+          this.regionSelected=temp[0];
+          this.AddRegion(temp[0]);
+
+          }
+        }
+      })
+          })
         })
 
-    this.$http.get('https://api.ebird.org/v2/ref/region/list/subnational1/US?key=vcs68p4j67pt')
-      .then(response => {
-        this.regionSearch = [...this.regionSearch,...response.data ].sort((a, b) => (a.name > b.name) ? 1 : -1);
-      })
-    this.$http.get('https://api.ebird.org/v2/ref/region/list/subnational1/CA?key=vcs68p4j67pt')
-      .then(response => {
-        this.regionSearch = [...this.regionSearch,...response.data ].sort((a, b) => (a.name > b.name) ? 1 : -1);
-      })
+
+
   },
   created() {
     //do we support geolocation
