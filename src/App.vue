@@ -28,37 +28,34 @@
             <l-popup>
               <b-card>
               
-              <b-card-title>{{obs.howMany}} {{obs.comName}}</b-card-title>
-              <b-card-sub-title class="mb-2">{{obs.sciName}}</b-card-sub-title>
-              <b-card-text>
-                <a v-bind:href="'https://ebird.org/checklist/'+obs.subId+'#'+obs.speciesCode" target="_blank">{{obs.locName}}</a>
-
-                  <span v-if="obs.hasRichMedia">
-                        <b-icon-camera-fill></b-icon-camera-fill>
+               <div class="d-flex w-100 justify-content-between">
+                  <a v-bind:href="'https://ebird.org/hotspot/'+obs.locId" target="_blank" title="eBird hotspot" v-if="!obs.locationPrivate">{{obs.locName}}</a>
+                  <span v-else>{{ obs.locName }}</span>
+                  <span style="flex: none;">
+                    <a v-bind:href="'https://ebird.org/checklist/'+obs.subId+'#'+obs.speciesCode" target="_blank" title="eBird checklist" class="mr-1">
+                      <font-awesome-icon icon="clone" />
+                    </a>
+                    <a v-bind:href="'https://www.google.com/maps?saddr=My+Location&daddr='+obs.lat+','+obs.lng" target="_blank" title="direction on google map">
+                    <font-awesome-icon icon="directions" />
+                    </a>
                   </span>
-                  <span v-if="obs.hasComments">
-                        <b-icon-chat-square-text-fill></b-icon-chat-square-text-fill>
+                    
+                  
+                  </div>
+                  <div class="d-flex w-100 justify-content-between">
+                    <small>{{obs.daysAgoFmt}}</small>
+                    <small>Count: {{obs.howMany}}</small>
+                    <span v-if="obs.hasRichMedia|obs.hasComments">
+                      <span v-if="obs.hasRichMedia">
+                          <small><b-icon-camera-fill class="mr-1"></b-icon-camera-fill></small>
+                    </span>
+                    <span v-if="obs.hasComments">
+                          <small><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill></small>
+                    </span>
                   </span>
-                  by {{obs.userDisplayName}}
+                    
+                  </div>
 
-                </b-card-text>
-
-                <template #footer>
-        <small>
-                      <span v-if="obs.daysAgo==0">
-                        today 
-                      </span>
-                      <span v-else-if="obs.daysAgo==1">
-                        yesterday
-                      </span>
-                      <span v-else-if="obs.daysAgo<6">
-                        {{obs.daysAgo}} days ago
-                      </span>
-                      <span v-else>
-                        {{obs.obsDt}} days ago
-                      </span>
-                    </small>
-      </template>
 </b-card>
             </l-popup>
           </l-marker>
