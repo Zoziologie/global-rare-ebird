@@ -60,14 +60,14 @@
           </l-marker>
         </v-marker-cluster>
         
-        <l-circle v-if="isMylocation"
+        <l-circle v-if="isMylocation & location!=null"
           :lat-lng="[location.latitude, location.longitude]"
           :radius="distSelected*1000"
           color="#4ca800"
           :fillOpacity=0
 
         />
-        <l-circle-marker v-if="isMylocation"
+        <l-circle-marker v-if="isMylocation & location!=null"
           :lat-lng="[location.latitude, location.longitude]"
           :radius=8
           color="white"
@@ -113,25 +113,25 @@
           {{ props.option.name }} <small>{{ props.option.code }}</small>
         </template>
         </multiselect>
-        <b-form-input v-model="distSelected" type="number" min="0" :max=distDist step="1" v-if="isMylocation"></b-form-input>
+        <b-form-input v-model="distSelected" type="number" min="0" :max='distDist' step="1" v-if="isMylocation" :debounce=debounce_time :state="(distSelected<=distDist & distSelected>=0) ? null : false" ></b-form-input>
         <b-input-group-append is-text v-if="isMylocation">
             km away
           </b-input-group-append>
         </b-input-group>
-          </b-form-group>
+        </b-form-group>
 
 <b-form-group>
         <b-input-group append="days ago">
           <b-input-group-prepend is-text>
             <b-icon-calendar-date class="mx-2"></b-icon-calendar-date>
           </b-input-group-prepend>
-          <b-form-input v-model="dateSelected" type="number" min="0" :max=backTime step="1"></b-form-input>
+          <b-form-input v-model="dateSelected" type="number" min="0" :max=backTime step="1" :debounce=debounce_time :state="(dateSelected<=backTime & dateSelected>=0) ? null : false"></b-form-input>
         </b-input-group>
 </b-form-group>
 
 <b-form-group>
         <b-input-group>
-        <b-form-input v-model="filterSearch" type="search" placeholder="Search..."></b-form-input>
+        <b-form-input v-model="filterSearch" type="search" placeholder="Search..." :debounce=debounce_time ></b-form-input>
         <template #prepend>
         <b-dropdown class="bg-green">
           <template #button-content>
@@ -199,12 +199,21 @@
 
     </b-overlay>
           <template #footer>
-       <div class="d-flex bg-dark text-light align-items-center px-3 py-2 w-100 justify-content-between">
-       <a v-b-modal.modal-instruction title="instruction/setting"> <b-icon-gear-fill></b-icon-gear-fill></a>
-       <a href="https://github.com/Zoziologie/global-rare-ebird/" target="_blank" title="github"> <b-icon-github style="color:white;"></b-icon-github></a>
-       <!--<a href="https://documenter.getpostman.com/view/664302/S1ENwy59" target="_blank"> <b-img :src=assets.ebird style="height: 16px;"></b-img></a>-->
-       <a href="https://zoziologie.raphaelnussbaumer.com/" target="_blank" title="zoziologie.com"><b-img :src=assets.logo class="zozio"></b-img></a>
-       </div>
+            <div class="d-flex bg-dark text-light align-items-center px-3 py-2 w-100 justify-content-between">
+            <a v-b-modal.modal-instruction title="instruction/setting"> <b-icon-gear-fill></b-icon-gear-fill></a>
+            <a href="https://github.com/Zoziologie/global-rare-ebird/" target="_blank" title="github"> <b-icon-github style="color:white;"></b-icon-github></a>
+             <b-icon-link id="link-btn" style="color:white;"></b-icon-link>
+            <b-tooltip target="link-btn" triggers="click">
+              <b-input-group class="bg-green">
+                <b-form-input type="text" v-model="linkUrl"></b-form-input>
+                <b-input-group-prepend>
+                  <b-button @click="copyLink">copy</b-button>
+                </b-input-group-prepend>
+              </b-input-group>
+            </b-tooltip>
+            <!--<a href="https://documenter.getpostman.com/view/664302/S1ENwy59" target="_blank"> <b-img :src=assets.ebird style="height: 16px;"></b-img></a>-->
+            <a href="https://zoziologie.raphaelnussbaumer.com/" target="_blank" title="zoziologie.com"><b-img :src=assets.logo class="zozio"></b-img></a>
+            </div>
       </template>
     </b-sidebar>
   </b-row>
@@ -221,17 +230,20 @@ You can create a bookmark and share a link using the following URL
 ?r=CH&back=4&mylocation=1&dist=20
 
 <h2>Setting</h2>
-<p>The following settings can affect the performance of the website.</p>
-<b-form-checkbox v-model="mapSelected"> sync observations list with map view</b-form-checkbox>
-
- <b-form-checkbox v-model="mediaSelected"> only with media</b-form-checkbox>
-
- <b-form-checkbox v-model="hotspot"> only at hotspot</b-form-checkbox>
-
+<b-form-group>
+<b-form-checkbox v-model="mapSelected"> Syncronize the observation list with the map view.</b-form-checkbox>
+</b-form-group>
+<p>The following settings affect the query to the eBird API. <a href="https://documenter.getpostman.com/view/664302/S1ENwy59#397b9b8c-4ab9-4136-baae-3ffa4e5b26e4">See the eBird API documentation for more information</a>. You might have to refresh the page/reload the data to be in effect. Note that longer distance and duration can affect the performance of the website.</p>
+ <b-form-group>
+ <b-form-checkbox v-model="mediaSelected"> fetch only observations with media</b-form-checkbox>
+ <b-form-checkbox v-model="hotspot"> fetch only observations made at a hotspot</b-form-checkbox>
+ </b-form-group>
+ <b-form-group label="The search radius from your location, in kilometers (max 50)">
  <b-form-input v-model="distDist" type="number" min="0" max="50" step="1"></b-form-input>
-
- <b-form-input v-model="backTime" type="number" min="0" max="30" step="1"></b-form-input>
-
+</b-form-group>
+<b-form-group label="The number of days back to fetch observations (max 30)">
+ <b-form-input v-model="backTime" id="backTime" type="number" min="0" max="30" step="1"></b-form-input>
+</b-form-group>
 
 
   </b-modal>
@@ -303,6 +315,7 @@ export default {
           attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
         }
       ],
+      debounce_time:200,
       backTime:10,
       distDist:20,
       hotspot:false,
@@ -337,24 +350,28 @@ export default {
     boundsUpdated (bounds) {
       this.bounds = bounds;
     },
-    myLocation(){
-      if (this.observationsMylocation.length>0){
-        this.isMylocation = true; 
-        return
-      }
+    myLocation(attempt){
       if (this.location =="User denied Geolocation"){
         alert("Your location is not enabled in your broweser")
         return
-      }
-      if (this.location == null){
+      } else {
+      if (this.location==null){
+        setTimeout(() => { 
+          console.log('Searching for location... test '+ attempt); 
+          this.myLocation(attempt+1) 
+        }, 1000 * attempt)
+
+
+      /*if (this.location == null){
         var r = confirm("Issue with location. Try again?")
         if (r == true) {
-          
           setTimeout(() => { this.myLocation(); }, 1000);
         }
         return
-      }
-        console.log(this.location)
+      }*/
+      return
+      } else {
+        console.log('Location found: '+this.location)
         this.isMylocation = true; 
       this.showOverlay=true;
       this.$http.get('https://api.ebird.org/v2/data/obs/geo/recent/notable?lat='+this.location.latitude+'&lng='+this.location.longitude+'&detail=full&key=vcs68p4j67pt&back='+this.backTime+'&dist='+this.distDist+'&hotspot='+this.hotspot)
@@ -365,7 +382,8 @@ export default {
         }
         this.showOverlay=false
         })
-      
+              }
+                    }
     },
     AddRegion(selectedOption){
       this.showOverlay=true;
@@ -448,9 +466,26 @@ export default {
     toRad(Value) {
       // Converts numeric degrees to radians
       return Value * Math.PI / 180;
+    },
+    copyLink: function(){
+      navigator.clipboard.writeText(this.linkUrl).then(function() {
+        console.log('Async: Copying to clipboard was successful!');
+      }, function(err) {
+        console.error('Async: Could not copy text: ', err);
+      });
     }
   },
   computed: {
+    linkUrl: function(){
+      var l = 'https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?'
+      l += 'mylocation='+(this.isMylocation ? '1':'0')+'&'
+      if (this.regionSelected.length>0){
+          l += 'r='+this.regionSelected.map(x=>x.code).join(',') + '&';
+      }
+      l += 'dist='+this.distSelected+'&'
+      l += 'back='+this.dateSelected+'&'
+      return l
+    },
     observationsFiltered : function(){
       var obsfiltered = this.isMylocation ? this.observationsMylocation : this.observationsRegion
       obsfiltered = obsfiltered.filter(x=> x.daysAgo <= this.dateSelected)
@@ -476,7 +511,7 @@ export default {
         r[i.speciesCode].count =r[i.speciesCode].count+1
         return r;
         }, {});
-    },
+    }
   },
   mounted() {
     let uri = window.location.search.substring(1); 
@@ -502,8 +537,9 @@ export default {
         this.regionSearch = [...this.regionSearch,...response.data ].sort((a, b) => (a.name > b.name) ? 1 : -1);
         
               if (params.get('mylocation') | this.isMylocation){
-      this.myLocation();
+      this.myLocation(1);
     } else {
+      this.isMylocation=false
             var temp = this.regionSearch.filter(x=>params.get('r')==x.code);
         if (temp.length>0){
           this.regionSelected=temp[0];
@@ -562,6 +598,9 @@ html, body{
   background-color: #367900 !important;
   border-color: #367900 !important;
   color: white;
+}
+#link-btn{
+  cursor: pointer;
 }
 .leaflet-popup-close-button{
   color: #4ca800 !important;
