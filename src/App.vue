@@ -577,9 +577,7 @@ export default {
                 this.hotspot
             )
             .then((response) => {
-              this.observationsMylocation.push(
-                ...this.processObs(response.data)
-              );
+              this.observationsMylocation=[...this.processObs(response.data)];
               if (this.observationsMylocation.length > 0) {
                 this.$refs.map.mapObject.fitBounds(
                   this.observationsMylocation.map((m) => m.latLng)
