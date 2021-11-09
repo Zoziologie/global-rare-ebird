@@ -802,8 +802,7 @@ export default {
                   ...this.regionSearch,
                   ...response.data,
                 ].sort((a, b) => (a.name > b.name ? 1 : -1));
-
-                if (params.get("mylocation") | this.isMylocation) {
+                if (params.get("mylocation")==1 | params.get("mylocation")=='true') {
                   this.myLocation(1);
                 } else {
                   this.isMylocation = false;
