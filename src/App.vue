@@ -638,6 +638,8 @@ export default {
           o.locationPrivate = e.locationPrivate;
           o.subId = e.subId;
           o.userDisplayName = e.userDisplayName;
+          o.subnational1Code = e.subnational1Code;
+          o.countryCode = e.countryCode;
           if (this.location) {
             o.distToMe = this.calcCrow(
               e.lat,
