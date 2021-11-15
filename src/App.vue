@@ -86,9 +86,9 @@
                   <b-button
                     v-bind:href="
                       'https://www.google.com/maps?saddr=My+Location&daddr=' +
-                      obs.lat +
+                      obs.latLng.lat +
                       ',' +
-                      obs.lng
+                      obs.latLng.lng
                     "
                     target="_blank"
                     title="direction on google map"
