@@ -194,7 +194,7 @@
                     step="1"
                     :debounce="debounce_time"
                     :state="
-                      (dateSelected <= backTime) & (dateSelected >= 0)
+                      (parseInt(dateSelected) <= parseInt(backTime)) & (parseInt(dateSelected) >= 0)
                         ? null
                         : false
                     "></b-form-input>
@@ -506,16 +506,16 @@ export default {
         },
       ],
       debounce_time: 200,
-      backTime: 10,
-      distDist: 20,
+      backTime: 5,
+      distDist: 50,
       hotspot: false,
       regionSearch: [],
       regionSelected: [],
       observationsRegion: [],
       observationsMylocation: [],
       speciesSelected: [],
-      dateSelected: 5,
-      distSelected: 10,
+      dateSelected: 2,
+      distSelected: 30,
       mapSelected: true,
       mediaSelected: false,
       filterSearch: "",
@@ -732,7 +732,7 @@ export default {
       var obsfiltered = this.isMylocation
         ? this.observationsMylocation
         : this.observationsRegion;
-      obsfiltered = obsfiltered.filter((x) => x.daysAgo <= this.dateSelected);
+      obsfiltered = obsfiltered.filter((x) => x.daysAgo <= parseInt(this.dateSelected));
       if (this.isMylocation) {
         obsfiltered = obsfiltered.filter(
           (x) => x.distToMe <= this.distSelected
