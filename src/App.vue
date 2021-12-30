@@ -745,7 +745,7 @@ export default {
         obsfiltered = obsfiltered.filter((x) => !x.locationPrivate);
       }
       if (this.mapSelected) {
-        obsfiltered = obsfiltered.filter((x) => this.bounds.contains(x.latLng));
+        obsfiltered = obsfiltered.filter((x) => this.bounds.pad(-0.05).contains(x.latLng));
       }
       obsfiltered = obsfiltered.filter((o) =>
         this.filterSearchOptionsSelected.some((k) =>
