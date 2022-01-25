@@ -809,12 +809,12 @@ export default {
                 } else {
                   this.isMylocation = false;
                   var temp = this.regionSearch.filter(
-                    (x) => params.get("r") == x.code
+                    (x) => params.get("r").split(",").indexOf(x.code) > -1
                   );
-                  if (temp.length > 0) {
-                    this.regionSelected = temp[0];
-                    this.AddRegion(temp[0]);
-                  }
+                  temp.forEach( (x) => {
+                    this.regionSelected.push(x)
+                    this.AddRegion(x);
+                  })
                 }
               });
           });
