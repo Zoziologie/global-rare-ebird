@@ -673,6 +673,7 @@ export default {
           o.hasRichMedia = e.hasRichMedia;
           o.howMany = e.howMany;
           o.locName = e.locName;
+          o.obsId = e.obsId;
           o.locId = e.locId;
           o.locationPrivate = e.locationPrivate;
           o.subId = e.subId;
@@ -698,7 +699,20 @@ export default {
               : o.daysAgo + " days ago";
           o.latLng = latLng(e.lat, e.lng);
           return o;
+        })
+        /*.map((o) => {
+          
+          this.$http
+        .get(
+          "https://ebird.org/obsservice/comment?obsId=" + o.obsId 
+        )
+        .then((response) => {
+          console.log(response.data)
+          o.comment = response.data
         });
+          
+        return o;
+        })*/
     },
     reload(newBack){
       this.backMax = newBack
