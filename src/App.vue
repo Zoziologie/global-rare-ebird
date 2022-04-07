@@ -5,7 +5,8 @@
         :bounds="bounds"
         @update:bounds="boundsUpdated"
         :options="{ zoomControl: false }"
-        ref="map">
+        ref="map"
+      >
         <l-control-layers position="topright"></l-control-layers>
         <l-control position="topleft">
           <b-button v-b-toggle.sidebar-1
@@ -20,23 +21,27 @@
           :visible="tileProvider.visible"
           :url="tileProvider.url"
           :attribution="tileProvider.attribution"
-          layer-type="base" />
+          layer-type="base"
+        />
         <l-control-zoom position="bottomright"></l-control-zoom>
         <v-marker-cluster
-          :options="{ showCoverageOnHover: false, maxClusterRadius: 50 }">
+          :options="{ showCoverageOnHover: false, maxClusterRadius: 50 }"
+        >
           <l-marker
             ref="markers"
             :name="obs.speciesCode + obs.subId"
             v-for="obs in observationsFiltered"
             :key="obs.speciesCode + obs.subId"
-            :lat-lng="obs.latLng">
+            :lat-lng="obs.latLng"
+          >
             <l-icon
               :popup-anchor="[0, -19]"
               :icon-anchor="[15, 19]"
               :icon-size="[22, 30]"
               :icon-url="
                 obs.locationPrivate ? assets.iconPersonal : assets.iconHotspot
-              " />
+              "
+            />
             <l-popup>
               <b-row class="mb-2">
                 <b-col>
@@ -80,7 +85,8 @@
                     "
                     target="_blank"
                     title="eBird checklist"
-                    class="mr-1 flex-grow-1">
+                    class="mr-1 flex-grow-1"
+                  >
                     <font-awesome-icon icon="clone" />
                   </b-button>
                   <b-button
@@ -92,7 +98,8 @@
                     "
                     target="_blank"
                     title="direction on google map"
-                    class="flex-grow-1">
+                    class="flex-grow-1"
+                  >
                     <font-awesome-icon icon="directions" />
                   </b-button>
                 </b-col>
@@ -106,14 +113,16 @@
           :lat-lng="[location.latitude, location.longitude]"
           :radius="distSelected * 1000"
           color="#4ca800"
-          :fillOpacity="0" />
+          :fillOpacity="0"
+        />
         <l-circle-marker
           v-if="isMylocation & (location != null)"
           :lat-lng="[location.latitude, location.longitude]"
           :radius="8"
           color="white"
           fillColor="#4ca800"
-          :fillOpacity="1" />
+          :fillOpacity="1"
+        />
       </l-map>
 
       <b-sidebar id="sidebar-1" title="Global Rare eBird" visible shadow>
@@ -127,10 +136,12 @@
                       <template #button-content>
                         <b-icon-globe
                           font-scale="1"
-                          v-if="!isMylocation"></b-icon-globe>
+                          v-if="!isMylocation"
+                        ></b-icon-globe>
                         <b-icon-geo-alt
                           font-scale="1"
-                          v-if="isMylocation"></b-icon-geo-alt>
+                          v-if="isMylocation"
+                        ></b-icon-geo-alt>
                       </template>
                       <b-dropdown-item @click="isMylocation = false"
                         ><b-icon-globe class="mr-2"></b-icon-globe>
@@ -154,9 +165,10 @@
                     :select-label="''"
                     :deselect-label="''"
                     @remove="removeRegion"
-                    @select="AddRegion"
+                    @select="addRegion"
                     style="flex: 1 1"
-                    v-if="!isMylocation">
+                    v-if="!isMylocation"
+                  >
                     <template slot="option" slot-scope="props">
                       {{ props.option.name }}
                       <small>{{ props.option.code }}</small>
@@ -166,15 +178,16 @@
                     v-model="distSelected"
                     type="number"
                     min="0"
-                    :max="distDist"
+                    :max="distMax"
                     step="1"
                     v-if="isMylocation"
                     :debounce="debounce_time"
                     :state="
-                      (distSelected <= distDist) & (distSelected >= 0)
+                      (distSelected <= distMax) & (distSelected >= 0)
                         ? null
                         : false
-                    "></b-form-input>
+                    "
+                  ></b-form-input>
                   <b-input-group-append is-text v-if="isMylocation">
                     km away
                   </b-input-group-append>
@@ -187,18 +200,30 @@
                     <b-icon-calendar-date class="mx-2"></b-icon-calendar-date>
                   </b-input-group-prepend>
                   <b-form-input
-                    v-model="dateSelected"
+                    v-model="backSelected"
                     type="number"
                     min="0"
-                    :max="backTime"
+                    :max="backMax"
                     step="1"
                     :debounce="debounce_time"
                     :state="
-                      (parseInt(dateSelected) <= parseInt(backTime)) & (parseInt(dateSelected) >= 0)
+                      (parseInt(backSelected) <= parseInt(backMax)) &
+                      (parseInt(backSelected) >= 0)
                         ? null
                         : false
-                    "></b-form-input>
+                    "
+                    aria-describedby="input-backSelected"
+                  ></b-form-input>
                 </b-input-group>
+                <p
+                  class="text-danger mb-0"
+                  v-if="parseInt(backSelected) > parseInt(backMax) & parseInt(backMax) != 30"
+                >
+                  <small @click="reload(Math.min(backSelected, 30))" style="cursor:pointer;"
+                    >Update max duration to
+                    {{ Math.min(backSelected, 30) }}</small
+                  >
+                </p>
               </b-form-group>
 
               <b-form-group>
@@ -207,7 +232,8 @@
                     v-model="filterSearch"
                     type="search"
                     placeholder="Search..."
-                    :debounce="debounce_time"></b-form-input>
+                    :debounce="debounce_time"
+                  ></b-form-input>
                   <template #prepend>
                     <b-dropdown class="bg-green">
                       <template #button-content>
@@ -216,13 +242,13 @@
                       <b-form-group
                         label="Search by:"
                         v-slot="{ ariaDescribedby }"
-                        class="p-1 py-0">
+                        class="p-1 py-0"
+                      >
                         <b-form-checkbox-group
                           v-model="filterSearchOptionsSelected"
                           :options="filterSearchOptions"
-                          :aria-describedby="
-                            ariaDescribedby
-                          "></b-form-checkbox-group>
+                          :aria-describedby="ariaDescribedby"
+                        ></b-form-checkbox-group>
                       </b-form-group>
                     </b-dropdown>
                   </template>
@@ -235,7 +261,8 @@
                 no-body
                 class="mb-1"
                 v-for="spe in speciesFiltered"
-                :key="spe.speciesCode">
+                :key="spe.speciesCode"
+              >
                 <b-card-header
                   header-tag="header"
                   role="tab"
@@ -248,7 +275,8 @@
                     cursor-pointer
                   "
                   @mouseover="mouseOverListHeader(spe.speciesCode)"
-                  @mouseout="mouseOutList">
+                  @mouseout="mouseOutList"
+                >
                   {{ spe.comName }}
                   <b-badge pill style="background-color: #343a40">{{
                     spe.count
@@ -257,7 +285,8 @@
                 <b-collapse
                   v-bind:id="'accordion-' + spe.speciesCode"
                   accordion="my-accordion"
-                  role="tabpanel">
+                  role="tabpanel"
+                >
                   <!--<b-card-body>
                 <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
               </b-card-body>-->
@@ -269,7 +298,8 @@
                       @mouseover="
                         mouseOverListItem(spe.speciesCode + obs.subId)
                       "
-                      @mouseout="mouseOutList">
+                      @mouseout="mouseOutList"
+                    >
                       <div class="d-flex w-100 justify-content-between">
                         <a
                           v-bind:href="'https://ebird.org/hotspot/' + obs.locId"
@@ -289,7 +319,8 @@
                             "
                             target="_blank"
                             title="eBird checklist"
-                            class="mr-1">
+                            class="mr-1"
+                          >
                             <font-awesome-icon icon="clone" />
                           </a>
                           <a
@@ -300,7 +331,8 @@
                               obs.latLng.lng
                             "
                             target="_blank"
-                            title="direction on google map">
+                            title="direction on google map"
+                          >
                             <font-awesome-icon icon="directions" />
                           </a>
                         </span>
@@ -312,7 +344,8 @@
                           <span v-if="obs.hasRichMedia">
                             <small
                               ><b-icon-camera-fill
-                                class="mr-1"></b-icon-camera-fill
+                                class="mr-1"
+                              ></b-icon-camera-fill
                             ></small>
                           </span>
                           <span v-if="obs.hasComments">
@@ -340,14 +373,16 @@
               py-2
               w-100
               justify-content-between
-            ">
+            "
+          >
             <a v-b-modal.modal-instruction title="instruction/setting">
               <b-icon-gear-fill></b-icon-gear-fill
             ></a>
             <a
               href="https://github.com/Zoziologie/global-rare-ebird/"
               target="_blank"
-              title="github">
+              title="github"
+            >
               <b-icon-github style="color: white"></b-icon-github
             ></a>
             <b-icon-link id="link-btn" style="color: white"></b-icon-link>
@@ -406,23 +441,27 @@
         >
       </b-form-group>
       <b-form-group
-        label="The search radius from your location, in kilometers (max 50)">
+        label="The search radius from your location, in kilometers (max 50)"
+      >
         <b-form-input
-          v-model="distDist"
+          v-model="distMax"
           type="number"
           min="0"
           max="50"
-          step="1"></b-form-input>
+          step="1"
+        ></b-form-input>
       </b-form-group>
       <b-form-group
-        label="The number of days back to fetch observations (max 30)">
+        label="The number of days back to fetch observations (max 30)"
+      >
         <b-form-input
-          v-model="backTime"
-          id="backTime"
+          v-model="backMax"
+          id="backMax"
           type="number"
           min="0"
           max="30"
-          step="1"></b-form-input>
+          step="1"
+        ></b-form-input>
       </b-form-group>
     </b-modal>
   </b-container>
@@ -506,15 +545,15 @@ export default {
         },
       ],
       debounce_time: 200,
-      backTime: 5,
-      distDist: 50,
+      backMax: 5,
+      distMax: 50,
       hotspot: false,
       regionSearch: [],
       regionSelected: [],
       observationsRegion: [],
       observationsMylocation: [],
       speciesSelected: [],
-      dateSelected: 2,
+      backSelected: 2,
       distSelected: 30,
       mapSelected: true,
       mediaSelected: false,
@@ -570,14 +609,14 @@ export default {
                 "&lng=" +
                 this.location.longitude +
                 "&detail=full&key=vcs68p4j67pt&back=" +
-                this.backTime +
+                this.backMax +
                 "&dist=" +
-                this.distDist +
+                this.distMax +
                 "&hotspot=" +
                 this.hotspot
             )
             .then((response) => {
-              this.observationsMylocation=[...this.processObs(response.data)];
+              this.observationsMylocation = [...this.processObs(response.data)];
               if (this.observationsMylocation.length > 0) {
                 this.$refs.map.mapObject.fitBounds(
                   this.observationsMylocation.map((m) => m.latLng)
@@ -588,14 +627,14 @@ export default {
         }
       }
     },
-    AddRegion(selectedOption) {
+    addRegion(selectedOption) {
       this.showOverlay = true;
       this.$http
         .get(
           "https://api.ebird.org/v2/data/obs/" +
             selectedOption.code +
             "/recent/notable?detail=full&key=vcs68p4j67pt&back=" +
-            this.backTime +
+            this.backMax +
             "&hotspot=" +
             this.hotspot
         )
@@ -661,6 +700,12 @@ export default {
           return o;
         });
     },
+    reload(newBack){
+      this.backMax = newBack
+      this.back = newBack;
+      this.regionSelected.forEach(x => this.removeRegion(x))
+      this.regionSelected.forEach(x => this.addRegion(x))
+    },
     mouseOverListItem(markerID) {
       this.$refs.markers.forEach(function (m) {
         if (m.name == markerID) {
@@ -725,14 +770,16 @@ export default {
         l += "r=" + this.regionSelected.map((x) => x.code).join(",") + "&";
       }
       l += "dist=" + this.distSelected + "&";
-      l += "back=" + this.dateSelected + "&";
+      l += "back=" + this.backSelected + "&";
       return l;
     },
     observationsFiltered: function () {
       var obsfiltered = this.isMylocation
         ? this.observationsMylocation
         : this.observationsRegion;
-      obsfiltered = obsfiltered.filter((x) => x.daysAgo <= parseInt(this.dateSelected));
+      obsfiltered = obsfiltered.filter(
+        (x) => x.daysAgo <= parseInt(this.backSelected)
+      );
       if (this.isMylocation) {
         obsfiltered = obsfiltered.filter(
           (x) => x.distToMe <= this.distSelected
@@ -745,7 +792,9 @@ export default {
         obsfiltered = obsfiltered.filter((x) => !x.locationPrivate);
       }
       if (this.mapSelected) {
-        obsfiltered = obsfiltered.filter((x) => this.bounds.pad(-0.05).contains(x.latLng));
+        obsfiltered = obsfiltered.filter((x) =>
+          this.bounds.pad(-0.05).contains(x.latLng)
+        );
       }
       obsfiltered = obsfiltered.filter((o) =>
         this.filterSearchOptionsSelected.some((k) =>
@@ -774,10 +823,16 @@ export default {
     let uri = window.location.search.substring(1);
     let params = new URLSearchParams(uri);
     if (params.get("back")) {
-      this.dateSelected = params.get("back");
+      this.backSelected = Math.min(params.get("back"),30);
+      if (this.backSelected > this.backMax){
+        this.backMax = this.backSelected;
+      }
     }
     if (params.get("dist")) {
-      this.distSelected = params.get("dist");
+      this.distSelected = Math.min(params.get("dist"),50);
+      if (this.distSelected > this.distMax){
+        this.distMax = this.distSelected;
+      }
     }
 
     this.$http
@@ -804,17 +859,22 @@ export default {
                   ...this.regionSearch,
                   ...response.data,
                 ].sort((a, b) => (a.name > b.name ? 1 : -1));
-                if (params.get("mylocation")==1 | params.get("mylocation")=='true') {
+                if (
+                  (params.get("mylocation") == 1) |
+                  (params.get("mylocation") == "true")
+                ) {
                   this.myLocation(1);
                 } else {
                   this.isMylocation = false;
+                  if (params.get("r")){
                   var temp = this.regionSearch.filter(
                     (x) => params.get("r").split(",").indexOf(x.code) > -1
                   );
-                  temp.forEach( (x) => {
-                    this.regionSelected.push(x)
-                    this.AddRegion(x);
-                  })
+                  temp.forEach((x) => {
+                    this.regionSelected.push(x);
+                    this.addRegion(x);
+                  });
+                  }
                 }
               });
           });
