@@ -397,7 +397,7 @@
         </template>
       </b-sidebar>
     </b-row>
-    <b-modal id="modal-instruction">
+    <b-modal id="modal-instruction" size="lg">
       <h2>Instruction</h2>
       <p>
         Query rare sightings per countries (or states for US and CA). Filter per
