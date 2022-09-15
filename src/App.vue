@@ -40,8 +40,8 @@
               :icon-size="[22, 30]"
               :icon-url="
                 obs.locationPrivate
-                  ? '/hotspot-icon_perso_small.png'
-                  : '/hotspot-icon-hotspot.png'
+                  ? hotspotIconPerso
+                  : hotspotIconHotspot
               "
             />
             <l-popup>
@@ -391,7 +391,7 @@
               href="https://zoziologie.raphaelnussbaumer.com/"
               target="_blank"
               title="zoziologie.com"
-              ><b-img src="/logo.svg" class="zozio"></b-img
+              ><b-img :src="logo" class="zozio"></b-img
             ></a>
           </div>
         </template>
@@ -467,6 +467,10 @@ import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
+import "vue-multiselect/dist/vue-multiselect.min.css";
+
+import './style.scss'
+
 import { latLngBounds, latLng } from "leaflet";
 import {
   LMap,
@@ -482,6 +486,12 @@ import {
 } from "vue2-leaflet";
 import moment from "moment";
 import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
+
+// import ebirdLogo from './assets/eBird.svg'
+import hotspotIconPerso from './assets/hotspot-icon_perso_small.png'
+import hotspotIconHotspot from './assets/hotspot-icon-hotspot.png'
+import logo from './assets/logo.svg'
+
 
 export default {
   components: {
@@ -499,6 +509,9 @@ export default {
   },
   data() {
     return {
+      logo: logo,
+      hotspotIconHotspot: hotspotIconHotspot,
+      hotspotIconPerso:hotspotIconPerso,
       isMylocation: true,
       location: null,
       bounds: latLngBounds([
@@ -892,4 +905,3 @@ export default {
   },
 };
 </script>
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>

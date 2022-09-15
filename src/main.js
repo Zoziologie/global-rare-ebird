@@ -22,8 +22,6 @@ Vue.component("font-awesome-icon", FontAwesomeIcon);
 import VueCookie from "vue-cookie";
 Vue.use(VueCookie);
 
-import './style.scss'
-
 new Vue({
   render: (h) => h(App),
 }).$mount("#app");
