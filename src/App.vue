@@ -39,7 +39,9 @@
               :icon-anchor="[15, 19]"
               :icon-size="[22, 30]"
               :icon-url="
-                obs.locationPrivate ? assets.iconPersonal : assets.iconHotspot
+                obs.locationPrivate
+                  ? '/hotspot-icon_perso_small.png'
+                  : '/hotspot-icon-hotspot.png'
               "
             />
             <l-popup>
@@ -217,9 +219,14 @@
                 </b-input-group>
                 <p
                   class="text-danger mb-0"
-                  v-if="parseInt(backSelected) > parseInt(backMax) & parseInt(backMax) != 30"
+                  v-if="
+                    (parseInt(backSelected) > parseInt(backMax)) &
+                    (parseInt(backMax) != 30)
+                  "
                 >
-                  <small @click="reload(Math.min(backSelected, 30))" style="cursor:pointer;"
+                  <small
+                    @click="reload(Math.min(backSelected, 30))"
+                    style="cursor: pointer"
                     >Update max duration to
                     {{ Math.min(backSelected, 30) }}</small
                   >
@@ -267,13 +274,7 @@
                   header-tag="header"
                   role="tab"
                   v-b-toggle="'accordion-' + spe.speciesCode"
-                  class="
-                    p-1
-                    d-flex
-                    justify-content-between
-                    align-items-center
-                    cursor-pointer
-                  "
+                  class="p-1 d-flex justify-content-between align-items-center cursor-pointer"
                   @mouseover="mouseOverListHeader(spe.speciesCode)"
                   @mouseout="mouseOutList"
                 >
@@ -364,16 +365,7 @@
         </b-overlay>
         <template #footer>
           <div
-            class="
-              d-flex
-              bg-dark
-              text-light
-              align-items-center
-              px-3
-              py-2
-              w-100
-              justify-content-between
-            "
+            class="d-flex bg-dark text-light align-items-center px-3 py-2 w-100 justify-content-between"
           >
             <a v-b-modal.modal-instruction title="instruction/setting">
               <b-icon-gear-fill></b-icon-gear-fill
@@ -394,12 +386,12 @@
                 </b-input-group-prepend>
               </b-input-group>
             </b-tooltip>
-            <!--<a href="https://documenter.getpostman.com/view/664302/S1ENwy59" target="_blank"> <b-img :src=assets.ebird style="height: 16px;"></b-img></a>-->
+            <!--<a href="https://documenter.getpostman.com/view/664302/S1ENwy59" target="_blank"> <b-img src="/ebird.svg" style="height: 16px;"></b-img></a>-->
             <a
               href="https://zoziologie.raphaelnussbaumer.com/"
               target="_blank"
               title="zoziologie.com"
-              ><b-img :src="assets.logo" class="zozio"></b-img
+              ><b-img src="/logo.svg" class="zozio"></b-img
             ></a>
           </div>
         </template>
@@ -472,7 +464,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 
 import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
 import "leaflet.markercluster/dist/MarkerCluster.css";
 import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
@@ -491,8 +482,6 @@ import {
 } from "vue2-leaflet";
 import moment from "moment";
 import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
-
-import "leaflet-defaulticon-compatibility/";
 
 export default {
   components: {
@@ -567,12 +556,6 @@ export default {
       ],
       filterSearchOptionsSelected: ["comName"],
       showOverlay: false,
-      assets: {
-        logo: require("./assets/logo.svg"),
-        ebird: require("./assets/ebird.svg"),
-        iconPersonal: require("./assets/hotspot-icon_perso_small.png"),
-        iconHotspot: require("./assets/hotspot-icon-hotspot.png"),
-      },
     };
   },
   methods: {
@@ -699,8 +682,8 @@ export default {
               : o.daysAgo + " days ago";
           o.latLng = latLng(e.lat, e.lng);
           return o;
-        })
-        /*.map((o) => {
+        });
+      /*.map((o) => {
           
           this.$http
         .get(
@@ -714,11 +697,11 @@ export default {
         return o;
         })*/
     },
-    reload(newBack){
-      this.backMax = newBack
+    reload(newBack) {
+      this.backMax = newBack;
       this.back = newBack;
-      this.regionSelected.forEach(x => this.removeRegion(x))
-      this.regionSelected.forEach(x => this.addRegion(x))
+      this.regionSelected.forEach((x) => this.removeRegion(x));
+      this.regionSelected.forEach((x) => this.addRegion(x));
     },
     mouseOverListItem(markerID) {
       this.$refs.markers.forEach(function (m) {
@@ -837,14 +820,14 @@ export default {
     let uri = window.location.search.substring(1);
     let params = new URLSearchParams(uri);
     if (params.get("back")) {
-      this.backSelected = Math.min(params.get("back"),30);
-      if (this.backSelected > this.backMax){
+      this.backSelected = Math.min(params.get("back"), 30);
+      if (this.backSelected > this.backMax) {
         this.backMax = this.backSelected;
       }
     }
     if (params.get("dist")) {
-      this.distSelected = Math.min(params.get("dist"),50);
-      if (this.distSelected > this.distMax){
+      this.distSelected = Math.min(params.get("dist"), 50);
+      if (this.distSelected > this.distMax) {
         this.distMax = this.distSelected;
       }
     }
@@ -880,14 +863,14 @@ export default {
                   this.myLocation(1);
                 } else {
                   this.isMylocation = false;
-                  if (params.get("r")){
-                  var temp = this.regionSearch.filter(
-                    (x) => params.get("r").split(",").indexOf(x.code) > -1
-                  );
-                  temp.forEach((x) => {
-                    this.regionSelected.push(x);
-                    this.addRegion(x);
-                  });
+                  if (params.get("r")) {
+                    var temp = this.regionSearch.filter(
+                      (x) => params.get("r").split(",").indexOf(x.code) > -1
+                    );
+                    temp.forEach((x) => {
+                      this.regionSelected.push(x);
+                      this.addRegion(x);
+                    });
                   }
                 }
               });

@@ -1,30 +1,29 @@
-import Vue from 'vue'
-import App from './App.vue'
-import { BootstrapVue , BootstrapVueIcons} from 'bootstrap-vue'
+import Vue from "vue";
+import App from "./App.vue";
 
-Vue.use(BootstrapVue)
-Vue.use(BootstrapVueIcons)
+import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
+Vue.use(BootstrapVue);
+Vue.use(BootstrapVueIcons);
 
-import axios from 'axios';
-Vue.prototype.$http = axios
+import axios from "axios";
+Vue.prototype.$http = axios;
 
 //Vue.config.productionTip = false
 
-import Multiselect from 'vue-multiselect'
-Vue.component('multiselect', Multiselect)
+import Multiselect from "vue-multiselect";
+Vue.component("multiselect", Multiselect);
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faDirections, faClone } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faDirections, faClone } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faDirections,faClone)
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+library.add(faDirections, faClone);
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 
-var VueCookie = require('vue-cookie');
+import VueCookie from "vue-cookie";
+
 Vue.use(VueCookie);
 
 new Vue({
-    el: '#app',
-    template: '<App/>',
-    components: { App },
-})
+  render: (h) => h(App),
+}).$mount("#app");
