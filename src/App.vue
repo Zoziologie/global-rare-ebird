@@ -243,13 +243,13 @@
                   ></b-form-input>
                   <template #prepend>
                     <b-dropdown class="bg-green">
-                      <template #button-content>
+                      <template #button-content class="w-100">
                         <b-icon-filter font-scale="1"></b-icon-filter>
                       </template>
                       <b-form-group
                         label="Search by:"
                         v-slot="{ ariaDescribedby }"
-                        class="p-1 py-0"
+                        class="px-1 mb-0"
                       >
                         <b-form-checkbox-group
                           v-model="filterSearchOptionsSelected"
