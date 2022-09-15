@@ -1,0 +1,56 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.hover-darken:hover {
+  background-color: rgba(95, 95, 95, 0.1);
+}
+.multiselect__tags {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+.multiselect__tag,
+.multiselect__option--highlight {
+  background: #4ca800 !important;
+}
+/*.b-sidebar-footer{
+  background-color: #212121;
+}
+*/
+.bg-green > .btn {
+  background-color: #4ca800 !important;
+  border-color: #4ca800 !important;
+  color: white;
+}
+.bg-green > .btn:hover {
+  background-color: #367900 !important;
+  border-color: #367900 !important;
+  color: white;
+}
+#link-btn {
+  cursor: pointer;
+}
+.leaflet-popup-close-button {
+  color: #4ca800 !important;
+}
+.leaflet-container {
+  font: inherit;
+}
+.dropdown-item.active,
+.dropdown-item:active {
+  background-color: #4ca800;
+}
+.b-sidebar-footer .b-icon:hover {
+  color: #4ca800 !important;
+}
+.zozio {
+  height: 16px;
+}
+.zozio:hover {
+  filter: invert(46%) sepia(92%) saturate(491%) hue-rotate(49deg)
+    brightness(97%) contrast(102%);
+}
