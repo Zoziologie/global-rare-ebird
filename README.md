@@ -1,24 +1,4 @@
-# global-rare-ebird
+# Global Rare eBird
+A map of all rare birds seen on the globe with eBird data.
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+<a href="https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/">![image](https://user-images.githubusercontent.com/7571260/190668681-2bd06339-2568-4da2-9931-bccc5e95c360.png)</a>
