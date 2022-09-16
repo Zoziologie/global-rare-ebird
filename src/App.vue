@@ -285,7 +285,7 @@
                 </b-input-group>
               </b-form-group>
             </b-form>
-            <label class="mt-2">Sightings:</label>
+            <label class="mt-2" v-if="Object.keys(speciesFiltered).length>0">Sightings:</label>
             <div class="accordion" role="tablist">
               <template v-for="(spe, speCode, spe_index) in speciesFiltered">
                 <b-card
