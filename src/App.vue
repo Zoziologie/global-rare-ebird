@@ -4,7 +4,7 @@
       <l-map
         :bounds="bounds"
         @update:bounds="boundsUpdated"
-        :options="{ zoomControl: false }"
+        :options="{ zoomControl: false, preferCanvas: true }"
         ref="map"
       >
         <l-control-layers position="topright"></l-control-layers>
@@ -33,82 +33,90 @@
             v-for="obs in observationsFiltered"
             :key="obs.speciesCode + obs.subId"
             :lat-lng="obs.latLng"
+            @click="clickMarker(obs)"
           >
             <l-icon
               :popup-anchor="[0, -19]"
               :icon-anchor="[15, 19]"
               :icon-size="[22, 30]"
               :icon-url="
-                obs.locationPrivate
-                  ? hotspotIconPerso
-                  : hotspotIconHotspot
+                obs.locationPrivate ? hotspotIconPerso : hotspotIconHotspot
               "
             />
-            <l-popup>
-              <b-row class="mb-2">
-                <b-col>
-                  <h5>{{ obs.comName }}</h5>
-                  <a
-                    v-bind:href="'https://ebird.org/hotspot/' + obs.locId"
-                    target="_blank"
-                    title="eBird hotspot"
-                    v-if="!obs.locationPrivate"
-                    >{{ obs.locName }}</a
-                  >
-                  <span v-else>{{ obs.locName }}</span>
-                </b-col>
-              </b-row>
-              <b-row class="mb-2">
-                <b-col class="d-flex w-100 justify-content-between">
-                  <small>{{ obs.daysAgoFmt }}</small>
-                  <small>Count: {{ obs.howMany }}</small>
-                  <span v-if="obs.hasRichMedia | obs.hasComments">
-                    <span v-if="obs.hasRichMedia">
-                      <small
-                        ><b-icon-camera-fill class="mr-1"></b-icon-camera-fill
-                      ></small>
-                    </span>
-                    <span v-if="obs.hasComments">
-                      <small
-                        ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
-                      ></small>
-                    </span>
-                  </span>
-                </b-col>
-              </b-row>
-              <b-row class="mb-2">
-                <b-col class="d-flex w-100 bg-green">
-                  <b-button
-                    v-bind:href="
-                      'https://ebird.org/checklist/' +
-                      obs.subId +
-                      '#' +
-                      obs.speciesCode
-                    "
-                    target="_blank"
-                    title="eBird checklist"
-                    class="mr-1 flex-grow-1"
-                  >
-                    <font-awesome-icon icon="clone" />
-                  </b-button>
-                  <b-button
-                    v-bind:href="
-                      'https://www.google.com/maps?saddr=My+Location&daddr=' +
-                      obs.latLng.lat +
-                      ',' +
-                      obs.latLng.lng
-                    "
-                    target="_blank"
-                    title="direction on google map"
-                    class="flex-grow-1"
-                  >
-                    <font-awesome-icon icon="directions" />
-                  </b-button>
-                </b-col>
-              </b-row>
-            </l-popup>
           </l-marker>
         </v-marker-cluster>
+
+        <l-marker ref="marker" v-if="popup != false" :lat-lng="popup.latLng">
+          <l-icon
+            :popup-anchor="[0, -19]"
+            :icon-anchor="[15, 19]"
+            :icon-size="[22, 30]"
+            :icon-url="hotspotIconEmpty"
+          />
+          <l-popup>
+            <b-row class="mb-2">
+              <b-col>
+                <h5>{{ popup.comName }}</h5>
+                <a
+                  v-bind:href="'https://ebird.org/hotspot/' + popup.locId"
+                  target="_blank"
+                  title="eBird hotspot"
+                  v-if="!popup.locationPrivate"
+                  >{{ popup.locName }}</a
+                >
+                <span v-else>{{ popup.locName }}</span>
+              </b-col>
+            </b-row>
+            <b-row class="mb-2">
+              <b-col class="d-flex w-100 justify-content-between">
+                <small>{{ popup.daysAgoFmt }}</small>
+                <small>Count: {{ popup.howMany }}</small>
+                <span v-if="popup.hasRichMedia | popup.hasComments">
+                  <span v-if="popup.hasRichMedia">
+                    <small
+                      ><b-icon-camera-fill class="mr-1"></b-icon-camera-fill
+                    ></small>
+                  </span>
+                  <span v-if="popup.hasComments">
+                    <small
+                      ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
+                    ></small>
+                  </span>
+                </span>
+              </b-col>
+            </b-row>
+            <b-row class="mb-2">
+              <b-col class="d-flex w-100 bg-green">
+                <b-button
+                  v-bind:href="
+                    'https://ebird.org/checklist/' +
+                    popup.subId +
+                    '#' +
+                    popup.speciesCode
+                  "
+                  target="_blank"
+                  title="eBird checklist"
+                  class="mr-1 flex-grow-1"
+                >
+                  <font-awesome-icon icon="clone" />
+                </b-button>
+                <b-button
+                  v-bind:href="
+                    'https://www.google.com/maps?saddr=My+Location&daddr=' +
+                    popup.latLng.lat +
+                    ',' +
+                    popup.latLng.lng
+                  "
+                  target="_blank"
+                  title="direction on google map"
+                  class="flex-grow-1"
+                >
+                  <font-awesome-icon icon="directions" />
+                </b-button>
+              </b-col>
+            </b-row>
+          </l-popup>
+        </l-marker>
 
         <l-circle
           v-if="isMylocation & (location != null)"
@@ -264,102 +272,106 @@
             </b-form>
             <label class="mt-2">Sightings:</label>
             <div class="accordion" role="tablist">
-              <b-card
-                no-body
-                class="mb-1"
-                v-for="spe in speciesFiltered"
-                :key="spe.speciesCode"
-              >
-                <b-card-header
-                  header-tag="header"
-                  role="tab"
-                  v-b-toggle="'accordion-' + spe.speciesCode"
-                  class="p-1 d-flex justify-content-between align-items-center cursor-pointer"
-                  @mouseover="mouseOverListHeader(spe.speciesCode)"
-                  @mouseout="mouseOutList"
+              <template v-for="(spe, speCode, spe_index) in speciesFiltered">
+                <b-card
+                  no-body
+                  class="mb-1"
+                  v-if="spe_index <= 50"
+                  :key="spe.speciesCode"
                 >
-                  {{ spe.comName }}
-                  <b-badge pill style="background-color: #343a40">{{
-                    spe.count
-                  }}</b-badge>
-                </b-card-header>
-                <b-collapse
-                  v-bind:id="'accordion-' + spe.speciesCode"
-                  accordion="my-accordion"
-                  role="tabpanel"
-                >
-                  <!--<b-card-body>
+                  <b-card-header
+                    header-tag="header"
+                    role="tab"
+                    v-b-toggle="'accordion-' + spe.speciesCode"
+                    class="p-1 d-flex justify-content-between align-items-center cursor-pointer"
+                    @mouseover="mouseOverListHeader(spe.speciesCode)"
+                    @mouseout="mouseOutList"
+                  >
+                    {{ spe.comName }}
+                    <b-badge pill style="background-color: #343a40">{{
+                      spe.count
+                    }}</b-badge>
+                  </b-card-header>
+                  <b-collapse
+                    v-bind:id="'accordion-' + spe.speciesCode"
+                    accordion="my-accordion"
+                    role="tabpanel"
+                  >
+                    <!--<b-card-body>
                 <b-card-text>I start opened because <code>visible</code> is <code>true</code></b-card-text>
               </b-card-body>-->
-                  <b-list-group>
-                    <b-list-group-item
-                      v-for="obs in spe.obs"
-                      :key="spe.speciesCode + obs.subId"
-                      class="py-2 px-2 hover-darken"
-                      @mouseover="
-                        mouseOverListItem(spe.speciesCode + obs.subId)
-                      "
-                      @mouseout="mouseOutList"
-                    >
-                      <div class="d-flex w-100 justify-content-between">
-                        <a
-                          v-bind:href="'https://ebird.org/hotspot/' + obs.locId"
-                          target="_blank"
-                          title="eBird hotspot"
-                          v-if="!obs.locationPrivate"
-                          >{{ obs.locName }}</a
-                        >
-                        <span v-else>{{ obs.locName }}</span>
-                        <span style="flex: none">
+                    <b-list-group>
+                      <b-list-group-item
+                        v-for="obs in spe.obs"
+                        :key="spe.speciesCode + obs.subId"
+                        class="py-2 px-2 hover-darken"
+                        @mouseover="
+                          mouseOverListItem(spe.speciesCode + obs.subId)
+                        "
+                        @mouseout="mouseOutList"
+                      >
+                        <div class="d-flex w-100 justify-content-between">
                           <a
                             v-bind:href="
-                              'https://ebird.org/checklist/' +
-                              obs.subId +
-                              '#' +
-                              obs.speciesCode
+                              'https://ebird.org/hotspot/' + obs.locId
                             "
                             target="_blank"
-                            title="eBird checklist"
-                            class="mr-1"
+                            title="eBird hotspot"
+                            v-if="!obs.locationPrivate"
+                            >{{ obs.locName }}</a
                           >
-                            <font-awesome-icon icon="clone" />
-                          </a>
-                          <a
-                            v-bind:href="
-                              'https://www.google.com/maps?saddr=My+Location&daddr=' +
-                              obs.latLng.lat +
-                              ',' +
-                              obs.latLng.lng
-                            "
-                            target="_blank"
-                            title="direction on google map"
-                          >
-                            <font-awesome-icon icon="directions" />
-                          </a>
-                        </span>
-                      </div>
-                      <div class="d-flex w-100 justify-content-between">
-                        <small>{{ obs.daysAgoFmt }}</small>
-                        <small>Count: {{ obs.howMany }}</small>
-                        <span v-if="obs.hasRichMedia | obs.hasComments">
-                          <span v-if="obs.hasRichMedia">
-                            <small
-                              ><b-icon-camera-fill
-                                class="mr-1"
-                              ></b-icon-camera-fill
-                            ></small>
+                          <span v-else>{{ obs.locName }}</span>
+                          <span style="flex: none">
+                            <a
+                              v-bind:href="
+                                'https://ebird.org/checklist/' +
+                                obs.subId +
+                                '#' +
+                                obs.speciesCode
+                              "
+                              target="_blank"
+                              title="eBird checklist"
+                              class="mr-1"
+                            >
+                              <font-awesome-icon icon="clone" />
+                            </a>
+                            <a
+                              v-bind:href="
+                                'https://www.google.com/maps?saddr=My+Location&daddr=' +
+                                obs.latLng.lat +
+                                ',' +
+                                obs.latLng.lng
+                              "
+                              target="_blank"
+                              title="direction on google map"
+                            >
+                              <font-awesome-icon icon="directions" />
+                            </a>
                           </span>
-                          <span v-if="obs.hasComments">
-                            <small
-                              ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
-                            ></small>
+                        </div>
+                        <div class="d-flex w-100 justify-content-between">
+                          <small>{{ obs.daysAgoFmt }}</small>
+                          <small>Count: {{ obs.howMany }}</small>
+                          <span v-if="obs.hasRichMedia | obs.hasComments">
+                            <span v-if="obs.hasRichMedia">
+                              <small
+                                ><b-icon-camera-fill
+                                  class="mr-1"
+                                ></b-icon-camera-fill
+                              ></small>
+                            </span>
+                            <span v-if="obs.hasComments">
+                              <small
+                                ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
+                              ></small>
+                            </span>
                           </span>
-                        </span>
-                      </div>
-                    </b-list-group-item>
-                  </b-list-group>
-                </b-collapse>
-              </b-card>
+                        </div>
+                      </b-list-group-item>
+                    </b-list-group>
+                  </b-collapse>
+                </b-card>
+              </template>
             </div>
           </div>
         </b-overlay>
@@ -472,7 +484,7 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 import "vue-multiselect/dist/vue-multiselect.min.css";
 
-import './style.scss'
+import "./style.scss";
 
 import { latLngBounds, latLng } from "leaflet";
 import {
@@ -491,9 +503,12 @@ import moment from "moment";
 import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
 
 // import ebirdLogo from './assets/eBird.svg'
-import hotspotIconPerso from './assets/hotspot-icon_perso_small.png'
-import hotspotIconHotspot from './assets/hotspot-icon-hotspot.png'
-import logo from './assets/logo.svg'
+import hotspotIconPerso from "./assets/hotspot-icon_perso_small.png";
+import hotspotIconHotspot from "./assets/hotspot-icon-hotspot.png";
+import hotspotIconEmpty from "./assets/hotspot-icon_empty.png";
+import logo from "./assets/logo.svg";
+
+import aba from "./assets/aba_code.json";
 
 import axios from "axios";
 
@@ -515,7 +530,8 @@ export default {
     return {
       logo: logo,
       hotspotIconHotspot: hotspotIconHotspot,
-      hotspotIconPerso:hotspotIconPerso,
+      hotspotIconPerso: hotspotIconPerso,
+      hotspotIconEmpty: hotspotIconEmpty,
       isMylocation: true,
       location: null,
       bounds: latLngBounds([
@@ -568,12 +584,13 @@ export default {
       filterSearchOptions: [
         { text: "Common Name", value: "comName" },
         { text: "Latin Name", value: "sciName" },
-        { text: "Region Code", value: "regionCode" },
+        //{ text: "Region Code", value: "regionCode" },
         { text: "Location Name", value: "locName" },
-        { text: "Observer Name", value: "userDisplayName" },
+        //{ text: "Observer Name", value: "userDisplayName" },
       ],
-      filterSearchOptionsSelected: ["comName"],
+      filterSearchOptionsSelected: ["comName", "sciName", "locName"],
       showOverlay: false,
+      popup: false,
     };
   },
   methods: {
@@ -791,6 +808,10 @@ export default {
           console.error("Async: Could not copy text: ", err);
         }
       );
+    },
+    clickMarker(obs) {
+      this.popup = obs;
+      setTimeout(() => this.$refs.marker.mapObject.openPopup(), 100);
     },
   },
   computed: {
