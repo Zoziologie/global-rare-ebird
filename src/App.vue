@@ -243,12 +243,6 @@
 
               <b-form-group>
                 <b-input-group>
-                  <b-form-input
-                    v-model="filterSearch"
-                    type="search"
-                    placeholder="Search..."
-                    :debounce="debounce_time"
-                  ></b-form-input>
                   <template #prepend>
                     <b-dropdown class="bg-green">
                       <template #button-content>
@@ -265,6 +259,28 @@
                           :aria-describedby="ariaDescribedby"
                         ></b-form-checkbox-group>
                       </b-form-group>
+                    </b-dropdown>
+                  </template>
+                  <b-form-input
+                    v-model="filterSearch"
+                    type="search"
+                    placeholder="Search..."
+                    :debounce="debounce_time"
+                  ></b-form-input>
+                  <template #append v-if="isaba">
+                    <b-dropdown>
+                      <template #button-content>
+                        <small>ABA-{{ aba_limit }}</small>
+                      </template>
+                      <b-dropdown-text>
+                        <b-form-spinbutton
+                          v-model="aba_limit"
+                          inline
+                          size="sm"
+                          min="1"
+                          max="6"
+                        ></b-form-spinbutton>
+                      </b-dropdown-text>
                     </b-dropdown>
                   </template>
                 </b-input-group>
@@ -288,9 +304,17 @@
                     @mouseout="mouseOutList"
                   >
                     {{ spe.comName }}
-                    <b-badge pill style="background-color: #343a40">{{
-                      spe.count
-                    }}</b-badge>
+                    <span>
+                      <b-badge
+                        style="background-color: #011750"
+                        v-if="isaba & (spe.aba >= 3)"
+                        class="mr-1"
+                        >ABA-{{ spe.aba }}</b-badge
+                      >
+                      <b-badge pill style="background-color: #343a40">{{
+                        spe.count
+                      }}</b-badge>
+                    </span>
                   </b-card-header>
                   <b-collapse
                     v-bind:id="'accordion-' + spe.speciesCode"
@@ -574,7 +598,7 @@ export default {
       observationsRegion: [],
       observationsMylocation: [],
       speciesSelected: [],
-      backSelected: 0,
+      backSelected: 1,
       distSelected: 50,
       mapSelected: true,
       mediaSelected: false,
@@ -591,6 +615,7 @@ export default {
       filterSearchOptionsSelected: ["comName", "sciName", "locName"],
       showOverlay: false,
       popup: false,
+      aba_limit: 1,
     };
   },
   methods: {
@@ -685,66 +710,75 @@ export default {
       }
     },
     processObs(obs, regionCode) {
+      // This filtering is due when using detail=full in api. Maybe because of adding comments/media later? Need to check, but it would be then worth filtering more
       var id = obs.map((item) => item.speciesCode + item.subId);
-      return (
-        obs
-          // This filtering is due when using detail=full in api. Maybe because of adding comments/media later? Need to check, but it would be then worth filtering more
-          .filter(
-            (val, index) => id.indexOf(val.speciesCode + val.subId) === index
-          )
-          .map((e) => {
-            let o = {};
-            o.regionCode = regionCode;
-
-            o.comName = e.comName;
-            o.sciName = e.sciName;
-            o.speciesCode = e.speciesCode;
-            o.howMany = e.howMany;
-            o.locId = e.locId;
-            o.subId = e.subId;
-            o.locName = e.locName;
-            o.locationPrivate = e.locationPrivate;
-            o.daysAgo = moment()
-              .startOf("day")
-              .diff(moment(e.obsDt).startOf("day"), "days");
-            o.daysAgoFmt =
-              o.daysAgo == 0
-                ? "today"
-                : o.daysAgo == 1
-                ? "yesterday"
-                : o.daysAgo + " days ago";
-            o.latLng = latLng(e.lat, e.lng);
-
-            // Following only present with detail=full in url but we found a way arround for all of them
-            //o.obsId = e.obsId;
-            //o.userDisplayName = "userDisplayName" in e ? e.userDisplayName : "";
-            //o.subnational1Code = e.subnational1Code;
-            //o.countryCode = e.countryCode;
-            o.hasComments = e.hasComments;
-            o.hasRichMedia = e.hasRichMedia;
-
-            if (this.location) {
-              o.distToMe = this.calcCrow(
-                e.lat,
-                e.lng,
-                this.location.latitude,
-                this.location.longitude
-              );
-            }
-            return o;
-          })
+      obs = obs.filter(
+        (val, index) => id.indexOf(val.speciesCode + val.subId) === index
       );
+      if (regionCode.includes("US") | regionCode.includes("CA")) {
+        obs = obs.map((e) => {
+          let tmp = aba.find((o) => o.code === e.speciesCode);
+          e.aba = tmp ? tmp.aba : 1;
+          return e;
+        });
+      }
+      if ((regionCode == "US") | (regionCode == "CA") | (regionCode == "ABA")) {
+        this.aba_limit = 3;
+      }
+      obs = obs.map((e) => {
+        let o = {};
+        o.regionCode = regionCode;
+        o.comName = e.comName;
+        o.sciName = e.sciName;
+        o.speciesCode = e.speciesCode;
+        o.howMany = e.howMany;
+        o.locId = e.locId;
+        o.subId = e.subId;
+        o.locName = e.locName;
+        o.locationPrivate = e.locationPrivate;
+        o.daysAgo = moment()
+          .startOf("day")
+          .diff(moment(e.obsDt).startOf("day"), "days");
+        o.daysAgoFmt =
+          o.daysAgo == 0
+            ? "today"
+            : o.daysAgo == 1
+            ? "yesterday"
+            : o.daysAgo + " days ago";
+        o.latLng = latLng(e.lat, e.lng);
+
+        // Following only present with detail=full in url but we found a way arround for all of them
+        //o.obsId = e.obsId;
+        //o.userDisplayName = "userDisplayName" in e ? e.userDisplayName : "";
+        //o.subnational1Code = e.subnational1Code;
+        //o.countryCode = e.countryCode;
+        o.hasComments = e.hasComments;
+        o.hasRichMedia = e.hasRichMedia;
+
+        if (this.location) {
+          o.distToMe = this.calcCrow(
+            e.lat,
+            e.lng,
+            this.location.latitude,
+            this.location.longitude
+          );
+        }
+
+        o.aba = "aba" in e ? e.aba : 10;
+
+        return o;
+      });
+      return obs;
+
       /*.map((o) => {
-          
           axios
         .get(
-          "https://ebird.org/obsservice/comment?obsId=" + o.obsId 
+          "https://ebird.org/obsservice/comment?obsId=" + o.obsId
         )
         .then((response) => {
           console.log(response.data)
           o.comment = response.data
         });
-          
         return o;
         })*/
     },
@@ -825,6 +859,15 @@ export default {
       l += "back=" + this.backSelected + "&";
       return l;
     },
+    isaba: function () {
+      let regionCode = this.regionSelected.map((e) => e.code);
+      console.log(regionCode);
+      if (regionCode.some((x) => x.includes("US") | x.includes("CA"))) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     observationsFiltered: function () {
       var obsfiltered = this.isMylocation
         ? this.observationsMylocation
@@ -837,6 +880,9 @@ export default {
           (x) => x.distToMe <= this.distSelected
         );
       }
+      obsfiltered = obsfiltered.filter(
+        (x) => x.aba >= parseInt(this.aba_limit)
+      );
       if (this.mediaSelected) {
         obsfiltered = obsfiltered.filter((x) => x.hasRichMedia);
       }
@@ -864,6 +910,7 @@ export default {
           count: 0,
           comName: i.comName,
           speciesCode: i.speciesCode,
+          aba: i.aba,
         };
         r[i.speciesCode].obs.push(i);
         r[i.speciesCode].count = r[i.speciesCode].count + 1;
