@@ -492,6 +492,7 @@ import hotspotIconPerso from './assets/hotspot-icon_perso_small.png'
 import hotspotIconHotspot from './assets/hotspot-icon-hotspot.png'
 import logo from './assets/logo.svg'
 
+import axios from "axios";
 
 export default {
   components: {
@@ -598,7 +599,7 @@ export default {
           console.log("Location found: " + this.location);
           this.isMylocation = true;
           this.showOverlay = true;
-          this.$http
+          axios
             .get(
               "https://api.ebird.org/v2/data/obs/geo/recent/notable?lat=" +
                 this.location.latitude +
@@ -625,7 +626,7 @@ export default {
     },
     addRegion(selectedOption) {
       this.showOverlay = true;
-      this.$http
+      axios
         .get(
           "https://api.ebird.org/v2/data/obs/" +
             selectedOption.code +
@@ -698,7 +699,7 @@ export default {
         });
       /*.map((o) => {
           
-          this.$http
+          axios
         .get(
           "https://ebird.org/obsservice/comment?obsId=" + o.obsId 
         )
@@ -845,22 +846,22 @@ export default {
       }
     }
 
-    this.$http
+    axios
       .get(
         "https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt"
       )
       .then((response) => {
-        response.data = response.data.filter(function (obj) {
+        /*response.data = response.data.filter(function (obj) {
           return !["US", "CA"].includes(obj.code);
         });
         this.regionSearch = [...this.regionSearch, ...response.data];
-        this.$http
+        axios
           .get(
             "https://api.ebird.org/v2/ref/region/list/subnational1/US?key=vcs68p4j67pt"
           )
           .then((response) => {
             this.regionSearch = [...this.regionSearch, ...response.data];
-            this.$http
+            axios
               .get(
                 "https://api.ebird.org/v2/ref/region/list/subnational1/CA?key=vcs68p4j67pt"
               )

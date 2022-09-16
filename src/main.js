@@ -5,9 +5,6 @@ import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
 
-import axios from "axios";
-Vue.prototype.$http = axios;
-
 //Vue.config.productionTip = false
 
 import Multiselect from "vue-multiselect";
