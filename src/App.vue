@@ -168,7 +168,7 @@
                     v-model="regionSelected"
                     :options="regionSearch"
                     :multiple="true"
-                    label="name"
+                    :custom-label="customLabel"
                     track-by="name"
                     placeholder="Select a region "
                     :select-label="''"
@@ -205,6 +205,7 @@
 
               <b-form-group>
                 <b-input-group append="days ago">
+                  <!--<b-input-group :append="backSelected == 0 ? 'today' : backSelected == 1 ? 'yesterday' : 'days ago'">-->
                   <b-input-group-prepend is-text>
                     <b-icon-calendar-date class="mx-2"></b-icon-calendar-date>
                   </b-input-group-prepend>
@@ -285,7 +286,9 @@
                 </b-input-group>
               </b-form-group>
             </b-form>
-            <label class="mt-2" v-if="Object.keys(speciesFiltered).length>0">Sightings:</label>
+            <label class="mt-2" v-if="Object.keys(speciesFiltered).length > 0"
+              >Sightings:</label
+            >
             <div class="accordion" role="tablist">
               <template v-for="(spe, speCode, spe_index) in speciesFiltered">
                 <b-card
@@ -306,7 +309,7 @@
                     <span>
                       <b-badge
                         v-if="isaba & (spe.aba >= 3)"
-                        :class="'mr-1 font-weight-normal bg-aba-'+spe.aba"
+                        :class="'mr-1 font-weight-normal bg-aba-' + spe.aba"
                         >ABA-{{ spe.aba }}</b-badge
                       >
                       <b-badge pill style="background-color: #343a40">{{
@@ -621,7 +624,7 @@ export default {
       showOverlay: false,
       popup: false,
       aba_limit: 1,
-      spe_index_max: 5,
+      spe_index_max: 50,
     };
   },
   methods: {
@@ -852,6 +855,13 @@ export default {
     clickMarker(obs) {
       this.popup = obs;
       setTimeout(() => this.$refs.marker.mapObject.openPopup(), 100);
+    },
+    customLabel({ name, code }) {
+      if (this.regionSelected.length > 1) {
+        return `${code}`;
+      } else {
+        return `${name}`;
+      }
     },
   },
   computed: {
