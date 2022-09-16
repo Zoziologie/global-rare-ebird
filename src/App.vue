@@ -292,7 +292,7 @@
                 <b-card
                   no-body
                   class="mb-1"
-                  v-if="spe_index <= 50"
+                  v-if="spe_index <= spe_index_max"
                   :key="spe.speciesCode"
                 >
                   <b-card-header
@@ -396,6 +396,13 @@
                   </b-collapse>
                 </b-card>
               </template>
+            </div>
+            <div v-if="Object.keys(speciesFiltered).length > spe_index_max">
+              <b-button @click="spe_index_max = 100000" block variant="light"
+                >See
+                {{ Object.keys(speciesFiltered).length - spe_index_max }} more
+                species</b-button
+              >
             </div>
           </div>
         </b-overlay>
@@ -616,6 +623,7 @@ export default {
       showOverlay: false,
       popup: false,
       aba_limit: 1,
+      spe_index_max: 5,
     };
   },
   methods: {
@@ -861,7 +869,6 @@ export default {
     },
     isaba: function () {
       let regionCode = this.regionSelected.map((e) => e.code);
-      console.log(regionCode);
       if (regionCode.some((x) => x.includes("US") | x.includes("CA"))) {
         return true;
       } else {
