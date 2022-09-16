@@ -305,9 +305,8 @@
                     {{ spe.comName }}
                     <span>
                       <b-badge
-                        style="background-color: #011750"
                         v-if="isaba & (spe.aba >= 3)"
-                        class="mr-1"
+                        :class="'mr-1 font-weight-normal bg-aba-'+spe.aba"
                         >ABA-{{ spe.aba }}</b-badge
                       >
                       <b-badge pill style="background-color: #343a40">{{
