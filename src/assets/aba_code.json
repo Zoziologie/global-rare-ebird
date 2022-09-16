@@ -1,4534 +1,4534 @@
 [
-    {
-      "code": "comred",
-      "aba": 1
-    },
-    {
-      "code": "hoared",
-      "aba": 2
-    },
-    {
-      "code": "coohaw",
-      "aba": 1
-    },
-    {
-      "code": "norgos",
-      "aba": 1
-    },
-    {
-      "code": "grfhaw1",
-      "aba": 5
-    },
-    {
-      "code": "shshaw",
-      "aba": 1
-    },
-    {
-      "code": "commyn",
-      "aba": 2
-    },
-    {
-      "code": "blrwar1",
-      "aba": 5
-    },
-    {
-      "code": "miller",
-      "aba": 3
-    },
-    {
-      "code": "sedwar1",
-      "aba": 5
-    },
-    {
-      "code": "comsan",
-      "aba": 3
-    },
-    {
-      "code": "sposan",
-      "aba": 1
-    },
-    {
-      "code": "clagre",
-      "aba": 1
-    },
-    {
-      "code": "wesgre",
-      "aba": 1
-    },
-    {
-      "code": "nswowl",
-      "aba": 2
-    },
-    {
-      "code": "borowl",
-      "aba": 2
-    },
-    {
-      "code": "marswi",
-      "aba": 2
-    },
-    {
-      "code": "whtswi",
-      "aba": 1
-    },
-    {
-      "code": "creauk",
-      "aba": 2
-    },
-    {
-      "code": "parauk",
-      "aba": 2
-    },
-    {
-      "code": "leaauk",
-      "aba": 2
-    },
-    {
-      "code": "whiauk",
-      "aba": 2
-    },
-    {
-      "code": "peflov",
-      "aba": 2
-    },
-    {
-      "code": "tasbla",
-      "aba": 5
-    },
-    {
-      "code": "rewbla",
-      "aba": 1
-    },
-    {
-      "code": "tribla",
-      "aba": 2
-    },
-    {
-      "code": "rucspa",
-      "aba": 1
-    },
-    {
-      "code": "wooduc",
-      "aba": 1
-    },
-    {
-      "code": "greaki2",
-      "aba": 6
-    },
-    {
-      "code": "greaki3",
-      "aba": 6
-    },
-    {
-      "code": "lesaki",
-      "aba": 6
-    },
-    {
-      "code": "greaki4",
-      "aba": 6
-    },
-    {
-      "code": "skylar",
-      "aba": 2
-    },
-    {
-      "code": "razorb",
-      "aba": 1
-    },
-    {
-      "code": "chukar",
-      "aba": 2
-    },
-    {
-      "code": "doveki",
-      "aba": 2
-    },
-    {
-      "code": "egygoo",
-      "aba": 2
-    },
-    {
-      "code": "redava",
-      "aba": 2
-    },
-    {
-      "code": "cinhum1",
-      "aba": 5
-    },
-    {
-      "code": "bubhum",
-      "aba": 2
-    },
-    {
-      "code": "licpar",
-      "aba": 2
-    },
-    {
-      "code": "recpar",
-      "aba": 2
-    },
-    {
-      "code": "graspa",
-      "aba": 1
-    },
-    {
-      "code": "sstspa",
-      "aba": 1
-    },
-    {
-      "code": "lecspa",
-      "aba": 1
-    },
-    {
-      "code": "seaspa",
-      "aba": 1
-    },
-    {
-      "code": "nstspa",
-      "aba": 1
-    },
-    {
-      "code": "bktspa",
-      "aba": 1
-    },
-    {
-      "code": "fisspa",
-      "aba": 3
-    },
-    {
-      "code": "norpin",
-      "aba": 1
-    },
-    {
-      "code": "whcpin",
-      "aba": 4
-    },
-    {
-      "code": "gnwtea",
-      "aba": 1
-    },
-    {
-      "code": "mexduc",
-      "aba": 2
-    },
-    {
-      "code": "motduc",
-      "aba": 1
-    },
-    {
-      "code": "layduc",
-      "aba": 3
-    },
-    {
-      "code": "mallar3",
-      "aba": 1
-    },
-    {
-      "code": "ambduc",
-      "aba": 1
-    },
-    {
-      "code": "hawduc",
-      "aba": 2
-    },
-    {
-      "code": "spbduc",
-      "aba": 4
-    },
-    {
-      "code": "anhing",
-      "aba": 1
-    },
-    {
-      "code": "bugnod",
-      "aba": 3
-    },
-    {
-      "code": "blknod",
-      "aba": 2
-    },
-    {
-      "code": "brnnod",
-      "aba": 2
-    },
-    {
-      "code": "gwfgoo",
-      "aba": 1
-    },
-    {
-      "code": "gragoo",
-      "aba": 5
-    },
-    {
-      "code": "pifgoo",
-      "aba": 4
-    },
-    {
-      "code": "snogoo",
-      "aba": 1
-    },
-    {
-      "code": "empgoo",
-      "aba": 2
-    },
-    {
-      "code": "lwfgoo",
-      "aba": 5
-    },
-    {
-      "code": "taibeg1",
-      "aba": 3
-    },
-    {
-      "code": "rosgoo",
-      "aba": 1
-    },
-    {
-      "code": "tunbeg1",
-      "aba": 3
-    },
-    {
-      "code": "gnbman",
-      "aba": 4
-    },
-    {
-      "code": "retpip",
-      "aba": 3
-    },
-    {
-      "code": "pecpip",
-      "aba": 4
-    },
-    {
-      "code": "olbpip",
-      "aba": 3
-    },
-    {
-      "code": "amepip",
-      "aba": 1
-    },
-    {
-      "code": "sprpip",
-      "aba": 2
-    },
-    {
-      "code": "trepip",
-      "aba": 4
-    },
-    {
-      "code": "sancra",
-      "aba": 1
-    },
-    {
-      "code": "souwpw1",
-      "aba": 2
-    },
-    {
-      "code": "chwwid",
-      "aba": 1
-    },
-    {
-      "code": "bucnig",
-      "aba": 3
-    },
-    {
-      "code": "easwpw1",
-      "aba": 1
-    },
-    {
-      "code": "cowscj1",
-      "aba": 1
-    },
-    {
-      "code": "flsjay",
-      "aba": 2
-    },
-    {
-      "code": "issjay",
-      "aba": 2
-    },
-    {
-      "code": "mexjay4",
-      "aba": 2
-    },
-    {
-      "code": "wooscj2",
-      "aba": 1
-    },
-    {
-      "code": "comswi",
-      "aba": 4
-    },
-    {
-      "code": "fotswi",
-      "aba": 4
-    },
-    {
-      "code": "goleag",
-      "aba": 1
-    },
-    {
-      "code": "rnwrai1",
-      "aba": 5
-    },
-    {
-      "code": "limpki",
-      "aba": 2
-    },
-    {
-      "code": "bkhpar",
-      "aba": 2
-    },
-    {
-      "code": "bkchum",
-      "aba": 1
-    },
-    {
-      "code": "rthhum",
-      "aba": 1
-    },
-    {
-      "code": "greegr",
-      "aba": 1
-    },
-    {
-      "code": "graher1",
-      "aba": 5
-    },
-    {
-      "code": "grbher3",
-      "aba": 1
-    },
-    {
-      "code": "integr",
-      "aba": 5
-    },
-    {
-      "code": "bulshe",
-      "aba": 2
-    },
-    {
-      "code": "flfshe",
-      "aba": 3
-    },
-    {
-      "code": "pifshe",
-      "aba": 1
-    },
-    {
-      "code": "greshe",
-      "aba": 1
-    },
-    {
-      "code": "sooshe",
-      "aba": 1
-    },
-    {
-      "code": "wetshe",
-      "aba": 2
-    },
-    {
-      "code": "shtshe",
-      "aba": 2
-    },
-    {
-      "code": "chpher1",
-      "aba": 5
-    },
-    {
-      "code": "rudtur",
-      "aba": 1
-    },
-    {
-      "code": "blktur",
-      "aba": 1
-    },
-    {
-      "code": "olispa",
-      "aba": 2
-    },
-    {
-      "code": "belspa2",
-      "aba": 1
-    },
-    {
-      "code": "sagspa1",
-      "aba": 1
-    },
-    {
-      "code": "thbwar1",
-      "aba": 5
-    },
-    {
-      "code": "sheowl",
-      "aba": 1
-    },
-    {
-      "code": "loeowl",
-      "aba": 2
-    },
-    {
-      "code": "styowl1",
-      "aba": 5
-    },
-    {
-      "code": "burowl",
-      "aba": 1
-    },
-    {
-      "code": "verdin",
-      "aba": 1
-    },
-    {
-      "code": "lessca",
-      "aba": 1
-    },
-    {
-      "code": "redhea",
-      "aba": 1
-    },
-    {
-      "code": "rinduc",
-      "aba": 1
-    },
-    {
-      "code": "compoc",
-      "aba": 3
-    },
-    {
-      "code": "tufduc",
-      "aba": 3
-    },
-    {
-      "code": "gresca",
-      "aba": 1
-    },
-    {
-      "code": "canvas",
-      "aba": 1
-    },
-    {
-      "code": "blctit4",
-      "aba": 2
-    },
-    {
-      "code": "tuftit",
-      "aba": 1
-    },
-    {
-      "code": "oaktit",
-      "aba": 1
-    },
-    {
-      "code": "juntit1",
-      "aba": 1
-    },
-    {
-      "code": "britit",
-      "aba": 2
-    },
-    {
-      "code": "uplsan",
-      "aba": 1
-    },
-    {
-      "code": "gcrwar",
-      "aba": 4
-    },
-    {
-      "code": "fatwar",
-      "aba": 4
-    },
-    {
-      "code": "rucwar",
-      "aba": 3
-    },
-    {
-      "code": "whehum",
-      "aba": 3
-    },
-    {
-      "code": "xanhum",
-      "aba": 5
-    },
-    {
-      "code": "cedwax",
-      "aba": 1
-    },
-    {
-      "code": "bohwax",
-      "aba": 2
-    },
-    {
-      "code": "rufgro",
-      "aba": 1
-    },
-    {
-      "code": "amebit",
-      "aba": 1
-    },
-    {
-      "code": "kitmur",
-      "aba": 2
-    },
-    {
-      "code": "marmur",
-      "aba": 1
-    },
-    {
-      "code": "lobmur",
-      "aba": 3
-    },
-    {
-      "code": "brant",
-      "aba": 1
-    },
-    {
-      "code": "cangoo",
-      "aba": 1
-    },
-    {
-      "code": "cacgoo1",
-      "aba": 1
-    },
-    {
-      "code": "bargoo",
-      "aba": 4
-    },
-    {
-      "code": "hawgoo",
-      "aba": 2
-    },
-    {
-      "code": "yecpar",
-      "aba": 2
-    },
-    {
-      "code": "whwpar",
-      "aba": 2
-    },
-    {
-      "code": "snoowl1",
-      "aba": 2
-    },
-    {
-      "code": "grhowl",
-      "aba": 1
-    },
-    {
-      "code": "categr",
-      "aba": 1
-    },
-    {
-      "code": "buffle",
-      "aba": 1
-    },
-    {
-      "code": "comgol",
-      "aba": 1
-    },
-    {
-      "code": "bargol",
-      "aba": 1
-    },
-    {
-      "code": "bulpet",
-      "aba": 3
-    },
-    {
-      "code": "joupet",
-      "aba": 5
-    },
-    {
-      "code": "dstkne",
-      "aba": 5
-    },
-    {
-      "code": "zothaw",
-      "aba": 2
-    },
-    {
-      "code": "shthaw",
-      "aba": 2
-    },
-    {
-      "code": "rethaw",
-      "aba": 1
-    },
-    {
-      "code": "rolhaw",
-      "aba": 1
-    },
-    {
-      "code": "reshaw",
-      "aba": 1
-    },
-    {
-      "code": "gryhaw2",
-      "aba": 2
-    },
-    {
-      "code": "brwhaw",
-      "aba": 1
-    },
-    {
-      "code": "ferhaw",
-      "aba": 1
-    },
-    {
-      "code": "lolbuz1",
-      "aba": 5
-    },
-    {
-      "code": "hawhaw",
-      "aba": 2
-    },
-    {
-      "code": "swahaw",
-      "aba": 1
-    },
-    {
-      "code": "comblh1",
-      "aba": 2
-    },
-    {
-      "code": "grbhaw1",
-      "aba": 5
-    },
-    {
-      "code": "grnher",
-      "aba": 1
-    },
-    {
-      "code": "musduc",
-      "aba": 2
-    },
-    {
-      "code": "larbun",
-      "aba": 1
-    },
-    {
-      "code": "laplon",
-      "aba": 1
-    },
-    {
-      "code": "chclon",
-      "aba": 1
-    },
-    {
-      "code": "smilon",
-      "aba": 2
-    },
-    {
-      "code": "shtsan",
-      "aba": 3
-    },
-    {
-      "code": "sander",
-      "aba": 1
-    },
-    {
-      "code": "dunlin",
-      "aba": 1
-    },
-    {
-      "code": "baisan",
-      "aba": 1
-    },
-    {
-      "code": "redkno",
-      "aba": 1
-    },
-    {
-      "code": "brbsan",
-      "aba": 4
-    },
-    {
-      "code": "cursan",
-      "aba": 3
-    },
-    {
-      "code": "whrsan",
-      "aba": 1
-    },
-    {
-      "code": "stisan",
-      "aba": 1
-    },
-    {
-      "code": "pursan",
-      "aba": 1
-    },
-    {
-      "code": "wessan",
-      "aba": 1
-    },
-    {
-      "code": "pecsan",
-      "aba": 1
-    },
-    {
-      "code": "litsti",
-      "aba": 4
-    },
-    {
-      "code": "leasan",
-      "aba": 1
-    },
-    {
-      "code": "rocsan",
-      "aba": 2
-    },
-    {
-      "code": "ruff",
-      "aba": 3
-    },
-    {
-      "code": "semsan",
-      "aba": 1
-    },
-    {
-      "code": "#N/A",
-      "aba": 4
-    },
-    {
-      "code": "rensti",
-      "aba": 3
-    },
-    {
-      "code": "lotsti",
-      "aba": 3
-    },
-    {
-      "code": "bubsan",
-      "aba": 1
-    },
-    {
-      "code": "temsti",
-      "aba": 3
-    },
-    {
-      "code": "grekno",
-      "aba": 4
-    },
-    {
-      "code": "surfbi",
-      "aba": 1
-    },
-    {
-      "code": "sibrub",
-      "aba": 3
-    },
-    {
-      "code": "calqua",
-      "aba": 1
-    },
-    {
-      "code": "gamqua",
-      "aba": 1
-    },
-    {
-      "code": "scaqua",
-      "aba": 1
-    },
-    {
-      "code": "corshe",
-      "aba": 1
-    },
-    {
-      "code": "cavshe1",
-      "aba": 5
-    },
-    {
-      "code": "strshe",
-      "aba": 4
-    },
-    {
-      "code": "luchum",
-      "aba": 2
-    },
-    {
-      "code": "annhum",
-      "aba": 1
-    },
-    {
-      "code": "coshum",
-      "aba": 1
-    },
-    {
-      "code": "ivbwoo",
-      "aba": 6
-    },
-    {
-      "code": "labduc",
-      "aba": 6
-    },
-    {
-      "code": "nobtyr",
-      "aba": 2
-    },
-    {
-      "code": "cacwre",
-      "aba": 1
-    },
-    {
-      "code": "sprgro",
-      "aba": 2
-    },
-    {
-      "code": "grynig1",
-      "aba": 5
-    },
-    {
-      "code": "y00678",
-      "aba": 2
-    },
-    {
-      "code": "canwar",
-      "aba": 1
-    },
-    {
-      "code": "wlswar",
-      "aba": 1
-    },
-    {
-      "code": "refwar",
-      "aba": 2
-    },
-    {
-      "code": "norcar",
-      "aba": 1
-    },
-    {
-      "code": "pyrrhu",
-      "aba": 1
-    },
-    {
-      "code": "comros",
-      "aba": 4
-    },
-    {
-      "code": "palros2",
-      "aba": 5
-    },
-    {
-      "code": "turvul",
-      "aba": 1
-    },
-    {
-      "code": "obnthr1",
-      "aba": 5
-    },
-    {
-      "code": "bicthr",
-      "aba": 2
-    },
-    {
-      "code": "veery",
-      "aba": 1
-    },
-    {
-      "code": "herthr",
-      "aba": 1
-    },
-    {
-      "code": "bhnthr1",
-      "aba": 5
-    },
-    {
-      "code": "gycthr",
-      "aba": 1
-    },
-    {
-      "code": "swathr",
-      "aba": 1
-    },
-    {
-      "code": "canwre",
-      "aba": 1
-    },
-    {
-      "code": "gusgro",
-      "aba": 2
-    },
-    {
-      "code": "saggro",
-      "aba": 1
-    },
-    {
-      "code": "baispa",
-      "aba": 2
-    },
-    {
-      "code": "henspa",
-      "aba": 2
-    },
-    {
-      "code": "piggui",
-      "aba": 1
-    },
-    {
-      "code": "blkgui",
-      "aba": 1
-    },
-    {
-      "code": "rhiauk",
-      "aba": 1
-    },
-    {
-      "code": "brncre",
-      "aba": 1
-    },
-    {
-      "code": "kioea",
-      "aba": 6
-    },
-    {
-      "code": "chiswi",
-      "aba": 1
-    },
-    {
-      "code": "vauswi",
-      "aba": 1
-    },
-    {
-      "code": "wrenti",
-      "aba": 1
-    },
-    {
-      "code": "colplo1",
-      "aba": 5
-    },
-    {
-      "code": "lirplo",
-      "aba": 5
-    },
-    {
-      "code": "corplo",
-      "aba": 3
-    },
-    {
-      "code": "grsplo",
-      "aba": 5
-    },
-    {
-      "code": "pipplo",
-      "aba": 2
-    },
-    {
-      "code": "lesplo",
-      "aba": 3
-    },
-    {
-      "code": "mouplo",
-      "aba": 2
-    },
-    {
-      "code": "eurdot",
-      "aba": 4
-    },
-    {
-      "code": "snoplo5",
-      "aba": 1
-    },
-    {
-      "code": "semplo",
-      "aba": 1
-    },
-    {
-      "code": "killde",
-      "aba": 1
-    },
-    {
-      "code": "wilplo",
-      "aba": 1
-    },
-    {
-      "code": "elepai4",
-      "aba": 2
-    },
-    {
-      "code": "elepai",
-      "aba": 2
-    },
-    {
-      "code": "elepai5",
-      "aba": 2
-    },
-    {
-      "code": "whiter2",
-      "aba": 5
-    },
-    {
-      "code": "whwter",
-      "aba": 4
-    },
-    {
-      "code": "blkter",
-      "aba": 1
-    },
-    {
-      "code": "kongro",
-      "aba": 6
-    },
-    {
-      "code": "origre",
-      "aba": 4
-    },
-    {
-      "code": "amakin1",
-      "aba": 5
-    },
-    {
-      "code": "grnkin",
-      "aba": 2
-    },
-    {
-      "code": "oahama",
-      "aba": 2
-    },
-    {
-      "code": "kauama",
-      "aba": 2
-    },
-    {
-      "code": "hawama",
-      "aba": 2
-    },
-    {
-      "code": "larspa",
-      "aba": 1
-    },
-    {
-      "code": "hobkit",
-      "aba": 3
-    },
-    {
-      "code": "lesnig",
-      "aba": 1
-    },
-    {
-      "code": "antnig",
-      "aba": 2
-    },
-    {
-      "code": "comnig",
-      "aba": 1
-    },
-    {
-      "code": "grhgul",
-      "aba": 5
-    },
-    {
-      "code": "bongul",
-      "aba": 1
-    },
-    {
-      "code": "bkhgul",
-      "aba": 2
-    },
-    {
-      "code": "amedip",
-      "aba": 1
-    },
-    {
-      "code": "norhar2",
-      "aba": 1
-    },
-    {
-      "code": "ulahaw",
-      "aba": 6
-    },
-    {
-      "code": "marwre",
-      "aba": 1
-    },
-    {
-      "code": "sedwre1",
-      "aba": 1
-    },
-    {
-      "code": "lotduc",
-      "aba": 1
-    },
-    {
-      "code": "hawfin",
-      "aba": 4
-    },
-    {
-      "code": "evegro",
-      "aba": 1
-    },
-    {
-      "code": "yebcuc",
-      "aba": 1
-    },
-    {
-      "code": "bkbcuc",
-      "aba": 1
-    },
-    {
-      "code": "dabcuc1",
-      "aba": 5
-    },
-    {
-      "code": "mancuc",
-      "aba": 2
-    },
-    {
-      "code": "banana",
-      "aba": 4
-    },
-    {
-      "code": "norfli",
-      "aba": 1
-    },
-    {
-      "code": "gilfli",
-      "aba": 2
-    },
-    {
-      "code": "grnvie1",
-      "aba": 3
-    },
-    {
-      "code": "norbob",
-      "aba": 1
-    },
-    {
-      "code": "rocpig",
-      "aba": 1
-    },
-    {
-      "code": "cowpig1",
-      "aba": 5
-    },
-    {
-      "code": "incdov",
-      "aba": 1
-    },
-    {
-      "code": "cogdov",
-      "aba": 1
-    },
-    {
-      "code": "rugdov",
-      "aba": 3
-    },
-    {
-      "code": "cubpew1",
-      "aba": 5
-    },
-    {
-      "code": "olsfly",
-      "aba": 1
-    },
-    {
-      "code": "grepew",
-      "aba": 2
-    },
-    {
-      "code": "wewpew",
-      "aba": 1
-    },
-    {
-      "code": "eawpew",
-      "aba": 1
-    },
-    {
-      "code": "carpar",
-      "aba": 6
-    },
-    {
-      "code": "whrsha",
-      "aba": 2
-    },
-    {
-      "code": "blkvul",
-      "aba": 1
-    },
-    {
-      "code": "ruckin",
-      "aba": 1
-    },
-    {
-      "code": "amecro",
-      "aba": 1
-    },
-    {
-      "code": "comrav",
-      "aba": 1
-    },
-    {
-      "code": "chirav",
-      "aba": 1
-    },
-    {
-      "code": "hawcro",
-      "aba": 6
-    },
-    {
-      "code": "tamcro",
-      "aba": 4
-    },
-    {
-      "code": "eurjac",
-      "aba": 4
-    },
-    {
-      "code": "fiscro",
-      "aba": 1
-    },
-    {
-      "code": "yelrai",
-      "aba": 2
-    },
-    {
-      "code": "swtgul1",
-      "aba": 5
-    },
-    {
-      "code": "corcra",
-      "aba": 4
-    },
-    {
-      "code": "yefcan",
-      "aba": 2
-    },
-    {
-      "code": "smbani",
-      "aba": 3
-    },
-    {
-      "code": "grbani",
-      "aba": 2
-    },
-    {
-      "code": "comcuc",
-      "aba": 3
-    },
-    {
-      "code": "oricuc2",
-      "aba": 4
-    },
-    {
-      "code": "#N/A",
-      "aba": 2
-    },
-    {
-      "code": "relhon1",
-      "aba": 5
-    },
-    {
-      "code": "blujay",
-      "aba": 1
-    },
-    {
-      "code": "stejay",
-      "aba": 1
-    },
-    {
-      "code": "blubun",
-      "aba": 4
-    },
-    {
-      "code": "grnjay",
-      "aba": 2
-    },
-    {
-      "code": "truswa",
-      "aba": 1
-    },
-    {
-      "code": "tunswa",
-      "aba": 1
-    },
-    {
-      "code": "whoswa",
-      "aba": 3
-    },
-    {
-      "code": "mutswa",
-      "aba": 1
-    },
-    {
-      "code": "brbhum",
-      "aba": 2
-    },
-    {
-      "code": "blkswi",
-      "aba": 2
-    },
-    {
-      "code": "monqua",
-      "aba": 2
-    },
-    {
-      "code": "cohmar1",
-      "aba": 4
-    },
-    {
-      "code": "soogro1",
-      "aba": 2
-    },
-    {
-      "code": "dusgro",
-      "aba": 2
-    },
-    {
-      "code": "grswoo",
-      "aba": 4
-    },
-    {
-      "code": "bbwduc",
-      "aba": 1
-    },
-    {
-      "code": "fuwduc",
-      "aba": 1
-    },
-    {
-      "code": "wanalb",
-      "aba": 5
-    },
-    {
-      "code": "boboli",
-      "aba": 1
-    },
-    {
-      "code": "iiwi",
-      "aba": 2
-    },
-    {
-      "code": "blkmam",
-      "aba": 6
-    },
-    {
-      "code": "hawmam1",
-      "aba": 6
-    },
-    {
-      "code": "whhwoo",
-      "aba": 1
-    },
-    {
-      "code": "ariwoo",
-      "aba": 2
-    },
-    {
-      "code": "recwoo",
-      "aba": 2
-    },
-    {
-      "code": "nutwoo",
-      "aba": 1
-    },
-    {
-      "code": "dowwoo",
-      "aba": 1
-    },
-    {
-      "code": "labwoo",
-      "aba": 1
-    },
-    {
-      "code": "haiwoo",
-      "aba": 1
-    },
-    {
-      "code": "pilwoo",
-      "aba": 1
-    },
-    {
-      "code": "grycat",
-      "aba": 1
-    },
-    {
-      "code": "lanhoo",
-      "aba": 6
-    },
-    {
-      "code": "paspig",
-      "aba": 6
-    },
-    {
-      "code": "libher",
-      "aba": 1
-    },
-    {
-      "code": "chiegr",
-      "aba": 5
-    },
-    {
-      "code": "litegr",
-      "aba": 4
-    },
-    {
-      "code": "werher",
-      "aba": 5
-    },
-    {
-      "code": "redegr",
-      "aba": 1
-    },
-    {
-      "code": "snoegr",
-      "aba": 1
-    },
-    {
-      "code": "triher",
-      "aba": 1
-    },
-    {
-      "code": "whcela1",
-      "aba": 5
-    },
-    {
-      "code": "smbela1",
-      "aba": 5
-    },
-    {
-      "code": "swtkit",
-      "aba": 1
-    },
-    {
-      "code": "whtkit",
-      "aba": 1
-    },
-    {
-      "code": "yebbun",
-      "aba": 4
-    },
-    {
-      "code": "yebbun1",
-      "aba": 5
-    },
-    {
-      "code": "yetbun1",
-      "aba": 5
-    },
-    {
-      "code": "pinbun",
-      "aba": 5
-    },
-    {
-      "code": "palbun",
-      "aba": 4
-    },
-    {
-      "code": "litbun",
-      "aba": 4
-    },
-    {
-      "code": "rusbun",
-      "aba": 3
-    },
-    {
-      "code": "reebun",
-      "aba": 4
-    },
-    {
-      "code": "grybun",
-      "aba": 5
-    },
-    {
-      "code": "pinfly1",
-      "aba": 5
-    },
-    {
-      "code": "aldfly",
-      "aba": 1
-    },
-    {
-      "code": "pasfly",
-      "aba": 1
-    },
-    {
-      "code": "yebfly",
-      "aba": 1
-    },
-    {
-      "code": "bubfly",
-      "aba": 2
-    },
-    {
-      "code": "hamfly",
-      "aba": 1
-    },
-    {
-      "code": "leafly",
-      "aba": 1
-    },
-    {
-      "code": "dusfly",
-      "aba": 1
-    },
-    {
-      "code": "corfly",
-      "aba": 1
-    },
-    {
-      "code": "wilfly",
-      "aba": 1
-    },
-    {
-      "code": "acafly",
-      "aba": 1
-    },
-    {
-      "code": "gryfly",
-      "aba": 1
-    },
-    {
-      "code": "croslf1",
-      "aba": 5
-    },
-    {
-      "code": "varfly",
-      "aba": 4
-    },
-    {
-      "code": "horlar",
-      "aba": 1
-    },
-    {
-      "code": "eurrob1",
-      "aba": 5
-    },
-    {
-      "code": "comwax",
-      "aba": 2
-    },
-    {
-      "code": "whiibi",
-      "aba": 1
-    },
-    {
-      "code": "scaibi",
-      "aba": 5
-    },
-    {
-      "code": "maghum1",
-      "aba": 2
-    },
-    {
-      "code": "afrsil1",
-      "aba": 2
-    },
-    {
-      "code": "rusbla",
-      "aba": 1
-    },
-    {
-      "code": "brebla",
-      "aba": 1
-    },
-    {
-      "code": "earque",
-      "aba": 4
-    },
-    {
-      "code": "merlin",
-      "aba": 1
-    },
-    {
-      "code": "aplfal",
-      "aba": 3
-    },
-    {
-      "code": "prafal",
-      "aba": 1
-    },
-    {
-      "code": "perfal",
-      "aba": 1
-    },
-    {
-      "code": "batfal1",
-      "aba": 5
-    },
-    {
-      "code": "gyrfal",
-      "aba": 2
-    },
-    {
-      "code": "amekes",
-      "aba": 1
-    },
-    {
-      "code": "eurhob",
-      "aba": 4
-    },
-    {
-      "code": "eurkes",
-      "aba": 4
-    },
-    {
-      "code": "reffal1",
-      "aba": 5
-    },
-    {
-      "code": "taifly1",
-      "aba": 4
-    },
-    {
-      "code": "mugfly",
-      "aba": 5
-    },
-    {
-      "code": "narfly2",
-      "aba": 5
-    },
-    {
-      "code": "blkfra",
-      "aba": 2
-    },
-    {
-      "code": "#N/A",
-      "aba": 2
-    },
-    {
-      "code": "atlpuf",
-      "aba": 1
-    },
-    {
-      "code": "tufpuf",
-      "aba": 1
-    },
-    {
-      "code": "horpuf",
-      "aba": 1
-    },
-    {
-      "code": "lesfri",
-      "aba": 4
-    },
-    {
-      "code": "magfri",
-      "aba": 1
-    },
-    {
-      "code": "grefri",
-      "aba": 2
-    },
-    {
-      "code": "bbspet1",
-      "aba": 5
-    },
-    {
-      "code": "comcha",
-      "aba": 4
-    },
-    {
-      "code": "brambl",
-      "aba": 3
-    },
-    {
-      "code": "hawcoo",
-      "aba": 2
-    },
-    {
-      "code": "y00475",
-      "aba": 1
-    },
-    {
-      "code": "eurcoo",
-      "aba": 5
-    },
-    {
-      "code": "norful",
-      "aba": 1
-    },
-    {
-      "code": "wilsni1",
-      "aba": 1
-    },
-    {
-      "code": "comsni",
-      "aba": 3
-    },
-    {
-      "code": "solsni1",
-      "aba": 5
-    },
-    {
-      "code": "pitsni",
-      "aba": 5
-    },
-    {
-      "code": "commoo3",
-      "aba": 5
-    },
-    {
-      "code": "comgal1",
-      "aba": 1
-    },
-    {
-      "code": "redjun",
-      "aba": 2
-    },
-    {
-      "code": "melthr",
-      "aba": 2
-    },
-    {
-      "code": "#N/A",
-      "aba": 2
-    },
-    {
-      "code": "yebloo",
-      "aba": 2
-    },
-    {
-      "code": "arcloo",
-      "aba": 3
-    },
-    {
-      "code": "comloo",
-      "aba": 1
-    },
-    {
-      "code": "pacloo",
-      "aba": 1
-    },
-    {
-      "code": "retloo",
-      "aba": 1
-    },
-    {
-      "code": "gubter1",
-      "aba": 1
-    },
-    {
-      "code": "greroa",
-      "aba": 1
-    },
-    {
-      "code": "zebdov",
-      "aba": 2
-    },
-    {
-      "code": "kenwar",
-      "aba": 1
-    },
-    {
-      "code": "mouwar",
-      "aba": 1
-    },
-    {
-      "code": "gycyel",
-      "aba": 4
-    },
-    {
-      "code": "macwar",
-      "aba": 1
-    },
-    {
-      "code": "comyel",
-      "aba": 1
-    },
-    {
-      "code": "kwqdov",
-      "aba": 4
-    },
-    {
-      "code": "ruqdov",
-      "aba": 5
-    },
-    {
-      "code": "whthaw",
-      "aba": 2
-    },
-    {
-      "code": "crahaw",
-      "aba": 5
-    },
-    {
-      "code": "oripra",
-      "aba": 5
-    },
-    {
-      "code": "fepowl",
-      "aba": 3
-    },
-    {
-      "code": "nopowl",
-      "aba": 2
-    },
-    {
-      "code": "whocra",
-      "aba": 2
-    },
-    {
-      "code": "comcra",
-      "aba": 4
-    },
-    {
-      "code": "hoocra1",
-      "aba": 5
-    },
-    {
-      "code": "whiter",
-      "aba": 2
-    },
-    {
-      "code": "calcon",
-      "aba": 2
-    },
-    {
-      "code": "pinjay",
-      "aba": 1
-    },
-    {
-      "code": "blkoys",
-      "aba": 1
-    },
-    {
-      "code": "euroys1",
-      "aba": 5
-    },
-    {
-      "code": "ameoys",
-      "aba": 1
-    },
-    {
-      "code": "casfin",
-      "aba": 1
-    },
-    {
-      "code": "houfin",
-      "aba": 1
-    },
-    {
-      "code": "purfin",
-      "aba": 1
-    },
-    {
-      "code": "whteag",
-      "aba": 4
-    },
-    {
-      "code": "baleag",
-      "aba": 1
-    },
-    {
-      "code": "stseag",
-      "aba": 4
-    },
-    {
-      "code": "dotkit1",
-      "aba": 5
-    },
-    {
-      "code": "plcsta",
-      "aba": 4
-    },
-    {
-      "code": "sungre1",
-      "aba": 5
-    },
-    {
-      "code": "woewar1",
-      "aba": 1
-    },
-    {
-      "code": "pagwar1",
-      "aba": 5
-    },
-    {
-      "code": "migwar",
-      "aba": 4
-    },
-    {
-      "code": "nukupu1",
-      "aba": 6
-    },
-    {
-      "code": "nukupu2",
-      "aba": 6
-    },
-    {
-      "code": "nukupu3",
-      "aba": 6
-    },
-    {
-      "code": "akiapo",
-      "aba": 2
-    },
-    {
-      "code": "bkwsti",
-      "aba": 5
-    },
-    {
-      "code": "bknsti",
-      "aba": 1
-    },
-    {
-      "code": "apapan2",
-      "aba": 6
-    },
-    {
-      "code": "apapan",
-      "aba": 2
-    },
-    {
-      "code": "whtnee",
-      "aba": 5
-    },
-    {
-      "code": "barswa",
-      "aba": 1
-    },
-    {
-      "code": "harduc",
-      "aba": 1
-    },
-    {
-      "code": "jabwar",
-      "aba": 2
-    },
-    {
-      "code": "barpet",
-      "aba": 2
-    },
-    {
-      "code": "ftspet",
-      "aba": 2
-    },
-    {
-      "code": "asspet",
-      "aba": 2
-    },
-    {
-      "code": "rispet1",
-      "aba": 5
-    },
-    {
-      "code": "lcspet",
-      "aba": 1
-    },
-    {
-      "code": "bkspet",
-      "aba": 2
-    },
-    {
-      "code": "lsspet",
-      "aba": 3
-    },
-    {
-      "code": "swspet",
-      "aba": 5
-    },
-    {
-      "code": "bripet",
-      "aba": 4
-    },
-    {
-      "code": "leastp5",
-      "aba": 3
-    },
-    {
-      "code": "wrspet",
-      "aba": 4
-    },
-    {
-      "code": "trspet",
-      "aba": 3
-    },
-    {
-      "code": "litgul",
-      "aba": 2
-    },
-    {
-      "code": "caster1",
-      "aba": 1
-    },
-    {
-      "code": "woothr",
-      "aba": 1
-    },
-    {
-      "code": "gbhgul2",
-      "aba": 5
-    },
-    {
-      "code": "yebcha",
-      "aba": 1
-    },
-    {
-      "code": "blbori1",
-      "aba": 5
-    },
-    {
-      "code": "bulori",
-      "aba": 1
-    },
-    {
-      "code": "hooori",
-      "aba": 1
-    },
-    {
-      "code": "balori",
-      "aba": 1
-    },
-    {
-      "code": "audori",
-      "aba": 2
-    },
-    {
-      "code": "altori",
-      "aba": 2
-    },
-    {
-      "code": "scoori",
-      "aba": 1
-    },
-    {
-      "code": "spbori",
-      "aba": 2
-    },
-    {
-      "code": "stbori",
-      "aba": 4
-    },
-    {
-      "code": "orcori",
-      "aba": 1
-    },
-    {
-      "code": "bkvori",
-      "aba": 4
-    },
-    {
-      "code": "miskit",
-      "aba": 1
-    },
-    {
-      "code": "leabit",
-      "aba": 1
-    },
-    {
-      "code": "yelbit",
-      "aba": 5
-    },
-    {
-      "code": "varthr",
-      "aba": 1
-    },
-    {
-      "code": "jabiru",
-      "aba": 4
-    },
-    {
-      "code": "norjac",
-      "aba": 4
-    },
-    {
-      "code": "daejun",
-      "aba": 1
-    },
-    {
-      "code": "yeejun",
-      "aba": 2
-    },
-    {
-      "code": "eurwry",
-      "aba": 5
-    },
-    {
-      "code": "wilpta",
-      "aba": 2
-    },
-    {
-      "code": "whtpta1",
-      "aba": 2
-    },
-    {
-      "code": "rocpta1",
-      "aba": 2
-    },
-    {
-      "code": "amthum1",
-      "aba": 5
-    },
-    {
-      "code": "buthum",
-      "aba": 2
-    },
-    {
-      "code": "norshr4",
-      "aba": 1
-    },
-    {
-      "code": "rebshr1",
-      "aba": 5
-    },
-    {
-      "code": "brnshr",
-      "aba": 4
-    },
-    {
-      "code": "logshr",
-      "aba": 1
-    },
-    {
-      "code": "incter1",
-      "aba": 5
-    },
-    {
-      "code": "hergul",
-      "aba": 1
-    },
-    {
-      "code": "belgul",
-      "aba": 5
-    },
-    {
-      "code": "mewgul2",
-      "aba": 1
-    },
-    {
-      "code": "calgul",
-      "aba": 1
-    },
-    {
-      "code": "mewgul",
-      "aba": 3
-    },
-    {
-      "code": "bktgul",
-      "aba": 4
-    },
-    {
-      "code": "ribgul",
-      "aba": 1
-    },
-    {
-      "code": "kelgul",
-      "aba": 4
-    },
-    {
-      "code": "lbbgul",
-      "aba": 2
-    },
-    {
-      "code": "glwgul",
-      "aba": 1
-    },
-    {
-      "code": "y00478",
-      "aba": 1
-    },
-    {
-      "code": "heegul",
-      "aba": 1
-    },
-    {
-      "code": "glagul",
-      "aba": 1
-    },
-    {
-      "code": "yefgul",
-      "aba": 2
-    },
-    {
-      "code": "gbbgul",
-      "aba": 1
-    },
-    {
-      "code": "yelgul1",
-      "aba": 4
-    },
-    {
-      "code": "wesgul",
-      "aba": 1
-    },
-    {
-      "code": "slbgul",
-      "aba": 3
-    },
-    {
-      "code": "sibrob",
-      "aba": 5
-    },
-    {
-      "code": "rutrob1",
-      "aba": 4
-    },
-    {
-      "code": "blkrai",
-      "aba": 2
-    },
-    {
-      "code": "pirfly1",
-      "aba": 4
-    },
-    {
-      "code": "orcwar",
-      "aba": 1
-    },
-    {
-      "code": "colwar",
-      "aba": 2
-    },
-    {
-      "code": "lucwar",
-      "aba": 1
-    },
-    {
-      "code": "tenwar",
-      "aba": 1
-    },
-    {
-      "code": "naswar",
-      "aba": 1
-    },
-    {
-      "code": "virwar",
-      "aba": 1
-    },
-    {
-      "code": "reblei",
-      "aba": 2
-    },
-    {
-      "code": "whtdov",
-      "aba": 2
-    },
-    {
-      "code": "laugul",
-      "aba": 1
-    },
-    {
-      "code": "fragul",
-      "aba": 1
-    },
-    {
-      "code": "asrfin1",
-      "aba": 5
-    },
-    {
-      "code": "bkrfin",
-      "aba": 2
-    },
-    {
-      "code": "bcrfin",
-      "aba": 2
-    },
-    {
-      "code": "gcrfin",
-      "aba": 1
-    },
-    {
-      "code": "shbdow",
-      "aba": 1
-    },
-    {
-      "code": "lobdow",
-      "aba": 1
-    },
-    {
-      "code": "swawar",
-      "aba": 2
-    },
-    {
-      "code": "margod",
-      "aba": 1
-    },
-    {
-      "code": "hudgod",
-      "aba": 1
-    },
-    {
-      "code": "batgod",
-      "aba": 2
-    },
-    {
-      "code": "bktgod",
-      "aba": 3
-    },
-    {
-      "code": "eurwar2",
-      "aba": 5
-    },
-    {
-      "code": "lanwar",
-      "aba": 4
-    },
-    {
-      "code": "chemun",
-      "aba": 2
-    },
-    {
-      "code": "trimun",
-      "aba": 4
-    },
-    {
-      "code": "nutman",
-      "aba": 2
-    },
-    {
-      "code": "hoomer",
-      "aba": 1
-    },
-    {
-      "code": "kalphe",
-      "aba": 2
-    },
-    {
-      "code": "redcro",
-      "aba": 1
-    },
-    {
-      "code": "whwcro",
-      "aba": 2
-    },
-    {
-      "code": "redcro9",
-      "aba": 2
-    },
-    {
-      "code": "palila",
-      "aba": 2
-    },
-    {
-      "code": "akekee",
-      "aba": 2
-    },
-    {
-      "code": "akepa1",
-      "aba": 2
-    },
-    {
-      "code": "hawcre",
-      "aba": 2
-    },
-    {
-      "code": "akepa3",
-      "aba": 6
-    },
-    {
-      "code": "akepa2",
-      "aba": 6
-    },
-    {
-      "code": "jacsni",
-      "aba": 4
-    },
-    {
-      "code": "norgip1",
-      "aba": 5
-    },
-    {
-      "code": "aniani",
-      "aba": 2
-    },
-    {
-      "code": "amewig",
-      "aba": 1
-    },
-    {
-      "code": "falduc",
-      "aba": 4
-    },
-    {
-      "code": "eurwig",
-      "aba": 2
-    },
-    {
-      "code": "gadwal",
-      "aba": 1
-    },
-    {
-      "code": "belkin1",
-      "aba": 1
-    },
-    {
-      "code": "rinkin1",
-      "aba": 2
-    },
-    {
-      "code": "easowl1",
-      "aba": 1
-    },
-    {
-      "code": "wesowl1",
-      "aba": 1
-    },
-    {
-      "code": "whsowl1",
-      "aba": 2
-    },
-    {
-      "code": "poouli",
-      "aba": 6
-    },
-    {
-      "code": "gofwoo",
-      "aba": 1
-    },
-    {
-      "code": "rebwoo",
-      "aba": 1
-    },
-    {
-      "code": "rehwoo",
-      "aba": 1
-    },
-    {
-      "code": "acowoo",
-      "aba": 1
-    },
-    {
-      "code": "lewwoo",
-      "aba": 1
-    },
-    {
-      "code": "gilwoo",
-      "aba": 1
-    },
-    {
-      "code": "blksco2",
-      "aba": 1
-    },
-    {
-      "code": "whwsco2",
-      "aba": 1
-    },
-    {
-      "code": "blksco1",
-      "aba": 5
-    },
-    {
-      "code": "sursco",
-      "aba": 1
-    },
-    {
-      "code": "whwsco1",
-      "aba": 3
-    },
-    {
-      "code": "bkfgra",
-      "aba": 4
-    },
-    {
-      "code": "blumoc",
-      "aba": 5
-    },
-    {
-      "code": "wiltur",
-      "aba": 1
-    },
-    {
-      "code": "swaspa",
-      "aba": 1
-    },
-    {
-      "code": "linspa",
-      "aba": 1
-    },
-    {
-      "code": "sonspa",
-      "aba": 1
-    },
-    {
-      "code": "abetow",
-      "aba": 1
-    },
-    {
-      "code": "caltow",
-      "aba": 1
-    },
-    {
-      "code": "cantow",
-      "aba": 1
-    },
-    {
-      "code": "smew",
-      "aba": 3
-    },
-    {
-      "code": "commer",
-      "aba": 1
-    },
-    {
-      "code": "rebmer",
-      "aba": 1
-    },
-    {
-      "code": "coffal1",
-      "aba": 5
-    },
-    {
-      "code": "elfowl",
-      "aba": 2
-    },
-    {
-      "code": "blakit1",
-      "aba": 5
-    },
-    {
-      "code": "bahmoc",
-      "aba": 4
-    },
-    {
-      "code": "normoc",
-      "aba": 1
-    },
-    {
-      "code": "tuffly",
-      "aba": 4
-    },
-    {
-      "code": "bawwar",
-      "aba": 1
-    },
-    {
-      "code": "oahoo",
-      "aba": 6
-    },
-    {
-      "code": "bisoo",
-      "aba": 6
-    },
-    {
-      "code": "kauoo",
-      "aba": 6
-    },
-    {
-      "code": "hawoo",
-      "aba": 6
-    },
-    {
-      "code": "brocow",
-      "aba": 1
-    },
-    {
-      "code": "bnhcow",
-      "aba": 1
-    },
-    {
-      "code": "shicow",
-      "aba": 3
-    },
-    {
-      "code": "rtrthr1",
-      "aba": 5
-    },
-    {
-      "code": "norgan",
-      "aba": 1
-    },
-    {
-      "code": "whiwag",
-      "aba": 3
-    },
-    {
-      "code": "grywag",
-      "aba": 4
-    },
-    {
-      "code": "citwag",
-      "aba": 5
-    },
-    {
-      "code": "eaywag",
-      "aba": 2
-    },
-    {
-      "code": "asbfly",
-      "aba": 5
-    },
-    {
-      "code": "gysfly1",
-      "aba": 4
-    },
-    {
-      "code": "dasfly",
-      "aba": 4
-    },
-    {
-      "code": "spofly1",
-      "aba": 5
-    },
-    {
-      "code": "olomao",
-      "aba": 6
-    },
-    {
-      "code": "kamao",
-      "aba": 6
-    },
-    {
-      "code": "omao",
-      "aba": 2
-    },
-    {
-      "code": "brbsol1",
-      "aba": 5
-    },
-    {
-      "code": "puaioh",
-      "aba": 2
-    },
-    {
-      "code": "towsol",
-      "aba": 1
-    },
-    {
-      "code": "amaui",
-      "aba": 6
-    },
-    {
-      "code": "woosto",
-      "aba": 1
-    },
-    {
-      "code": "astfly",
-      "aba": 1
-    },
-    {
-      "code": "grcfly",
-      "aba": 1
-    },
-    {
-      "code": "nutfly",
-      "aba": 4
-    },
-    {
-      "code": "lasfly",
-      "aba": 3
-    },
-    {
-      "code": "ducfly",
-      "aba": 2
-    },
-    {
-      "code": "bncfly",
-      "aba": 1
-    },
-    {
-      "code": "sltred",
-      "aba": 4
-    },
-    {
-      "code": "paired",
-      "aba": 2
-    },
-    {
-      "code": "subfly",
-      "aba": 2
-    },
-    {
-      "code": "greela",
-      "aba": 5
-    },
-    {
-      "code": "monpar",
-      "aba": 2
-    },
-    {
-      "code": "socfly1",
-      "aba": 5
-    },
-    {
-      "code": "doccor",
-      "aba": 1
-    },
-    {
-      "code": "neocor",
-      "aba": 1
-    },
-    {
-      "code": "#N/A",
-      "aba": 5
-    },
-    {
-      "code": "bahwoo",
-      "aba": 5
-    },
-    {
-      "code": "norboo1",
-      "aba": 5
-    },
-    {
-      "code": "masduc",
-      "aba": 3
-    },
-    {
-      "code": "clanut",
-      "aba": 1
-    },
-    {
-      "code": "lobcur",
-      "aba": 1
-    },
-    {
-      "code": "eurcur",
-      "aba": 5
-    },
-    {
-      "code": "eskcur",
-      "aba": 6
-    },
-    {
-      "code": "faecur",
-      "aba": 4
-    },
-    {
-      "code": "litcur",
-      "aba": 5
-    },
-    {
-      "code": "whimbr",
-      "aba": 1
-    },
-    {
-      "code": "brtcur",
-      "aba": 2
-    },
-    {
-      "code": "slbcur",
-      "aba": 5
-    },
-    {
-      "code": "ycnher",
-      "aba": 1
-    },
-    {
-      "code": "bcnher",
-      "aba": 1
-    },
-    {
-      "code": "compau",
-      "aba": 2
-    },
-    {
-      "code": "wispet",
-      "aba": 1
-    },
-    {
-      "code": "norwhe",
-      "aba": 2
-    },
-    {
-      "code": "piewhe1",
-      "aba": 5
-    },
-    {
-      "code": "aleter1",
-      "aba": 2
-    },
-    {
-      "code": "briter1",
-      "aba": 2
-    },
-    {
-      "code": "sooter1",
-      "aba": 2
-    },
-    {
-      "code": "gybter1",
-      "aba": 2
-    },
-    {
-      "code": "conwar",
-      "aba": 2
-    },
-    {
-      "code": "akikik",
-      "aba": 2
-    },
-    {
-      "code": "mouqua",
-      "aba": 1
-    },
-    {
-      "code": "sagthr",
-      "aba": 1
-    },
-    {
-      "code": "crcwar",
-      "aba": 4
-    },
-    {
-      "code": "placha",
-      "aba": 2
-    },
-    {
-      "code": "orsowl",
-      "aba": 5
-    },
-    {
-      "code": "rudduc",
-      "aba": 1
-    },
-    {
-      "code": "rotbec",
-      "aba": 3
-    },
-    {
-      "code": "grcbec1",
-      "aba": 5
-    },
-    {
-      "code": "javspa",
-      "aba": 2
-    },
-    {
-      "code": "ivogul",
-      "aba": 3
-    },
-    {
-      "code": "crehon",
-      "aba": 2
-    },
-    {
-      "code": "osprey",
-      "aba": 1
-    },
-    {
-      "code": "hrshaw",
-      "aba": 1
-    },
-    {
-      "code": "sporai",
-      "aba": 5
-    },
-    {
-      "code": "louwat",
-      "aba": 1
-    },
-    {
-      "code": "norwat",
-      "aba": 1
-    },
-    {
-      "code": "yebcar",
-      "aba": 2
-    },
-    {
-      "code": "reccar",
-      "aba": 2
-    },
-    {
-      "code": "kakawa",
-      "aba": 6
-    },
-    {
-      "code": "oahala",
-      "aba": 6
-    },
-    {
-      "code": "mauala",
-      "aba": 2
-    },
-    {
-      "code": "houspa",
-      "aba": 1
-    },
-    {
-      "code": "eutspa",
-      "aba": 2
-    },
-    {
-      "code": "savspa",
-      "aba": 1
-    },
-    {
-      "code": "foxspa",
-      "aba": 1
-    },
-    {
-      "code": "lazbun",
-      "aba": 1
-    },
-    {
-      "code": "blugrb1",
-      "aba": 1
-    },
-    {
-      "code": "paibun",
-      "aba": 1
-    },
-    {
-      "code": "indbun",
-      "aba": 1
-    },
-    {
-      "code": "varbun",
-      "aba": 2
-    },
-    {
-      "code": "batpig1",
-      "aba": 1
-    },
-    {
-      "code": "rebpig1",
-      "aba": 2
-    },
-    {
-      "code": "whcpig2",
-      "aba": 2
-    },
-    {
-      "code": "scnpig1",
-      "aba": 5
-    },
-    {
-      "code": "compea",
-      "aba": 2
-    },
-    {
-      "code": "wfspet",
-      "aba": 3
-    },
-    {
-      "code": "amwpel",
-      "aba": 1
-    },
-    {
-      "code": "brnpel",
-      "aba": 1
-    },
-    {
-      "code": "grypar",
-      "aba": 2
-    },
-    {
-      "code": "gryjay",
-      "aba": 1
-    },
-    {
-      "code": "cavswa",
-      "aba": 1
-    },
-    {
-      "code": "cliswa",
-      "aba": 1
-    },
-    {
-      "code": "bacspa",
-      "aba": 1
-    },
-    {
-      "code": "botspa",
-      "aba": 2
-    },
-    {
-      "code": "ruwspa",
-      "aba": 2
-    },
-    {
-      "code": "casspa",
-      "aba": 1
-    },
-    {
-      "code": "oliwar",
-      "aba": 2
-    },
-    {
-      "code": "rebtro",
-      "aba": 3
-    },
-    {
-      "code": "whttro",
-      "aba": 2
-    },
-    {
-      "code": "rettro",
-      "aba": 2
-    },
-    {
-      "code": "labter1",
-      "aba": 5
-    },
-    {
-      "code": "phaino",
-      "aba": 1
-    },
-    {
-      "code": "grecor",
-      "aba": 1
-    },
-    {
-      "code": "compoo",
-      "aba": 1
-    },
-    {
-      "code": "redpha1",
-      "aba": 1
-    },
-    {
-      "code": "renpha",
-      "aba": 1
-    },
-    {
-      "code": "wilpha",
-      "aba": 1
-    },
-    {
-      "code": "rinphe",
-      "aba": 1
-    },
-    {
-      "code": "yelgro",
-      "aba": 4
-    },
-    {
-      "code": "robgro",
-      "aba": 1
-    },
-    {
-      "code": "bkhgro",
-      "aba": 1
-    },
-    {
-      "code": "shtalb",
-      "aba": 3
-    },
-    {
-      "code": "layalb",
-      "aba": 2
-    },
-    {
-      "code": "bkfalb",
-      "aba": 1
-    },
-    {
-      "code": "limalb1",
-      "aba": 5
-    },
-    {
-      "code": "grefla2",
-      "aba": 3
-    },
-    {
-      "code": "comred2",
-      "aba": 5
-    },
-    {
-      "code": "arcwar1",
-      "aba": 2
-    },
-    {
-      "code": "comchi1",
-      "aba": 4
-    },
-    {
-      "code": "arcwar2",
-      "aba": 4
-    },
-    {
-      "code": "duswar",
-      "aba": 4
-    },
-    {
-      "code": "yebwar3",
-      "aba": 4
-    },
-    {
-      "code": "palwar5",
-      "aba": 5
-    },
-    {
-      "code": "woowar",
-      "aba": 4
-    },
-    {
-      "code": "wlwwar",
-      "aba": 4
-    },
-    {
-      "code": "bkbmag1",
-      "aba": 1
-    },
-    {
-      "code": "yebmag",
-      "aba": 2
-    },
-    {
-      "code": "bkbwoo",
-      "aba": 2
-    },
-    {
-      "code": "attwoo1",
-      "aba": 2
-    },
-    {
-      "code": "greauk",
-      "aba": 6
-    },
-    {
-      "code": "pingro",
-      "aba": 1
-    },
-    {
-      "code": "gnttow",
-      "aba": 1
-    },
-    {
-      "code": "eastow",
-      "aba": 1
-    },
-    {
-      "code": "spotow",
-      "aba": 1
-    },
-    {
-      "code": "flctan",
-      "aba": 3
-    },
-    {
-      "code": "heptan",
-      "aba": 2
-    },
-    {
-      "code": "westan",
-      "aba": 1
-    },
-    {
-      "code": "scatan",
-      "aba": 1
-    },
-    {
-      "code": "sumtan",
-      "aba": 1
-    },
-    {
-      "code": "grekis",
-      "aba": 2
-    },
-    {
-      "code": "rosspo1",
-      "aba": 1
-    },
-    {
-      "code": "mckbun",
-      "aba": 3
-    },
-    {
-      "code": "snobun",
-      "aba": 1
-    },
-    {
-      "code": "whfibi",
-      "aba": 1
-    },
-    {
-      "code": "gloibi",
-      "aba": 1
-    },
-    {
-      "code": "eugplo",
-      "aba": 4
-    },
-    {
-      "code": "amgplo",
-      "aba": 1
-    },
-    {
-      "code": "pagplo",
-      "aba": 2
-    },
-    {
-      "code": "bkbplo",
-      "aba": 1
-    },
-    {
-      "code": "horgre",
-      "aba": 1
-    },
-    {
-      "code": "rengre",
-      "aba": 1
-    },
-    {
-      "code": "eargre",
-      "aba": 1
-    },
-    {
-      "code": "pibgre",
-      "aba": 1
-    },
-    {
-      "code": "bkcchi",
-      "aba": 1
-    },
-    {
-      "code": "carchi",
-      "aba": 1
-    },
-    {
-      "code": "gyhchi",
-      "aba": 3
-    },
-    {
-      "code": "mouchi",
-      "aba": 1
-    },
-    {
-      "code": "borchi2",
-      "aba": 1
-    },
-    {
-      "code": "chbchi",
-      "aba": 1
-    },
-    {
-      "code": "mexchi",
-      "aba": 2
-    },
-    {
-      "code": "buggna",
-      "aba": 1
-    },
-    {
-      "code": "calgna",
-      "aba": 2
-    },
-    {
-      "code": "bktgna",
-      "aba": 1
-    },
-    {
-      "code": "bkcgna",
-      "aba": 3
-    },
-    {
-      "code": "steeid",
-      "aba": 2
-    },
-    {
-      "code": "vesspa",
-      "aba": 1
-    },
-    {
-      "code": "#N/A",
-      "aba": 1
-    },
-    {
-      "code": "purswa1",
-      "aba": 2
-    },
-    {
-      "code": "sora",
-      "aba": 1
-    },
-    {
-      "code": "whcpet1",
-      "aba": 5
-    },
-    {
-      "code": "parpet1",
-      "aba": 5
-    },
-    {
-      "code": "gybmar",
-      "aba": 5
-    },
-    {
-      "code": "cubmar",
-      "aba": 5
-    },
-    {
-      "code": "soumar",
-      "aba": 5
-    },
-    {
-      "code": "purmar",
-      "aba": 1
-    },
-    {
-      "code": "brcmar1",
-      "aba": 4
-    },
-    {
-      "code": "prowar",
-      "aba": 1
-    },
-    {
-      "code": "sibacc",
-      "aba": 4
-    },
-    {
-      "code": "bushti",
-      "aba": 1
-    },
-    {
-      "code": "tahpet1",
-      "aba": 5
-    },
-    {
-      "code": "maupar",
-      "aba": 2
-    },
-    {
-      "code": "brnjay",
-      "aba": 4
-    },
-    {
-      "code": "flaowl",
-      "aba": 2
-    },
-    {
-      "code": "rempar",
-      "aba": 2
-    },
-    {
-      "code": "grnpar",
-      "aba": 2
-    },
-    {
-      "code": "mitpar",
-      "aba": 2
-    },
-    {
-      "code": "rorpar",
-      "aba": 2
-    },
-    {
-      "code": "ou",
-      "aba": 6
-    },
-    {
-      "code": "ercfra",
-      "aba": 2
-    },
-    {
-      "code": "chbsan",
-      "aba": 3
-    },
-    {
-      "code": "tripet1",
-      "aba": 3
-    },
-    {
-      "code": "berpet",
-      "aba": 3
-    },
-    {
-      "code": "whnpet",
-      "aba": 3
-    },
-    {
-      "code": "coopet",
-      "aba": 3
-    },
-    {
-      "code": "jufpet",
-      "aba": 3
-    },
-    {
-      "code": "feapet1",
-      "aba": 3
-    },
-    {
-      "code": "grwpet2",
-      "aba": 5
-    },
-    {
-      "code": "bkcpet",
-      "aba": 2
-    },
-    {
-      "code": "herpet2",
-      "aba": 4
-    },
-    {
-      "code": "bonpet",
-      "aba": 3
-    },
-    {
-      "code": "motpet",
-      "aba": 2
-    },
-    {
-      "code": "stepet",
-      "aba": 4
-    },
-    {
-      "code": "madpet",
-      "aba": 5
-    },
-    {
-      "code": "kerpet",
-      "aba": 4
-    },
-    {
-      "code": "bkwpet",
-      "aba": 3
-    },
-    {
-      "code": "hawpet1",
-      "aba": 2
-    },
-    {
-      "code": "solpet1",
-      "aba": 4
-    },
-    {
-      "code": "murpet",
-      "aba": 3
-    },
-    {
-      "code": "grsfly1",
-      "aba": 5
-    },
-    {
-      "code": "casauk",
-      "aba": 1
-    },
-    {
-      "code": "litshe1",
-      "aba": 4
-    },
-    {
-      "code": "bryshe1",
-      "aba": 5
-    },
-    {
-      "code": "audshe",
-      "aba": 1
-    },
-    {
-      "code": "chrshe",
-      "aba": 3
-    },
-    {
-      "code": "towshe2",
-      "aba": 2
-    },
-    {
-      "code": "bkvshe",
-      "aba": 2
-    },
-    {
-      "code": "manshe",
-      "aba": 2
-    },
-    {
-      "code": "revbul",
-      "aba": 2
-    },
-    {
-      "code": "rewbul",
-      "aba": 2
-    },
-    {
-      "code": "bawswa1",
-      "aba": 5
-    },
-    {
-      "code": "verfly",
-      "aba": 1
-    },
-    {
-      "code": "eurbul",
-      "aba": 4
-    },
-    {
-      "code": "botgra",
-      "aba": 1
-    },
-    {
-      "code": "grtgra",
-      "aba": 1
-    },
-    {
-      "code": "comgra",
-      "aba": 1
-    },
-    {
-      "code": "clarai11",
-      "aba": 1
-    },
-    {
-      "code": "kinrai4",
-      "aba": 1
-    },
-    {
-      "code": "virrai",
-      "aba": 1
-    },
-    {
-      "code": "ridrai1",
-      "aba": 2
-    },
-    {
-      "code": "#N/A",
-      "aba": 2
-    },
-    {
-      "code": "ameavo",
-      "aba": 1
-    },
-    {
-      "code": "gockin",
-      "aba": 1
-    },
-    {
-      "code": "lekfin",
-      "aba": 6
-    },
-    {
-      "code": "grkfin",
-      "aba": 6
-    },
-    {
-      "code": "rosgul",
-      "aba": 3
-    },
-    {
-      "code": "crcgro",
-      "aba": 4
-    },
-    {
-      "code": "mcclon",
-      "aba": 2
-    },
-    {
-      "code": "thbpar",
-      "aba": 5
-    },
-    {
-      "code": "aztthr",
-      "aba": 4
-    },
-    {
-      "code": "banswa",
-      "aba": 1
-    },
-    {
-      "code": "relkit",
-      "aba": 2
-    },
-    {
-      "code": "bklkit",
-      "aba": 1
-    },
-    {
-      "code": "snakit",
-      "aba": 2
-    },
-    {
-      "code": "roahaw",
-      "aba": 4
-    },
-    {
-      "code": "blkski",
-      "aba": 1
-    },
-    {
-      "code": "rocwre",
-      "aba": 1
-    },
-    {
-      "code": "berhum",
-      "aba": 3
-    },
-    {
-      "code": "sibsto1",
-      "aba": 4
-    },
-    {
-      "code": "blkpho",
-      "aba": 1
-    },
-    {
-      "code": "easpho",
-      "aba": 1
-    },
-    {
-      "code": "saypho",
-      "aba": 1
-    },
-    {
-      "code": "amewoo",
-      "aba": 1
-    },
-    {
-      "code": "eurwoo",
-      "aba": 5
-    },
-    {
-      "code": "ovenbi1",
-      "aba": 1
-    },
-    {
-      "code": "calhum",
-      "aba": 1
-    },
-    {
-      "code": "bumhum",
-      "aba": 5
-    },
-    {
-      "code": "brthum",
-      "aba": 1
-    },
-    {
-      "code": "rufhum",
-      "aba": 1
-    },
-    {
-      "code": "allhum",
-      "aba": 1
-    },
-    {
-      "code": "comcan",
-      "aba": 3
-    },
-    {
-      "code": "norpar",
-      "aba": 1
-    },
-    {
-      "code": "btbwar",
-      "aba": 1
-    },
-    {
-      "code": "babwar",
-      "aba": 1
-    },
-    {
-      "code": "cerwar",
-      "aba": 2
-    },
-    {
-      "code": "gchwar",
-      "aba": 2
-    },
-    {
-      "code": "hoowar",
-      "aba": 1
-    },
-    {
-      "code": "yerwar",
-      "aba": 1
-    },
-    {
-      "code": "prawar",
-      "aba": 1
-    },
-    {
-      "code": "yetwar",
-      "aba": 1
-    },
-    {
-      "code": "bkbwar",
-      "aba": 1
-    },
-    {
-      "code": "grawar",
-      "aba": 1
-    },
-    {
-      "code": "kirwar",
-      "aba": 2
-    },
-    {
-      "code": "magwar",
-      "aba": 1
-    },
-    {
-      "code": "btywar",
-      "aba": 1
-    },
-    {
-      "code": "herwar",
-      "aba": 1
-    },
-    {
-      "code": "palwar",
-      "aba": 1
-    },
-    {
-      "code": "chswar",
-      "aba": 1
-    },
-    {
-      "code": "yelwar",
-      "aba": 1
-    },
-    {
-      "code": "pinwar",
-      "aba": 1
-    },
-    {
-      "code": "tropar",
-      "aba": 3
-    },
-    {
-      "code": "amered",
-      "aba": 1
-    },
-    {
-      "code": "bkpwar",
-      "aba": 1
-    },
-    {
-      "code": "camwar",
-      "aba": 1
-    },
-    {
-      "code": "towwar",
-      "aba": 1
-    },
-    {
-      "code": "btnwar",
-      "aba": 1
-    },
-    {
-      "code": "moublu",
-      "aba": 1
-    },
-    {
-      "code": "wesblu",
-      "aba": 1
-    },
-    {
-      "code": "easblu",
-      "aba": 1
-    },
-    {
-      "code": "baitea",
-      "aba": 4
-    },
-    {
-      "code": "saffin",
-      "aba": 2
-    },
-    {
-      "code": "rebnut",
-      "aba": 1
-    },
-    {
-      "code": "whbnut",
-      "aba": 1
-    },
-    {
-      "code": "bnhnut",
-      "aba": 1
-    },
-    {
-      "code": "pygnut",
-      "aba": 1
-    },
-    {
-      "code": "speeid",
-      "aba": 2
-    },
-    {
-      "code": "comeid",
-      "aba": 1
-    },
-    {
-      "code": "kineid",
-      "aba": 2
-    },
-    {
-      "code": "norsho",
-      "aba": 1
-    },
-    {
-      "code": "cintea",
-      "aba": 1
-    },
-    {
-      "code": "buwtea",
-      "aba": 1
-    },
-    {
-      "code": "gargan",
-      "aba": 4
-    },
-    {
-      "code": "rensap",
-      "aba": 1
-    },
-    {
-      "code": "rebsap",
-      "aba": 1
-    },
-    {
-      "code": "wilsap",
-      "aba": 1
-    },
-    {
-      "code": "yebsap",
-      "aba": 1
-    },
-    {
-      "code": "wesspi",
-      "aba": 3
-    },
-    {
-      "code": "lawgol",
-      "aba": 2
-    },
-    {
-      "code": "pinsis",
-      "aba": 1
-    },
-    {
-      "code": "lesgol",
-      "aba": 1
-    },
-    {
-      "code": "eursis",
-      "aba": 5
-    },
-    {
-      "code": "amegfi",
-      "aba": 1
-    },
-    {
-      "code": "dickci",
-      "aba": 1
-    },
-    {
-      "code": "bkcspa",
-      "aba": 1
-    },
-    {
-      "code": "brespa",
-      "aba": 1
-    },
-    {
-      "code": "clcspa",
-      "aba": 1
-    },
-    {
-      "code": "chispa",
-      "aba": 1
-    },
-    {
-      "code": "fiespa",
-      "aba": 1
-    },
-    {
-      "code": "worspa",
-      "aba": 5
-    },
-    {
-      "code": "amtspa",
-      "aba": 1
-    },
-    {
-      "code": "whcsee1",
-      "aba": 3
-    },
-    {
-      "code": "nrwswa",
-      "aba": 1
-    },
-    {
-      "code": "lotjae",
-      "aba": 1
-    },
-    {
-      "code": "sopsku1",
-      "aba": 2
-    },
-    {
-      "code": "parjae",
-      "aba": 1
-    },
-    {
-      "code": "pomjae",
-      "aba": 1
-    },
-    {
-      "code": "gresku1",
-      "aba": 3
-    },
-    {
-      "code": "roster",
-      "aba": 2
-    },
-    {
-      "code": "forter",
-      "aba": 1
-    },
-    {
-      "code": "comter",
-      "aba": 1
-    },
-    {
-      "code": "arcter",
-      "aba": 1
-    },
-    {
-      "code": "litter1",
-      "aba": 4
-    },
-    {
-      "code": "leater1",
-      "aba": 1
-    },
-    {
-      "code": "spodov",
-      "aba": 2
-    },
-    {
-      "code": "eucdov",
-      "aba": 1
-    },
-    {
-      "code": "ortdov",
-      "aba": 4
-    },
-    {
-      "code": "eutdov",
-      "aba": 5
-    },
-    {
-      "code": "whcswi",
-      "aba": 4
-    },
-    {
-      "code": "grgowl",
-      "aba": 2
-    },
-    {
-      "code": "spoowl",
-      "aba": 2
-    },
-    {
-      "code": "brdowl",
-      "aba": 1
-    },
-    {
-      "code": "#N/A",
-      "aba": 5
-    },
-    {
-      "code": "#N/A",
-      "aba": 1
-    },
-    {
-      "code": "easmea",
-      "aba": 1
-    },
-    {
-      "code": "wesmea",
-      "aba": 1
-    },
-    {
-      "code": "eursta",
-      "aba": 1
-    },
-    {
-      "code": "masboo",
-      "aba": 2
-    },
-    {
-      "code": "nazboo1",
-      "aba": 4
-    },
-    {
-      "code": "brnboo",
-      "aba": 2
-    },
-    {
-      "code": "bfoboo",
-      "aba": 4
-    },
-    {
-      "code": "refboo",
-      "aba": 2
-    },
-    {
-      "code": "nohowl",
-      "aba": 2
-    },
-    {
-      "code": "#N/A",
-      "aba": 5
-    },
-    {
-      "code": "ancmur",
-      "aba": 2
-    },
-    {
-      "code": "cramur",
-      "aba": 3
-    },
-    {
-      "code": "xanmur1",
-      "aba": 3
-    },
-    {
-      "code": "xanmur2",
-      "aba": 2
-    },
-    {
-      "code": "anpswi",
-      "aba": 5
-    },
-    {
-      "code": "leagre",
-      "aba": 2
-    },
-    {
-      "code": "manswa1",
-      "aba": 5
-    },
-    {
-      "code": "treswa",
-      "aba": 1
-    },
-    {
-      "code": "bahswa",
-      "aba": 4
-    },
-    {
-      "code": "vigswa",
-      "aba": 1
-    },
-    {
-      "code": "comshe",
-      "aba": 4
-    },
-    {
-      "code": "refblu",
-      "aba": 4
-    },
-    {
-      "code": "layfin",
-      "aba": 3
-    },
-    {
-      "code": "nihfin",
-      "aba": 3
-    },
-    {
-      "code": "himsno",
-      "aba": 2
-    },
-    {
-      "code": "whcalb1",
-      "aba": 4
-    },
-    {
-      "code": "yenalb",
-      "aba": 4
-    },
-    {
-      "code": "shyalb2",
-      "aba": 5
-    },
-    {
-      "code": "bkbalb",
-      "aba": 4
-    },
-    {
-      "code": "salalb1",
-      "aba": 5
-    },
-    {
-      "code": "grcter1",
-      "aba": 5
-    },
-    {
-      "code": "eleter1",
-      "aba": 1
-    },
-    {
-      "code": "royter1",
-      "aba": 1
-    },
-    {
-      "code": "santer1",
-      "aba": 1
-    },
-    {
-      "code": "bewwre",
-      "aba": 1
-    },
-    {
-      "code": "sinwre1",
-      "aba": 5
-    },
-    {
-      "code": "carwre",
-      "aba": 1
-    },
-    {
-      "code": "yefgra1",
-      "aba": 3
-    },
-    {
-      "code": "btther1",
-      "aba": 5
-    },
-    {
-      "code": "mastit1",
-      "aba": 5
-    },
-    {
-      "code": "benthr",
-      "aba": 2
-    },
-    {
-      "code": "crithr",
-      "aba": 2
-    },
-    {
-      "code": "cubthr",
-      "aba": 1
-    },
-    {
-      "code": "lecthr",
-      "aba": 2
-    },
-    {
-      "code": "lobthr",
-      "aba": 2
-    },
-    {
-      "code": "calthr",
-      "aba": 2
-    },
-    {
-      "code": "brnthr",
-      "aba": 1
-    },
-    {
-      "code": "gyttat1",
-      "aba": 3
-    },
-    {
-      "code": "spored",
-      "aba": 4
-    },
-    {
-      "code": "lesyel",
-      "aba": 1
-    },
-    {
-      "code": "woosan",
-      "aba": 2
-    },
-    {
-      "code": "wantat1",
-      "aba": 1
-    },
-    {
-      "code": "greyel",
-      "aba": 1
-    },
-    {
-      "code": "comgre",
-      "aba": 3
-    },
-    {
-      "code": "grnsan",
-      "aba": 4
-    },
-    {
-      "code": "willet1",
-      "aba": 1
-    },
-    {
-      "code": "solsan",
-      "aba": 1
-    },
-    {
-      "code": "marsan",
-      "aba": 4
-    },
-    {
-      "code": "comred1",
-      "aba": 4
-    },
-    {
-      "code": "houwre",
-      "aba": 1
-    },
-    {
-      "code": "winwre3",
-      "aba": 1
-    },
-    {
-      "code": "pacwre1",
-      "aba": 1
-    },
-    {
-      "code": "eletro",
-      "aba": 2
-    },
-    {
-      "code": "whtrob1",
-      "aba": 4
-    },
-    {
-      "code": "dusthr2",
-      "aba": 4
-    },
-    {
-      "code": "clcrob",
-      "aba": 2
-    },
-    {
-      "code": "redwin",
-      "aba": 4
-    },
-    {
-      "code": "eurbla",
-      "aba": 5
-    },
-    {
-      "code": "amerob",
-      "aba": 1
-    },
-    {
-      "code": "dusthr1",
-      "aba": 5
-    },
-    {
-      "code": "eyethr",
-      "aba": 3
-    },
-    {
-      "code": "sonthr1",
-      "aba": 5
-    },
-    {
-      "code": "fieldf",
-      "aba": 4
-    },
-    {
-      "code": "relthr1",
-      "aba": 5
-    },
-    {
-      "code": "rubrob",
-      "aba": 3
-    },
-    {
-      "code": "misthr1",
-      "aba": 5
-    },
-    {
-      "code": "grpchi",
-      "aba": 2
-    },
-    {
-      "code": "lepchi",
-      "aba": 2
-    },
-    {
-      "code": "shtgro",
-      "aba": 2
-    },
-    {
-      "code": "logkin",
-      "aba": 5
-    },
-    {
-      "code": "coukin",
-      "aba": 2
-    },
-    {
-      "code": "thbkin",
-      "aba": 2
-    },
-    {
-      "code": "grykin",
-      "aba": 2
-    },
-    {
-      "code": "sctfly",
-      "aba": 1
-    },
-    {
-      "code": "trokin",
-      "aba": 2
-    },
-    {
-      "code": "fotfly",
-      "aba": 3
-    },
-    {
-      "code": "easkin",
-      "aba": 1
-    },
-    {
-      "code": "weskin",
-      "aba": 1
-    },
-    {
-      "code": "caskin",
-      "aba": 1
-    },
-    {
-      "code": "brnowl",
-      "aba": 1
-    },
-    {
-      "code": "hoopoe",
-      "aba": 5
-    },
-    {
-      "code": "commur",
-      "aba": 1
-    },
-    {
-      "code": "thbmur",
-      "aba": 1
-    },
-    {
-      "code": "pelcor",
-      "aba": 1
-    },
-    {
-      "code": "bracor",
-      "aba": 1
-    },
-    {
-      "code": "refcor",
-      "aba": 2
-    },
-    {
-      "code": "norlap",
-      "aba": 4
-    },
-    {
-      "code": "bacwar",
-      "aba": 6
-    },
-    {
-      "code": "gowwar",
-      "aba": 2
-    },
-    {
-      "code": "buwwar",
-      "aba": 1
-    },
-    {
-      "code": "bkwvir",
-      "aba": 2
-    },
-    {
-      "code": "bkcvir1",
-      "aba": 2
-    },
-    {
-      "code": "belvir",
-      "aba": 1
-    },
-    {
-      "code": "casvir",
-      "aba": 1
-    },
-    {
-      "code": "thbvir",
-      "aba": 4
-    },
-    {
-      "code": "yetvir",
-      "aba": 1
-    },
-    {
-      "code": "yegvir",
-      "aba": 3
-    },
-    {
-      "code": "warvir",
-      "aba": 1
-    },
-    {
-      "code": "whevir",
-      "aba": 1
-    },
-    {
-      "code": "cubvir1",
-      "aba": 5
-    },
-    {
-      "code": "hutvir",
-      "aba": 1
-    },
-    {
-      "code": "yucvir",
-      "aba": 5
-    },
-    {
-      "code": "reevir1",
-      "aba": 1
-    },
-    {
-      "code": "phivir",
-      "aba": 1
-    },
-    {
-      "code": "plsvir",
-      "aba": 1
-    },
-    {
-      "code": "buhvir",
-      "aba": 1
-    },
-    {
-      "code": "gryvir",
-      "aba": 2
-    },
-    {
-      "code": "greama",
-      "aba": 6
-    },
-    {
-      "code": "yehbla",
-      "aba": 1
-    },
-    {
-      "code": "sabgul",
-      "aba": 1
-    },
-    {
-      "code": "tersan",
-      "aba": 3
-    },
-    {
-      "code": "layrai",
-      "aba": 6
-    },
-    {
-      "code": "hawrai",
-      "aba": 6
-    },
-    {
-      "code": "whwdov",
-      "aba": 1
-    },
-    {
-      "code": "zendov",
-      "aba": 4
-    },
-    {
-      "code": "moudov",
-      "aba": 1
-    },
-    {
-      "code": "whtspa",
-      "aba": 1
-    },
-    {
-      "code": "gocspa",
-      "aba": 1
-    },
-    {
-      "code": "whcspa",
-      "aba": 1
-    },
-    {
-      "code": "harspa",
-      "aba": 1
-    },
-    {
-      "code": "warwhe1",
-      "aba": 2
-    }
-  ]
+  {
+    "code": "comred",
+    "aba": 1
+  },
+  {
+    "code": "hoared",
+    "aba": 2
+  },
+  {
+    "code": "coohaw",
+    "aba": 1
+  },
+  {
+    "code": "norgos",
+    "aba": 1
+  },
+  {
+    "code": "grfhaw1",
+    "aba": 5
+  },
+  {
+    "code": "shshaw",
+    "aba": 1
+  },
+  {
+    "code": "commyn",
+    "aba": 2
+  },
+  {
+    "code": "blrwar1",
+    "aba": 5
+  },
+  {
+    "code": "miller",
+    "aba": 3
+  },
+  {
+    "code": "sedwar1",
+    "aba": 5
+  },
+  {
+    "code": "comsan",
+    "aba": 3
+  },
+  {
+    "code": "sposan",
+    "aba": 1
+  },
+  {
+    "code": "clagre",
+    "aba": 1
+  },
+  {
+    "code": "wesgre",
+    "aba": 1
+  },
+  {
+    "code": "nswowl",
+    "aba": 2
+  },
+  {
+    "code": "borowl",
+    "aba": 2
+  },
+  {
+    "code": "marswi",
+    "aba": 2
+  },
+  {
+    "code": "whtswi",
+    "aba": 1
+  },
+  {
+    "code": "creauk",
+    "aba": 2
+  },
+  {
+    "code": "parauk",
+    "aba": 2
+  },
+  {
+    "code": "leaauk",
+    "aba": 2
+  },
+  {
+    "code": "whiauk",
+    "aba": 2
+  },
+  {
+    "code": "peflov",
+    "aba": 2
+  },
+  {
+    "code": "tasbla",
+    "aba": 5
+  },
+  {
+    "code": "rewbla",
+    "aba": 1
+  },
+  {
+    "code": "tribla",
+    "aba": 2
+  },
+  {
+    "code": "rucspa",
+    "aba": 1
+  },
+  {
+    "code": "wooduc",
+    "aba": 1
+  },
+  {
+    "code": "greaki2",
+    "aba": 6
+  },
+  {
+    "code": "greaki3",
+    "aba": 6
+  },
+  {
+    "code": "lesaki",
+    "aba": 6
+  },
+  {
+    "code": "greaki4",
+    "aba": 6
+  },
+  {
+    "code": "skylar",
+    "aba": 2
+  },
+  {
+    "code": "razorb",
+    "aba": 1
+  },
+  {
+    "code": "chukar",
+    "aba": 2
+  },
+  {
+    "code": "doveki",
+    "aba": 2
+  },
+  {
+    "code": "egygoo",
+    "aba": 2
+  },
+  {
+    "code": "redava",
+    "aba": 2
+  },
+  {
+    "code": "cinhum1",
+    "aba": 5
+  },
+  {
+    "code": "bubhum",
+    "aba": 2
+  },
+  {
+    "code": "licpar",
+    "aba": 2
+  },
+  {
+    "code": "recpar",
+    "aba": 2
+  },
+  {
+    "code": "graspa",
+    "aba": 1
+  },
+  {
+    "code": "sstspa",
+    "aba": 1
+  },
+  {
+    "code": "lecspa",
+    "aba": 1
+  },
+  {
+    "code": "seaspa",
+    "aba": 1
+  },
+  {
+    "code": "nstspa",
+    "aba": 1
+  },
+  {
+    "code": "bktspa",
+    "aba": 1
+  },
+  {
+    "code": "fisspa",
+    "aba": 3
+  },
+  {
+    "code": "norpin",
+    "aba": 1
+  },
+  {
+    "code": "whcpin",
+    "aba": 4
+  },
+  {
+    "code": "gnwtea",
+    "aba": 1
+  },
+  {
+    "code": "mexduc",
+    "aba": 2
+  },
+  {
+    "code": "motduc",
+    "aba": 1
+  },
+  {
+    "code": "layduc",
+    "aba": 3
+  },
+  {
+    "code": "mallar3",
+    "aba": 1
+  },
+  {
+    "code": "ambduc",
+    "aba": 1
+  },
+  {
+    "code": "hawduc",
+    "aba": 2
+  },
+  {
+    "code": "spbduc",
+    "aba": 4
+  },
+  {
+    "code": "anhing",
+    "aba": 1
+  },
+  {
+    "code": "bugnod",
+    "aba": 3
+  },
+  {
+    "code": "blknod",
+    "aba": 2
+  },
+  {
+    "code": "brnnod",
+    "aba": 2
+  },
+  {
+    "code": "gwfgoo",
+    "aba": 1
+  },
+  {
+    "code": "gragoo",
+    "aba": 5
+  },
+  {
+    "code": "pifgoo",
+    "aba": 4
+  },
+  {
+    "code": "snogoo",
+    "aba": 1
+  },
+  {
+    "code": "empgoo",
+    "aba": 2
+  },
+  {
+    "code": "lwfgoo",
+    "aba": 5
+  },
+  {
+    "code": "taibeg1",
+    "aba": 3
+  },
+  {
+    "code": "rosgoo",
+    "aba": 1
+  },
+  {
+    "code": "tunbeg1",
+    "aba": 3
+  },
+  {
+    "code": "gnbman",
+    "aba": 4
+  },
+  {
+    "code": "retpip",
+    "aba": 3
+  },
+  {
+    "code": "pecpip",
+    "aba": 4
+  },
+  {
+    "code": "olbpip",
+    "aba": 3
+  },
+  {
+    "code": "amepip",
+    "aba": 1
+  },
+  {
+    "code": "sprpip",
+    "aba": 2
+  },
+  {
+    "code": "trepip",
+    "aba": 4
+  },
+  {
+    "code": "sancra",
+    "aba": 1
+  },
+  {
+    "code": "souwpw1",
+    "aba": 2
+  },
+  {
+    "code": "chwwid",
+    "aba": 1
+  },
+  {
+    "code": "bucnig",
+    "aba": 3
+  },
+  {
+    "code": "easwpw1",
+    "aba": 1
+  },
+  {
+    "code": "cowscj1",
+    "aba": 1
+  },
+  {
+    "code": "flsjay",
+    "aba": 2
+  },
+  {
+    "code": "issjay",
+    "aba": 2
+  },
+  {
+    "code": "mexjay4",
+    "aba": 2
+  },
+  {
+    "code": "wooscj2",
+    "aba": 1
+  },
+  {
+    "code": "comswi",
+    "aba": 4
+  },
+  {
+    "code": "fotswi",
+    "aba": 4
+  },
+  {
+    "code": "goleag",
+    "aba": 1
+  },
+  {
+    "code": "rnwrai1",
+    "aba": 5
+  },
+  {
+    "code": "limpki",
+    "aba": 2
+  },
+  {
+    "code": "bkhpar",
+    "aba": 2
+  },
+  {
+    "code": "bkchum",
+    "aba": 1
+  },
+  {
+    "code": "rthhum",
+    "aba": 1
+  },
+  {
+    "code": "greegr",
+    "aba": 1
+  },
+  {
+    "code": "graher1",
+    "aba": 5
+  },
+  {
+    "code": "grbher3",
+    "aba": 1
+  },
+  {
+    "code": "integr",
+    "aba": 5
+  },
+  {
+    "code": "bulshe",
+    "aba": 2
+  },
+  {
+    "code": "flfshe",
+    "aba": 3
+  },
+  {
+    "code": "pifshe",
+    "aba": 1
+  },
+  {
+    "code": "greshe",
+    "aba": 1
+  },
+  {
+    "code": "sooshe",
+    "aba": 1
+  },
+  {
+    "code": "wetshe",
+    "aba": 2
+  },
+  {
+    "code": "shtshe",
+    "aba": 2
+  },
+  {
+    "code": "chpher1",
+    "aba": 5
+  },
+  {
+    "code": "rudtur",
+    "aba": 1
+  },
+  {
+    "code": "blktur",
+    "aba": 1
+  },
+  {
+    "code": "olispa",
+    "aba": 2
+  },
+  {
+    "code": "belspa2",
+    "aba": 1
+  },
+  {
+    "code": "sagspa1",
+    "aba": 1
+  },
+  {
+    "code": "thbwar1",
+    "aba": 5
+  },
+  {
+    "code": "sheowl",
+    "aba": 1
+  },
+  {
+    "code": "loeowl",
+    "aba": 2
+  },
+  {
+    "code": "styowl1",
+    "aba": 5
+  },
+  {
+    "code": "burowl",
+    "aba": 1
+  },
+  {
+    "code": "verdin",
+    "aba": 1
+  },
+  {
+    "code": "lessca",
+    "aba": 1
+  },
+  {
+    "code": "redhea",
+    "aba": 1
+  },
+  {
+    "code": "rinduc",
+    "aba": 1
+  },
+  {
+    "code": "compoc",
+    "aba": 3
+  },
+  {
+    "code": "tufduc",
+    "aba": 3
+  },
+  {
+    "code": "gresca",
+    "aba": 1
+  },
+  {
+    "code": "canvas",
+    "aba": 1
+  },
+  {
+    "code": "blctit4",
+    "aba": 2
+  },
+  {
+    "code": "tuftit",
+    "aba": 1
+  },
+  {
+    "code": "oaktit",
+    "aba": 1
+  },
+  {
+    "code": "juntit1",
+    "aba": 1
+  },
+  {
+    "code": "britit",
+    "aba": 2
+  },
+  {
+    "code": "uplsan",
+    "aba": 1
+  },
+  {
+    "code": "gcrwar",
+    "aba": 4
+  },
+  {
+    "code": "fatwar",
+    "aba": 4
+  },
+  {
+    "code": "rucwar",
+    "aba": 3
+  },
+  {
+    "code": "whehum",
+    "aba": 3
+  },
+  {
+    "code": "xanhum",
+    "aba": 5
+  },
+  {
+    "code": "cedwax",
+    "aba": 1
+  },
+  {
+    "code": "bohwax",
+    "aba": 2
+  },
+  {
+    "code": "rufgro",
+    "aba": 1
+  },
+  {
+    "code": "amebit",
+    "aba": 1
+  },
+  {
+    "code": "kitmur",
+    "aba": 2
+  },
+  {
+    "code": "marmur",
+    "aba": 1
+  },
+  {
+    "code": "lobmur",
+    "aba": 3
+  },
+  {
+    "code": "brant",
+    "aba": 1
+  },
+  {
+    "code": "cangoo",
+    "aba": 1
+  },
+  {
+    "code": "cacgoo1",
+    "aba": 1
+  },
+  {
+    "code": "bargoo",
+    "aba": 4
+  },
+  {
+    "code": "hawgoo",
+    "aba": 2
+  },
+  {
+    "code": "yecpar",
+    "aba": 2
+  },
+  {
+    "code": "whwpar",
+    "aba": 2
+  },
+  {
+    "code": "snoowl1",
+    "aba": 2
+  },
+  {
+    "code": "grhowl",
+    "aba": 1
+  },
+  {
+    "code": "categr",
+    "aba": 1
+  },
+  {
+    "code": "buffle",
+    "aba": 1
+  },
+  {
+    "code": "comgol",
+    "aba": 1
+  },
+  {
+    "code": "bargol",
+    "aba": 1
+  },
+  {
+    "code": "bulpet",
+    "aba": 3
+  },
+  {
+    "code": "joupet",
+    "aba": 5
+  },
+  {
+    "code": "dstkne",
+    "aba": 5
+  },
+  {
+    "code": "zothaw",
+    "aba": 2
+  },
+  {
+    "code": "shthaw",
+    "aba": 2
+  },
+  {
+    "code": "rethaw",
+    "aba": 1
+  },
+  {
+    "code": "rolhaw",
+    "aba": 1
+  },
+  {
+    "code": "reshaw",
+    "aba": 1
+  },
+  {
+    "code": "gryhaw2",
+    "aba": 2
+  },
+  {
+    "code": "brwhaw",
+    "aba": 1
+  },
+  {
+    "code": "ferhaw",
+    "aba": 1
+  },
+  {
+    "code": "lolbuz1",
+    "aba": 5
+  },
+  {
+    "code": "hawhaw",
+    "aba": 2
+  },
+  {
+    "code": "swahaw",
+    "aba": 1
+  },
+  {
+    "code": "comblh1",
+    "aba": 2
+  },
+  {
+    "code": "grbhaw1",
+    "aba": 5
+  },
+  {
+    "code": "grnher",
+    "aba": 1
+  },
+  {
+    "code": "musduc",
+    "aba": 2
+  },
+  {
+    "code": "larbun",
+    "aba": 1
+  },
+  {
+    "code": "laplon",
+    "aba": 1
+  },
+  {
+    "code": "chclon",
+    "aba": 1
+  },
+  {
+    "code": "smilon",
+    "aba": 2
+  },
+  {
+    "code": "shtsan",
+    "aba": 3
+  },
+  {
+    "code": "sander",
+    "aba": 1
+  },
+  {
+    "code": "dunlin",
+    "aba": 1
+  },
+  {
+    "code": "baisan",
+    "aba": 1
+  },
+  {
+    "code": "redkno",
+    "aba": 1
+  },
+  {
+    "code": "brbsan",
+    "aba": 4
+  },
+  {
+    "code": "cursan",
+    "aba": 3
+  },
+  {
+    "code": "whrsan",
+    "aba": 1
+  },
+  {
+    "code": "stisan",
+    "aba": 1
+  },
+  {
+    "code": "pursan",
+    "aba": 1
+  },
+  {
+    "code": "wessan",
+    "aba": 1
+  },
+  {
+    "code": "pecsan",
+    "aba": 1
+  },
+  {
+    "code": "litsti",
+    "aba": 4
+  },
+  {
+    "code": "leasan",
+    "aba": 1
+  },
+  {
+    "code": "rocsan",
+    "aba": 2
+  },
+  {
+    "code": "ruff",
+    "aba": 3
+  },
+  {
+    "code": "semsan",
+    "aba": 1
+  },
+  {
+    "code": "#N/A",
+    "aba": 4
+  },
+  {
+    "code": "rensti",
+    "aba": 3
+  },
+  {
+    "code": "lotsti",
+    "aba": 3
+  },
+  {
+    "code": "bubsan",
+    "aba": 1
+  },
+  {
+    "code": "temsti",
+    "aba": 3
+  },
+  {
+    "code": "grekno",
+    "aba": 4
+  },
+  {
+    "code": "surfbi",
+    "aba": 1
+  },
+  {
+    "code": "sibrub",
+    "aba": 3
+  },
+  {
+    "code": "calqua",
+    "aba": 1
+  },
+  {
+    "code": "gamqua",
+    "aba": 1
+  },
+  {
+    "code": "scaqua",
+    "aba": 1
+  },
+  {
+    "code": "corshe",
+    "aba": 1
+  },
+  {
+    "code": "cavshe1",
+    "aba": 5
+  },
+  {
+    "code": "strshe",
+    "aba": 4
+  },
+  {
+    "code": "luchum",
+    "aba": 2
+  },
+  {
+    "code": "annhum",
+    "aba": 1
+  },
+  {
+    "code": "coshum",
+    "aba": 1
+  },
+  {
+    "code": "ivbwoo",
+    "aba": 6
+  },
+  {
+    "code": "labduc",
+    "aba": 6
+  },
+  {
+    "code": "nobtyr",
+    "aba": 2
+  },
+  {
+    "code": "cacwre",
+    "aba": 1
+  },
+  {
+    "code": "sprgro",
+    "aba": 2
+  },
+  {
+    "code": "grynig1",
+    "aba": 5
+  },
+  {
+    "code": "y00678",
+    "aba": 2
+  },
+  {
+    "code": "canwar",
+    "aba": 1
+  },
+  {
+    "code": "wlswar",
+    "aba": 1
+  },
+  {
+    "code": "refwar",
+    "aba": 2
+  },
+  {
+    "code": "norcar",
+    "aba": 1
+  },
+  {
+    "code": "pyrrhu",
+    "aba": 1
+  },
+  {
+    "code": "comros",
+    "aba": 4
+  },
+  {
+    "code": "palros2",
+    "aba": 5
+  },
+  {
+    "code": "turvul",
+    "aba": 1
+  },
+  {
+    "code": "obnthr1",
+    "aba": 5
+  },
+  {
+    "code": "bicthr",
+    "aba": 2
+  },
+  {
+    "code": "veery",
+    "aba": 1
+  },
+  {
+    "code": "herthr",
+    "aba": 1
+  },
+  {
+    "code": "bhnthr1",
+    "aba": 5
+  },
+  {
+    "code": "gycthr",
+    "aba": 1
+  },
+  {
+    "code": "swathr",
+    "aba": 1
+  },
+  {
+    "code": "canwre",
+    "aba": 1
+  },
+  {
+    "code": "gusgro",
+    "aba": 2
+  },
+  {
+    "code": "saggro",
+    "aba": 1
+  },
+  {
+    "code": "baispa",
+    "aba": 2
+  },
+  {
+    "code": "henspa",
+    "aba": 2
+  },
+  {
+    "code": "piggui",
+    "aba": 1
+  },
+  {
+    "code": "blkgui",
+    "aba": 1
+  },
+  {
+    "code": "rhiauk",
+    "aba": 1
+  },
+  {
+    "code": "brncre",
+    "aba": 1
+  },
+  {
+    "code": "kioea",
+    "aba": 6
+  },
+  {
+    "code": "chiswi",
+    "aba": 1
+  },
+  {
+    "code": "vauswi",
+    "aba": 1
+  },
+  {
+    "code": "wrenti",
+    "aba": 1
+  },
+  {
+    "code": "colplo1",
+    "aba": 5
+  },
+  {
+    "code": "lirplo",
+    "aba": 5
+  },
+  {
+    "code": "corplo",
+    "aba": 3
+  },
+  {
+    "code": "grsplo",
+    "aba": 5
+  },
+  {
+    "code": "pipplo",
+    "aba": 2
+  },
+  {
+    "code": "lesplo",
+    "aba": 3
+  },
+  {
+    "code": "mouplo",
+    "aba": 2
+  },
+  {
+    "code": "eurdot",
+    "aba": 4
+  },
+  {
+    "code": "snoplo5",
+    "aba": 1
+  },
+  {
+    "code": "semplo",
+    "aba": 1
+  },
+  {
+    "code": "killde",
+    "aba": 1
+  },
+  {
+    "code": "wilplo",
+    "aba": 1
+  },
+  {
+    "code": "elepai4",
+    "aba": 2
+  },
+  {
+    "code": "elepai",
+    "aba": 2
+  },
+  {
+    "code": "elepai5",
+    "aba": 2
+  },
+  {
+    "code": "whiter2",
+    "aba": 5
+  },
+  {
+    "code": "whwter",
+    "aba": 4
+  },
+  {
+    "code": "blkter",
+    "aba": 1
+  },
+  {
+    "code": "kongro",
+    "aba": 6
+  },
+  {
+    "code": "origre",
+    "aba": 4
+  },
+  {
+    "code": "amakin1",
+    "aba": 5
+  },
+  {
+    "code": "grnkin",
+    "aba": 2
+  },
+  {
+    "code": "oahama",
+    "aba": 2
+  },
+  {
+    "code": "kauama",
+    "aba": 2
+  },
+  {
+    "code": "hawama",
+    "aba": 2
+  },
+  {
+    "code": "larspa",
+    "aba": 1
+  },
+  {
+    "code": "hobkit",
+    "aba": 3
+  },
+  {
+    "code": "lesnig",
+    "aba": 1
+  },
+  {
+    "code": "antnig",
+    "aba": 2
+  },
+  {
+    "code": "comnig",
+    "aba": 1
+  },
+  {
+    "code": "grhgul",
+    "aba": 5
+  },
+  {
+    "code": "bongul",
+    "aba": 1
+  },
+  {
+    "code": "bkhgul",
+    "aba": 2
+  },
+  {
+    "code": "amedip",
+    "aba": 1
+  },
+  {
+    "code": "norhar2",
+    "aba": 1
+  },
+  {
+    "code": "ulahaw",
+    "aba": 6
+  },
+  {
+    "code": "marwre",
+    "aba": 1
+  },
+  {
+    "code": "sedwre1",
+    "aba": 1
+  },
+  {
+    "code": "lotduc",
+    "aba": 1
+  },
+  {
+    "code": "hawfin",
+    "aba": 4
+  },
+  {
+    "code": "evegro",
+    "aba": 1
+  },
+  {
+    "code": "yebcuc",
+    "aba": 1
+  },
+  {
+    "code": "bkbcuc",
+    "aba": 1
+  },
+  {
+    "code": "dabcuc1",
+    "aba": 5
+  },
+  {
+    "code": "mancuc",
+    "aba": 2
+  },
+  {
+    "code": "banana",
+    "aba": 4
+  },
+  {
+    "code": "norfli",
+    "aba": 1
+  },
+  {
+    "code": "gilfli",
+    "aba": 2
+  },
+  {
+    "code": "grnvie1",
+    "aba": 3
+  },
+  {
+    "code": "norbob",
+    "aba": 1
+  },
+  {
+    "code": "rocpig",
+    "aba": 1
+  },
+  {
+    "code": "cowpig1",
+    "aba": 5
+  },
+  {
+    "code": "incdov",
+    "aba": 1
+  },
+  {
+    "code": "cogdov",
+    "aba": 1
+  },
+  {
+    "code": "rugdov",
+    "aba": 3
+  },
+  {
+    "code": "cubpew1",
+    "aba": 5
+  },
+  {
+    "code": "olsfly",
+    "aba": 1
+  },
+  {
+    "code": "grepew",
+    "aba": 2
+  },
+  {
+    "code": "wewpew",
+    "aba": 1
+  },
+  {
+    "code": "eawpew",
+    "aba": 1
+  },
+  {
+    "code": "carpar",
+    "aba": 6
+  },
+  {
+    "code": "whrsha",
+    "aba": 2
+  },
+  {
+    "code": "blkvul",
+    "aba": 1
+  },
+  {
+    "code": "ruckin",
+    "aba": 1
+  },
+  {
+    "code": "amecro",
+    "aba": 1
+  },
+  {
+    "code": "comrav",
+    "aba": 1
+  },
+  {
+    "code": "chirav",
+    "aba": 1
+  },
+  {
+    "code": "hawcro",
+    "aba": 6
+  },
+  {
+    "code": "tamcro",
+    "aba": 4
+  },
+  {
+    "code": "eurjac",
+    "aba": 4
+  },
+  {
+    "code": "fiscro",
+    "aba": 1
+  },
+  {
+    "code": "yelrai",
+    "aba": 2
+  },
+  {
+    "code": "swtgul1",
+    "aba": 5
+  },
+  {
+    "code": "corcra",
+    "aba": 4
+  },
+  {
+    "code": "yefcan",
+    "aba": 2
+  },
+  {
+    "code": "smbani",
+    "aba": 3
+  },
+  {
+    "code": "grbani",
+    "aba": 2
+  },
+  {
+    "code": "comcuc",
+    "aba": 3
+  },
+  {
+    "code": "oricuc2",
+    "aba": 4
+  },
+  {
+    "code": "#N/A",
+    "aba": 2
+  },
+  {
+    "code": "relhon1",
+    "aba": 5
+  },
+  {
+    "code": "blujay",
+    "aba": 1
+  },
+  {
+    "code": "stejay",
+    "aba": 1
+  },
+  {
+    "code": "blubun",
+    "aba": 4
+  },
+  {
+    "code": "grnjay",
+    "aba": 2
+  },
+  {
+    "code": "truswa",
+    "aba": 1
+  },
+  {
+    "code": "tunswa",
+    "aba": 1
+  },
+  {
+    "code": "whoswa",
+    "aba": 3
+  },
+  {
+    "code": "mutswa",
+    "aba": 1
+  },
+  {
+    "code": "brbhum",
+    "aba": 2
+  },
+  {
+    "code": "blkswi",
+    "aba": 2
+  },
+  {
+    "code": "monqua",
+    "aba": 2
+  },
+  {
+    "code": "cohmar1",
+    "aba": 4
+  },
+  {
+    "code": "soogro1",
+    "aba": 2
+  },
+  {
+    "code": "dusgro",
+    "aba": 2
+  },
+  {
+    "code": "grswoo",
+    "aba": 4
+  },
+  {
+    "code": "bbwduc",
+    "aba": 1
+  },
+  {
+    "code": "fuwduc",
+    "aba": 1
+  },
+  {
+    "code": "wanalb",
+    "aba": 5
+  },
+  {
+    "code": "boboli",
+    "aba": 1
+  },
+  {
+    "code": "iiwi",
+    "aba": 2
+  },
+  {
+    "code": "blkmam",
+    "aba": 6
+  },
+  {
+    "code": "hawmam1",
+    "aba": 6
+  },
+  {
+    "code": "whhwoo",
+    "aba": 1
+  },
+  {
+    "code": "ariwoo",
+    "aba": 2
+  },
+  {
+    "code": "recwoo",
+    "aba": 2
+  },
+  {
+    "code": "nutwoo",
+    "aba": 1
+  },
+  {
+    "code": "dowwoo",
+    "aba": 1
+  },
+  {
+    "code": "labwoo",
+    "aba": 1
+  },
+  {
+    "code": "haiwoo",
+    "aba": 1
+  },
+  {
+    "code": "pilwoo",
+    "aba": 1
+  },
+  {
+    "code": "grycat",
+    "aba": 1
+  },
+  {
+    "code": "lanhoo",
+    "aba": 6
+  },
+  {
+    "code": "paspig",
+    "aba": 6
+  },
+  {
+    "code": "libher",
+    "aba": 1
+  },
+  {
+    "code": "chiegr",
+    "aba": 5
+  },
+  {
+    "code": "litegr",
+    "aba": 4
+  },
+  {
+    "code": "werher",
+    "aba": 5
+  },
+  {
+    "code": "redegr",
+    "aba": 1
+  },
+  {
+    "code": "snoegr",
+    "aba": 1
+  },
+  {
+    "code": "triher",
+    "aba": 1
+  },
+  {
+    "code": "whcela1",
+    "aba": 5
+  },
+  {
+    "code": "smbela1",
+    "aba": 5
+  },
+  {
+    "code": "swtkit",
+    "aba": 1
+  },
+  {
+    "code": "whtkit",
+    "aba": 1
+  },
+  {
+    "code": "yebbun",
+    "aba": 4
+  },
+  {
+    "code": "yebbun1",
+    "aba": 5
+  },
+  {
+    "code": "yetbun1",
+    "aba": 5
+  },
+  {
+    "code": "pinbun",
+    "aba": 5
+  },
+  {
+    "code": "palbun",
+    "aba": 4
+  },
+  {
+    "code": "litbun",
+    "aba": 4
+  },
+  {
+    "code": "rusbun",
+    "aba": 3
+  },
+  {
+    "code": "reebun",
+    "aba": 4
+  },
+  {
+    "code": "grybun",
+    "aba": 5
+  },
+  {
+    "code": "pinfly1",
+    "aba": 5
+  },
+  {
+    "code": "aldfly",
+    "aba": 1
+  },
+  {
+    "code": "pasfly",
+    "aba": 1
+  },
+  {
+    "code": "yebfly",
+    "aba": 1
+  },
+  {
+    "code": "bubfly",
+    "aba": 2
+  },
+  {
+    "code": "hamfly",
+    "aba": 1
+  },
+  {
+    "code": "leafly",
+    "aba": 1
+  },
+  {
+    "code": "dusfly",
+    "aba": 1
+  },
+  {
+    "code": "corfly",
+    "aba": 1
+  },
+  {
+    "code": "wilfly",
+    "aba": 1
+  },
+  {
+    "code": "acafly",
+    "aba": 1
+  },
+  {
+    "code": "gryfly",
+    "aba": 1
+  },
+  {
+    "code": "croslf1",
+    "aba": 5
+  },
+  {
+    "code": "varfly",
+    "aba": 4
+  },
+  {
+    "code": "horlar",
+    "aba": 1
+  },
+  {
+    "code": "eurrob1",
+    "aba": 5
+  },
+  {
+    "code": "comwax",
+    "aba": 2
+  },
+  {
+    "code": "whiibi",
+    "aba": 1
+  },
+  {
+    "code": "scaibi",
+    "aba": 5
+  },
+  {
+    "code": "maghum1",
+    "aba": 2
+  },
+  {
+    "code": "afrsil1",
+    "aba": 2
+  },
+  {
+    "code": "rusbla",
+    "aba": 1
+  },
+  {
+    "code": "brebla",
+    "aba": 1
+  },
+  {
+    "code": "earque",
+    "aba": 4
+  },
+  {
+    "code": "merlin",
+    "aba": 1
+  },
+  {
+    "code": "aplfal",
+    "aba": 3
+  },
+  {
+    "code": "prafal",
+    "aba": 1
+  },
+  {
+    "code": "perfal",
+    "aba": 1
+  },
+  {
+    "code": "batfal1",
+    "aba": 5
+  },
+  {
+    "code": "gyrfal",
+    "aba": 2
+  },
+  {
+    "code": "amekes",
+    "aba": 1
+  },
+  {
+    "code": "eurhob",
+    "aba": 4
+  },
+  {
+    "code": "eurkes",
+    "aba": 4
+  },
+  {
+    "code": "reffal1",
+    "aba": 5
+  },
+  {
+    "code": "taifly1",
+    "aba": 4
+  },
+  {
+    "code": "mugfly",
+    "aba": 5
+  },
+  {
+    "code": "narfly2",
+    "aba": 5
+  },
+  {
+    "code": "blkfra",
+    "aba": 2
+  },
+  {
+    "code": "#N/A",
+    "aba": 2
+  },
+  {
+    "code": "atlpuf",
+    "aba": 1
+  },
+  {
+    "code": "tufpuf",
+    "aba": 1
+  },
+  {
+    "code": "horpuf",
+    "aba": 1
+  },
+  {
+    "code": "lesfri",
+    "aba": 4
+  },
+  {
+    "code": "magfri",
+    "aba": 1
+  },
+  {
+    "code": "grefri",
+    "aba": 2
+  },
+  {
+    "code": "bbspet1",
+    "aba": 5
+  },
+  {
+    "code": "comcha",
+    "aba": 4
+  },
+  {
+    "code": "brambl",
+    "aba": 3
+  },
+  {
+    "code": "hawcoo",
+    "aba": 2
+  },
+  {
+    "code": "y00475",
+    "aba": 1
+  },
+  {
+    "code": "eurcoo",
+    "aba": 5
+  },
+  {
+    "code": "norful",
+    "aba": 1
+  },
+  {
+    "code": "wilsni1",
+    "aba": 1
+  },
+  {
+    "code": "comsni",
+    "aba": 3
+  },
+  {
+    "code": "solsni1",
+    "aba": 5
+  },
+  {
+    "code": "pitsni",
+    "aba": 5
+  },
+  {
+    "code": "commoo3",
+    "aba": 5
+  },
+  {
+    "code": "comgal1",
+    "aba": 1
+  },
+  {
+    "code": "redjun",
+    "aba": 2
+  },
+  {
+    "code": "melthr",
+    "aba": 2
+  },
+  {
+    "code": "#N/A",
+    "aba": 2
+  },
+  {
+    "code": "yebloo",
+    "aba": 2
+  },
+  {
+    "code": "arcloo",
+    "aba": 3
+  },
+  {
+    "code": "comloo",
+    "aba": 1
+  },
+  {
+    "code": "pacloo",
+    "aba": 1
+  },
+  {
+    "code": "retloo",
+    "aba": 1
+  },
+  {
+    "code": "gubter1",
+    "aba": 1
+  },
+  {
+    "code": "greroa",
+    "aba": 1
+  },
+  {
+    "code": "zebdov",
+    "aba": 2
+  },
+  {
+    "code": "kenwar",
+    "aba": 1
+  },
+  {
+    "code": "mouwar",
+    "aba": 1
+  },
+  {
+    "code": "gycyel",
+    "aba": 4
+  },
+  {
+    "code": "macwar",
+    "aba": 1
+  },
+  {
+    "code": "comyel",
+    "aba": 1
+  },
+  {
+    "code": "kwqdov",
+    "aba": 4
+  },
+  {
+    "code": "ruqdov",
+    "aba": 5
+  },
+  {
+    "code": "whthaw",
+    "aba": 2
+  },
+  {
+    "code": "crahaw",
+    "aba": 5
+  },
+  {
+    "code": "oripra",
+    "aba": 5
+  },
+  {
+    "code": "fepowl",
+    "aba": 3
+  },
+  {
+    "code": "nopowl",
+    "aba": 2
+  },
+  {
+    "code": "whocra",
+    "aba": 2
+  },
+  {
+    "code": "comcra",
+    "aba": 4
+  },
+  {
+    "code": "hoocra1",
+    "aba": 5
+  },
+  {
+    "code": "whiter",
+    "aba": 2
+  },
+  {
+    "code": "calcon",
+    "aba": 2
+  },
+  {
+    "code": "pinjay",
+    "aba": 1
+  },
+  {
+    "code": "blkoys",
+    "aba": 1
+  },
+  {
+    "code": "euroys1",
+    "aba": 5
+  },
+  {
+    "code": "ameoys",
+    "aba": 1
+  },
+  {
+    "code": "casfin",
+    "aba": 1
+  },
+  {
+    "code": "houfin",
+    "aba": 1
+  },
+  {
+    "code": "purfin",
+    "aba": 1
+  },
+  {
+    "code": "whteag",
+    "aba": 4
+  },
+  {
+    "code": "baleag",
+    "aba": 1
+  },
+  {
+    "code": "stseag",
+    "aba": 4
+  },
+  {
+    "code": "dotkit1",
+    "aba": 5
+  },
+  {
+    "code": "plcsta",
+    "aba": 4
+  },
+  {
+    "code": "sungre1",
+    "aba": 5
+  },
+  {
+    "code": "woewar1",
+    "aba": 1
+  },
+  {
+    "code": "pagwar1",
+    "aba": 5
+  },
+  {
+    "code": "migwar",
+    "aba": 4
+  },
+  {
+    "code": "nukupu1",
+    "aba": 6
+  },
+  {
+    "code": "nukupu2",
+    "aba": 6
+  },
+  {
+    "code": "nukupu3",
+    "aba": 6
+  },
+  {
+    "code": "akiapo",
+    "aba": 2
+  },
+  {
+    "code": "bkwsti",
+    "aba": 5
+  },
+  {
+    "code": "bknsti",
+    "aba": 1
+  },
+  {
+    "code": "apapan2",
+    "aba": 6
+  },
+  {
+    "code": "apapan",
+    "aba": 2
+  },
+  {
+    "code": "whtnee",
+    "aba": 5
+  },
+  {
+    "code": "barswa",
+    "aba": 1
+  },
+  {
+    "code": "harduc",
+    "aba": 1
+  },
+  {
+    "code": "jabwar",
+    "aba": 2
+  },
+  {
+    "code": "barpet",
+    "aba": 2
+  },
+  {
+    "code": "ftspet",
+    "aba": 2
+  },
+  {
+    "code": "asspet",
+    "aba": 2
+  },
+  {
+    "code": "rispet1",
+    "aba": 5
+  },
+  {
+    "code": "lcspet",
+    "aba": 1
+  },
+  {
+    "code": "bkspet",
+    "aba": 2
+  },
+  {
+    "code": "lsspet",
+    "aba": 3
+  },
+  {
+    "code": "swspet",
+    "aba": 5
+  },
+  {
+    "code": "bripet",
+    "aba": 4
+  },
+  {
+    "code": "leastp5",
+    "aba": 3
+  },
+  {
+    "code": "wrspet",
+    "aba": 4
+  },
+  {
+    "code": "trspet",
+    "aba": 3
+  },
+  {
+    "code": "litgul",
+    "aba": 2
+  },
+  {
+    "code": "caster1",
+    "aba": 1
+  },
+  {
+    "code": "woothr",
+    "aba": 1
+  },
+  {
+    "code": "gbhgul2",
+    "aba": 5
+  },
+  {
+    "code": "yebcha",
+    "aba": 1
+  },
+  {
+    "code": "blbori1",
+    "aba": 5
+  },
+  {
+    "code": "bulori",
+    "aba": 1
+  },
+  {
+    "code": "hooori",
+    "aba": 1
+  },
+  {
+    "code": "balori",
+    "aba": 1
+  },
+  {
+    "code": "audori",
+    "aba": 2
+  },
+  {
+    "code": "altori",
+    "aba": 2
+  },
+  {
+    "code": "scoori",
+    "aba": 1
+  },
+  {
+    "code": "spbori",
+    "aba": 2
+  },
+  {
+    "code": "stbori",
+    "aba": 4
+  },
+  {
+    "code": "orcori",
+    "aba": 1
+  },
+  {
+    "code": "bkvori",
+    "aba": 4
+  },
+  {
+    "code": "miskit",
+    "aba": 1
+  },
+  {
+    "code": "leabit",
+    "aba": 1
+  },
+  {
+    "code": "yelbit",
+    "aba": 5
+  },
+  {
+    "code": "varthr",
+    "aba": 1
+  },
+  {
+    "code": "jabiru",
+    "aba": 4
+  },
+  {
+    "code": "norjac",
+    "aba": 4
+  },
+  {
+    "code": "daejun",
+    "aba": 1
+  },
+  {
+    "code": "yeejun",
+    "aba": 2
+  },
+  {
+    "code": "eurwry",
+    "aba": 5
+  },
+  {
+    "code": "wilpta",
+    "aba": 2
+  },
+  {
+    "code": "whtpta1",
+    "aba": 2
+  },
+  {
+    "code": "rocpta1",
+    "aba": 2
+  },
+  {
+    "code": "amthum1",
+    "aba": 5
+  },
+  {
+    "code": "buthum",
+    "aba": 2
+  },
+  {
+    "code": "norshr4",
+    "aba": 1
+  },
+  {
+    "code": "rebshr1",
+    "aba": 5
+  },
+  {
+    "code": "brnshr",
+    "aba": 4
+  },
+  {
+    "code": "logshr",
+    "aba": 1
+  },
+  {
+    "code": "incter1",
+    "aba": 5
+  },
+  {
+    "code": "hergul",
+    "aba": 1
+  },
+  {
+    "code": "belgul",
+    "aba": 5
+  },
+  {
+    "code": "mewgul2",
+    "aba": 1
+  },
+  {
+    "code": "calgul",
+    "aba": 1
+  },
+  {
+    "code": "mewgul",
+    "aba": 3
+  },
+  {
+    "code": "bktgul",
+    "aba": 4
+  },
+  {
+    "code": "ribgul",
+    "aba": 1
+  },
+  {
+    "code": "kelgul",
+    "aba": 4
+  },
+  {
+    "code": "lbbgul",
+    "aba": 2
+  },
+  {
+    "code": "glwgul",
+    "aba": 1
+  },
+  {
+    "code": "y00478",
+    "aba": 1
+  },
+  {
+    "code": "heegul",
+    "aba": 1
+  },
+  {
+    "code": "glagul",
+    "aba": 1
+  },
+  {
+    "code": "yefgul",
+    "aba": 2
+  },
+  {
+    "code": "gbbgul",
+    "aba": 1
+  },
+  {
+    "code": "yelgul1",
+    "aba": 4
+  },
+  {
+    "code": "wesgul",
+    "aba": 1
+  },
+  {
+    "code": "slbgul",
+    "aba": 3
+  },
+  {
+    "code": "sibrob",
+    "aba": 5
+  },
+  {
+    "code": "rutrob1",
+    "aba": 4
+  },
+  {
+    "code": "blkrai",
+    "aba": 2
+  },
+  {
+    "code": "pirfly1",
+    "aba": 4
+  },
+  {
+    "code": "orcwar",
+    "aba": 1
+  },
+  {
+    "code": "colwar",
+    "aba": 2
+  },
+  {
+    "code": "lucwar",
+    "aba": 1
+  },
+  {
+    "code": "tenwar",
+    "aba": 1
+  },
+  {
+    "code": "naswar",
+    "aba": 1
+  },
+  {
+    "code": "virwar",
+    "aba": 1
+  },
+  {
+    "code": "reblei",
+    "aba": 2
+  },
+  {
+    "code": "whtdov",
+    "aba": 2
+  },
+  {
+    "code": "laugul",
+    "aba": 1
+  },
+  {
+    "code": "fragul",
+    "aba": 1
+  },
+  {
+    "code": "asrfin1",
+    "aba": 5
+  },
+  {
+    "code": "bkrfin",
+    "aba": 2
+  },
+  {
+    "code": "bcrfin",
+    "aba": 2
+  },
+  {
+    "code": "gcrfin",
+    "aba": 1
+  },
+  {
+    "code": "shbdow",
+    "aba": 1
+  },
+  {
+    "code": "lobdow",
+    "aba": 1
+  },
+  {
+    "code": "swawar",
+    "aba": 2
+  },
+  {
+    "code": "margod",
+    "aba": 1
+  },
+  {
+    "code": "hudgod",
+    "aba": 1
+  },
+  {
+    "code": "batgod",
+    "aba": 2
+  },
+  {
+    "code": "bktgod",
+    "aba": 3
+  },
+  {
+    "code": "eurwar2",
+    "aba": 5
+  },
+  {
+    "code": "lanwar",
+    "aba": 4
+  },
+  {
+    "code": "chemun",
+    "aba": 2
+  },
+  {
+    "code": "trimun",
+    "aba": 4
+  },
+  {
+    "code": "nutman",
+    "aba": 2
+  },
+  {
+    "code": "hoomer",
+    "aba": 1
+  },
+  {
+    "code": "kalphe",
+    "aba": 2
+  },
+  {
+    "code": "redcro",
+    "aba": 1
+  },
+  {
+    "code": "whwcro",
+    "aba": 2
+  },
+  {
+    "code": "redcro9",
+    "aba": 2
+  },
+  {
+    "code": "palila",
+    "aba": 2
+  },
+  {
+    "code": "akekee",
+    "aba": 2
+  },
+  {
+    "code": "akepa1",
+    "aba": 2
+  },
+  {
+    "code": "hawcre",
+    "aba": 2
+  },
+  {
+    "code": "akepa3",
+    "aba": 6
+  },
+  {
+    "code": "akepa2",
+    "aba": 6
+  },
+  {
+    "code": "jacsni",
+    "aba": 4
+  },
+  {
+    "code": "norgip1",
+    "aba": 5
+  },
+  {
+    "code": "aniani",
+    "aba": 2
+  },
+  {
+    "code": "amewig",
+    "aba": 1
+  },
+  {
+    "code": "falduc",
+    "aba": 4
+  },
+  {
+    "code": "eurwig",
+    "aba": 2
+  },
+  {
+    "code": "gadwal",
+    "aba": 1
+  },
+  {
+    "code": "belkin1",
+    "aba": 1
+  },
+  {
+    "code": "rinkin1",
+    "aba": 2
+  },
+  {
+    "code": "easowl1",
+    "aba": 1
+  },
+  {
+    "code": "wesowl1",
+    "aba": 1
+  },
+  {
+    "code": "whsowl1",
+    "aba": 2
+  },
+  {
+    "code": "poouli",
+    "aba": 6
+  },
+  {
+    "code": "gofwoo",
+    "aba": 1
+  },
+  {
+    "code": "rebwoo",
+    "aba": 1
+  },
+  {
+    "code": "rehwoo",
+    "aba": 1
+  },
+  {
+    "code": "acowoo",
+    "aba": 1
+  },
+  {
+    "code": "lewwoo",
+    "aba": 1
+  },
+  {
+    "code": "gilwoo",
+    "aba": 1
+  },
+  {
+    "code": "blksco2",
+    "aba": 1
+  },
+  {
+    "code": "whwsco2",
+    "aba": 1
+  },
+  {
+    "code": "blksco1",
+    "aba": 5
+  },
+  {
+    "code": "sursco",
+    "aba": 1
+  },
+  {
+    "code": "whwsco1",
+    "aba": 3
+  },
+  {
+    "code": "bkfgra",
+    "aba": 4
+  },
+  {
+    "code": "blumoc",
+    "aba": 5
+  },
+  {
+    "code": "wiltur",
+    "aba": 1
+  },
+  {
+    "code": "swaspa",
+    "aba": 1
+  },
+  {
+    "code": "linspa",
+    "aba": 1
+  },
+  {
+    "code": "sonspa",
+    "aba": 1
+  },
+  {
+    "code": "abetow",
+    "aba": 1
+  },
+  {
+    "code": "caltow",
+    "aba": 1
+  },
+  {
+    "code": "cantow",
+    "aba": 1
+  },
+  {
+    "code": "smew",
+    "aba": 3
+  },
+  {
+    "code": "commer",
+    "aba": 1
+  },
+  {
+    "code": "rebmer",
+    "aba": 1
+  },
+  {
+    "code": "coffal1",
+    "aba": 5
+  },
+  {
+    "code": "elfowl",
+    "aba": 2
+  },
+  {
+    "code": "blakit1",
+    "aba": 5
+  },
+  {
+    "code": "bahmoc",
+    "aba": 4
+  },
+  {
+    "code": "normoc",
+    "aba": 1
+  },
+  {
+    "code": "tuffly",
+    "aba": 4
+  },
+  {
+    "code": "bawwar",
+    "aba": 1
+  },
+  {
+    "code": "oahoo",
+    "aba": 6
+  },
+  {
+    "code": "bisoo",
+    "aba": 6
+  },
+  {
+    "code": "kauoo",
+    "aba": 6
+  },
+  {
+    "code": "hawoo",
+    "aba": 6
+  },
+  {
+    "code": "brocow",
+    "aba": 1
+  },
+  {
+    "code": "bnhcow",
+    "aba": 1
+  },
+  {
+    "code": "shicow",
+    "aba": 3
+  },
+  {
+    "code": "rtrthr1",
+    "aba": 5
+  },
+  {
+    "code": "norgan",
+    "aba": 1
+  },
+  {
+    "code": "whiwag",
+    "aba": 3
+  },
+  {
+    "code": "grywag",
+    "aba": 4
+  },
+  {
+    "code": "citwag",
+    "aba": 5
+  },
+  {
+    "code": "eaywag",
+    "aba": 2
+  },
+  {
+    "code": "asbfly",
+    "aba": 5
+  },
+  {
+    "code": "gysfly1",
+    "aba": 4
+  },
+  {
+    "code": "dasfly",
+    "aba": 4
+  },
+  {
+    "code": "spofly1",
+    "aba": 5
+  },
+  {
+    "code": "olomao",
+    "aba": 6
+  },
+  {
+    "code": "kamao",
+    "aba": 6
+  },
+  {
+    "code": "omao",
+    "aba": 2
+  },
+  {
+    "code": "brbsol1",
+    "aba": 5
+  },
+  {
+    "code": "puaioh",
+    "aba": 2
+  },
+  {
+    "code": "towsol",
+    "aba": 1
+  },
+  {
+    "code": "amaui",
+    "aba": 6
+  },
+  {
+    "code": "woosto",
+    "aba": 1
+  },
+  {
+    "code": "astfly",
+    "aba": 1
+  },
+  {
+    "code": "grcfly",
+    "aba": 1
+  },
+  {
+    "code": "nutfly",
+    "aba": 4
+  },
+  {
+    "code": "lasfly",
+    "aba": 3
+  },
+  {
+    "code": "ducfly",
+    "aba": 2
+  },
+  {
+    "code": "bncfly",
+    "aba": 1
+  },
+  {
+    "code": "sltred",
+    "aba": 4
+  },
+  {
+    "code": "paired",
+    "aba": 2
+  },
+  {
+    "code": "subfly",
+    "aba": 2
+  },
+  {
+    "code": "greela",
+    "aba": 5
+  },
+  {
+    "code": "monpar",
+    "aba": 2
+  },
+  {
+    "code": "socfly1",
+    "aba": 5
+  },
+  {
+    "code": "doccor",
+    "aba": 1
+  },
+  {
+    "code": "neocor",
+    "aba": 1
+  },
+  {
+    "code": "#N/A",
+    "aba": 5
+  },
+  {
+    "code": "bahwoo",
+    "aba": 5
+  },
+  {
+    "code": "norboo1",
+    "aba": 5
+  },
+  {
+    "code": "masduc",
+    "aba": 3
+  },
+  {
+    "code": "clanut",
+    "aba": 1
+  },
+  {
+    "code": "lobcur",
+    "aba": 1
+  },
+  {
+    "code": "eurcur",
+    "aba": 5
+  },
+  {
+    "code": "eskcur",
+    "aba": 6
+  },
+  {
+    "code": "faecur",
+    "aba": 4
+  },
+  {
+    "code": "litcur",
+    "aba": 5
+  },
+  {
+    "code": "whimbr",
+    "aba": 1
+  },
+  {
+    "code": "brtcur",
+    "aba": 2
+  },
+  {
+    "code": "slbcur",
+    "aba": 5
+  },
+  {
+    "code": "ycnher",
+    "aba": 1
+  },
+  {
+    "code": "bcnher",
+    "aba": 1
+  },
+  {
+    "code": "compau",
+    "aba": 2
+  },
+  {
+    "code": "wispet",
+    "aba": 1
+  },
+  {
+    "code": "norwhe",
+    "aba": 2
+  },
+  {
+    "code": "piewhe1",
+    "aba": 5
+  },
+  {
+    "code": "aleter1",
+    "aba": 2
+  },
+  {
+    "code": "briter1",
+    "aba": 2
+  },
+  {
+    "code": "sooter1",
+    "aba": 2
+  },
+  {
+    "code": "gybter1",
+    "aba": 2
+  },
+  {
+    "code": "conwar",
+    "aba": 2
+  },
+  {
+    "code": "akikik",
+    "aba": 2
+  },
+  {
+    "code": "mouqua",
+    "aba": 1
+  },
+  {
+    "code": "sagthr",
+    "aba": 1
+  },
+  {
+    "code": "crcwar",
+    "aba": 4
+  },
+  {
+    "code": "placha",
+    "aba": 2
+  },
+  {
+    "code": "orsowl",
+    "aba": 5
+  },
+  {
+    "code": "rudduc",
+    "aba": 1
+  },
+  {
+    "code": "rotbec",
+    "aba": 3
+  },
+  {
+    "code": "grcbec1",
+    "aba": 5
+  },
+  {
+    "code": "javspa",
+    "aba": 2
+  },
+  {
+    "code": "ivogul",
+    "aba": 3
+  },
+  {
+    "code": "crehon",
+    "aba": 2
+  },
+  {
+    "code": "osprey",
+    "aba": 1
+  },
+  {
+    "code": "hrshaw",
+    "aba": 1
+  },
+  {
+    "code": "sporai",
+    "aba": 5
+  },
+  {
+    "code": "louwat",
+    "aba": 1
+  },
+  {
+    "code": "norwat",
+    "aba": 1
+  },
+  {
+    "code": "yebcar",
+    "aba": 2
+  },
+  {
+    "code": "reccar",
+    "aba": 2
+  },
+  {
+    "code": "kakawa",
+    "aba": 6
+  },
+  {
+    "code": "oahala",
+    "aba": 6
+  },
+  {
+    "code": "mauala",
+    "aba": 2
+  },
+  {
+    "code": "houspa",
+    "aba": 1
+  },
+  {
+    "code": "eutspa",
+    "aba": 2
+  },
+  {
+    "code": "savspa",
+    "aba": 1
+  },
+  {
+    "code": "foxspa",
+    "aba": 1
+  },
+  {
+    "code": "lazbun",
+    "aba": 1
+  },
+  {
+    "code": "blugrb1",
+    "aba": 1
+  },
+  {
+    "code": "paibun",
+    "aba": 1
+  },
+  {
+    "code": "indbun",
+    "aba": 1
+  },
+  {
+    "code": "varbun",
+    "aba": 2
+  },
+  {
+    "code": "batpig1",
+    "aba": 1
+  },
+  {
+    "code": "rebpig1",
+    "aba": 2
+  },
+  {
+    "code": "whcpig2",
+    "aba": 2
+  },
+  {
+    "code": "scnpig1",
+    "aba": 5
+  },
+  {
+    "code": "compea",
+    "aba": 2
+  },
+  {
+    "code": "wfspet",
+    "aba": 3
+  },
+  {
+    "code": "amwpel",
+    "aba": 1
+  },
+  {
+    "code": "brnpel",
+    "aba": 1
+  },
+  {
+    "code": "grypar",
+    "aba": 2
+  },
+  {
+    "code": "gryjay",
+    "aba": 1
+  },
+  {
+    "code": "cavswa",
+    "aba": 1
+  },
+  {
+    "code": "cliswa",
+    "aba": 1
+  },
+  {
+    "code": "bacspa",
+    "aba": 1
+  },
+  {
+    "code": "botspa",
+    "aba": 2
+  },
+  {
+    "code": "ruwspa",
+    "aba": 2
+  },
+  {
+    "code": "casspa",
+    "aba": 1
+  },
+  {
+    "code": "oliwar",
+    "aba": 2
+  },
+  {
+    "code": "rebtro",
+    "aba": 3
+  },
+  {
+    "code": "whttro",
+    "aba": 2
+  },
+  {
+    "code": "rettro",
+    "aba": 2
+  },
+  {
+    "code": "labter1",
+    "aba": 5
+  },
+  {
+    "code": "phaino",
+    "aba": 1
+  },
+  {
+    "code": "grecor",
+    "aba": 1
+  },
+  {
+    "code": "compoo",
+    "aba": 1
+  },
+  {
+    "code": "redpha1",
+    "aba": 1
+  },
+  {
+    "code": "renpha",
+    "aba": 1
+  },
+  {
+    "code": "wilpha",
+    "aba": 1
+  },
+  {
+    "code": "rinphe",
+    "aba": 1
+  },
+  {
+    "code": "yelgro",
+    "aba": 4
+  },
+  {
+    "code": "robgro",
+    "aba": 1
+  },
+  {
+    "code": "bkhgro",
+    "aba": 1
+  },
+  {
+    "code": "shtalb",
+    "aba": 3
+  },
+  {
+    "code": "layalb",
+    "aba": 2
+  },
+  {
+    "code": "bkfalb",
+    "aba": 1
+  },
+  {
+    "code": "limalb1",
+    "aba": 5
+  },
+  {
+    "code": "grefla2",
+    "aba": 3
+  },
+  {
+    "code": "comred2",
+    "aba": 5
+  },
+  {
+    "code": "arcwar1",
+    "aba": 2
+  },
+  {
+    "code": "comchi1",
+    "aba": 4
+  },
+  {
+    "code": "arcwar2",
+    "aba": 4
+  },
+  {
+    "code": "duswar",
+    "aba": 4
+  },
+  {
+    "code": "yebwar3",
+    "aba": 4
+  },
+  {
+    "code": "palwar5",
+    "aba": 5
+  },
+  {
+    "code": "woowar",
+    "aba": 4
+  },
+  {
+    "code": "wlwwar",
+    "aba": 4
+  },
+  {
+    "code": "bkbmag1",
+    "aba": 1
+  },
+  {
+    "code": "yebmag",
+    "aba": 2
+  },
+  {
+    "code": "bkbwoo",
+    "aba": 2
+  },
+  {
+    "code": "attwoo1",
+    "aba": 2
+  },
+  {
+    "code": "greauk",
+    "aba": 6
+  },
+  {
+    "code": "pingro",
+    "aba": 1
+  },
+  {
+    "code": "gnttow",
+    "aba": 1
+  },
+  {
+    "code": "eastow",
+    "aba": 1
+  },
+  {
+    "code": "spotow",
+    "aba": 1
+  },
+  {
+    "code": "flctan",
+    "aba": 3
+  },
+  {
+    "code": "heptan",
+    "aba": 2
+  },
+  {
+    "code": "westan",
+    "aba": 1
+  },
+  {
+    "code": "scatan",
+    "aba": 1
+  },
+  {
+    "code": "sumtan",
+    "aba": 1
+  },
+  {
+    "code": "grekis",
+    "aba": 2
+  },
+  {
+    "code": "rosspo1",
+    "aba": 1
+  },
+  {
+    "code": "mckbun",
+    "aba": 3
+  },
+  {
+    "code": "snobun",
+    "aba": 1
+  },
+  {
+    "code": "whfibi",
+    "aba": 1
+  },
+  {
+    "code": "gloibi",
+    "aba": 1
+  },
+  {
+    "code": "eugplo",
+    "aba": 4
+  },
+  {
+    "code": "amgplo",
+    "aba": 1
+  },
+  {
+    "code": "pagplo",
+    "aba": 2
+  },
+  {
+    "code": "bkbplo",
+    "aba": 1
+  },
+  {
+    "code": "horgre",
+    "aba": 1
+  },
+  {
+    "code": "rengre",
+    "aba": 1
+  },
+  {
+    "code": "eargre",
+    "aba": 1
+  },
+  {
+    "code": "pibgre",
+    "aba": 1
+  },
+  {
+    "code": "bkcchi",
+    "aba": 1
+  },
+  {
+    "code": "carchi",
+    "aba": 1
+  },
+  {
+    "code": "gyhchi",
+    "aba": 3
+  },
+  {
+    "code": "mouchi",
+    "aba": 1
+  },
+  {
+    "code": "borchi2",
+    "aba": 1
+  },
+  {
+    "code": "chbchi",
+    "aba": 1
+  },
+  {
+    "code": "mexchi",
+    "aba": 2
+  },
+  {
+    "code": "buggna",
+    "aba": 1
+  },
+  {
+    "code": "calgna",
+    "aba": 2
+  },
+  {
+    "code": "bktgna",
+    "aba": 1
+  },
+  {
+    "code": "bkcgna",
+    "aba": 3
+  },
+  {
+    "code": "steeid",
+    "aba": 2
+  },
+  {
+    "code": "vesspa",
+    "aba": 1
+  },
+  {
+    "code": "#N/A",
+    "aba": 1
+  },
+  {
+    "code": "purswa1",
+    "aba": 2
+  },
+  {
+    "code": "sora",
+    "aba": 1
+  },
+  {
+    "code": "whcpet1",
+    "aba": 5
+  },
+  {
+    "code": "parpet1",
+    "aba": 5
+  },
+  {
+    "code": "gybmar",
+    "aba": 5
+  },
+  {
+    "code": "cubmar",
+    "aba": 5
+  },
+  {
+    "code": "soumar",
+    "aba": 5
+  },
+  {
+    "code": "purmar",
+    "aba": 1
+  },
+  {
+    "code": "brcmar1",
+    "aba": 4
+  },
+  {
+    "code": "prowar",
+    "aba": 1
+  },
+  {
+    "code": "sibacc",
+    "aba": 4
+  },
+  {
+    "code": "bushti",
+    "aba": 1
+  },
+  {
+    "code": "tahpet1",
+    "aba": 5
+  },
+  {
+    "code": "maupar",
+    "aba": 2
+  },
+  {
+    "code": "brnjay",
+    "aba": 4
+  },
+  {
+    "code": "flaowl",
+    "aba": 2
+  },
+  {
+    "code": "rempar",
+    "aba": 2
+  },
+  {
+    "code": "grnpar",
+    "aba": 2
+  },
+  {
+    "code": "mitpar",
+    "aba": 2
+  },
+  {
+    "code": "rorpar",
+    "aba": 2
+  },
+  {
+    "code": "ou",
+    "aba": 6
+  },
+  {
+    "code": "ercfra",
+    "aba": 2
+  },
+  {
+    "code": "chbsan",
+    "aba": 3
+  },
+  {
+    "code": "tripet1",
+    "aba": 3
+  },
+  {
+    "code": "berpet",
+    "aba": 3
+  },
+  {
+    "code": "whnpet",
+    "aba": 3
+  },
+  {
+    "code": "coopet",
+    "aba": 3
+  },
+  {
+    "code": "jufpet",
+    "aba": 3
+  },
+  {
+    "code": "feapet1",
+    "aba": 3
+  },
+  {
+    "code": "grwpet2",
+    "aba": 5
+  },
+  {
+    "code": "bkcpet",
+    "aba": 2
+  },
+  {
+    "code": "herpet2",
+    "aba": 4
+  },
+  {
+    "code": "bonpet",
+    "aba": 3
+  },
+  {
+    "code": "motpet",
+    "aba": 2
+  },
+  {
+    "code": "stepet",
+    "aba": 4
+  },
+  {
+    "code": "madpet",
+    "aba": 5
+  },
+  {
+    "code": "kerpet",
+    "aba": 4
+  },
+  {
+    "code": "bkwpet",
+    "aba": 3
+  },
+  {
+    "code": "hawpet1",
+    "aba": 2
+  },
+  {
+    "code": "solpet1",
+    "aba": 4
+  },
+  {
+    "code": "murpet",
+    "aba": 3
+  },
+  {
+    "code": "grsfly1",
+    "aba": 5
+  },
+  {
+    "code": "casauk",
+    "aba": 1
+  },
+  {
+    "code": "litshe1",
+    "aba": 4
+  },
+  {
+    "code": "bryshe1",
+    "aba": 5
+  },
+  {
+    "code": "audshe",
+    "aba": 1
+  },
+  {
+    "code": "chrshe",
+    "aba": 3
+  },
+  {
+    "code": "towshe2",
+    "aba": 2
+  },
+  {
+    "code": "bkvshe",
+    "aba": 2
+  },
+  {
+    "code": "manshe",
+    "aba": 2
+  },
+  {
+    "code": "revbul",
+    "aba": 2
+  },
+  {
+    "code": "rewbul",
+    "aba": 2
+  },
+  {
+    "code": "bawswa1",
+    "aba": 5
+  },
+  {
+    "code": "verfly",
+    "aba": 1
+  },
+  {
+    "code": "eurbul",
+    "aba": 4
+  },
+  {
+    "code": "botgra",
+    "aba": 1
+  },
+  {
+    "code": "grtgra",
+    "aba": 1
+  },
+  {
+    "code": "comgra",
+    "aba": 1
+  },
+  {
+    "code": "clarai11",
+    "aba": 1
+  },
+  {
+    "code": "kinrai4",
+    "aba": 1
+  },
+  {
+    "code": "virrai",
+    "aba": 1
+  },
+  {
+    "code": "ridrai1",
+    "aba": 2
+  },
+  {
+    "code": "#N/A",
+    "aba": 2
+  },
+  {
+    "code": "ameavo",
+    "aba": 1
+  },
+  {
+    "code": "gockin",
+    "aba": 1
+  },
+  {
+    "code": "lekfin",
+    "aba": 6
+  },
+  {
+    "code": "grkfin",
+    "aba": 6
+  },
+  {
+    "code": "rosgul",
+    "aba": 3
+  },
+  {
+    "code": "crcgro",
+    "aba": 4
+  },
+  {
+    "code": "mcclon",
+    "aba": 2
+  },
+  {
+    "code": "thbpar",
+    "aba": 5
+  },
+  {
+    "code": "aztthr",
+    "aba": 4
+  },
+  {
+    "code": "banswa",
+    "aba": 1
+  },
+  {
+    "code": "relkit",
+    "aba": 2
+  },
+  {
+    "code": "bklkit",
+    "aba": 1
+  },
+  {
+    "code": "snakit",
+    "aba": 2
+  },
+  {
+    "code": "roahaw",
+    "aba": 4
+  },
+  {
+    "code": "blkski",
+    "aba": 1
+  },
+  {
+    "code": "rocwre",
+    "aba": 1
+  },
+  {
+    "code": "berhum",
+    "aba": 3
+  },
+  {
+    "code": "sibsto1",
+    "aba": 4
+  },
+  {
+    "code": "blkpho",
+    "aba": 1
+  },
+  {
+    "code": "easpho",
+    "aba": 1
+  },
+  {
+    "code": "saypho",
+    "aba": 1
+  },
+  {
+    "code": "amewoo",
+    "aba": 1
+  },
+  {
+    "code": "eurwoo",
+    "aba": 5
+  },
+  {
+    "code": "ovenbi1",
+    "aba": 1
+  },
+  {
+    "code": "calhum",
+    "aba": 1
+  },
+  {
+    "code": "bumhum",
+    "aba": 5
+  },
+  {
+    "code": "brthum",
+    "aba": 1
+  },
+  {
+    "code": "rufhum",
+    "aba": 1
+  },
+  {
+    "code": "allhum",
+    "aba": 1
+  },
+  {
+    "code": "comcan",
+    "aba": 3
+  },
+  {
+    "code": "norpar",
+    "aba": 1
+  },
+  {
+    "code": "btbwar",
+    "aba": 1
+  },
+  {
+    "code": "babwar",
+    "aba": 1
+  },
+  {
+    "code": "cerwar",
+    "aba": 2
+  },
+  {
+    "code": "gchwar",
+    "aba": 2
+  },
+  {
+    "code": "hoowar",
+    "aba": 1
+  },
+  {
+    "code": "yerwar",
+    "aba": 1
+  },
+  {
+    "code": "prawar",
+    "aba": 1
+  },
+  {
+    "code": "yetwar",
+    "aba": 1
+  },
+  {
+    "code": "bkbwar",
+    "aba": 1
+  },
+  {
+    "code": "grawar",
+    "aba": 1
+  },
+  {
+    "code": "kirwar",
+    "aba": 2
+  },
+  {
+    "code": "magwar",
+    "aba": 1
+  },
+  {
+    "code": "btywar",
+    "aba": 1
+  },
+  {
+    "code": "herwar",
+    "aba": 1
+  },
+  {
+    "code": "palwar",
+    "aba": 1
+  },
+  {
+    "code": "chswar",
+    "aba": 1
+  },
+  {
+    "code": "yelwar",
+    "aba": 1
+  },
+  {
+    "code": "pinwar",
+    "aba": 1
+  },
+  {
+    "code": "tropar",
+    "aba": 3
+  },
+  {
+    "code": "amered",
+    "aba": 1
+  },
+  {
+    "code": "bkpwar",
+    "aba": 1
+  },
+  {
+    "code": "camwar",
+    "aba": 1
+  },
+  {
+    "code": "towwar",
+    "aba": 1
+  },
+  {
+    "code": "btnwar",
+    "aba": 1
+  },
+  {
+    "code": "moublu",
+    "aba": 1
+  },
+  {
+    "code": "wesblu",
+    "aba": 1
+  },
+  {
+    "code": "easblu",
+    "aba": 1
+  },
+  {
+    "code": "baitea",
+    "aba": 4
+  },
+  {
+    "code": "saffin",
+    "aba": 2
+  },
+  {
+    "code": "rebnut",
+    "aba": 1
+  },
+  {
+    "code": "whbnut",
+    "aba": 1
+  },
+  {
+    "code": "bnhnut",
+    "aba": 1
+  },
+  {
+    "code": "pygnut",
+    "aba": 1
+  },
+  {
+    "code": "speeid",
+    "aba": 2
+  },
+  {
+    "code": "comeid",
+    "aba": 1
+  },
+  {
+    "code": "kineid",
+    "aba": 2
+  },
+  {
+    "code": "norsho",
+    "aba": 1
+  },
+  {
+    "code": "cintea",
+    "aba": 1
+  },
+  {
+    "code": "buwtea",
+    "aba": 1
+  },
+  {
+    "code": "gargan",
+    "aba": 4
+  },
+  {
+    "code": "rensap",
+    "aba": 1
+  },
+  {
+    "code": "rebsap",
+    "aba": 1
+  },
+  {
+    "code": "wilsap",
+    "aba": 1
+  },
+  {
+    "code": "yebsap",
+    "aba": 1
+  },
+  {
+    "code": "wesspi",
+    "aba": 3
+  },
+  {
+    "code": "lawgol",
+    "aba": 2
+  },
+  {
+    "code": "pinsis",
+    "aba": 1
+  },
+  {
+    "code": "lesgol",
+    "aba": 1
+  },
+  {
+    "code": "eursis",
+    "aba": 5
+  },
+  {
+    "code": "amegfi",
+    "aba": 1
+  },
+  {
+    "code": "dickci",
+    "aba": 1
+  },
+  {
+    "code": "bkcspa",
+    "aba": 1
+  },
+  {
+    "code": "brespa",
+    "aba": 1
+  },
+  {
+    "code": "clcspa",
+    "aba": 1
+  },
+  {
+    "code": "chispa",
+    "aba": 1
+  },
+  {
+    "code": "fiespa",
+    "aba": 1
+  },
+  {
+    "code": "worspa",
+    "aba": 5
+  },
+  {
+    "code": "amtspa",
+    "aba": 1
+  },
+  {
+    "code": "whcsee1",
+    "aba": 3
+  },
+  {
+    "code": "nrwswa",
+    "aba": 1
+  },
+  {
+    "code": "lotjae",
+    "aba": 1
+  },
+  {
+    "code": "sopsku1",
+    "aba": 2
+  },
+  {
+    "code": "parjae",
+    "aba": 1
+  },
+  {
+    "code": "pomjae",
+    "aba": 1
+  },
+  {
+    "code": "gresku1",
+    "aba": 3
+  },
+  {
+    "code": "roster",
+    "aba": 2
+  },
+  {
+    "code": "forter",
+    "aba": 1
+  },
+  {
+    "code": "comter",
+    "aba": 1
+  },
+  {
+    "code": "arcter",
+    "aba": 1
+  },
+  {
+    "code": "litter1",
+    "aba": 4
+  },
+  {
+    "code": "leater1",
+    "aba": 1
+  },
+  {
+    "code": "spodov",
+    "aba": 2
+  },
+  {
+    "code": "eucdov",
+    "aba": 1
+  },
+  {
+    "code": "ortdov",
+    "aba": 4
+  },
+  {
+    "code": "eutdov",
+    "aba": 5
+  },
+  {
+    "code": "whcswi",
+    "aba": 4
+  },
+  {
+    "code": "grgowl",
+    "aba": 2
+  },
+  {
+    "code": "spoowl",
+    "aba": 2
+  },
+  {
+    "code": "brdowl",
+    "aba": 1
+  },
+  {
+    "code": "#N/A",
+    "aba": 5
+  },
+  {
+    "code": "#N/A",
+    "aba": 1
+  },
+  {
+    "code": "easmea",
+    "aba": 1
+  },
+  {
+    "code": "wesmea",
+    "aba": 1
+  },
+  {
+    "code": "eursta",
+    "aba": 1
+  },
+  {
+    "code": "masboo",
+    "aba": 2
+  },
+  {
+    "code": "nazboo1",
+    "aba": 4
+  },
+  {
+    "code": "brnboo",
+    "aba": 2
+  },
+  {
+    "code": "bfoboo",
+    "aba": 4
+  },
+  {
+    "code": "refboo",
+    "aba": 2
+  },
+  {
+    "code": "nohowl",
+    "aba": 2
+  },
+  {
+    "code": "#N/A",
+    "aba": 5
+  },
+  {
+    "code": "ancmur",
+    "aba": 2
+  },
+  {
+    "code": "cramur",
+    "aba": 3
+  },
+  {
+    "code": "xanmur1",
+    "aba": 3
+  },
+  {
+    "code": "xanmur2",
+    "aba": 2
+  },
+  {
+    "code": "anpswi",
+    "aba": 5
+  },
+  {
+    "code": "leagre",
+    "aba": 2
+  },
+  {
+    "code": "manswa1",
+    "aba": 5
+  },
+  {
+    "code": "treswa",
+    "aba": 1
+  },
+  {
+    "code": "bahswa",
+    "aba": 4
+  },
+  {
+    "code": "vigswa",
+    "aba": 1
+  },
+  {
+    "code": "comshe",
+    "aba": 4
+  },
+  {
+    "code": "refblu",
+    "aba": 4
+  },
+  {
+    "code": "layfin",
+    "aba": 3
+  },
+  {
+    "code": "nihfin",
+    "aba": 3
+  },
+  {
+    "code": "himsno",
+    "aba": 2
+  },
+  {
+    "code": "whcalb1",
+    "aba": 4
+  },
+  {
+    "code": "yenalb",
+    "aba": 4
+  },
+  {
+    "code": "shyalb2",
+    "aba": 5
+  },
+  {
+    "code": "bkbalb",
+    "aba": 4
+  },
+  {
+    "code": "salalb1",
+    "aba": 5
+  },
+  {
+    "code": "grcter1",
+    "aba": 5
+  },
+  {
+    "code": "eleter1",
+    "aba": 1
+  },
+  {
+    "code": "royter1",
+    "aba": 1
+  },
+  {
+    "code": "santer1",
+    "aba": 1
+  },
+  {
+    "code": "bewwre",
+    "aba": 1
+  },
+  {
+    "code": "sinwre1",
+    "aba": 5
+  },
+  {
+    "code": "carwre",
+    "aba": 1
+  },
+  {
+    "code": "yefgra1",
+    "aba": 3
+  },
+  {
+    "code": "btther1",
+    "aba": 5
+  },
+  {
+    "code": "mastit1",
+    "aba": 5
+  },
+  {
+    "code": "benthr",
+    "aba": 2
+  },
+  {
+    "code": "crithr",
+    "aba": 2
+  },
+  {
+    "code": "cubthr",
+    "aba": 1
+  },
+  {
+    "code": "lecthr",
+    "aba": 2
+  },
+  {
+    "code": "lobthr",
+    "aba": 2
+  },
+  {
+    "code": "calthr",
+    "aba": 2
+  },
+  {
+    "code": "brnthr",
+    "aba": 1
+  },
+  {
+    "code": "gyttat1",
+    "aba": 3
+  },
+  {
+    "code": "spored",
+    "aba": 4
+  },
+  {
+    "code": "lesyel",
+    "aba": 1
+  },
+  {
+    "code": "woosan",
+    "aba": 2
+  },
+  {
+    "code": "wantat1",
+    "aba": 1
+  },
+  {
+    "code": "greyel",
+    "aba": 1
+  },
+  {
+    "code": "comgre",
+    "aba": 3
+  },
+  {
+    "code": "grnsan",
+    "aba": 4
+  },
+  {
+    "code": "willet1",
+    "aba": 1
+  },
+  {
+    "code": "solsan",
+    "aba": 1
+  },
+  {
+    "code": "marsan",
+    "aba": 4
+  },
+  {
+    "code": "comred1",
+    "aba": 4
+  },
+  {
+    "code": "houwre",
+    "aba": 1
+  },
+  {
+    "code": "winwre3",
+    "aba": 1
+  },
+  {
+    "code": "pacwre1",
+    "aba": 1
+  },
+  {
+    "code": "eletro",
+    "aba": 2
+  },
+  {
+    "code": "whtrob1",
+    "aba": 4
+  },
+  {
+    "code": "dusthr2",
+    "aba": 4
+  },
+  {
+    "code": "clcrob",
+    "aba": 2
+  },
+  {
+    "code": "redwin",
+    "aba": 4
+  },
+  {
+    "code": "eurbla",
+    "aba": 5
+  },
+  {
+    "code": "amerob",
+    "aba": 1
+  },
+  {
+    "code": "dusthr1",
+    "aba": 5
+  },
+  {
+    "code": "eyethr",
+    "aba": 3
+  },
+  {
+    "code": "sonthr1",
+    "aba": 5
+  },
+  {
+    "code": "fieldf",
+    "aba": 4
+  },
+  {
+    "code": "relthr1",
+    "aba": 5
+  },
+  {
+    "code": "rubrob",
+    "aba": 3
+  },
+  {
+    "code": "misthr1",
+    "aba": 5
+  },
+  {
+    "code": "grpchi",
+    "aba": 2
+  },
+  {
+    "code": "lepchi",
+    "aba": 2
+  },
+  {
+    "code": "shtgro",
+    "aba": 2
+  },
+  {
+    "code": "logkin",
+    "aba": 5
+  },
+  {
+    "code": "coukin",
+    "aba": 2
+  },
+  {
+    "code": "thbkin",
+    "aba": 2
+  },
+  {
+    "code": "grykin",
+    "aba": 2
+  },
+  {
+    "code": "sctfly",
+    "aba": 1
+  },
+  {
+    "code": "trokin",
+    "aba": 2
+  },
+  {
+    "code": "fotfly",
+    "aba": 3
+  },
+  {
+    "code": "easkin",
+    "aba": 1
+  },
+  {
+    "code": "weskin",
+    "aba": 1
+  },
+  {
+    "code": "caskin",
+    "aba": 1
+  },
+  {
+    "code": "brnowl",
+    "aba": 1
+  },
+  {
+    "code": "hoopoe",
+    "aba": 5
+  },
+  {
+    "code": "commur",
+    "aba": 1
+  },
+  {
+    "code": "thbmur",
+    "aba": 1
+  },
+  {
+    "code": "pelcor",
+    "aba": 1
+  },
+  {
+    "code": "bracor",
+    "aba": 1
+  },
+  {
+    "code": "refcor",
+    "aba": 2
+  },
+  {
+    "code": "norlap",
+    "aba": 4
+  },
+  {
+    "code": "bacwar",
+    "aba": 6
+  },
+  {
+    "code": "gowwar",
+    "aba": 2
+  },
+  {
+    "code": "buwwar",
+    "aba": 1
+  },
+  {
+    "code": "bkwvir",
+    "aba": 2
+  },
+  {
+    "code": "bkcvir1",
+    "aba": 2
+  },
+  {
+    "code": "belvir",
+    "aba": 1
+  },
+  {
+    "code": "casvir",
+    "aba": 1
+  },
+  {
+    "code": "thbvir",
+    "aba": 4
+  },
+  {
+    "code": "yetvir",
+    "aba": 1
+  },
+  {
+    "code": "yegvir",
+    "aba": 3
+  },
+  {
+    "code": "warvir",
+    "aba": 1
+  },
+  {
+    "code": "whevir",
+    "aba": 1
+  },
+  {
+    "code": "cubvir1",
+    "aba": 5
+  },
+  {
+    "code": "hutvir",
+    "aba": 1
+  },
+  {
+    "code": "yucvir",
+    "aba": 5
+  },
+  {
+    "code": "reevir1",
+    "aba": 1
+  },
+  {
+    "code": "phivir",
+    "aba": 1
+  },
+  {
+    "code": "plsvir",
+    "aba": 1
+  },
+  {
+    "code": "buhvir",
+    "aba": 1
+  },
+  {
+    "code": "gryvir",
+    "aba": 2
+  },
+  {
+    "code": "greama",
+    "aba": 6
+  },
+  {
+    "code": "yehbla",
+    "aba": 1
+  },
+  {
+    "code": "sabgul",
+    "aba": 1
+  },
+  {
+    "code": "tersan",
+    "aba": 3
+  },
+  {
+    "code": "layrai",
+    "aba": 6
+  },
+  {
+    "code": "hawrai",
+    "aba": 6
+  },
+  {
+    "code": "whwdov",
+    "aba": 1
+  },
+  {
+    "code": "zendov",
+    "aba": 4
+  },
+  {
+    "code": "moudov",
+    "aba": 1
+  },
+  {
+    "code": "whtspa",
+    "aba": 1
+  },
+  {
+    "code": "gocspa",
+    "aba": 1
+  },
+  {
+    "code": "whcspa",
+    "aba": 1
+  },
+  {
+    "code": "harspa",
+    "aba": 1
+  },
+  {
+    "code": "warwhe1",
+    "aba": 2
+  }
+]

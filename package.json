@@ -2,6 +2,7 @@
   "name": "global-rare-ebird",
   "version": "0.2.0",
   "title": "Global Rare eBird",
+  "description": "A map of all rare birds seen on the globe with eBird data.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zoziologie/global-rare-ebird.git"
