@@ -425,10 +425,13 @@
         website.
       </p>
       <b-form-group>
+        <b-form-checkbox v-model="detailSelected">
+          fetch information on media and comments</b-form-checkbox
+        >
         <b-form-checkbox v-model="mediaSelected">
           fetch only observations with media</b-form-checkbox
         >
-        <b-form-checkbox v-model="hotspot">
+        <b-form-checkbox v-model="hotspotSelected">
           fetch only observations made at a hotspot</b-form-checkbox
         >
       </b-form-group>
@@ -550,7 +553,6 @@ export default {
       debounce_time: 200,
       backMax: 3,
       distMax: 50,
-      hotspot: false,
       regionSearch: [],
       regionSelected: [],
       observationsRegion: [],
@@ -560,6 +562,8 @@ export default {
       distSelected: 50,
       mapSelected: true,
       mediaSelected: false,
+      hotspotSelected: false,
+      detailSelected: false,
       filterSearch: "",
       filterSearchOptions: [
         { text: "Common Name", value: "comName" },
@@ -605,15 +609,19 @@ export default {
                 this.location.latitude +
                 "&lng=" +
                 this.location.longitude +
-                "&detail=full&key=vcs68p4j67pt&back=" +
+                "&key=vcs68p4j67pt&detail=" +
+                (this.detailSelected ? "full" : "simple") +
+                "&back=" +
                 this.backMax +
                 "&dist=" +
                 this.distMax +
                 "&hotspot=" +
-                this.hotspot
+                this.hotspotSelected
             )
             .then((response) => {
-              this.observationsMylocation = [...this.processObs(response.data)];
+              this.observationsMylocation = [
+                ...this.processObs(response.data, "mylocation"),
+              ];
               if (this.observationsMylocation.length > 0) {
                 this.$refs.map.mapObject.fitBounds(
                   this.observationsMylocation.map((m) => m.latLng)
@@ -630,13 +638,17 @@ export default {
         .get(
           "https://api.ebird.org/v2/data/obs/" +
             selectedOption.code +
-            "/recent/notable?detail=full&key=vcs68p4j67pt&back=" +
+            "/recent/notable?key=vcs68p4j67pt&detail=" +
+            (this.detailSelected ? "full" : "simple") +
+            "&back=" +
             this.backMax +
             "&hotspot=" +
-            this.hotspot
+            this.hotspotSelected
         )
         .then((response) => {
-          this.observationsRegion.push(...this.processObs(response.data));
+          this.observationsRegion.push(
+            ...this.processObs(response.data, selectedOption.code)
+          );
           if (this.observationsRegion.length > 0) {
             this.$refs.map.mapObject.fitBounds(
               this.observationsRegion.map((m) => m.latLng)
@@ -647,9 +659,7 @@ export default {
     },
     removeRegion(removedOption) {
       this.observationsRegion = this.observationsRegion.filter(
-        (e) =>
-          (e.countryCode != removedOption.code) &
-          (e.subnational1Code != removedOption.code)
+        (e) => e.regionCode != removedOption.code
       );
       if (this.observationsRegion.length > 0) {
         this.$refs.map.mapObject.fitBounds(
@@ -657,46 +667,56 @@ export default {
         );
       }
     },
-    processObs(obs) {
-      var id = obs.map((item) => item.obsId);
-      return obs
-        .filter((val, index) => id.indexOf(val.obsId) === index)
-        .map((e) => {
-          let o = {};
-          o.comName = e.comName;
-          o.sciName = e.sciName;
-          o.speciesCode = e.speciesCode;
-          o.hasComments = e.hasComments;
-          o.hasRichMedia = e.hasRichMedia;
-          o.howMany = e.howMany;
-          o.locName = e.locName;
-          o.obsId = e.obsId;
-          o.locId = e.locId;
-          o.locationPrivate = e.locationPrivate;
-          o.subId = e.subId;
-          o.userDisplayName = e.userDisplayName;
-          o.subnational1Code = e.subnational1Code;
-          o.countryCode = e.countryCode;
-          if (this.location) {
-            o.distToMe = this.calcCrow(
-              e.lat,
-              e.lng,
-              this.location.latitude,
-              this.location.longitude
-            );
-          }
-          o.daysAgo = moment()
-            .startOf("day")
-            .diff(moment(e.obsDt).startOf("day"), "days");
-          o.daysAgoFmt =
-            o.daysAgo == 0
-              ? "today"
-              : o.daysAgo == 1
-              ? "yesterday"
-              : o.daysAgo + " days ago";
-          o.latLng = latLng(e.lat, e.lng);
-          return o;
-        });
+    processObs(obs, regionCode) {
+      var id = obs.map((item) => item.speciesCode + item.subId);
+      return (
+        obs
+          // This filtering is due when using detail=full in api. Maybe because of adding comments/media later? Need to check, but it would be then worth filtering more
+          .filter(
+            (val, index) => id.indexOf(val.speciesCode + val.subId) === index
+          )
+          .map((e) => {
+            let o = {};
+            o.regionCode = regionCode;
+
+            o.comName = e.comName;
+            o.sciName = e.sciName;
+            o.speciesCode = e.speciesCode;
+            o.howMany = e.howMany;
+            o.locId = e.locId;
+            o.subId = e.subId;
+            o.locName = e.locName;
+            o.locationPrivate = e.locationPrivate;
+            o.daysAgo = moment()
+              .startOf("day")
+              .diff(moment(e.obsDt).startOf("day"), "days");
+            o.daysAgoFmt =
+              o.daysAgo == 0
+                ? "today"
+                : o.daysAgo == 1
+                ? "yesterday"
+                : o.daysAgo + " days ago";
+            o.latLng = latLng(e.lat, e.lng);
+
+            // Following only present with detail=full in url but we found a way arround for all of them
+            //o.obsId = e.obsId;
+            //o.userDisplayName = "userDisplayName" in e ? e.userDisplayName : "";
+            //o.subnational1Code = e.subnational1Code;
+            //o.countryCode = e.countryCode;
+            o.hasComments = e.hasComments;
+            o.hasRichMedia = e.hasRichMedia;
+
+            if (this.location) {
+              o.distToMe = this.calcCrow(
+                e.lat,
+                e.lng,
+                this.location.latitude,
+                this.location.longitude
+              );
+            }
+            return o;
+          })
+      );
       /*.map((o) => {
           
           axios
@@ -799,7 +819,7 @@ export default {
       if (this.mediaSelected) {
         obsfiltered = obsfiltered.filter((x) => x.hasRichMedia);
       }
-      if (this.hotspot) {
+      if (this.hotspotSelected) {
         obsfiltered = obsfiltered.filter((x) => !x.locationPrivate);
       }
       if (this.mapSelected) {
@@ -853,7 +873,7 @@ export default {
       .then((response) => {
         /*response.data = response.data.filter(function (obj) {
           return !["US", "CA"].includes(obj.code);
-        });
+        });*/
         this.regionSearch = [...this.regionSearch, ...response.data];
         axios
           .get(
