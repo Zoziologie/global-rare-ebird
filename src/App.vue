@@ -10,9 +10,8 @@
         <l-control-layers position="topright"></l-control-layers>
         <l-control position="topleft">
           <b-button v-b-toggle.sidebar-1
-            ><b-icon-layout-sidebar-inset></b-icon-layout-sidebar-inset>
-            Sidebar</b-button
-          >
+            ><b-icon-layout-sidebar-inset></b-icon-layout-sidebar-inset
+          ></b-button>
         </l-control>
         <l-tile-layer
           v-for="tileProvider in tileProviders"
