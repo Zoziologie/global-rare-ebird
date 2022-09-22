@@ -166,9 +166,11 @@
 
                   <multiselect
                     v-model="regionSelected"
-                    :options="regionSearch"
+                    :options="regionSearchFiltered"
                     :multiple="true"
                     :custom-label="customLabel"
+                    @search-change="asyncFind"
+                    :internal-search="false"
                     track-by="name"
                     placeholder="Select a region "
                     :select-label="''"
@@ -608,6 +610,7 @@ export default {
       backMax: 3,
       distMax: 50,
       regionSearch: [],
+      regionSearchFiltered: [],
       regionSelected: [],
       observationsRegion: [],
       observationsMylocation: [],
@@ -869,6 +872,13 @@ export default {
         return `${name}`;
       }
     },
+    asyncFind(query) {
+      this.regionSearchFiltered = this.regionSearch.filter((o) =>
+        Object.keys(o).some((k) =>
+          o[k].toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    },
   },
   computed: {
     linkUrl: function () {
@@ -996,6 +1006,7 @@ export default {
                     });
                   }
                 }
+                this.regionSearchFiltered = this.regionSearch;
               });
           });
       });
