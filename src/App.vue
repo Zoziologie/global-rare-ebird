@@ -430,7 +430,12 @@
                 </b-input-group-prepend>
               </b-input-group>
             </b-tooltip>
-            <!--<a href="https://documenter.getpostman.com/view/664302/S1ENwy59" target="_blank"> <b-img src="/ebird.svg" style="height: 16px;"></b-img></a>-->
+            <a
+              href="https://documenter.getpostman.com/view/664302/S1ENwy59"
+              target="_blank"
+            >
+              <b-img :src="ebirdLogo" style="height: 16px"></b-img
+            ></a>
             <a
               href="https://zoziologie.raphaelnussbaumer.com/"
               target="_blank"
@@ -534,7 +539,7 @@ import {
 import moment from "moment";
 import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
 
-// import ebirdLogo from './assets/eBird.svg'
+import ebirdLogo from "./assets/ebird_e_w.svg";
 import hotspotIconPerso from "./assets/hotspot-icon_perso_small.png";
 import hotspotIconHotspot from "./assets/hotspot-icon-hotspot.png";
 import hotspotIconEmpty from "./assets/hotspot-icon_empty.png";
@@ -561,6 +566,7 @@ export default {
   data() {
     return {
       logo: logo,
+      ebirdLogo: ebirdLogo,
       hotspotIconHotspot: hotspotIconHotspot,
       hotspotIconPerso: hotspotIconPerso,
       hotspotIconEmpty: hotspotIconEmpty,
