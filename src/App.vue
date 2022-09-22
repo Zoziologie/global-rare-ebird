@@ -35,9 +35,9 @@
             @click="clickMarker(obs)"
           >
             <l-icon
-              :popup-anchor="[0, -19]"
-              :icon-anchor="[15, 19]"
-              :icon-size="[22, 30]"
+              :popup-anchor="[0, -34]"
+              :icon-anchor="[12.5, 34]"
+              :icon-size="[25, 34]"
               :icon-url="
                 obs.locationPrivate ? hotspotIconPerso : hotspotIconHotspot
               "
@@ -47,9 +47,9 @@
 
         <l-marker ref="marker" v-if="popup != false" :lat-lng="popup.latLng">
           <l-icon
-            :popup-anchor="[0, -19]"
-            :icon-anchor="[15, 19]"
-            :icon-size="[22, 30]"
+            :popup-anchor="[0, -34]"
+            :icon-anchor="[12.5, 34]"
+            :icon-size="[25, 34]"
             :icon-url="hotspotIconEmpty"
           />
           <l-popup>
