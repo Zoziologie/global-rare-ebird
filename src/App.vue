@@ -28,9 +28,9 @@
         >
           <l-marker
             ref="markers"
-            :name="obs.speciesCode + obs.subId"
+            :name="obs.speciesCode + obs.locId"
             v-for="obs in observationsFiltered"
-            :key="obs.speciesCode + obs.subId"
+            :key="obs.speciesCode + obs.locId"
             :lat-lng="obs.latLng"
             @click="clickMarker(obs)"
           >
@@ -56,6 +56,10 @@
             <b-row class="mb-2">
               <b-col>
                 <h5>{{ popup.comName }}</h5>
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col>
                 <a
                   v-bind:href="'https://ebird.org/hotspot/' + popup.locId"
                   target="_blank"
@@ -65,41 +69,8 @@
                 >
                 <span v-else>{{ popup.locName }}</span>
               </b-col>
-            </b-row>
-            <b-row class="mb-2">
-              <b-col class="d-flex w-100 justify-content-between">
-                <small>{{ popup.daysAgoFmt }}</small>
-                <small>Count: {{ popup.howMany }}</small>
-                <span v-if="popup.hasRichMedia | popup.hasComments">
-                  <span v-if="popup.hasRichMedia">
-                    <small
-                      ><b-icon-camera-fill class="mr-1"></b-icon-camera-fill
-                    ></small>
-                  </span>
-                  <span v-if="popup.hasComments">
-                    <small
-                      ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
-                    ></small>
-                  </span>
-                </span>
-              </b-col>
-            </b-row>
-            <b-row class="mb-2">
-              <b-col class="d-flex w-100 bg-green">
-                <b-button
-                  v-bind:href="
-                    'https://ebird.org/checklist/' +
-                    popup.subId +
-                    '#' +
-                    popup.speciesCode
-                  "
-                  target="_blank"
-                  title="eBird checklist"
-                  class="mr-1 flex-grow-1"
-                >
-                  <font-awesome-icon icon="clone" />
-                </b-button>
-                <b-button
+              <b-col v-if="!popup.locationPrivate" md="auto">
+                <a
                   v-bind:href="
                     'https://www.google.com/maps?saddr=My+Location&daddr=' +
                     popup.latLng.lat +
@@ -108,10 +79,43 @@
                   "
                   target="_blank"
                   title="direction on google map"
-                  class="flex-grow-1"
                 >
                   <font-awesome-icon icon="directions" />
-                </b-button>
+                </a>
+              </b-col>
+            </b-row>
+            <b-row v-for="obs in popup.sighting" :key="obs.subId">
+              <b-col class="d-flex w-100 justify-content-between">
+                <small
+                  >{{ obs.howMany }} ind., {{ daysAgoFmt(obs.daysAgo) }}
+                </small>
+                <span v-if="obs.hasRichMedia | obs.hasComments">
+                  <span v-if="obs.hasRichMedia">
+                    <small
+                      ><b-icon-camera-fill class="mr-1"></b-icon-camera-fill
+                    ></small>
+                  </span>
+                  <span v-if="obs.hasComments">
+                    <small
+                      ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
+                    ></small>
+                  </span>
+                </span>
+              </b-col>
+              <b-col>
+                <a
+                  v-bind:href="
+                    'https://ebird.org/checklist/' +
+                    obs.subId +
+                    '#' +
+                    popup.speciesCode
+                  "
+                  target="_blank"
+                  title="eBird checklist"
+                  class="mr-1 flex-grow-1"
+                >
+                  <font-awesome-icon icon="clone" />
+                </a>
               </b-col>
             </b-row>
           </l-popup>
@@ -757,12 +761,6 @@ export default {
         o.daysAgo = moment()
           .startOf("day")
           .diff(moment(e.obsDt).startOf("day"), "days");
-        o.daysAgoFmt =
-          o.daysAgo == 0
-            ? "today"
-            : o.daysAgo == 1
-            ? "yesterday"
-            : o.daysAgo + " days ago";
         o.latLng = latLng(e.lat, e.lng);
 
         // Following only present with detail=full in url but we found a way arround for all of them
@@ -781,13 +779,9 @@ export default {
             this.location.longitude
           );
         }
-
         o.aba = "aba" in e ? e.aba : 10;
-
         return o;
       });
-      return obs;
-
       /*.map((o) => {
           axios
         .get(
@@ -799,6 +793,37 @@ export default {
         });
         return o;
         })*/
+      return obs.reduce((acc, o) => {
+        let sighting = {
+          subId: o.subId,
+          howMany: o.howMany,
+          daysAgo: o.daysAgo,
+          hasComments: o.hasComments,
+          hasRichMedia: o.hasRichMedia,
+        };
+        let found = acc.find(
+          (a) => a.locName + a.comName == o.locName + o.comName
+        );
+
+        if (found) {
+          found.sighting.push(sighting);
+        } else {
+          acc.push({
+            speciesCode: o.speciesCode,
+            comName: o.comName,
+            sciName: o.sciName,
+            aba: o.aba,
+            locId: o.locId,
+            locName: o.locName,
+            latLng: o.latLng,
+            distToMe: o.distToMe,
+            locationPrivate: o.locationPrivate,
+            regionCode: o.regionCode,
+            sighting: [sighting],
+          });
+        }
+        return acc;
+      }, []);
     },
     reload(newBack) {
       this.backMax = newBack;
@@ -879,6 +904,13 @@ export default {
         )
       );
     },
+    daysAgoFmt(daysAgo) {
+      return daysAgo == 0
+        ? "today"
+        : daysAgo == 1
+        ? "yesterday"
+        : daysAgo + " days ago";
+    },
   },
   computed: {
     linkUrl: function () {
@@ -903,9 +935,22 @@ export default {
       var obsfiltered = this.isMylocation
         ? this.observationsMylocation
         : this.observationsRegion;
-      obsfiltered = obsfiltered.filter(
-        (x) => x.daysAgo <= parseInt(this.backSelected)
-      );
+
+      obsfiltered = obsfiltered.reduce((acc, curr) => {
+        curr.sighting = curr.sighting.filter(
+          (x) => x.daysAgo <= parseInt(this.backSelected)
+        );
+        if (this.mediaSelected) {
+          curr.sighting = curr.sighting.filter((x) => x.hasRichMedia);
+        }
+        if (this.hotspotSelected) {
+          curr.sighting = curr.sighting.filter((x) => !x.locationPrivate);
+        }
+        if (curr.sighting.length > 0) {
+          acc.push(curr);
+        }
+        return acc;
+      }, []);
       if (this.isMylocation) {
         obsfiltered = obsfiltered.filter(
           (x) => x.distToMe <= this.distSelected
@@ -914,12 +959,6 @@ export default {
       obsfiltered = obsfiltered.filter(
         (x) => x.aba >= parseInt(this.aba_limit)
       );
-      if (this.mediaSelected) {
-        obsfiltered = obsfiltered.filter((x) => x.hasRichMedia);
-      }
-      if (this.hotspotSelected) {
-        obsfiltered = obsfiltered.filter((x) => !x.locationPrivate);
-      }
       if (this.mapSelected) {
         obsfiltered = obsfiltered.filter((x) =>
           this.bounds.pad(-0.05).contains(x.latLng)
@@ -930,8 +969,15 @@ export default {
           o[k].toLowerCase().includes(this.filterSearch.toLowerCase())
         )
       );
+
       return obsfiltered
-        .sort((a, b) => (a.daysAgo < b.daysAgo ? 1 : -1))
+        .sort((a, b) => (a.aba > b.aba ? 1 : -1))
+        .sort((a, b) =>
+          a.sighting.reduce((o, acc) => Math.min(o.daysAgo, acc), 1000) <
+          b.sighting.reduce((o, acc) => Math.min(o.daysAgo, acc), 1000)
+            ? 1
+            : -1
+        )
         .sort((a, b) => (a.comName > b.comName ? 1 : -1));
     },
     speciesFiltered: function () {
