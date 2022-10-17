@@ -423,15 +423,14 @@
             >
               <b-icon-github style="color: white"></b-icon-github
             ></a>
-            <b-icon-link id="link-btn" style="color: white"></b-icon-link>
-            <b-tooltip target="link-btn" triggers="click">
-              <b-input-group class="bg-green">
-                <b-form-input type="text" v-model="linkUrl"></b-form-input>
-                <b-input-group-prepend>
-                  <b-button @click="copyLink">copy</b-button>
-                </b-input-group-prepend>
-              </b-input-group>
-            </b-tooltip>
+            <b-icon-link
+              id="link-btn"
+              style="color: white"
+              @click="copyLink"
+            ></b-icon-link>
+            <b-tooltip target="link-btn" triggers="click">{{
+              copy_status
+            }}</b-tooltip>
             <a
               href="https://documenter.getpostman.com/view/664302/S1ENwy59"
               target="_blank"
@@ -634,6 +633,7 @@ export default {
       popup: false,
       aba_limit: 1,
       spe_index_max: 50,
+      copy_status: "...",
     };
   },
   methods: {
@@ -854,15 +854,17 @@ export default {
       // Converts numeric degrees to radians
       return (Value * Math.PI) / 180;
     },
-    copyLink: function () {
-      navigator.clipboard.writeText(this.linkUrl).then(
-        function () {
-          console.log("Async: Copying to clipboard was successful!");
-        },
-        function (err) {
-          console.error("Async: Could not copy text: ", err);
-        }
-      );
+    async copyLink() {
+      this.copy_status = "...";
+      let str =
+        "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?" +
+        this.linkUrl;
+      try {
+        await navigator.clipboard.writeText(str);
+        this.copy_status = "Copied url to clipboard!";
+      } catch ($e) {
+        this.copy_status = "Cannot copy url to clipboard!";
+      }
     },
     clickMarker(obs) {
       this.popup = obs;
