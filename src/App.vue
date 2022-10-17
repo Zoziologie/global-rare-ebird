@@ -688,6 +688,7 @@ export default {
                 );
               }
               this.showOverlay = false;
+              this.updateURL();
             });
         }
       }
@@ -715,6 +716,7 @@ export default {
             );
           }
           this.showOverlay = false;
+          this.updateURL();
         });
     },
     removeRegion(removedOption) {
@@ -726,6 +728,7 @@ export default {
           this.observationsRegion.map((m) => [m.lat, m.lng])
         );
       }
+      this.updateURL();
     },
     processObs(obs, regionCode) {
       // This filtering is due when using detail=full in api. Maybe because of adding comments/media later? Need to check, but it would be then worth filtering more
@@ -879,17 +882,31 @@ export default {
         )
       );
     },
+    updateURL() {
+      history.replaceState(null, null, "?" + this.linkUrl);
+    },
   },
   computed: {
     linkUrl: function () {
-      var l = "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?";
+      let qp = new URLSearchParams();
+      if (this.isMylocation !== "")
+        qp.set("mode", this.isMylocation ? "n" : "r");
+      if (!this.isMylocation) {
+        if (this.regionSelected.length > 0)
+          qp.set("r", this.regionSelected.map((x) => x.code).join("_"));
+      } else {
+        if (this.distSelected !== "") qp.set("d", this.distSelected);
+      }
+      if (this.backSelected !== "") qp.set("t", this.backSelected);
+      return qp.toString();
+      /* var l = "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?";
       l += "mylocation=" + (this.isMylocation ? "1" : "0") + "&";
       if (this.regionSelected.length > 0) {
         l += "r=" + this.regionSelected.map((x) => x.code).join(",") + "&";
       }
       l += "dist=" + this.distSelected + "&";
       l += "back=" + this.backSelected + "&";
-      return l;
+      return l;*/
     },
     isaba: function () {
       let regionCode = this.regionSelected.map((e) => e.code);
@@ -950,21 +967,19 @@ export default {
     },
   },
   mounted() {
-    let uri = window.location.search.substring(1);
-    let params = new URLSearchParams(uri);
-    if (params.get("back")) {
-      this.backSelected = Math.min(params.get("back"), 30);
+    let qp = new URLSearchParams(window.location.search);
+    if (qp.get("b")) {
+      this.backSelected = Math.min(qp.get("b"), 30);
       if (this.backSelected > this.backMax) {
         this.backMax = this.backSelected;
       }
     }
-    if (params.get("dist")) {
-      this.distSelected = Math.min(params.get("dist"), 50);
+    if (qp.get("d")) {
+      this.distSelected = Math.min(qp.get("d"), 50);
       if (this.distSelected > this.distMax) {
         this.distMax = this.distSelected;
       }
     }
-
     axios
       .get(
         "https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt"
@@ -989,16 +1004,13 @@ export default {
                   ...this.regionSearch,
                   ...response.data,
                 ].sort((a, b) => (a.name > b.name ? 1 : -1));
-                if (
-                  (params.get("mylocation") == 1) |
-                  (params.get("mylocation") == "true")
-                ) {
+                if (qp.get("mode") == "n") {
                   this.myLocation(1);
                 } else {
                   this.isMylocation = false;
-                  if (params.get("r")) {
+                  if (qp.get("r")) {
                     var temp = this.regionSearch.filter(
-                      (x) => params.get("r").split(",").indexOf(x.code) > -1
+                      (x) => qp.get("r").split("_").indexOf(x.code) > -1
                     );
                     temp.forEach((x) => {
                       this.regionSelected.push(x);
@@ -1023,6 +1035,17 @@ export default {
         }
       );
     }
+  },
+  watch: {
+    isMylocation() {
+      this.updateURL();
+    },
+    backSelected() {
+      this.updateURL();
+    },
+    distSelected() {
+      this.updateURL();
+    },
   },
 };
 </script>
