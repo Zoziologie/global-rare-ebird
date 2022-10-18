@@ -28,18 +28,18 @@
         >
           <l-marker
             ref="markers"
-            :name="obs.speciesCode + obs.locId"
-            v-for="obs in observationsFiltered"
-            :key="obs.speciesCode + obs.locId"
-            :lat-lng="obs.latLng"
-            @click="clickMarker(obs)"
+            :name="loc.locId + loc.obs.map((x) => x.speciesCode).join('_')"
+            v-for="loc in locationFiltered"
+            :key="loc.locId"
+            :lat-lng="loc.latLng"
+            @click="clickMarker(loc)"
           >
             <l-icon
               :popup-anchor="[0, -34]"
               :icon-anchor="[12.5, 34]"
               :icon-size="[25, 34]"
               :icon-url="
-                obs.locationPrivate ? hotspotIconPerso : hotspotIconHotspot
+                loc.locationPrivate ? hotspotIconPerso : hotspotIconHotspot
               "
             />
           </l-marker>
@@ -52,24 +52,21 @@
             :icon-size="[25, 34]"
             :icon-url="hotspotIconEmpty"
           />
-          <l-popup>
+          <l-popup :options="{ width: 600 }">
             <b-row class="mb-2">
               <b-col>
-                <h5>{{ popup.comName }}</h5>
+                <h5>
+                  <a
+                    v-bind:href="'https://ebird.org/hotspot/' + popup.locId"
+                    target="_blank"
+                    title="eBird hotspot"
+                    v-if="!popup.locationPrivate"
+                    >{{ popup.locName }}</a
+                  >
+                  <span v-else>{{ popup.locName }}</span>
+                </h5>
               </b-col>
-            </b-row>
-            <b-row>
-              <b-col>
-                <a
-                  v-bind:href="'https://ebird.org/hotspot/' + popup.locId"
-                  target="_blank"
-                  title="eBird hotspot"
-                  v-if="!popup.locationPrivate"
-                  >{{ popup.locName }}</a
-                >
-                <span v-else>{{ popup.locName }}</span>
-              </b-col>
-              <b-col v-if="!popup.locationPrivate" md="auto">
+              <b-col md="auto">
                 <a
                   v-bind:href="
                     'https://www.google.com/maps?saddr=My+Location&daddr=' +
@@ -84,40 +81,70 @@
                 </a>
               </b-col>
             </b-row>
-            <b-row v-for="obs in popup.sighting" :key="obs.subId">
-              <b-col class="d-flex w-100 justify-content-between">
-                <small
-                  >{{ obs.howMany }} ind., {{ daysAgoFmt(obs.daysAgo) }}
-                </small>
-                <span v-if="obs.hasRichMedia | obs.hasComments">
-                  <span v-if="obs.hasRichMedia">
-                    <small
-                      ><b-icon-camera-fill class="mr-1"></b-icon-camera-fill
-                    ></small>
-                  </span>
-                  <span v-if="obs.hasComments">
-                    <small
-                      ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
-                    ></small>
-                  </span>
-                </span>
-              </b-col>
-              <b-col>
-                <a
-                  v-bind:href="
-                    'https://ebird.org/checklist/' +
-                    obs.subId +
-                    '#' +
-                    popup.speciesCode
-                  "
-                  target="_blank"
-                  title="eBird checklist"
-                  class="mr-1 flex-grow-1"
+            <b-card-group deck>
+              <b-card
+                no-body
+                v-for="sp in popup.sp"
+                :key="sp.speciesCode"
+                class="mx-0"
+              >
+                <b-card-header
+                  class="p-1 d-flex justify-content-between align-items-center"
                 >
-                  <font-awesome-icon icon="clone" />
-                </a>
-              </b-col>
-            </b-row>
+                  {{ sp.comName }}
+                  <b-badge
+                    v-if="isaba & (sp.aba >= 3)"
+                    :class="'mr-1 font-weight-normal bg-aba-' + sp.aba"
+                    >ABA-{{ sp.aba }}</b-badge
+                  >
+                  <b-badge pill style="background-color: #343a40">{{
+                    sp.obs.length
+                  }}</b-badge>
+                </b-card-header>
+                <b-list-group flush>
+                  <b-list-group-item
+                    v-for="obs in sp.obs"
+                    :key="obs.subId"
+                    class="py-2 px-2 hover-darken"
+                  >
+                    <b-col class="d-flex w-100 justify-content-between">
+                      <small
+                        >{{ obs.howMany }} ind., {{ daysAgoFmt(obs.daysAgo) }}
+                      </small>
+                      <span v-if="obs.hasRichMedia | obs.hasComments">
+                        <span v-if="obs.hasRichMedia">
+                          <small
+                            ><b-icon-camera-fill
+                              class="mr-1"
+                            ></b-icon-camera-fill
+                          ></small>
+                        </span>
+                        <span v-if="obs.hasComments">
+                          <small
+                            ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
+                          ></small>
+                        </span>
+                      </span>
+                    </b-col>
+                    <b-col md="auto">
+                      <a
+                        v-bind:href="
+                          'https://ebird.org/checklist/' +
+                          obs.subId +
+                          '#' +
+                          sp.speciesCode
+                        "
+                        target="_blank"
+                        title="eBird checklist"
+                        class="mr-1 flex-grow-1"
+                      >
+                        <font-awesome-icon icon="clone" />
+                      </a>
+                    </b-col>
+                  </b-list-group-item>
+                </b-list-group>
+              </b-card>
+            </b-card-group>
           </l-popup>
         </l-marker>
 
@@ -292,11 +319,11 @@
                 </b-input-group>
               </b-form-group>
             </b-form>
-            <label class="mt-2" v-if="Object.keys(speciesFiltered).length > 0"
+            <label class="mt-2" v-if="speciesFiltered.length > 0"
               >Sightings:</label
             >
             <div class="accordion" role="tablist">
-              <template v-for="(spe, speCode, spe_index) in speciesFiltered">
+              <template v-for="(spe, spe_index) in speciesFiltered">
                 <b-card
                   no-body
                   class="mb-1"
@@ -308,7 +335,7 @@
                     role="tab"
                     v-b-toggle="'accordion-' + spe.speciesCode"
                     class="p-1 d-flex justify-content-between align-items-center cursor-pointer"
-                    @mouseover="mouseOverListHeader(spe.speciesCode)"
+                    @mouseover="mouseOverList(spe.speciesCode)"
                     @mouseout="mouseOutList"
                   >
                     {{ spe.comName }}
@@ -333,45 +360,30 @@
               </b-card-body>-->
                     <b-list-group>
                       <b-list-group-item
-                        v-for="obs in spe.obs"
-                        :key="spe.speciesCode + obs.subId"
+                        v-for="loc in spe.loc"
+                        :key="spe.speciesCode + loc.locId"
                         class="py-2 px-2 hover-darken"
-                        @mouseover="
-                          mouseOverListItem(spe.speciesCode + obs.subId)
-                        "
+                        @mouseover="mouseOverList(loc.subId)"
                         @mouseout="mouseOutList"
                       >
                         <div class="d-flex w-100 justify-content-between">
                           <a
                             v-bind:href="
-                              'https://ebird.org/hotspot/' + obs.locId
+                              'https://ebird.org/hotspot/' + loc.locId
                             "
                             target="_blank"
                             title="eBird hotspot"
-                            v-if="!obs.locationPrivate"
-                            >{{ obs.locName }}</a
+                            v-if="!loc.locationPrivate"
+                            >{{ loc.locName }}</a
                           >
-                          <span v-else>{{ obs.locName }}</span>
+                          <span v-else>{{ loc.locName }}</span>
                           <span style="flex: none">
                             <a
                               v-bind:href="
-                                'https://ebird.org/checklist/' +
-                                obs.subId +
-                                '#' +
-                                obs.speciesCode
-                              "
-                              target="_blank"
-                              title="eBird checklist"
-                              class="mr-1"
-                            >
-                              <font-awesome-icon icon="clone" />
-                            </a>
-                            <a
-                              v-bind:href="
                                 'https://www.google.com/maps?saddr=My+Location&daddr=' +
-                                obs.latLng.lat +
+                                loc.latLng.lat +
                                 ',' +
-                                obs.latLng.lng
+                                loc.latLng.lng
                               "
                               target="_blank"
                               title="direction on google map"
@@ -380,8 +392,25 @@
                             </a>
                           </span>
                         </div>
-                        <div class="d-flex w-100 justify-content-between">
+                        <div
+                          v-for="obs in loc.obs"
+                          :key="obs.subId"
+                          class="d-flex w-100 justify-content-between"
+                        >
                           <small>{{ obs.daysAgoFmt }}</small>
+                          <a
+                            v-bind:href="
+                              'https://ebird.org/checklist/' +
+                              obs.subId +
+                              '#' +
+                              obs.speciesCode
+                            "
+                            target="_blank"
+                            title="eBird checklist"
+                            class="mr-1"
+                          >
+                            <font-awesome-icon icon="clone" />
+                          </a>
                           <small>Count: {{ obs.howMany }}</small>
                           <span v-if="obs.hasRichMedia | obs.hasComments">
                             <span v-if="obs.hasRichMedia">
@@ -427,15 +456,14 @@
             >
               <b-icon-github style="color: white"></b-icon-github
             ></a>
-            <b-icon-link id="link-btn" style="color: white"></b-icon-link>
-            <b-tooltip target="link-btn" triggers="click">
-              <b-input-group class="bg-green">
-                <b-form-input type="text" v-model="linkUrl"></b-form-input>
-                <b-input-group-prepend>
-                  <b-button @click="copyLink">copy</b-button>
-                </b-input-group-prepend>
-              </b-input-group>
-            </b-tooltip>
+            <b-icon-link
+              id="link-btn"
+              style="color: white"
+              @click="copyLink"
+            ></b-icon-link>
+            <b-tooltip target="link-btn" triggers="click">{{
+              copy_status
+            }}</b-tooltip>
             <a
               href="https://documenter.getpostman.com/view/664302/S1ENwy59"
               target="_blank"
@@ -638,6 +666,7 @@ export default {
       popup: false,
       aba_limit: 1,
       spe_index_max: 50,
+      copy_status: "...",
     };
   },
   methods: {
@@ -692,6 +721,7 @@ export default {
                 );
               }
               this.showOverlay = false;
+              this.updateURL();
             });
         }
       }
@@ -719,6 +749,7 @@ export default {
             );
           }
           this.showOverlay = false;
+          this.updateURL();
         });
     },
     removeRegion(removedOption) {
@@ -730,6 +761,7 @@ export default {
           this.observationsRegion.map((m) => [m.lat, m.lng])
         );
       }
+      this.updateURL();
     },
     processObs(obs, regionCode) {
       // This filtering is due when using detail=full in api. Maybe because of adding comments/media later? Need to check, but it would be then worth filtering more
@@ -761,6 +793,12 @@ export default {
         o.daysAgo = moment()
           .startOf("day")
           .diff(moment(e.obsDt).startOf("day"), "days");
+        o.daysAgoFmt =
+          o.daysAgo == 0
+            ? "Today"
+            : o.daysAgo == 1
+            ? "Yesterday"
+            : o.daysAgo + " days ago";
         o.latLng = latLng(e.lat, e.lng);
 
         // Following only present with detail=full in url but we found a way arround for all of them
@@ -779,9 +817,13 @@ export default {
             this.location.longitude
           );
         }
+
         o.aba = "aba" in e ? e.aba : 10;
+
         return o;
       });
+      return obs;
+
       /*.map((o) => {
           axios
         .get(
@@ -793,37 +835,6 @@ export default {
         });
         return o;
         })*/
-      return obs.reduce((acc, o) => {
-        let sighting = {
-          subId: o.subId,
-          howMany: o.howMany,
-          daysAgo: o.daysAgo,
-          hasComments: o.hasComments,
-          hasRichMedia: o.hasRichMedia,
-        };
-        let found = acc.find(
-          (a) => a.locName + a.comName == o.locName + o.comName
-        );
-
-        if (found) {
-          found.sighting.push(sighting);
-        } else {
-          acc.push({
-            speciesCode: o.speciesCode,
-            comName: o.comName,
-            sciName: o.sciName,
-            aba: o.aba,
-            locId: o.locId,
-            locName: o.locName,
-            latLng: o.latLng,
-            distToMe: o.distToMe,
-            locationPrivate: o.locationPrivate,
-            regionCode: o.regionCode,
-            sighting: [sighting],
-          });
-        }
-        return acc;
-      }, []);
     },
     reload(newBack) {
       this.backMax = newBack;
@@ -831,16 +842,7 @@ export default {
       this.regionSelected.forEach((x) => this.removeRegion(x));
       this.regionSelected.forEach((x) => this.addRegion(x));
     },
-    mouseOverListItem(markerID) {
-      this.$refs.markers.forEach(function (m) {
-        if (m.name == markerID) {
-          m.setVisible(true);
-        } else {
-          m.setVisible(false);
-        }
-      });
-    },
-    mouseOverListHeader(markerID) {
+    mouseOverList(markerID) {
       this.$refs.markers.forEach(function (m) {
         if (m.name.includes(markerID)) {
           m.setVisible(true);
@@ -876,18 +878,30 @@ export default {
       // Converts numeric degrees to radians
       return (Value * Math.PI) / 180;
     },
-    copyLink: function () {
-      navigator.clipboard.writeText(this.linkUrl).then(
-        function () {
-          console.log("Async: Copying to clipboard was successful!");
-        },
-        function (err) {
-          console.error("Async: Could not copy text: ", err);
-        }
-      );
+    async copyLink() {
+      this.copy_status = "...";
+      let str =
+        "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?" +
+        this.linkUrl;
+      try {
+        await navigator.clipboard.writeText(str);
+        this.copy_status = "Copied url to clipboard!";
+      } catch ($e) {
+        this.copy_status = "Cannot copy url to clipboard!";
+      }
     },
-    clickMarker(obs) {
-      this.popup = obs;
+    clickMarker(loc) {
+      loc.sp = loc.obs.reduce(function (r, i) {
+        r[i.speciesCode] = r[i.speciesCode] || {
+          obs: [],
+          comName: i.comName,
+          speciesCode: i.speciesCode,
+          aba: i.aba,
+        };
+        r[i.speciesCode].obs.push(i);
+        return r;
+      }, {});
+      this.popup = loc;
       setTimeout(() => this.$refs.marker.mapObject.openPopup(), 100);
     },
     customLabel({ name, code }) {
@@ -904,6 +918,9 @@ export default {
         )
       );
     },
+    updateURL() {
+      history.replaceState(null, null, "?" + this.linkUrl);
+    },
     daysAgoFmt(daysAgo) {
       return daysAgo == 0
         ? "today"
@@ -914,14 +931,25 @@ export default {
   },
   computed: {
     linkUrl: function () {
-      var l = "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?";
+      let qp = new URLSearchParams();
+      if (this.isMylocation !== "")
+        qp.set("mode", this.isMylocation ? "n" : "r");
+      if (!this.isMylocation) {
+        if (this.regionSelected.length > 0)
+          qp.set("r", this.regionSelected.map((x) => x.code).join("_"));
+      } else {
+        if (this.distSelected !== "") qp.set("d", this.distSelected);
+      }
+      if (this.backSelected !== "") qp.set("t", this.backSelected);
+      return qp.toString();
+      /* var l = "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?";
       l += "mylocation=" + (this.isMylocation ? "1" : "0") + "&";
       if (this.regionSelected.length > 0) {
         l += "r=" + this.regionSelected.map((x) => x.code).join(",") + "&";
       }
       l += "dist=" + this.distSelected + "&";
       l += "back=" + this.backSelected + "&";
-      return l;
+      return l;*/
     },
     isaba: function () {
       let regionCode = this.regionSelected.map((e) => e.code);
@@ -935,22 +963,9 @@ export default {
       var obsfiltered = this.isMylocation
         ? this.observationsMylocation
         : this.observationsRegion;
-
-      obsfiltered = obsfiltered.reduce((acc, curr) => {
-        curr.sighting = curr.sighting.filter(
-          (x) => x.daysAgo <= parseInt(this.backSelected)
-        );
-        if (this.mediaSelected) {
-          curr.sighting = curr.sighting.filter((x) => x.hasRichMedia);
-        }
-        if (this.hotspotSelected) {
-          curr.sighting = curr.sighting.filter((x) => !x.locationPrivate);
-        }
-        if (curr.sighting.length > 0) {
-          acc.push(curr);
-        }
-        return acc;
-      }, []);
+      obsfiltered = obsfiltered.filter(
+        (x) => x.daysAgo <= parseInt(this.backSelected)
+      );
       if (this.isMylocation) {
         obsfiltered = obsfiltered.filter(
           (x) => x.distToMe <= this.distSelected
@@ -959,6 +974,12 @@ export default {
       obsfiltered = obsfiltered.filter(
         (x) => x.aba >= parseInt(this.aba_limit)
       );
+      if (this.mediaSelected) {
+        obsfiltered = obsfiltered.filter((x) => x.hasRichMedia);
+      }
+      if (this.hotspotSelected) {
+        obsfiltered = obsfiltered.filter((x) => !x.locationPrivate);
+      }
       if (this.mapSelected) {
         obsfiltered = obsfiltered.filter((x) =>
           this.bounds.pad(-0.05).contains(x.latLng)
@@ -969,19 +990,12 @@ export default {
           o[k].toLowerCase().includes(this.filterSearch.toLowerCase())
         )
       );
-
       return obsfiltered
-        .sort((a, b) => (a.aba > b.aba ? 1 : -1))
-        .sort((a, b) =>
-          a.sighting.reduce((o, acc) => Math.min(o.daysAgo, acc), 1000) <
-          b.sighting.reduce((o, acc) => Math.min(o.daysAgo, acc), 1000)
-            ? 1
-            : -1
-        )
+        .sort((a, b) => (a.daysAgo < b.daysAgo ? 1 : -1))
         .sort((a, b) => (a.comName > b.comName ? 1 : -1));
     },
     speciesFiltered: function () {
-      return this.observationsFiltered.reduce(function (r, i) {
+      let y = this.observationsFiltered.reduce(function (r, i) {
         r[i.speciesCode] = r[i.speciesCode] || {
           obs: [],
           count: 0,
@@ -993,24 +1007,53 @@ export default {
         r[i.speciesCode].count = r[i.speciesCode].count + 1;
         return r;
       }, {});
+      return Object.values(y).map((x) => {
+        x.loc = x.obs.reduce(function (r, i) {
+          r[i.locId] = r[i.locId] || {
+            obs: [],
+            locName: i.locName,
+            locationPrivate: i.locationPrivate,
+            regionCode: i.regionCode,
+            latLng: i.latLng,
+            locId: i.locId,
+          };
+          r[i.locId].obs.push(i);
+          return r;
+        }, {});
+        return x;
+      });
+    },
+    locationFiltered: function () {
+      return this.observationsFiltered.reduce(function (r, i) {
+        r[i.locId] = r[i.locId] || {
+          obs: [],
+          count: 0,
+          locName: i.locName,
+          locationPrivate: i.locationPrivate,
+          regionCode: i.regionCode,
+          latLng: i.latLng,
+          locId: i.locId,
+        };
+        r[i.locId].obs.push(i);
+        r[i.locId].count = r[i.locId].count + 1;
+        return r;
+      }, {});
     },
   },
   mounted() {
-    let uri = window.location.search.substring(1);
-    let params = new URLSearchParams(uri);
-    if (params.get("back")) {
-      this.backSelected = Math.min(params.get("back"), 30);
+    let qp = new URLSearchParams(window.location.search);
+    if (qp.get("b")) {
+      this.backSelected = Math.min(qp.get("b"), 30);
       if (this.backSelected > this.backMax) {
         this.backMax = this.backSelected;
       }
     }
-    if (params.get("dist")) {
-      this.distSelected = Math.min(params.get("dist"), 50);
+    if (qp.get("d")) {
+      this.distSelected = Math.min(qp.get("d"), 50);
       if (this.distSelected > this.distMax) {
         this.distMax = this.distSelected;
       }
     }
-
     axios
       .get(
         "https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt"
@@ -1035,16 +1078,13 @@ export default {
                   ...this.regionSearch,
                   ...response.data,
                 ].sort((a, b) => (a.name > b.name ? 1 : -1));
-                if (
-                  (params.get("mylocation") == 1) |
-                  (params.get("mylocation") == "true")
-                ) {
+                if (qp.get("mode") == "n") {
                   this.myLocation(1);
                 } else {
                   this.isMylocation = false;
-                  if (params.get("r")) {
+                  if (qp.get("r")) {
                     var temp = this.regionSearch.filter(
-                      (x) => params.get("r").split(",").indexOf(x.code) > -1
+                      (x) => qp.get("r").split("_").indexOf(x.code) > -1
                     );
                     temp.forEach((x) => {
                       this.regionSelected.push(x);
@@ -1069,6 +1109,17 @@ export default {
         }
       );
     }
+  },
+  watch: {
+    isMylocation() {
+      this.updateURL();
+    },
+    backSelected() {
+      this.updateURL();
+    },
+    distSelected() {
+      this.updateURL();
+    },
   },
 };
 </script>
