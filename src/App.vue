@@ -785,7 +785,7 @@ export default {
         o.comName = e.comName;
         o.sciName = e.sciName;
         o.speciesCode = e.speciesCode;
-        o.howMany = e.howMany;
+        o.howMany = e.howMany ? e.howMany : "x";
         o.locId = e.locId;
         o.subId = e.subId;
         o.locName = e.locName;
