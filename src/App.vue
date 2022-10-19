@@ -28,18 +28,18 @@
         >
           <l-marker
             ref="markers"
-            :name="obs.speciesCode + obs.subId"
-            v-for="obs in observationsFiltered"
-            :key="obs.speciesCode + obs.subId"
-            :lat-lng="obs.latLng"
-            @click="clickMarker(obs)"
+            :name="loc.locId + loc.obs.map((x) => x.speciesCode).join('_')"
+            v-for="loc in locationFiltered"
+            :key="loc.locId"
+            :lat-lng="loc.latLng"
+            @click="clickMarker(loc)"
           >
             <l-icon
               :popup-anchor="[0, -34]"
               :icon-anchor="[12.5, 34]"
               :icon-size="[25, 34]"
               :icon-url="
-                obs.locationPrivate ? hotspotIconPerso : hotspotIconHotspot
+                loc.locationPrivate ? hotspotIconPerso : hotspotIconHotspot
               "
             />
           </l-marker>
@@ -52,54 +52,22 @@
             :icon-size="[25, 34]"
             :icon-url="hotspotIconEmpty"
           />
-          <l-popup>
+          <l-popup :options="{ width: 600 }">
             <b-row class="mb-2">
               <b-col>
-                <h5>{{ popup.comName }}</h5>
+                <h5>
+                  <a
+                    v-bind:href="'https://ebird.org/hotspot/' + popup.locId"
+                    target="_blank"
+                    title="eBird hotspot"
+                    v-if="!popup.locationPrivate"
+                    >{{ popup.locName }}</a
+                  >
+                  <span v-else>{{ popup.locName }}</span>
+                </h5>
+              </b-col>
+              <b-col md="auto">
                 <a
-                  v-bind:href="'https://ebird.org/hotspot/' + popup.locId"
-                  target="_blank"
-                  title="eBird hotspot"
-                  v-if="!popup.locationPrivate"
-                  >{{ popup.locName }}</a
-                >
-                <span v-else>{{ popup.locName }}</span>
-              </b-col>
-            </b-row>
-            <b-row class="mb-2">
-              <b-col class="d-flex w-100 justify-content-between">
-                <small>{{ popup.daysAgoFmt }}</small>
-                <small>Count: {{ popup.howMany }}</small>
-                <span v-if="popup.hasRichMedia | popup.hasComments">
-                  <span v-if="popup.hasRichMedia">
-                    <small
-                      ><b-icon-camera-fill class="mr-1"></b-icon-camera-fill
-                    ></small>
-                  </span>
-                  <span v-if="popup.hasComments">
-                    <small
-                      ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
-                    ></small>
-                  </span>
-                </span>
-              </b-col>
-            </b-row>
-            <b-row class="mb-2">
-              <b-col class="d-flex w-100 bg-green">
-                <b-button
-                  v-bind:href="
-                    'https://ebird.org/checklist/' +
-                    popup.subId +
-                    '#' +
-                    popup.speciesCode
-                  "
-                  target="_blank"
-                  title="eBird checklist"
-                  class="mr-1 flex-grow-1"
-                >
-                  <font-awesome-icon icon="clone" />
-                </b-button>
-                <b-button
                   v-bind:href="
                     'https://www.google.com/maps?saddr=My+Location&daddr=' +
                     popup.latLng.lat +
@@ -108,12 +76,70 @@
                   "
                   target="_blank"
                   title="direction on google map"
-                  class="flex-grow-1"
                 >
                   <font-awesome-icon icon="directions" />
-                </b-button>
+                </a>
               </b-col>
             </b-row>
+            <div>
+              <b-card
+                no-body
+                v-for="sp in popup.sp"
+                :key="sp.speciesCode"
+                class="mx-0 mb-1"
+              >
+                <b-card-header
+                  class="p-1 d-flex justify-content-between align-items-center"
+                >
+                  {{ sp.comName }}
+                  <b-badge
+                    v-if="isaba & (sp.aba >= 3)"
+                    :class="'mr-1 font-weight-normal bg-aba-' + sp.aba"
+                    >ABA-{{ sp.aba }}</b-badge
+                  >
+                  <b-badge pill style="background-color: #343a40">{{
+                    sp.obs.length
+                  }}</b-badge>
+                </b-card-header>
+                <b-list-group flush class="mh-240">
+                  <b-list-group-item
+                    v-for="obs in sp.obs"
+                    :key="obs.subId"
+                    class="py-2 px-2 hover-darken"
+                  >
+                    <b-col class="d-flex w-100 justify-content-between">
+                      <small>
+                        <a
+                          v-bind:href="
+                            'https://ebird.org/checklist/' +
+                            obs.subId +
+                            '#' +
+                            sp.speciesCode
+                          "
+                          target="_blank"
+                        >
+                          {{ daysAgoFmt(obs.daysAgo) }}, {{ obs.howMany }} ind.
+                        </a>
+                      </small>
+                      <span v-if="obs.hasRichMedia | obs.hasComments">
+                        <span v-if="obs.hasRichMedia">
+                          <small
+                            ><b-icon-camera-fill
+                              class="mr-1"
+                            ></b-icon-camera-fill
+                          ></small>
+                        </span>
+                        <span v-if="obs.hasComments">
+                          <small
+                            ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
+                          ></small>
+                        </span>
+                      </span>
+                    </b-col>
+                  </b-list-group-item>
+                </b-list-group>
+              </b-card>
+            </div>
           </l-popup>
         </l-marker>
 
@@ -288,11 +314,11 @@
                 </b-input-group>
               </b-form-group>
             </b-form>
-            <label class="mt-2" v-if="Object.keys(speciesFiltered).length > 0"
+            <label class="mt-2" v-if="speciesFiltered.length > 0"
               >Sightings:</label
             >
             <div class="accordion" role="tablist">
-              <template v-for="(spe, speCode, spe_index) in speciesFiltered">
+              <template v-for="(spe, spe_index) in speciesFiltered">
                 <b-card
                   no-body
                   class="mb-1"
@@ -304,7 +330,7 @@
                     role="tab"
                     v-b-toggle="'accordion-' + spe.speciesCode"
                     class="p-1 d-flex justify-content-between align-items-center cursor-pointer"
-                    @mouseover="mouseOverListHeader(spe.speciesCode)"
+                    @mouseover="mouseHoverList(spe.speciesCode)"
                     @mouseout="mouseOutList"
                   >
                     {{ spe.comName }}
@@ -329,45 +355,30 @@
               </b-card-body>-->
                     <b-list-group>
                       <b-list-group-item
-                        v-for="obs in spe.obs"
-                        :key="spe.speciesCode + obs.subId"
+                        v-for="loc in spe.loc"
+                        :key="spe.speciesCode + loc.locId"
                         class="py-2 px-2 hover-darken"
-                        @mouseover="
-                          mouseOverListItem(spe.speciesCode + obs.subId)
-                        "
+                        @mouseover="mouseHoverList(loc.locId)"
                         @mouseout="mouseOutList"
                       >
                         <div class="d-flex w-100 justify-content-between">
                           <a
                             v-bind:href="
-                              'https://ebird.org/hotspot/' + obs.locId
+                              'https://ebird.org/hotspot/' + loc.locId
                             "
                             target="_blank"
                             title="eBird hotspot"
-                            v-if="!obs.locationPrivate"
-                            >{{ obs.locName }}</a
+                            v-if="!loc.locationPrivate"
+                            >{{ loc.locName }}</a
                           >
-                          <span v-else>{{ obs.locName }}</span>
+                          <span v-else>{{ loc.locName }}</span>
                           <span style="flex: none">
                             <a
                               v-bind:href="
-                                'https://ebird.org/checklist/' +
-                                obs.subId +
-                                '#' +
-                                obs.speciesCode
-                              "
-                              target="_blank"
-                              title="eBird checklist"
-                              class="mr-1"
-                            >
-                              <font-awesome-icon icon="clone" />
-                            </a>
-                            <a
-                              v-bind:href="
                                 'https://www.google.com/maps?saddr=My+Location&daddr=' +
-                                obs.latLng.lat +
+                                loc.latLng.lat +
                                 ',' +
-                                obs.latLng.lng
+                                loc.latLng.lng
                               "
                               target="_blank"
                               title="direction on google map"
@@ -376,9 +387,27 @@
                             </a>
                           </span>
                         </div>
-                        <div class="d-flex w-100 justify-content-between">
-                          <small>{{ obs.daysAgoFmt }}</small>
-                          <small>Count: {{ obs.howMany }}</small>
+                        <div
+                          v-for="obs in loc.obs"
+                          :key="obs.subId"
+                          class="d-flex w-100 justify-content-between"
+                        >
+                          <a
+                            v-bind:href="
+                              'https://ebird.org/checklist/' +
+                              obs.subId +
+                              '#' +
+                              obs.speciesCode
+                            "
+                            target="_blank"
+                            title="eBird checklist"
+                            class="mr-1"
+                          >
+                            <small
+                              >{{ daysAgoFmt(obs.daysAgo) }},
+                              {{ obs.howMany }} ind.</small
+                            >
+                          </a>
                           <span v-if="obs.hasRichMedia | obs.hasComments">
                             <span v-if="obs.hasRichMedia">
                               <small
@@ -752,7 +781,7 @@ export default {
         o.comName = e.comName;
         o.sciName = e.sciName;
         o.speciesCode = e.speciesCode;
-        o.howMany = e.howMany;
+        o.howMany = e.howMany ? e.howMany : "x";
         o.locId = e.locId;
         o.subId = e.subId;
         o.locName = e.locName;
@@ -760,12 +789,6 @@ export default {
         o.daysAgo = moment()
           .startOf("day")
           .diff(moment(e.obsDt).startOf("day"), "days");
-        o.daysAgoFmt =
-          o.daysAgo == 0
-            ? "today"
-            : o.daysAgo == 1
-            ? "yesterday"
-            : o.daysAgo + " days ago";
         o.latLng = latLng(e.lat, e.lng);
 
         // Following only present with detail=full in url but we found a way arround for all of them
@@ -809,16 +832,7 @@ export default {
       this.regionSelected.forEach((x) => this.removeRegion(x));
       this.regionSelected.forEach((x) => this.addRegion(x));
     },
-    mouseOverListItem(markerID) {
-      this.$refs.markers.forEach(function (m) {
-        if (m.name == markerID) {
-          m.setVisible(true);
-        } else {
-          m.setVisible(false);
-        }
-      });
-    },
-    mouseOverListHeader(markerID) {
+    mouseHoverList(markerID) {
       this.$refs.markers.forEach(function (m) {
         if (m.name.includes(markerID)) {
           m.setVisible(true);
@@ -866,8 +880,18 @@ export default {
         this.copy_status = "Cannot copy url to clipboard!";
       }
     },
-    clickMarker(obs) {
-      this.popup = obs;
+    clickMarker(loc) {
+      loc.sp = loc.obs.reduce(function (r, i) {
+        r[i.speciesCode] = r[i.speciesCode] || {
+          obs: [],
+          comName: i.comName,
+          speciesCode: i.speciesCode,
+          aba: i.aba,
+        };
+        r[i.speciesCode].obs.push(i);
+        return r;
+      }, {});
+      this.popup = loc;
       setTimeout(() => this.$refs.marker.mapObject.openPopup(), 100);
     },
     customLabel({ name, code }) {
@@ -887,6 +911,13 @@ export default {
     updateURL() {
       history.replaceState(null, null, "?" + this.linkUrl);
     },
+    daysAgoFmt(daysAgo) {
+      return daysAgo == 0
+        ? "Today"
+        : daysAgo == 1
+        ? "Yesterday"
+        : daysAgo + " days ago";
+    },
   },
   computed: {
     linkUrl: function () {
@@ -900,6 +931,7 @@ export default {
         if (this.distSelected !== "") qp.set("d", this.distSelected);
       }
       if (this.backSelected !== "") qp.set("t", this.backSelected);
+      if (this.detailSelected !== "") qp.set("c", this.detailSelected ? 1 : 0);
       return qp.toString();
       /* var l = "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?";
       l += "mylocation=" + (this.isMylocation ? "1" : "0") + "&";
@@ -954,7 +986,7 @@ export default {
         .sort((a, b) => (a.comName > b.comName ? 1 : -1));
     },
     speciesFiltered: function () {
-      return this.observationsFiltered.reduce(function (r, i) {
+      let y = this.observationsFiltered.reduce(function (r, i) {
         r[i.speciesCode] = r[i.speciesCode] || {
           obs: [],
           count: 0,
@@ -964,6 +996,37 @@ export default {
         };
         r[i.speciesCode].obs.push(i);
         r[i.speciesCode].count = r[i.speciesCode].count + 1;
+        return r;
+      }, {});
+      return Object.values(y).map((x) => {
+        x.loc = x.obs.reduce(function (r, i) {
+          r[i.locId] = r[i.locId] || {
+            obs: [],
+            locName: i.locName,
+            locationPrivate: i.locationPrivate,
+            regionCode: i.regionCode,
+            latLng: i.latLng,
+            locId: i.locId,
+          };
+          r[i.locId].obs.push(i);
+          return r;
+        }, {});
+        return x;
+      });
+    },
+    locationFiltered: function () {
+      return this.observationsFiltered.reduce(function (r, i) {
+        r[i.locId] = r[i.locId] || {
+          obs: [],
+          count: 0,
+          locName: i.locName,
+          locationPrivate: i.locationPrivate,
+          regionCode: i.regionCode,
+          latLng: i.latLng,
+          locId: i.locId,
+        };
+        r[i.locId].obs.push(i);
+        r[i.locId].count = r[i.locId].count + 1;
         return r;
       }, {});
     },
@@ -981,6 +1044,9 @@ export default {
       if (this.distSelected > this.distMax) {
         this.distMax = this.distSelected;
       }
+    }
+    if (qp.get("c")) {
+      this.detailSelected = qp.get("c") == 1 ? true : false;
     }
     axios
       .get(
@@ -1046,6 +1112,9 @@ export default {
       this.updateURL();
     },
     distSelected() {
+      this.updateURL();
+    },
+    detailSelected() {
       this.updateURL();
     },
   },

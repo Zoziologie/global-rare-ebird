@@ -63,3 +63,8 @@ body {
   filter: invert(46%) sepia(92%) saturate(491%) hue-rotate(49deg)
     brightness(97%) contrast(102%);
 }
+
+.mh-240 {
+  max-height: 240px;
+  overflow: auto;
+}
