@@ -81,12 +81,12 @@
                 </a>
               </b-col>
             </b-row>
-            <b-card-group deck>
+            <div>
               <b-card
                 no-body
                 v-for="sp in popup.sp"
                 :key="sp.speciesCode"
-                class="mx-0"
+                class="mx-0 mb-1"
               >
                 <b-card-header
                   class="p-1 d-flex justify-content-between align-items-center"
@@ -101,15 +101,25 @@
                     sp.obs.length
                   }}</b-badge>
                 </b-card-header>
-                <b-list-group flush>
+                <b-list-group flush class="mh-240">
                   <b-list-group-item
                     v-for="obs in sp.obs"
                     :key="obs.subId"
                     class="py-2 px-2 hover-darken"
                   >
                     <b-col class="d-flex w-100 justify-content-between">
-                      <small
-                        >{{ obs.howMany }} ind., {{ daysAgoFmt(obs.daysAgo) }}
+                      <small>
+                        <a
+                          v-bind:href="
+                            'https://ebird.org/checklist/' +
+                            obs.subId +
+                            '#' +
+                            sp.speciesCode
+                          "
+                          target="_blank"
+                        >
+                          {{ daysAgoFmt(obs.daysAgo) }}, {{ obs.howMany }} ind.
+                        </a>
                       </small>
                       <span v-if="obs.hasRichMedia | obs.hasComments">
                         <span v-if="obs.hasRichMedia">
@@ -126,25 +136,10 @@
                         </span>
                       </span>
                     </b-col>
-                    <b-col md="auto">
-                      <a
-                        v-bind:href="
-                          'https://ebird.org/checklist/' +
-                          obs.subId +
-                          '#' +
-                          sp.speciesCode
-                        "
-                        target="_blank"
-                        title="eBird checklist"
-                        class="mr-1 flex-grow-1"
-                      >
-                        <font-awesome-icon icon="clone" />
-                      </a>
-                    </b-col>
                   </b-list-group-item>
                 </b-list-group>
               </b-card>
-            </b-card-group>
+            </div>
           </l-popup>
         </l-marker>
 
@@ -335,7 +330,7 @@
                     role="tab"
                     v-b-toggle="'accordion-' + spe.speciesCode"
                     class="p-1 d-flex justify-content-between align-items-center cursor-pointer"
-                    @mouseover="mouseOverList(spe.speciesCode)"
+                    @mouseover="mouseHoverList(spe.speciesCode)"
                     @mouseout="mouseOutList"
                   >
                     {{ spe.comName }}
@@ -363,7 +358,7 @@
                         v-for="loc in spe.loc"
                         :key="spe.speciesCode + loc.locId"
                         class="py-2 px-2 hover-darken"
-                        @mouseover="mouseOverList(loc.subId)"
+                        @mouseover="mouseHoverList(loc.locId)"
                         @mouseout="mouseOutList"
                       >
                         <div class="d-flex w-100 justify-content-between">
@@ -397,7 +392,6 @@
                           :key="obs.subId"
                           class="d-flex w-100 justify-content-between"
                         >
-                          <small>{{ obs.daysAgoFmt }}</small>
                           <a
                             v-bind:href="
                               'https://ebird.org/checklist/' +
@@ -409,9 +403,11 @@
                             title="eBird checklist"
                             class="mr-1"
                           >
-                            <font-awesome-icon icon="clone" />
+                            <small
+                              >{{ daysAgoFmt(obs.daysAgo) }},
+                              {{ obs.howMany }} ind.</small
+                            >
                           </a>
-                          <small>Count: {{ obs.howMany }}</small>
                           <span v-if="obs.hasRichMedia | obs.hasComments">
                             <span v-if="obs.hasRichMedia">
                               <small
@@ -793,12 +789,6 @@ export default {
         o.daysAgo = moment()
           .startOf("day")
           .diff(moment(e.obsDt).startOf("day"), "days");
-        o.daysAgoFmt =
-          o.daysAgo == 0
-            ? "Today"
-            : o.daysAgo == 1
-            ? "Yesterday"
-            : o.daysAgo + " days ago";
         o.latLng = latLng(e.lat, e.lng);
 
         // Following only present with detail=full in url but we found a way arround for all of them
@@ -842,7 +832,7 @@ export default {
       this.regionSelected.forEach((x) => this.removeRegion(x));
       this.regionSelected.forEach((x) => this.addRegion(x));
     },
-    mouseOverList(markerID) {
+    mouseHoverList(markerID) {
       this.$refs.markers.forEach(function (m) {
         if (m.name.includes(markerID)) {
           m.setVisible(true);
@@ -923,9 +913,9 @@ export default {
     },
     daysAgoFmt(daysAgo) {
       return daysAgo == 0
-        ? "today"
+        ? "Today"
         : daysAgo == 1
-        ? "yesterday"
+        ? "Yesterday"
         : daysAgo + " days ago";
     },
   },
