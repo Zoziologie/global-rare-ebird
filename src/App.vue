@@ -941,6 +941,7 @@ export default {
         if (this.distSelected !== "") qp.set("d", this.distSelected);
       }
       if (this.backSelected !== "") qp.set("t", this.backSelected);
+      if (this.detailSelected !== "") qp.set("c", this.detailSelected ? 1 : 0);
       return qp.toString();
       /* var l = "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?";
       l += "mylocation=" + (this.isMylocation ? "1" : "0") + "&";
@@ -1054,6 +1055,9 @@ export default {
         this.distMax = this.distSelected;
       }
     }
+    if (qp.get("c")) {
+      this.detailSelected = qp.get("c") == 1 ? true : false;
+    }
     axios
       .get(
         "https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt"
@@ -1118,6 +1122,9 @@ export default {
       this.updateURL();
     },
     distSelected() {
+      this.updateURL();
+    },
+    detailSelected() {
       this.updateURL();
     },
   },
