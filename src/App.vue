@@ -40,14 +40,6 @@
             @click="clickMarker(loc)"
             :icon="getIcon(loc)"
           >
-            <!--<l-icon
-              :popup-anchor="[0, -34]"
-              :icon-anchor="[12.5, 34]"
-              :icon-size="[25, 34]"
-              :icon-url="
-                loc.locationPrivate ? hotspotIconPerso : hotspotIconHotspot
-              "
-            />-->
           </l-marker>
         </v-marker-cluster>
 
@@ -299,6 +291,21 @@
                           :options="filterSearchOptions"
                           :aria-describedby="ariaDescribedby"
                         ></b-form-checkbox-group>
+                      </b-form-group>
+                      <b-form-group
+                        label="Sort by:"
+                        v-slot="{ ariaDescribedby }"
+                        class="px-2 mb-0 small"
+                      >
+                        <b-form-radio
+                          v-model="filterSortOptionsSelected"
+                          :aria-describedby="ariaDescribedby"
+                          v-for="opt in filterSortOptions"
+                          :key="opt.name"
+                          :value="opt.value"
+                        >
+                          {{ opt.text }}
+                        </b-form-radio>
                       </b-form-group>
                     </b-dropdown>
                   </template>
@@ -606,7 +613,7 @@ import hotspotIconHotspot from "./assets/hotspot-icon-hotspot.png";
 import hotspotIconEmpty from "./assets/hotspot-icon_empty.png";
 import logo from "./assets/logo.svg";
 
-import aba from "./assets/aba_code.json";
+import taxo from "./assets/taxo.json";
 
 import axios from "axios";
 
@@ -682,13 +689,20 @@ export default {
       detailSelected: false,
       filterSearch: "",
       filterSearchOptions: [
-        { text: "Common Name", value: "comName" },
-        { text: "Latin Name", value: "sciName" },
+        { text: "Common name", value: "comName" },
+        { text: "Scientific name", value: "sciName" },
         //{ text: "Region Code", value: "regionCode" },
-        { text: "Location Name", value: "locName" },
+        { text: "Location name", value: "locName" },
         //{ text: "Observer Name", value: "userDisplayName" },
       ],
       filterSearchOptionsSelected: ["comName", "sciName", "locName"],
+      filterSortOptions: [
+        { text: "Taxonomic order", value: "tax" },
+        { text: "Common name", value: "comName" },
+        { text: "Date", value: "daysAgo" },
+        //{ text: "Scientific name", value: "sciName" },
+      ],
+      filterSortOptionsSelected: "tax",
       showOverlay: false,
       popup: false,
       aba_limit: 1,
@@ -796,16 +810,8 @@ export default {
       obs = obs.filter(
         (val, index) => id.indexOf(val.speciesCode + val.subId) === index
       );
-      if (regionCode.includes("US") | regionCode.includes("CA")) {
-        obs = obs.map((e) => {
-          let tmp = aba.find((o) => o.code === e.speciesCode);
-          e.aba = tmp ? tmp.aba : 1;
-          return e;
-        });
-      }
-      if ((regionCode == "US") | (regionCode == "CA") | (regionCode == "ABA")) {
-        this.aba_limit = 3;
-      }
+      let USCA = regionCode.includes("US") | regionCode.includes("CA");
+      this.aba_limit = USCA ? 3 : this.aba_limit;
       obs = obs.map((e) => {
         let o = {};
         o.regionCode = regionCode;
@@ -840,13 +846,12 @@ export default {
           );
         }
 
-        o.aba = "aba" in e ? e.aba : 10;
+        let tmp = taxo.find((e) => e.cod === o.speciesCode);
+        o.aba = tmp ? (USCA ? tmp.aba : 1) : 10;
+        o.cat = tmp ? tmp.cat : "unknown";
+        o.tax = tmp ? tmp.tax : 9999;
 
-        return o;
-      });
-      return obs;
-
-      /*.map((o) => {
+        /*.map((o) => {
           axios
         .get(
           "https://ebird.org/obsservice/comment?obsId=" + o.obsId
@@ -857,6 +862,10 @@ export default {
         });
         return o;
         })*/
+
+        return o;
+      });
+      return obs;
     },
     reload(newBack) {
       this.backMax = newBack;
@@ -1062,7 +1071,11 @@ export default {
       );
       return obsfiltered
         .sort((a, b) => (a.daysAgo < b.daysAgo ? 1 : -1))
-        .sort((a, b) => (a.comName > b.comName ? 1 : -1));
+        .sort((a, b) =>
+          a[this.filterSortOptionsSelected] > b[this.filterSortOptionsSelected]
+            ? 1
+            : -1
+        );
     },
     speciesFiltered: function () {
       let y = this.observationsFiltered.reduce(function (r, i) {
