@@ -1010,7 +1010,7 @@ export default {
         if (this.distSelected !== "") qp.set("d", this.distSelected);
       }
       if (this.backSelected !== "") qp.set("t", this.backSelected);
-      if (this.detailSelected !== "") qp.set("c", this.detailSelected ? 1 : 0);
+      if (this.detailSelected) qp.set("c", this.detailSelected ? 1 : 0);
       return qp.toString();
       /* var l = "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?";
       l += "mylocation=" + (this.isMylocation ? "1" : "0") + "&";
@@ -1112,8 +1112,8 @@ export default {
   },
   mounted() {
     let qp = new URLSearchParams(window.location.search);
-    if (qp.get("b")) {
-      this.backSelected = Math.min(qp.get("b"), 30);
+    if (qp.get("t")) {
+      this.backSelected = Math.min(qp.get("t"), 30);
       if (this.backSelected > this.backMax) {
         this.backMax = this.backSelected;
       }
