@@ -68,3 +68,8 @@ body {
   max-height: 240px;
   overflow: auto;
 }
+
+.leaflet-popup-content {
+  margin: 10px 15px;
+  min-width: 200px;
+}

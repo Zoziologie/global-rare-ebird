@@ -53,23 +53,21 @@
             :icon-url="hotspotIconEmpty"
           />
           <l-popup :options="{ width: 600 }">
-            <b-row class="mb-2">
-              <b-col>
-                <h5>
-                  <a
-                    v-bind:href="'https://ebird.org/hotspot/' + popup.locId"
-                    target="_blank"
-                    title="eBird hotspot"
-                    v-if="!popup.locationPrivate"
-                    >{{ popup.locName }}</a
-                  >
-                  <span v-else>{{ popup.locName }}</span>
-                </h5>
-              </b-col>
-              <b-col md="auto">
+            <div class="mb-2 d-flex justify-content-between align-items-center">
+              <span>
+                <a
+                  v-bind:href="'https://ebird.org/hotspot/' + popup.locId"
+                  target="_blank"
+                  title="eBird hotspot"
+                  v-if="!popup.locationPrivate"
+                  >{{ popup.locName }}</a
+                >
+                <span v-else>{{ popup.locName }}</span>
+              </span>
+              <span>
                 <a
                   v-bind:href="
-                    'https://www.google.com/maps?saddr=My+Location&daddr=' +
+                    'https://www.google.com/maps/search/?api=1&query=' +
                     popup.latLng.lat +
                     ',' +
                     popup.latLng.lng
@@ -77,10 +75,10 @@
                   target="_blank"
                   title="direction on google map"
                 >
-                  <font-awesome-icon icon="directions" />
+                  <font-awesome-icon icon="directions" class="ml-2" />
                 </a>
-              </b-col>
-            </b-row>
+              </span>
+            </div>
             <div>
               <b-card
                 no-body
@@ -91,12 +89,14 @@
                 <b-card-header
                   class="p-1 d-flex justify-content-between align-items-center"
                 >
-                  {{ sp.comName }}
-                  <b-badge
-                    v-if="isaba & (sp.aba >= 3)"
-                    :class="'mr-1 font-weight-normal bg-aba-' + sp.aba"
-                    >ABA-{{ sp.aba }}</b-badge
-                  >
+                  <span>
+                    {{ sp.comName }}
+                    <b-badge
+                      v-if="isaba & (sp.aba >= 3)"
+                      :class="'ml-2 font-weight-normal bg-aba-' + sp.aba"
+                      >ABA-{{ sp.aba }}</b-badge
+                    >
+                  </span>
                   <b-badge pill style="background-color: #343a40">{{
                     sp.obs.length
                   }}</b-badge>
@@ -105,7 +105,7 @@
                   <b-list-group-item
                     v-for="obs in sp.obs"
                     :key="obs.subId"
-                    class="py-2 px-2 hover-darken"
+                    class="py-1 px-0 hover-darken"
                   >
                     <b-col class="d-flex w-100 justify-content-between">
                       <small>
@@ -126,6 +126,7 @@
                           <small
                             ><b-icon-camera-fill
                               class="mr-1"
+                              @click="addMedia(obs.obsId)"
                             ></b-icon-camera-fill
                           ></small>
                         </span>
@@ -333,17 +334,18 @@
                     @mouseover="mouseHoverList(spe.speciesCode)"
                     @mouseout="mouseOutList"
                   >
-                    {{ spe.comName }}
                     <span>
+                      {{ spe.comName }}
+
                       <b-badge
                         v-if="isaba & (spe.aba >= 3)"
                         :class="'mr-1 font-weight-normal bg-aba-' + spe.aba"
                         >ABA-{{ spe.aba }}</b-badge
                       >
-                      <b-badge pill style="background-color: #343a40">{{
-                        spe.count
-                      }}</b-badge>
                     </span>
+                    <b-badge pill style="background-color: #343a40">{{
+                      spe.count
+                    }}</b-badge>
                   </b-card-header>
                   <b-collapse
                     v-bind:id="'accordion-' + spe.speciesCode"
@@ -375,7 +377,7 @@
                           <span style="flex: none">
                             <a
                               v-bind:href="
-                                'https://www.google.com/maps?saddr=My+Location&daddr=' +
+                                'https://www.google.com/maps/search/?api=1&query=' +
                                 loc.latLng.lat +
                                 ',' +
                                 loc.latLng.lng
@@ -409,13 +411,22 @@
                             >
                           </a>
                           <span v-if="obs.hasRichMedia | obs.hasComments">
-                            <span v-if="obs.hasRichMedia">
+                            <span v-if="obs.hasRichMedia & !obs.media">
                               <small
                                 ><b-icon-camera-fill
                                   class="mr-1"
+                                  @click="addMedia(obs.obsId)"
                                 ></b-icon-camera-fill
                               ></small>
                             </span>
+                            <b-img
+                              v-if="obs.media"
+                              :src="
+                                'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/' +
+                                obs.media +
+                                '/320'
+                              "
+                            ></b-img>
                             <span v-if="obs.hasComments">
                               <small
                                 ><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill
@@ -792,7 +803,7 @@ export default {
         o.latLng = latLng(e.lat, e.lng);
 
         // Following only present with detail=full in url but we found a way arround for all of them
-        //o.obsId = e.obsId;
+        o.obsId = e.obsId;
         //o.userDisplayName = "userDisplayName" in e ? e.userDisplayName : "";
         //o.subnational1Code = e.subnational1Code;
         //o.countryCode = e.countryCode;
@@ -917,6 +928,16 @@ export default {
         : daysAgo == 1
         ? "Yesterday"
         : daysAgo + " days ago";
+    },
+    addMedia(obsId) {
+      const index = this.observationsRegion.findIndex((x) => {
+        return x.obsId === obsId;
+      });
+      axios
+        .get("https://ebird.org/obsservice/media?obsId=" + obsId)
+        .then((response) => {
+          this.observationsRegion[index].media = response.assetId;
+        });
     },
   },
   computed: {
