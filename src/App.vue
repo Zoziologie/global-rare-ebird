@@ -80,28 +80,28 @@
             <div>
               <b-card
                 no-body
-                v-for="sp in popup.sp"
-                :key="sp.speciesCode"
+                v-for="spe in popup.sp"
+                :key="spe.speciesCode"
                 class="mx-0 mb-1"
               >
                 <b-card-header
                   class="p-1 d-flex justify-content-between align-items-center"
                 >
                   <span>
-                    {{ sp.comName }}
+                    {{ spe.comName }}
                     <b-badge
-                      v-if="isaba & (sp.aba >= 3)"
-                      :class="'ml-2 font-weight-normal bg-aba-' + sp.aba"
-                      >ABA-{{ sp.aba }}</b-badge
+                      v-if="(spe.aba >= 3) & (spe.aba <= 6)"
+                      :class="'ml-2 font-weight-normal bg-aba-' + spe.aba"
+                      >ABA-{{ spe.aba }}</b-badge
                     >
                   </span>
                   <b-badge pill style="background-color: #343a40">{{
-                    sp.obs.length
+                    spe.obs.length
                   }}</b-badge>
                 </b-card-header>
                 <b-list-group flush class="mh-240">
                   <b-list-group-item
-                    v-for="obs in sp.obs"
+                    v-for="obs in spe.obs"
                     :key="obs.subId"
                     class="py-1 px-0 hover-darken"
                   >
@@ -112,7 +112,7 @@
                             'https://ebird.org/checklist/' +
                             obs.subId +
                             '#' +
-                            sp.speciesCode
+                            spe.speciesCode
                           "
                           target="_blank"
                         >
@@ -357,7 +357,7 @@
                       {{ spe.comName }}
 
                       <b-badge
-                        v-if="isaba & (spe.aba >= 3)"
+                        v-if="(spe.aba >= 3) & (spe.aba <= 6)"
                         :class="'mr-1 font-weight-normal bg-aba-' + spe.aba"
                         >ABA-{{ spe.aba }}</b-badge
                       >
@@ -811,7 +811,8 @@ export default {
         (val, index) => id.indexOf(val.speciesCode + val.subId) === index
       );
       let USCA = regionCode.includes("US") | regionCode.includes("CA");
-      this.aba_limit = USCA ? 3 : this.aba_limit;
+      this.aba_limit =
+        (regionCode == "US") | (regionCode == "CA") ? 3 : this.aba_limit;
       obs = obs.map((e) => {
         let o = {};
         o.regionCode = regionCode;
@@ -845,9 +846,8 @@ export default {
             this.location.longitude
           );
         }
-
         let tmp = taxo.find((e) => e.cod === o.speciesCode);
-        o.aba = tmp ? (USCA ? tmp.aba : 1) : 10;
+        o.aba = tmp ? (USCA ? tmp.aba : 10) : 1;
         o.cat = tmp ? tmp.cat : "unknown";
         o.tax = tmp ? tmp.tax : 9999;
 
