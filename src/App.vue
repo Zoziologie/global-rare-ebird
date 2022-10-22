@@ -118,7 +118,13 @@
                           "
                           target="_blank"
                         >
-                          {{ daysAgoFmt(obs.daysAgo) }}, {{ obs.howMany }} ind.
+                          {{ daysAgoFmt(obs.daysAgo) }}
+                          {{
+                            new Date(obs.obsDt).toLocaleTimeString(undefined, {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })
+                          }}, {{ obs.howMany }} ind.
                         </a>
                       </small>
                       <span v-if="obs.hasRichMedia | obs.hasComments">
@@ -406,8 +412,16 @@
                             class="mr-1"
                           >
                             <small
-                              >{{ daysAgoFmt(obs.daysAgo) }},
-                              {{ obs.howMany }} ind.</small
+                              >{{ daysAgoFmt(obs.daysAgo) }}
+                              {{
+                                new Date(obs.obsDt).toLocaleTimeString(
+                                  undefined,
+                                  {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  }
+                                )
+                              }}, {{ obs.howMany }} ind.</small
                             >
                           </a>
                           <span v-if="obs.hasRichMedia | obs.hasComments">
@@ -797,6 +811,7 @@ export default {
         o.subId = e.subId;
         o.locName = e.locName;
         o.locationPrivate = e.locationPrivate;
+        o.obsDt = e.obsDt;
         o.daysAgo = moment()
           .startOf("day")
           .diff(moment(e.obsDt).startOf("day"), "days");
