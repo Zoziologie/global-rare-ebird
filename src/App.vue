@@ -514,19 +514,40 @@
         </template>
       </b-sidebar>
     </b-row>
-    <b-modal id="modal-instruction" size="lg">
-      <h2>Instruction</h2>
+    <b-modal
+      id="modal-instruction"
+      size="lg"
+      ok-only
+      title="Instruction and help"
+    >
+      Global Rare eBird uses the
+      <a
+        href="https://documenter.getpostman.com/view/664302/S1ENwy59#397b9b8c-4ab9-4136-baae-3ffa4e5b26e4"
+        >recent notable observations (i.e., rare bird) in a region</a
+      >
+      entry point of the public API.
+      <h4>Instruction</h4>
+      <p>Query the recent (up to 30 days) rare sightings in two modes:</p>
+      <ul>
+        <li>
+          <b>My location (n: nerby):</b> up to 50km of your position (you'll
+          need to give permission to the navigator)
+        </li>
+        <li>
+          <b>Region (r):</b> in a country or a states/provinces for US/CA.
+        </li>
+      </ul>
+      <h4>Link and bookmark</h4>
       <p>
-        Query rare sightings per countries (or states for US and CA). Filter per
-        date, location and species name.
+        You can share the link of the page or create a bookmark in your
+        navigator:
       </p>
-      How is it made? Report and issue?
-
-      <h2>Bookmark</h2>
-      You can create a bookmark and share a link using the following URL
-      ?r=CH&back=4&mylocation=1&dist=20
-
-      <h2>Setting</h2>
+      <pre><code>https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?{{this.linkUrl}}</code></pre>
+      <p>
+        Press <code>Command/Cmd+D</code> or <code>CTRL+D</code> to bookmark this
+        page.
+      </p>
+      <h4>Settings</h4>
       <b-form-group>
         <b-form-checkbox v-model="mapSelected">
           Syncronize the observation list with the map view.</b-form-checkbox
@@ -537,44 +558,51 @@
         <a
           href="https://documenter.getpostman.com/view/664302/S1ENwy59#397b9b8c-4ab9-4136-baae-3ffa4e5b26e4"
           >See the eBird API documentation for more information</a
-        >. You might have to refresh the page/reload the data to be in effect.
-        Note that longer distance and duration can affect the performance of the
-        website.
+        >. Note that longer distance and duration can affect the performance of
+        the website.
       </p>
       <b-form-group>
         <b-form-checkbox v-model="detailSelected">
-          fetch information on media and comments</b-form-checkbox
+          Fetch/display information on media and comments (slow -
+          instable)</b-form-checkbox
         >
         <b-form-checkbox v-model="mediaSelected">
-          fetch only observations with media</b-form-checkbox
-        >
+          Fetch/display only observations with media (slow - instable)
+        </b-form-checkbox>
         <b-form-checkbox v-model="hotspotSelected">
-          fetch only observations made at a hotspot</b-form-checkbox
-        >
+          Fetch/display only observations made at a hotspot
+        </b-form-checkbox>
       </b-form-group>
-      <b-form-group
-        label="The search radius from your location, in kilometers (max 50)"
-      >
-        <b-form-input
-          v-model="distMax"
-          type="number"
-          min="0"
-          max="50"
-          step="1"
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group
-        label="The number of days back to fetch observations (max 30)"
-      >
-        <b-form-input
-          v-model="backMax"
-          id="backMax"
-          type="number"
-          min="0"
-          max="30"
-          step="1"
-        ></b-form-input>
-      </b-form-group>
+      <b-form inline>
+        <label>
+          <b-form-input
+            v-model="distMax"
+            type="number"
+            min="0"
+            max="50"
+            step="1"
+            class="mr-2"
+          ></b-form-input>
+          The search radius from your location, in kilometers (max: 50)
+        </label>
+        <label>
+          <b-form-input
+            v-model="backMax"
+            id="backMax"
+            type="number"
+            class="mr-2"
+            min="0"
+            max="30"
+            step="1"
+          ></b-form-input>
+          The number of days back to fetch observations (max: 30)
+        </label>
+      </b-form>
+      <h4>Report an issue, bug or suggestion</h4>
+      Use
+      <a href="https://github.com/Zoziologie/global-rare-ebird/issues"
+        >Github Issues</a
+      >.
     </b-modal>
   </b-container>
 </template>
