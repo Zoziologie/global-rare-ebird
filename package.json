@@ -22,7 +22,7 @@
     "axios": "^0.27.2",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.23.1",
-    "leaflet": "^1.7.1",
+    "leaflet": "^1.9.2",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-cookie": "^1.1.4",
