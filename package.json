@@ -1,6 +1,6 @@
 {
   "name": "global-rare-ebird",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "title": "Global Rare eBird",
   "description": "A map of all rare birds seen on the globe with eBird data.",
   "repository": {
@@ -19,10 +19,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^2.0.6",
-    "axios": "^0.27.2",
     "bootstrap-vue": "^2.23.1",
     "leaflet": "^1.9.3",
-    "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-cookie": "^1.1.4",
     "vue-multiselect": "^2.1.6",

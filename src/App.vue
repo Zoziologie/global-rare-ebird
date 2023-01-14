@@ -477,7 +477,6 @@ import {
   LCircle,
   LCircleMarker,
 } from "vue2-leaflet";
-import moment from "moment";
 import Vue2LeafletMarkerCluster from "vue2-leaflet-markercluster";
 
 import ebirdLogo from "./assets/ebird_e_w.svg";
@@ -487,8 +486,6 @@ import hotspotIconEmpty from "./assets/hotspot-icon_empty.png";
 import logo from "./assets/logo.svg";
 
 import taxo from "./assets/taxo.json";
-
-import axios from "axios";
 
 export default {
   components: {
@@ -609,23 +606,23 @@ export default {
           console.log("Location found: " + this.location);
           this.isMylocation = true;
           this.showOverlay = true;
-          axios
-            .get(
-              "https://api.ebird.org/v2/data/obs/geo/recent/notable?lat=" +
-                this.location.latitude +
-                "&lng=" +
-                this.location.longitude +
-                "&key=vcs68p4j67pt&detail=" +
-                (this.detailSelected ? "full" : "simple") +
-                "&back=" +
-                this.backMax +
-                "&dist=" +
-                this.distMax +
-                "&hotspot=" +
-                this.hotspotSelected
-            )
-            .then((response) => {
-              this.observationsMylocation = [...this.processObs(response.data, "mylocation")];
+          fetch(
+            "https://api.ebird.org/v2/data/obs/geo/recent/notable?lat=" +
+              this.location.latitude +
+              "&lng=" +
+              this.location.longitude +
+              "&key=vcs68p4j67pt&detail=" +
+              (this.detailSelected ? "full" : "simple") +
+              "&back=" +
+              this.backMax +
+              "&dist=" +
+              this.distMax +
+              "&hotspot=" +
+              this.hotspotSelected
+          )
+            .then((response) => response.json())
+            .then((json) => {
+              this.observationsMylocation = [...this.processObs(json, "mylocation")];
               if (this.observationsMylocation.length > 0) {
                 this.$refs.map.mapObject.fitBounds(this.observationsMylocation.map((m) => m.latLng));
               }
@@ -637,19 +634,19 @@ export default {
     },
     addRegion(selectedOption) {
       this.showOverlay = true;
-      axios
-        .get(
-          "https://api.ebird.org/v2/data/obs/" +
-            selectedOption.code +
-            "/recent/notable?key=vcs68p4j67pt&detail=" +
-            (this.detailSelected ? "full" : "simple") +
-            "&back=" +
-            this.backMax +
-            "&hotspot=" +
-            this.hotspotSelected
-        )
-        .then((response) => {
-          this.observationsRegion.push(...this.processObs(response.data, selectedOption.code));
+      fetch(
+        "https://api.ebird.org/v2/data/obs/" +
+          selectedOption.code +
+          "/recent/notable?key=vcs68p4j67pt&detail=" +
+          (this.detailSelected ? "full" : "simple") +
+          "&back=" +
+          this.backMax +
+          "&hotspot=" +
+          this.hotspotSelected
+      )
+        .then((response) => response.json())
+        .then((json) => {
+          this.observationsRegion.push(...this.processObs(json, selectedOption.code));
           if (this.observationsRegion.length > 0) {
             this.$refs.map.mapObject.fitBounds(this.observationsRegion.map((m) => m.latLng));
           }
@@ -682,7 +679,7 @@ export default {
         o.locName = e.locName;
         o.locationPrivate = e.locationPrivate;
         o.obsDt = e.obsDt;
-        o.daysAgo = moment().startOf("day").diff(moment(e.obsDt).startOf("day"), "days");
+        o.daysAgo = (new Date().setHours(0, 0, 0, 0) - new Date(e.obsDt).setHours(0, 0, 0, 0)) / 1000 / 60 / 60 / 24;
         o.latLng = latLng(e.lat, e.lng);
 
         // Following only present with detail=full in url but we found a way arround for all of them
@@ -702,13 +699,13 @@ export default {
         o.tax = tmp ? tmp.tax : 9999;
 
         /*.map((o) => {
-          axios
-        .get(
+          fetch(
           "https://ebird.org/obsservice/comment?obsId=" + o.obsId
         )
-        .then((response) => {
-          console.log(response.data)
-          o.comment = response.data
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json)
+          o.comment = json
         });
         return o;
         })*/
@@ -802,9 +799,11 @@ export default {
       const index = this.observationsRegion.findIndex((x) => {
         return x.obsId === obsId;
       });
-      axios.get("https://ebird.org/obsservice/media?obsId=" + obsId).then((response) => {
-        this.observationsRegion[index].media = response.assetId;
-      });
+      fetch("https://ebird.org/obsservice/media?obsId=" + obsId)
+        .then((response) => response.json())
+        .then((json) => {
+          this.observationsRegion[index].media = json.assetId;
+        });
     },
     getIcon(loc) {
       return L.divIcon({
@@ -957,31 +956,37 @@ export default {
     if (qp.get("c")) {
       this.detailSelected = qp.get("c") == 1 ? true : false;
     }
-    axios.get("https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt").then((response) => {
-      /*response.data = response.data.filter(function (obj) {
+    fetch("https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt")
+      .then((response) => response.json())
+      .then((json) => {
+        /*json = json.filter(function (obj) {
           return !["US", "CA"].includes(obj.code);
         });*/
-      this.regionSearch = [...this.regionSearch, ...response.data];
-      axios.get("https://api.ebird.org/v2/ref/region/list/subnational1/US?key=vcs68p4j67pt").then((response) => {
-        this.regionSearch = [...this.regionSearch, ...response.data];
-        axios.get("https://api.ebird.org/v2/ref/region/list/subnational1/CA?key=vcs68p4j67pt").then((response) => {
-          this.regionSearch = [...this.regionSearch, ...response.data].sort((a, b) => (a.name > b.name ? 1 : -1));
-          if (qp.get("mode") == "n") {
-            this.myLocation(1);
-          } else {
-            this.isMylocation = false;
-            if (qp.get("r")) {
-              var temp = this.regionSearch.filter((x) => qp.get("r").split("_").indexOf(x.code) > -1);
-              temp.forEach((x) => {
-                this.regionSelected.push(x);
-                this.addRegion(x);
+        this.regionSearch = [...this.regionSearch, ...json];
+        fetch("https://api.ebird.org/v2/ref/region/list/subnational1/US?key=vcs68p4j67pt")
+          .then((response) => response.json())
+          .then((json) => {
+            this.regionSearch = [...this.regionSearch, ...json];
+            fetch("https://api.ebird.org/v2/ref/region/list/subnational1/CA?key=vcs68p4j67pt")
+              .then((response) => response.json())
+              .then((json) => {
+                this.regionSearch = [...this.regionSearch, ...json].sort((a, b) => (a.name > b.name ? 1 : -1));
+                if (qp.get("mode") == "n") {
+                  this.myLocation(1);
+                } else {
+                  this.isMylocation = false;
+                  if (qp.get("r")) {
+                    var temp = this.regionSearch.filter((x) => qp.get("r").split("_").indexOf(x.code) > -1);
+                    temp.forEach((x) => {
+                      this.regionSelected.push(x);
+                      this.addRegion(x);
+                    });
+                  }
+                }
+                this.regionSearchFiltered = this.regionSearch;
               });
-            }
-          }
-          this.regionSearchFiltered = this.regionSearch;
-        });
+          });
       });
-    });
   },
   created() {
     //do we support geolocation
