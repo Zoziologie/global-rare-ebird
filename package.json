@@ -1,6 +1,6 @@
 {
   "name": "global-rare-ebird",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "title": "Global Rare eBird",
   "description": "A map of all rare birds seen on the globe with eBird data.",
   "repository": {
@@ -20,25 +20,22 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "axios": "^0.27.2",
-    "bootstrap": "^4.6.2",
-    "bootstrap-vue": "^2.21.2",
-    "leaflet": "^1.7.1",
+    "bootstrap-vue": "^2.23.1",
+    "leaflet": "^1.9.3",
     "moment": "^2.29.1",
     "vue": "^2.6.11",
     "vue-cookie": "^1.1.4",
     "vue-multiselect": "^2.1.6",
     "vue2-leaflet": "^2.7.1",
+    "vite": "^4.0.4",
+    "@vitejs/plugin-vue2": "^2.2.0",
     "vue2-leaflet-markercluster": "^3.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^1.6.1",
-    "vite": "^2.5.4",
-    "vite-plugin-vue2": "1.9.0",
-    "@vue/eslint-config-prettier": "^7.0.0",
-    "eslint": "^8.1.0",
-    "sass": "^1.26.5",
+    "eslint": "^8.31.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.4.0",
-    "prettier": "^2.2.1"
+    "eslint-plugin-vue": "^9.8.0",
+    "prettier": "^2.8.2",
+    "sass": "^1.26.5"
   }
 }
