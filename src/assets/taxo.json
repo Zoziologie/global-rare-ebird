@@ -6447,12 +6447,14 @@
     {
         "cod": "comgul1",
         "cat": "issf",
-        "tax": 6319
+        "tax": 6319,
+        "aba": 3
     },
     {
         "cod": "mewgul3",
         "cat": "issf",
-        "tax": 6320
+        "tax": 6320,
+        "aba": 3
     },
     {
         "cod": "kamgul1",

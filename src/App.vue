@@ -694,9 +694,20 @@ export default {
           o.distToMe = this.calcCrow(e.lat, e.lng, this.location.latitude, this.location.longitude);
         }
         let tmp = taxo.find((e) => e.cod === o.speciesCode);
-        o.aba = tmp ? (USCA ? tmp.aba : 10) : 1;
-        o.cat = tmp ? tmp.cat : "unknown";
-        o.tax = tmp ? tmp.tax : 9999;
+        console.log(tmp);
+        if (tmp) {
+          if (USCA) {
+            o.aba = tmp.aba ? tmp.aba : 10;
+          } else {
+            o.aba = 10;
+          }
+          o.cat = tmp.cat;
+          o.tax = tmp.tax;
+        } else {
+          o.aba = 1;
+          o.cat = "unknown";
+          o.tax = 9999;
+        }
 
         /*.map((o) => {
           fetch(
