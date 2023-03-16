@@ -679,7 +679,9 @@ export default {
         o.locName = e.locName;
         o.locationPrivate = e.locationPrivate;
         o.obsDt = e.obsDt;
-        o.daysAgo = (new Date().setHours(0, 0, 0, 0) - new Date(e.obsDt).setHours(0, 0, 0, 0)) / 1000 / 60 / 60 / 24;
+        o.daysAgo = Math.round(
+          (new Date().setHours(0, 0, 0, 0) - new Date(e.obsDt).setHours(0, 0, 0, 0)) / 1000 / 60 / 60 / 24
+        );
         o.latLng = latLng(e.lat, e.lng);
 
         // Following only present with detail=full in url but we found a way arround for all of them
@@ -694,7 +696,6 @@ export default {
           o.distToMe = this.calcCrow(e.lat, e.lng, this.location.latitude, this.location.longitude);
         }
         let tmp = taxo.find((e) => e.cod === o.speciesCode);
-        console.log(tmp);
         if (tmp) {
           if (USCA) {
             o.aba = tmp.aba ? tmp.aba : 10;
