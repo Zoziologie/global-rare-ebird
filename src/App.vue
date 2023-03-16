@@ -729,8 +729,12 @@ export default {
     reload(newBack) {
       this.backMax = newBack;
       this.back = newBack;
-      this.regionSelected.forEach((x) => this.removeRegion(x));
-      this.regionSelected.forEach((x) => this.addRegion(x));
+      if (this.isMylocation) {
+        this.myLocation(1);
+      } else {
+        this.regionSelected.forEach((x) => this.removeRegion(x));
+        this.regionSelected.forEach((x) => this.addRegion(x));
+      }
     },
     mouseHoverList(markerID) {
       this.$refs.markers.forEach(function (m) {
