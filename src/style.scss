@@ -60,8 +60,7 @@ body {
   height: 16px;
 }
 .zozio:hover {
-  filter: invert(46%) sepia(92%) saturate(491%) hue-rotate(49deg)
-    brightness(97%) contrast(102%);
+  filter: invert(46%) sepia(92%) saturate(491%) hue-rotate(49deg) brightness(97%) contrast(102%);
 }
 
 .mh-240 {
@@ -78,4 +77,18 @@ body {
   width: 25px;
   margin-left: -12.5px;
   margin-top: -34px;
+}
+
+.marker-text {
+  font-size: 14.2px;
+  fill: #fff;
+}
+.marker-hotspot {
+  fill: #5286bf;
+}
+.marker-perso {
+  fill: #ed7a25;
+}
+.marker-outer {
+  fill: #fff;
 }
