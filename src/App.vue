@@ -102,9 +102,9 @@
                       </small>
                       <span v-if="obs.hasRichMedia | obs.hasComments">
                         <span v-if="obs.hasRichMedia">
-                          <small
-                            ><b-icon-camera-fill class="mr-1" @click="addMedia(obs.obsId)"></b-icon-camera-fill
-                          ></small>
+                          <small>
+                            <b-icon-camera-fill class="mr-1" @click="addMedia(obs.obsId)" />
+                          </small>
                         </span>
                         <span v-if="obs.hasComments">
                           <small><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill></small>
@@ -215,9 +215,9 @@
                   class="text-danger mb-0"
                   v-if="(parseInt(backSelected) > parseInt(backMax)) & (parseInt(backMax) != 30)"
                 >
-                  <small @click="reload(Math.min(backSelected, 30))" style="cursor: pointer"
-                    >Update max duration to {{ Math.min(backSelected, 30) }}</small
-                  >
+                  <small @click="reload(Math.min(backSelected, 30))" class="cursor-pointer">
+                    Update max duration to {{ Math.min(backSelected, 30) }}
+                  </small>
                 </p>
               </b-form-group>
 
@@ -345,16 +345,19 @@
                           </a>
                           <span v-if="obs.hasRichMedia | obs.hasComments">
                             <span v-if="obs.hasRichMedia & !obs.media">
-                              <small
-                                ><b-icon-camera-fill class="mr-1" @click="addMedia(obs.obsId)"></b-icon-camera-fill
-                              ></small>
+                              <small>
+                                <b-icon-camera-fill class="mr-1 cursor-pointer" @click="addMedia(obs.obsId)" />
+                              </small>
                             </span>
-                            <b-img
-                              v-if="obs.media"
-                              :src="'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/' + obs.media + '/320'"
-                            ></b-img>
+                            <template v-if="obs.media">
+                              <b-img
+                                v-for="m in obs.media"
+                                :key="m"
+                                :src="'https://cdn.download.ams.birds.cornell.edu/api/v1/asset/' + m + '/320'"
+                              />
+                            </template>
                             <span v-if="obs.hasComments">
-                              <small><b-icon-chat-square-text-fill></b-icon-chat-square-text-fill></small>
+                              <small><b-icon-chat-square-text-fill class="cursor-pointer" /></small>
                             </span>
                           </span>
                         </div>
@@ -815,10 +818,10 @@ export default {
       const index = this.observationsRegion.findIndex((x) => {
         return x.obsId === obsId;
       });
-      fetch("https://ebird.org/obsservice/media?obsId=" + obsId)
+      fetch("http://tripreport.raphaelnussbaumer.com/obsservice/media?obsId=" + obsId)
         .then((response) => response.json())
         .then((json) => {
-          this.observationsRegion[index].media = json.assetId;
+          this.observationsRegion[index].media = json.map((j) => j.assetId);
         });
     },
     getIcon(loc) {
