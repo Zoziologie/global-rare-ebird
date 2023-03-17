@@ -267,7 +267,7 @@
                 </b-input-group>
               </b-form-group>
             </b-form>
-            <label class="mt-2" v-if="speciesFiltered.length > 0">Sightings:</label>
+            <!--<label class="mt-2" v-if="speciesFiltered.length > 0">Sightings:</label>-->
             <div class="accordion" role="tablist">
               <template v-for="(spe, spe_index) in speciesFiltered">
                 <b-card no-body class="mb-1" v-if="spe_index <= spe_index_max" :key="spe.speciesCode">
@@ -701,7 +701,7 @@ export default {
         let tmp = taxo.find((e) => e.cod === o.speciesCode);
         if (tmp) {
           if (USCA) {
-            o.aba = tmp.aba ? tmp.aba : 10;
+            o.aba = tmp.aba ? tmp.aba : 1;
           } else {
             o.aba = 10;
           }
@@ -974,6 +974,8 @@ export default {
     fetch("https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt")
       .then((response) => response.json())
       .then((json) => {
+        // Temporary for the trip
+        json = json.filter((obj) => ["US", "CA"].includes(obj.code));
         /*json = json.filter(function (obj) {
           return !["US", "CA"].includes(obj.code);
         });*/
