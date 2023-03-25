@@ -21119,7 +21119,8 @@
     {
         "cod": "lilmea2",
         "cat": "issf",
-        "tax": 32490
+        "tax": 32490,
+        "aba": 1
     },
     {
         "cod": "yebcac2",
@@ -34280,7 +34281,8 @@
     {
         "cod": "vichum2",
         "cat": "species",
-        "tax": 4610
+        "tax": 4610,
+        "aba": 2
     },
     {
         "cod": "scthum1",
@@ -35674,7 +35676,8 @@
     {
         "cod": "purgal2",
         "cat": "species",
-        "tax": 5372
+        "tax": 5372,
+        "aba": 1
     },
     {
         "cod": "azugal1",
