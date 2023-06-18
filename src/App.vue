@@ -97,7 +97,7 @@
                               hour: "2-digit",
                               minute: "2-digit",
                             })
-                          }}, {{ obs.howMany }} ind. {{obs.userDisplayName}}
+                          }}, {{ obs.howMany }} ind. {{ obs.userDisplayName }}
                         </a>
                       </small>
                       <span v-if="obs.hasRichMedia | obs.hasComments">
@@ -340,7 +340,7 @@
                                   hour: "2-digit",
                                   minute: "2-digit",
                                 })
-                              }}, {{ obs.howMany }} ind.  {{obs.userDisplayName}}</small
+                              }}, {{ obs.howMany }} ind. {{ obs.userDisplayName }}</small
                             >
                           </a>
                           <span v-if="obs.hasRichMedia | obs.hasComments">
@@ -689,7 +689,7 @@ export default {
 
         // Following only present with detail=full in url but we found a way around for all of them
         o.obsId = e.obsId;
-        o.userDisplayName = "userDisplayName" in e ? "(" + e.userDisplayName + ")": "";
+        o.userDisplayName = "userDisplayName" in e ? "(" + e.userDisplayName + ")" : "";
         //o.subnational1Code = e.subnational1Code;
         //o.countryCode = e.countryCode;
         o.hasComments = e.hasComments;
@@ -957,7 +957,6 @@ export default {
   },
   mounted() {
     let qp = new URLSearchParams(window.location.search);
-    let allowedCountries = ["US", "CA", "EC", "CO"];
     if (qp.get("t")) {
       this.backSelected = Math.min(qp.get("t"), 30);
       if (this.backSelected > this.backMax) {
@@ -976,8 +975,6 @@ export default {
     fetch("https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt")
       .then((response) => response.json())
       .then((json) => {
-        // Temporary for the trip
-        json = json.filter((obj) => allowedCountries.includes(obj.code));
         this.regionSearch = [...this.regionSearch, ...json];
         fetch("https://api.ebird.org/v2/ref/region/list/subnational1/US?key=vcs68p4j67pt")
           .then((response) => response.json())
