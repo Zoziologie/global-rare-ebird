@@ -519,8 +519,14 @@ export default {
       ]),
       tileProviders: [
         {
-          name: "Mapbox.Streets",
+          name: "OpenStreetMap",
           visible: true,
+          attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+          url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        },
+        {
+          name: "Mapbox.Streets",
+          visible: false,
           url: "https://api.mapbox.com/styles/v1/mapbox/streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmFmbnVzcyIsImEiOiIzMVE1dnc0In0.3FNMKIlQ_afYktqki-6m0g",
           attribution: "",
         },
@@ -529,12 +535,6 @@ export default {
           visible: false,
           url: "https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v9/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicmFmbnVzcyIsImEiOiIzMVE1dnc0In0.3FNMKIlQ_afYktqki-6m0g",
           attribution: "",
-        },
-        {
-          name: "OpenStreetMap",
-          visible: false,
-          attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-          url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         },
         {
           name: "Esri.WorldImagery",
