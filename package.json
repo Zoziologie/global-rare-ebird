@@ -16,8 +16,8 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.4.0",
-    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@fortawesome/free-solid-svg-icons": "^6.4.2",
     "@fortawesome/vue-fontawesome": "^2.0.6",
     "bootstrap-vue": "^2.23.1",
     "leaflet": "^1.9.4",
@@ -25,15 +25,15 @@
     "vue-cookie": "^1.1.4",
     "vue-multiselect": "^2.1.7",
     "vue2-leaflet": "^2.7.1",
-    "vite": "^4.3.9",
+    "vite": "^4.4.9",
     "@vitejs/plugin-vue2": "^2.2.0",
     "vue2-leaflet-markercluster": "^3.1.0"
   },
   "devDependencies": {
-    "eslint": "^8.43.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.15.0",
-    "prettier": "^2.8.8",
-    "sass": "^1.63.4"
+    "eslint": "^8.50.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "prettier": "^3.0.3",
+    "sass": "^1.68.0"
   }
 }
