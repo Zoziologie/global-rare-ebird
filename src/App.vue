@@ -162,7 +162,7 @@
                         <b-icon-globe font-scale="1" v-if="!isMylocation"></b-icon-globe>
                         <b-icon-geo-alt font-scale="1" v-if="isMylocation"></b-icon-geo-alt>
                       </template>
-                      <b-dropdown-item @click="(isMylocation = false)"
+                      <b-dropdown-item @click="isMylocation = false"
                         ><b-icon-globe class="mr-2"></b-icon-globe> Countries</b-dropdown-item
                       >
                       <b-dropdown-divider></b-dropdown-divider>
@@ -424,7 +424,7 @@
               </template>
             </div>
             <div v-if="Object.keys(speciesFiltered).length > spe_index_max">
-              <b-button @click="(spe_index_max = 100000)" block variant="light"
+              <b-button @click="spe_index_max = 100000" block variant="light"
                 >See {{ Object.keys(speciesFiltered).length - spe_index_max }} more
                 species</b-button
               >
@@ -528,6 +528,118 @@
           ></b-form-input>
           The number of days back to fetch observations (max: 30)
         </label>
+      </b-form>
+      <b-form class="mt-2">
+        Select Language of species:
+        <b-form-select v-model="sppLocale">
+          <option value="af">Afrikaans</option>
+          <option value="sq">Albanian</option>
+          <option value="ar">Arabic</option>
+          <option value="hy">Armenian</option>
+          <option value="as">Assamese</option>
+          <option value="ast">Asturian</option>
+          <option value="az">Azerbaijani</option>
+          <option value="bn">Bangla</option>
+          <option value="bn_BD">Bangla (Bangladesh)</option>
+          <option value="eu">Basque</option>
+          <option value="bn_IN">Bengali (India)</option>
+          <option value="bg">Bulgarian</option>
+          <option value="ca">Catalan</option>
+          <option value="zh">Chinese</option>
+          <option value="zh_HK">Chinese (Hong Kong)</option>
+          <option value="zh_SIM">Chinese (SIM)</option>
+          <option value="hr">Croatian</option>
+          <option value="cs">Czech</option>
+          <option value="da">Danish</option>
+          <option value="nl">Dutch</option>
+          <option value="en" selected="selected">English</option>
+          <option value="en_AU">English (Australia)</option>
+          <option value="en_BD">English (Bangladesh)</option>
+          <option value="en_HAW">English (HAW)</option>
+          <option value="en_HBW">English (HBW)</option>
+          <option value="en_HK">English (Hong Kong)</option>
+          <option value="en_IN">English (India)</option>
+          <option value="en_IOC">English (IOC)</option>
+          <option value="en_KE">English (Kenya)</option>
+          <option value="en_MY">English (Malaysia)</option>
+          <option value="en_NZ">English (New Zealand)</option>
+          <option value="en_PH">English (Philippines)</option>
+          <option value="en_ZA">English (South Africa)</option>
+          <option value="en_UK">English (UK)</option>
+          <option value="en_AE">English (United Arab Emirates)</option>
+          <option value="en_US">English (United States)</option>
+          <option value="fo">Faroese</option>
+          <option value="fi">Finnish</option>
+          <option value="fr">French</option>
+          <option value="fr_AOU">French (AOU)</option>
+          <option value="fr_CA">French (Canada)</option>
+          <option value="fr_FR">French (France)</option>
+          <option value="fr_GF">French (French Guiana)</option>
+          <option value="fr_GP">French (Guadeloupe)</option>
+          <option value="fr_HT">French (Haiti)</option>
+          <option value="gl">Galician</option>
+          <option value="de">German</option>
+          <option value="el">Greek</option>
+          <option value="gu">Gujarati</option>
+          <option value="ht_HT">Haitian Creole (Haiti)</option>
+          <option value="he">Hebrew</option>
+          <option value="hi">Hindi</option>
+          <option value="hu">Hungarian</option>
+          <option value="is">Icelandic</option>
+          <option value="in">Indonesian</option>
+          <option value="it">Italian</option>
+          <option value="ja">Japanese</option>
+          <option value="kn">Kannada</option>
+          <option value="kok">Konkani</option>
+          <option value="ko">Korean</option>
+          <option value="lbj">Ladakhi</option>
+          <option value="lv">Latvian</option>
+          <option value="lt">Lithuanian</option>
+          <option value="ml">Malayalam</option>
+          <option value="mr">Marathi</option>
+          <option value="mn">Mongolian</option>
+          <option value="mi">Māori</option>
+          <option value="ne_IN">Nepali (India)</option>
+          <option value="ne_NP">Nepali (Nepal)</option>
+          <option value="no">Norwegian</option>
+          <option value="or">Odia</option>
+          <option value="fa">Persian</option>
+          <option value="pl">Polish</option>
+          <option value="pt_AO">Portuguese (Angola)</option>
+          <option value="pt_BR">Portuguese (Brazil)</option>
+          <option value="pt_PT">Portuguese (Portugal)</option>
+          <option value="pt_RAA">Portuguese (RAA)</option>
+          <option value="pt_RAM">Portuguese (RAM)</option>
+          <option value="pa_IN">Punjabi (India)</option>
+          <option value="ro">Romanian</option>
+          <option value="ru">Russian</option>
+          <option value="sr">Serbian</option>
+          <option value="sk">Slovak</option>
+          <option value="sl">Slovenian</option>
+          <option value="es">Spanish</option>
+          <option value="es_AR">Spanish (Argentina)</option>
+          <option value="es_CL">Spanish (Chile)</option>
+          <option value="es_CR">Spanish (Costa Rica)</option>
+          <option value="es_CU">Spanish (Cuba)</option>
+          <option value="es_DO">Spanish (Dominican Republic)</option>
+          <option value="es_EC">Spanish (Ecuador)</option>
+          <option value="es_HN">Spanish (Honduras)</option>
+          <option value="es_MX">Spanish (Mexico)</option>
+          <option value="es_PA">Spanish (Panama)</option>
+          <option value="es_PY">Spanish (Paraguay)</option>
+          <option value="es_PE">Spanish (Peru)</option>
+          <option value="es_PR">Spanish (Puerto Rico)</option>
+          <option value="es_ES">Spanish (Spain)</option>
+          <option value="es_UY">Spanish (Uruguay)</option>
+          <option value="es_VE">Spanish (Venezuela)</option>
+          <option value="sv">Swedish</option>
+          <option value="ta_IN">Tamil (India)</option>
+          <option value="te">Telugu</option>
+          <option value="th">Thai</option>
+          <option value="tr">Turkish</option>
+          <option value="uk">Ukrainian</option>
+          <option value="zu">Zulu</option>
+        </b-form-select>
       </b-form>
       <h4>Report an issue, bug or suggestion</h4>
       Use
@@ -638,6 +750,7 @@ export default {
       speciesSelected: [],
       backSelected: 1,
       distSelected: 50,
+      sppLocale: "en",
       mapSelected: true,
       mediaSelected: false,
       hotspotSelected: false,
@@ -692,20 +805,19 @@ export default {
           console.log("Location found: " + this.location);
           this.isMylocation = true;
           this.showOverlay = true;
-          fetch(
-            "https://api.ebird.org/v2/data/obs/geo/recent/notable?lat=" +
-              this.location.latitude +
-              "&lng=" +
-              this.location.longitude +
-              "&key=vcs68p4j67pt&detail=" +
-              (this.detailSelected ? "full" : "simple") +
-              "&back=" +
-              this.backMax +
-              "&dist=" +
-              this.distMax +
-              "&hotspot=" +
-              this.hotspotSelected
-          )
+
+          const params = new URLSearchParams({
+            lat: this.location.latitude,
+            lng: this.location.longitude,
+            key: "vcs68p4j67pt",
+            detail: this.detailSelected ? "full" : "simple",
+            back: this.backMax,
+            dist: this.distMax,
+            hotspot: this.hotspotSelected,
+            sppLocale: this.sppLocale,
+          });
+
+          fetch(`https://api.ebird.org/v2/data/obs/geo/recent/notable?${params}`)
             .then((response) => response.json())
             .then((json) => {
               this.observationsMylocation = [...this.processObs(json, "mylocation")];
@@ -722,16 +834,15 @@ export default {
     },
     addRegion(selectedOption) {
       this.showOverlay = true;
-      fetch(
-        "https://api.ebird.org/v2/data/obs/" +
-          selectedOption.code +
-          "/recent/notable?key=vcs68p4j67pt&detail=" +
-          (this.detailSelected ? "full" : "simple") +
-          "&back=" +
-          this.backMax +
-          "&hotspot=" +
-          this.hotspotSelected
-      )
+      const params = new URLSearchParams({
+        key: "vcs68p4j67pt",
+        detail: this.detailSelected ? "full" : "simple",
+        back: this.backMax,
+        hotspot: this.hotspotSelected,
+        sppLocale: this.sppLocale,
+      });
+
+      fetch(`https://api.ebird.org/v2/data/obs/${selectedOption.code}/recent/notable?${params}`)
         .then((response) => response.json())
         .then((json) => {
           this.observationsRegion.push(...this.processObs(json, selectedOption.code));
@@ -960,6 +1071,7 @@ export default {
       }
       if (this.backSelected !== "") qp.set("t", this.backSelected);
       if (this.detailSelected) qp.set("c", this.detailSelected ? 1 : 0);
+      if (this.sppLocale != "en") qp.set("l", this.sppLocale);
       return qp.toString();
       /* var l = "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/?";
       l += "mylocation=" + (this.isMylocation ? "1" : "0") + "&";
@@ -1068,6 +1180,9 @@ export default {
     if (qp.get("c")) {
       this.detailSelected = qp.get("c") == 1 ? true : false;
     }
+    if (qp.get("l")) {
+      this.sppLocale = qp.get("l");
+    }
     fetch("https://api.ebird.org/v2/ref/region/list/country/world?key=vcs68p4j67pt")
       .then((response) => response.json())
       .then((json) => {
@@ -1125,6 +1240,9 @@ export default {
       this.updateURL();
     },
     detailSelected() {
+      this.updateURL();
+    },
+    sppLocale() {
       this.updateURL();
     },
   },
