@@ -96,15 +96,3 @@ body {
 .hover-effect:hover {
   text-decoration: underline;
 }
-
-/* Prevent Leaflet zoom animation canvas from blocking marker clicks */
-.leaflet-zoom-animated,
-.leaflet-zoom-anim {
-  pointer-events: none !important;
-}
-
-/* Extra protection: ensure canvas in marker pane never blocks clicks */
-.leaflet-marker-pane > .leaflet-zoom-animated {
-  pointer-events: none !important;
-  z-index: 0 !important;
-}
