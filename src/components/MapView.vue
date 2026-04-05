@@ -130,6 +130,10 @@ function shouldMountObservationOverlays() {
   return !app.isMobileLayout
 }
 
+function shouldUseMobileLiteMap() {
+  return app.isMobileLayout
+}
+
 function shouldObserveMapContainer() {
   return !app.isMobileLayout
 }
@@ -194,6 +198,37 @@ function scheduleMapboxPreload() {
 
   mapboxPreloadHandleType = "timeout"
   mapboxPreloadHandle = window.setTimeout(preload, 250)
+}
+
+function getMapOptions() {
+  const options = {
+    container: mapContainer.value,
+    style: app.mapStyle,
+    projection: "mercator",
+    center: [0, 20],
+    zoom: 1,
+    attributionControl: true,
+  }
+
+  if (!shouldUseMobileLiteMap()) {
+    return options
+  }
+
+  return {
+    ...options,
+    crossSourceCollisions: false,
+    dragRotate: false,
+    fadeDuration: 0,
+    keyboard: false,
+    maxTileCacheSize: 64,
+    performanceMetricsCollection: false,
+    pitchWithRotate: false,
+    precompilePrograms: false,
+    refreshExpiredTiles: false,
+    renderWorldCopies: false,
+    touchPitch: false,
+    trackResize: false,
+  }
 }
 
 function buildGeoJson(visibleIds = null) {
@@ -1219,18 +1254,13 @@ async function initializeMap() {
   }
 
   mapbox.accessToken = mapboxAccessToken
-  mapInstance.value = new mapbox.Map({
-    container: mapContainer.value,
-    style: app.mapStyle,
-    projection: "mercator",
-    center: [0, 20],
-    zoom: 1,
-    attributionControl: true,
-  })
+  mapInstance.value = new mapbox.Map(getMapOptions())
 
-  styleSwitcherControl = createStyleSwitcherControl()
-  mapInstance.value.addControl(styleSwitcherControl, "top-right")
-  mapInstance.value.addControl(new mapbox.NavigationControl({ showCompass: false }), "top-right")
+  if (!shouldUseMobileLiteMap()) {
+    styleSwitcherControl = createStyleSwitcherControl()
+    mapInstance.value.addControl(styleSwitcherControl, "top-right")
+    mapInstance.value.addControl(new mapbox.NavigationControl({ showCompass: false }), "top-right")
+  }
 
   mapInstance.value.on("load", () => {
     mapReady.value = true
