@@ -138,6 +138,33 @@ function shouldObserveMapContainer() {
   return !app.isMobileLayout
 }
 
+function createMobileRasterDiagnosticStyle() {
+  return {
+    version: 8,
+    sources: {
+      "mobile-raster-basemap": {
+        type: "raster",
+        tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+        tileSize: 256,
+        attribution: "&copy; OpenStreetMap contributors",
+      },
+    },
+    layers: [
+      {
+        id: "mobile-raster-basemap",
+        type: "raster",
+        source: "mobile-raster-basemap",
+        minzoom: 0,
+        maxzoom: 19,
+      },
+    ],
+  }
+}
+
+function getMountedMapStyle(style = app.mapStyle) {
+  return shouldMountObservationOverlays() ? style : createMobileRasterDiagnosticStyle()
+}
+
 function shouldSyncClusterRichness() {
   return !app.isMobileLayout
 }
@@ -203,7 +230,7 @@ function scheduleMapboxPreload() {
 function getMapOptions() {
   const options = {
     container: mapContainer.value,
-    style: app.mapStyle,
+    style: getMountedMapStyle(),
     projection: "mercator",
     center: [0, 20],
     zoom: 1,
@@ -1377,7 +1404,7 @@ watch(
   (nextStyle) => {
     if (mapInstance.value && nextStyle) {
       clearClusterMarkers()
-      mapInstance.value.setStyle(nextStyle)
+      mapInstance.value.setStyle(getMountedMapStyle(nextStyle))
     }
   }
 )
