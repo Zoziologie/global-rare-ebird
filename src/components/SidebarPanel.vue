@@ -479,7 +479,6 @@ if (!app) {
 }
 
 const openSpeciesCode = ref(null);
-const initializedOpenSpecies = ref(false);
 const showFilterOptions = ref(false);
 const speciesCollapseRefs = new Map();
 
@@ -499,18 +498,11 @@ watch(
   (codes) => {
     if (!codes.length) {
       openSpeciesCode.value = null;
-      initializedOpenSpecies.value = false;
-      return;
-    }
-
-    if (!initializedOpenSpecies.value) {
-      openSpeciesCode.value = codes[0];
-      initializedOpenSpecies.value = true;
       return;
     }
 
     if (openSpeciesCode.value && !codes.includes(openSpeciesCode.value)) {
-      openSpeciesCode.value = codes[0];
+      openSpeciesCode.value = null;
     }
   },
   { immediate: true },

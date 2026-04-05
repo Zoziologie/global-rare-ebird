@@ -126,6 +126,30 @@ function shouldDeferMapInitialization() {
   return app.isMobileLayout && app.sidebarOpen
 }
 
+function shouldMountObservationOverlays() {
+  return !app.isMobileLayout
+}
+
+function shouldSyncClusterRichness() {
+  return !app.isMobileLayout
+}
+
+function getClusterColorExpression() {
+  if (shouldSyncClusterRichness()) {
+    return getRichnessColorExpression([
+      "coalesce",
+      ["feature-state", "speciesCount"],
+      1,
+    ])
+  }
+
+  return getRichnessColorExpression([
+    "coalesce",
+    ["get", "point_count"],
+    1,
+  ])
+}
+
 function cancelMapboxPreload() {
   if (typeof window === "undefined" || mapboxPreloadHandle === null) {
     return
@@ -444,6 +468,12 @@ function syncClusterStates() {
     return
   }
 
+  if (!shouldSyncClusterRichness()) {
+    clearClusterMarkers()
+    clusterMarkersDirty = false
+    return
+  }
+
   if (!app.mapSelected) {
     clearClusterMarkers()
     clusterMarkersDirty = false
@@ -473,6 +503,14 @@ function syncClusterStates() {
 }
 
 function scheduleClusterMarkerSync(force = false) {
+  if (!shouldSyncClusterRichness()) {
+    if (force) {
+      clearClusterMarkers()
+    }
+    clusterMarkersDirty = false
+    return
+  }
+
   if (clusterFrameId !== null) {
     cancelAnimationFrame(clusterFrameId)
   }
@@ -617,6 +655,24 @@ function ensureMyLocationOverlay() {
     return
   }
 
+  if (!shouldMountObservationOverlays()) {
+    removeMyLocationMarker()
+
+    if (mapInstance.value.getLayer(myLocationLineLayerId)) {
+      mapInstance.value.removeLayer(myLocationLineLayerId)
+    }
+
+    if (mapInstance.value.getLayer(myLocationFillLayerId)) {
+      mapInstance.value.removeLayer(myLocationFillLayerId)
+    }
+
+    if (mapInstance.value.getSource(myLocationSourceId)) {
+      mapInstance.value.removeSource(myLocationSourceId)
+    }
+
+    return
+  }
+
   const active = app.locationCoords
   const showRadius = app.isMylocation && app.locationCoords
   const source = mapInstance.value.getSource(myLocationSourceId)
@@ -741,6 +797,11 @@ function createStyleSwitcherControl() {
 
 function syncVisibleLocations() {
   if (!mapInstance.value) {
+    return
+  }
+
+  if (!shouldMountObservationOverlays()) {
+    app.clearMapVisibleLocationIds()
     return
   }
 
@@ -904,11 +965,7 @@ function addLayers() {
       source: sourceId,
       filter: ["has", "point_count"],
       paint: {
-        "circle-color": getRichnessColorExpression([
-          "coalesce",
-          ["feature-state", "speciesCount"],
-          1,
-        ]),
+        "circle-color": getClusterColorExpression(),
         "circle-radius": [
           "interpolate",
           ["linear"],
@@ -953,14 +1010,26 @@ function addLayers() {
   }
 }
 
+function syncClusterPaint() {
+  if (!mapInstance.value?.getLayer(clusterLayerId)) {
+    return
+  }
+
+  mapInstance.value.setPaintProperty(clusterLayerId, "circle-color", getClusterColorExpression())
+}
+
 function syncSourceData() {
   if (!mapInstance.value?.getSource(sourceId)) {
     return
   }
 
   clusterRevision += 1
-  clearClusterMarkers()
-  clusterMarkersDirty = true
+  if (shouldSyncClusterRichness()) {
+    clearClusterMarkers()
+    clusterMarkersDirty = true
+  } else {
+    clusterMarkersDirty = false
+  }
 
   if (app.highlightedSpeciesCode) {
     const grouped = groupObservations(
@@ -974,7 +1043,10 @@ function syncSourceData() {
 
   syncHighlightLayer()
   renderPopup()
-  scheduleClusterMarkerSync(true)
+  syncClusterPaint()
+  if (shouldSyncClusterRichness()) {
+    scheduleClusterMarkerSync(true)
+  }
 }
 
 function removePopup() {
@@ -1158,6 +1230,11 @@ async function initializeMap() {
 
   mapInstance.value.on("load", () => {
     mapReady.value = true
+    if (!shouldMountObservationOverlays()) {
+      app.clearMapVisibleLocationIds()
+      return
+    }
+
     ensureSource()
     ensureMyLocationOverlay()
     addLayers()
@@ -1168,6 +1245,11 @@ async function initializeMap() {
   })
 
   mapInstance.value.on("style.load", () => {
+    if (!shouldMountObservationOverlays()) {
+      app.clearMapVisibleLocationIds()
+      return
+    }
+
     ensureSource()
     ensureMyLocationOverlay()
     addLayers()
@@ -1268,6 +1350,26 @@ watch(
   () => app.mapStyleKey,
   () => {
     styleSwitcherControl?.syncActive?.()
+  }
+)
+
+watch(
+  () => app.isMobileLayout,
+  () => {
+    if (!mapInstance.value || !mapReady.value) {
+      return
+    }
+
+    syncClusterPaint()
+
+    if (shouldSyncClusterRichness()) {
+      clusterMarkersDirty = true
+      scheduleClusterMarkerSync(true)
+      return
+    }
+
+    clearClusterMarkers()
+    clusterMarkersDirty = false
   }
 )
 
