@@ -154,7 +154,7 @@ function shouldDeferMapInitialization() {
 }
 
 function shouldUseMobileRasterBasemap() {
-  return false
+  return app.isMobileLayout
 }
 
 function getMobileRasterStyleId() {
