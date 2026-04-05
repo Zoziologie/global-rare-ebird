@@ -49,6 +49,7 @@ import { birdAppKey } from "../composables/useGlobalRareBird"
 import { createBoundsFromPoints, toMapboxBounds } from "../utils/bounds"
 import { createGeodesicCircleBounds, createGeodesicCircleFeature } from "../utils/geo"
 import { escapeHtml, formatDaysAgo, formatObservationTime } from "../utils/formatters"
+import { groupObservations } from "../utils/observations"
 import { getClusterCountColorExpression, getRichnessColorExpression } from "../utils/richness"
 import { pointInViewport } from "../utils/viewport"
 
@@ -266,10 +267,14 @@ function getMapOptions() {
   }
 }
 
-function buildGeoJson() {
+function buildGeoJson(visibleIds = null) {
+  const visibleSet = visibleIds?.length ? new Set(visibleIds) : null
+
   return {
     type: "FeatureCollection",
-    features: app.mapLocationCandidates.map((location) => ({
+    features: app.mapLocationCandidates
+      .filter((location) => !visibleSet || visibleSet.has(location.locId))
+      .map((location) => ({
         type: "Feature",
         id: location.locId,
         properties: {
@@ -286,6 +291,29 @@ function buildGeoJson() {
           coordinates: [location.latLng.lng, location.latLng.lat],
         },
       })),
+  }
+}
+
+function buildGeoJsonFromGroupedLocations(locations = []) {
+  return {
+    type: "FeatureCollection",
+    features: locations.map((location) => ({
+      type: "Feature",
+      id: location.locId,
+      properties: {
+        locId: location.locId,
+        locName: location.locName,
+        locationPrivate: location.locationPrivate,
+        regionCode: location.regionCode,
+        count: location.count,
+        speciesCount: location.speciesCount,
+        speciesCodes: location.speciesCodes,
+      },
+      geometry: {
+        type: "Point",
+        coordinates: [location.latLng.lng, location.latLng.lat],
+      },
+    })),
   }
 }
 
@@ -751,26 +779,19 @@ function createHighlightFilter(ids) {
   return ["all", ["!", ["has", "point_count"]], ["in", ["get", "locId"], ["literal", ids]]]
 }
 
-function getHighlightedLocationIds() {
-  if (app.highlightedLocationIds.length) {
-    return app.highlightedLocationIds
-  }
-
-  if (!app.highlightedSpeciesCode) {
-    return []
-  }
-
-  return app.mapLocationCandidates
-    .filter((location) => location.speciesCodes?.includes(app.highlightedSpeciesCode))
-    .map((location) => location.locId)
-}
-
 function syncHighlightLayer() {
   if (!mapInstance.value?.getLayer(pointHighlightLayerId)) {
     return
   }
 
-  mapInstance.value.setFilter(pointHighlightLayerId, createHighlightFilter(getHighlightedLocationIds()))
+  const ids = app.highlightedLocationIds
+
+  if (!ids.length) {
+    mapInstance.value.setFilter(pointHighlightLayerId, ["==", ["get", "locId"], "__none__"])
+    return
+  }
+
+  mapInstance.value.setFilter(pointHighlightLayerId, createHighlightFilter(ids))
 }
 
 function scheduleHighlightLayerSync() {
@@ -780,8 +801,7 @@ function scheduleHighlightLayerSync() {
 
   highlightFrameId = requestAnimationFrame(() => {
     highlightFrameId = null
-    syncHighlightLayer()
-    renderPopup()
+    syncSourceData()
   })
 }
 
@@ -899,7 +919,15 @@ function syncSourceData() {
     return
   }
 
-  mapInstance.value.getSource(sourceId).setData(buildGeoJson())
+  if (app.highlightedSpeciesCode) {
+    const grouped = groupObservations(
+      app.candidateObservations.filter((obs) => obs.speciesCode === app.highlightedSpeciesCode),
+    )
+    mapInstance.value.getSource(sourceId).setData(buildGeoJsonFromGroupedLocations(grouped.locations))
+  } else {
+    const visibleIds = app.highlightedLocationIds.length ? app.highlightedLocationIds : null
+    mapInstance.value.getSource(sourceId).setData(buildGeoJson(visibleIds))
+  }
 
   syncHighlightLayer()
   renderPopup()
