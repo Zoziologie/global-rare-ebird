@@ -139,6 +139,7 @@ function createMobileMapboxRasterStyle() {
 
   return {
     version: 8,
+    glyphs: "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
     sources: {
       "mobile-mapbox-raster-basemap": {
         type: "raster",
