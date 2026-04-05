@@ -49,7 +49,7 @@ import { createBoundsFromPoints, toMapboxBounds } from "../utils/bounds"
 import { createGeodesicCircleBounds, createGeodesicCircleFeature } from "../utils/geo"
 import { escapeHtml, formatDaysAgo, formatObservationTime } from "../utils/formatters"
 import { groupObservations } from "../utils/observations"
-import { getClusterMarkerSize, getRichnessColor, getRichnessColorExpression } from "../utils/richness"
+import { getRichnessColorExpression } from "../utils/richness"
 import { pointInViewport } from "../utils/viewport"
 
 const app = inject(birdAppKey)
@@ -98,7 +98,6 @@ let clusterFrameId = null
 let clusterRevision = 0
 let clusterMarkersDirty = false
 const clusterRichnessCache = new Map()
-const clusterMarkers = new Map()
 let myLocationMarker = null
 let mapboxPreloadHandle = null
 let mapboxPreloadHandleType = null
@@ -379,10 +378,6 @@ function removeMyLocationMarker() {
 
 function clearClusterMarkers() {
   clusterRichnessCache.clear()
-  for (const marker of clusterMarkers.values()) {
-    marker.remove()
-  }
-  clusterMarkers.clear()
   if (mapInstance.value?.removeFeatureState) {
     try {
       mapInstance.value.removeFeatureState({ source: sourceId })
@@ -390,104 +385,6 @@ function clearClusterMarkers() {
       // Ignore cleanup failures across style/source transitions.
     }
   }
-}
-
-function ensureClusterMarker(feature) {
-  const clusterId = Number(feature.properties?.cluster_id)
-  const coordinates = Array.isArray(feature.geometry?.coordinates) ? feature.geometry.coordinates : null
-
-  if (!Number.isFinite(clusterId) || !coordinates) {
-    return null
-  }
-
-  const count = Number(feature.properties?.obsCount ?? feature.properties?.point_count ?? 0)
-  const elementCount = Number.isFinite(count) && count > 0 ? count : Number(feature.properties?.point_count ?? 0)
-  let marker = clusterMarkers.get(clusterId)
-
-  if (!marker) {
-    const markerNode = document.createElement("button")
-    markerNode.type = "button"
-    markerNode.className = "map-pane__cluster-marker"
-    markerNode.innerHTML = `
-      <span class="map-pane__cluster-marker-bubble">
-        <span class="map-pane__cluster-marker-count"></span>
-      </span>
-    `
-    markerNode.addEventListener("click", (event) => {
-      event.preventDefault()
-      event.stopPropagation()
-      const markerLngLat = marker?.getLngLat?.()
-      zoomToCluster(clusterId, markerLngLat ? [markerLngLat.lng, markerLngLat.lat] : coordinates)
-    })
-
-    marker = new mapboxgl.Marker({
-      element: markerNode,
-      anchor: "center",
-    })
-    clusterMarkers.set(clusterId, marker)
-  }
-
-  const markerElement = marker.getElement()
-  const countNode = markerElement.querySelector(".map-pane__cluster-marker-count")
-  const colorValue = Number(feature.properties?.point_count ?? elementCount)
-
-  markerElement.style.setProperty("--cluster-size", `${getClusterMarkerSize(elementCount)}px`)
-  markerElement.style.setProperty("--cluster-color", getRichnessColor(colorValue))
-  markerElement.setAttribute("aria-label", `${elementCount} observations in cluster`)
-  markerElement.title = `${elementCount} observations`
-
-  if (countNode) {
-    countNode.textContent = String(elementCount)
-  }
-
-  marker.setLngLat(coordinates)
-
-  if (!markerElement.isConnected) {
-    marker.addTo(mapInstance.value)
-  }
-
-  return clusterId
-}
-
-function syncMobileClusterMarkers() {
-  if (!mapInstance.value || !mapReady.value || !mapInstance.value.getSource(sourceId)) {
-    clearClusterMarkers()
-    return
-  }
-
-  if (!app.mapSelected) {
-    clearClusterMarkers()
-    clusterMarkersDirty = false
-    return
-  }
-
-  if (!mapInstance.value.isSourceLoaded(sourceId)) {
-    clusterMarkersDirty = true
-    return
-  }
-
-  const clusterFeatures = mapInstance.value.queryRenderedFeatures({
-    layers: [clusterLayerId],
-  })
-  const activeClusterIds = new Set()
-
-  for (const feature of clusterFeatures) {
-    const clusterId = ensureClusterMarker(feature)
-    if (clusterId !== null) {
-      activeClusterIds.add(clusterId)
-    }
-  }
-
-  for (const [clusterId, marker] of clusterMarkers) {
-    if (activeClusterIds.has(clusterId)) {
-      continue
-    }
-
-    marker.remove()
-    clusterMarkers.delete(clusterId)
-  }
-
-  clusterMarkersDirty = false
 }
 
 function syncTextCountLayers() {
@@ -735,18 +632,10 @@ function syncClusterStates() {
 
 function scheduleClusterMarkerSync(force = false) {
   if (!shouldSyncClusterRichness()) {
-    if (!force) {
-      return
+    if (force) {
+      clearClusterMarkers()
     }
-
-    if (clusterFrameId !== null) {
-      cancelAnimationFrame(clusterFrameId)
-    }
-
-    clusterFrameId = requestAnimationFrame(() => {
-      clusterFrameId = null
-      syncMobileClusterMarkers()
-    })
+    clusterMarkersDirty = false
     return
   }
 
