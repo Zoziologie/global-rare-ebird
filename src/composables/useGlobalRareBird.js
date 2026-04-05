@@ -16,6 +16,7 @@ import { createSortOptionLabels, filterSearchOptions } from "./globalRareBirdOpt
 import regionCatalog from "../../data/region-catalog.json";
 
 export const birdAppKey = Symbol("bird-app");
+const MOBILE_LAYOUT_MEDIA_QUERY = "(max-width: 900px)";
 
 const MEDIA_BASE_URL = `${
   typeof window !== "undefined" ? window.location.protocol : "https:"
@@ -40,6 +41,8 @@ async function fetchJson(url) {
 export function useGlobalRareBird() {
   const initialState = parseShareState(window.location.search);
   const regionCatalogLookup = new Map(regionCatalog.map((region) => [region.code, normalizeRegion(region)]));
+  const initialMobileLayout =
+    typeof window !== "undefined" ? window.matchMedia(MOBILE_LAYOUT_MEDIA_QUERY).matches : false;
 
   const isMylocation = ref(initialState.isMylocation);
   const locationCoords = ref(null);
@@ -81,7 +84,7 @@ export function useGlobalRareBird() {
   const statusBadgeModalSystemId = ref(null);
   const showInstruction = ref(false);
   const sidebarOpen = ref(true);
-  const isMobileLayout = ref(false);
+  const isMobileLayout = ref(initialMobileLayout);
   const fitRequest = ref(0);
   let mobileMediaQuery = null;
   let syncSidebarMode = null;
@@ -652,7 +655,7 @@ export function useGlobalRareBird() {
   };
 
   onMounted(async () => {
-    mobileMediaQuery = window.matchMedia("(max-width: 900px)");
+    mobileMediaQuery = window.matchMedia(MOBILE_LAYOUT_MEDIA_QUERY);
     syncSidebarMode = (event) => {
       const compact = event.matches;
       isMobileLayout.value = compact;

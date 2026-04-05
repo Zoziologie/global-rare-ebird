@@ -99,6 +99,8 @@ let clusterRevision = 0
 let clusterMarkersDirty = false
 const clusterRichnessCache = new Map()
 let myLocationMarker = null
+let mapboxPreloadHandle = null
+let mapboxPreloadHandleType = null
 
 async function loadMapbox() {
   if (mapboxgl) {
@@ -106,10 +108,15 @@ async function loadMapbox() {
   }
 
   if (!mapboxglPromise) {
-    mapboxglPromise = import("mapbox-gl").then((module) => {
-      mapboxgl = module.default
-      return mapboxgl
-    })
+    mapboxglPromise = import("mapbox-gl")
+      .then((module) => {
+        mapboxgl = module.default
+        return mapboxgl
+      })
+      .catch((error) => {
+        mapboxglPromise = null
+        throw error
+      })
   }
 
   return mapboxglPromise
@@ -117,6 +124,48 @@ async function loadMapbox() {
 
 function shouldDeferMapInitialization() {
   return app.isMobileLayout && app.sidebarOpen
+}
+
+function cancelMapboxPreload() {
+  if (typeof window === "undefined" || mapboxPreloadHandle === null) {
+    return
+  }
+
+  if (mapboxPreloadHandleType === "idle" && "cancelIdleCallback" in window) {
+    window.cancelIdleCallback(mapboxPreloadHandle)
+  } else {
+    window.clearTimeout(mapboxPreloadHandle)
+  }
+
+  mapboxPreloadHandle = null
+  mapboxPreloadHandleType = null
+}
+
+function scheduleMapboxPreload() {
+  if (
+    typeof window === "undefined" ||
+    !hasToken.value ||
+    mapboxgl ||
+    mapboxglPromise ||
+    mapboxPreloadHandle !== null
+  ) {
+    return
+  }
+
+  const preload = () => {
+    mapboxPreloadHandle = null
+    mapboxPreloadHandleType = null
+    void loadMapbox()
+  }
+
+  if ("requestIdleCallback" in window) {
+    mapboxPreloadHandleType = "idle"
+    mapboxPreloadHandle = window.requestIdleCallback(preload, { timeout: 1200 })
+    return
+  }
+
+  mapboxPreloadHandleType = "timeout"
+  mapboxPreloadHandle = window.setTimeout(preload, 250)
 }
 
 function buildGeoJson(visibleIds = null) {
@@ -1236,9 +1285,12 @@ watch(
   () => [app.isMobileLayout, app.sidebarOpen],
   async () => {
     if (shouldDeferMapInitialization()) {
+      scheduleMapboxPreload()
       app.setMapVisibleLocationIds(null)
       return
     }
+
+    cancelMapboxPreload()
 
     if (!mapInstance.value) {
       await initializeMap()
@@ -1251,10 +1303,16 @@ watch(
 )
 
 onMounted(() => {
+  if (shouldDeferMapInitialization()) {
+    scheduleMapboxPreload()
+    return
+  }
+
   void initializeMap()
 })
 
 onBeforeUnmount(() => {
+  cancelMapboxPreload()
   if (highlightFrameId !== null) {
     cancelAnimationFrame(highlightFrameId)
     highlightFrameId = null
