@@ -126,26 +126,28 @@ function shouldDeferMapInitialization() {
   return app.isMobileLayout && app.sidebarOpen
 }
 
-function shouldMountObservationOverlays() {
-  return true
-}
-
-function shouldUseMobileLiteMap() {
+function shouldUseMobileRasterBasemap() {
   return app.isMobileLayout
 }
 
-function shouldObserveMapContainer() {
-  return !app.isMobileLayout
+function getMobileRasterStyleId() {
+  return app.mapStyleKey === "satellite" ? "satellite-streets-v12" : "streets-v12"
 }
 
 function createMobileMapboxRasterStyle() {
+  const styleId = getMobileRasterStyleId()
+
   return {
     version: 8,
     sources: {
       "mobile-mapbox-raster-basemap": {
         type: "raster",
-        url: "mapbox://mapbox.satellite",
-        tileSize: 256,
+        tiles: [
+          `https://api.mapbox.com/styles/v1/mapbox/${styleId}/tiles/512/{z}/{x}/{y}?access_token=${mapboxAccessToken}`,
+        ],
+        tileSize: 512,
+        attribution:
+          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://www.mapbox.com/about/maps/">Mapbox</a>',
       },
     },
     layers: [
@@ -161,7 +163,7 @@ function createMobileMapboxRasterStyle() {
 }
 
 function getMountedMapStyle(style = app.mapStyle) {
-  return app.isMobileLayout ? createMobileMapboxRasterStyle() : style
+  return shouldUseMobileRasterBasemap() ? createMobileMapboxRasterStyle() : style
 }
 
 function shouldSyncClusterRichness() {
@@ -236,7 +238,7 @@ function getMapOptions() {
     attributionControl: true,
   }
 
-  if (!shouldUseMobileLiteMap()) {
+  if (!app.isMobileLayout) {
     return options
   }
 
@@ -720,24 +722,6 @@ function ensureMyLocationOverlay() {
     return
   }
 
-  if (!shouldMountObservationOverlays()) {
-    removeMyLocationMarker()
-
-    if (mapInstance.value.getLayer(myLocationLineLayerId)) {
-      mapInstance.value.removeLayer(myLocationLineLayerId)
-    }
-
-    if (mapInstance.value.getLayer(myLocationFillLayerId)) {
-      mapInstance.value.removeLayer(myLocationFillLayerId)
-    }
-
-    if (mapInstance.value.getSource(myLocationSourceId)) {
-      mapInstance.value.removeSource(myLocationSourceId)
-    }
-
-    return
-  }
-
   const active = app.locationCoords
   const showRadius = app.isMylocation && app.locationCoords
   const source = mapInstance.value.getSource(myLocationSourceId)
@@ -862,11 +846,6 @@ function createStyleSwitcherControl() {
 
 function syncVisibleLocations() {
   if (!mapInstance.value) {
-    return
-  }
-
-  if (!shouldMountObservationOverlays()) {
-    app.clearMapVisibleLocationIds()
     return
   }
 
@@ -1282,19 +1261,12 @@ async function initializeMap() {
   mapbox.accessToken = mapboxAccessToken
   mapInstance.value = new mapbox.Map(getMapOptions())
 
-  if (!shouldUseMobileLiteMap()) {
-    styleSwitcherControl = createStyleSwitcherControl()
-    mapInstance.value.addControl(styleSwitcherControl, "top-right")
-    mapInstance.value.addControl(new mapbox.NavigationControl({ showCompass: false }), "top-right")
-  }
+  styleSwitcherControl = createStyleSwitcherControl()
+  mapInstance.value.addControl(styleSwitcherControl, "top-right")
+  mapInstance.value.addControl(new mapbox.NavigationControl({ showCompass: false }), "top-right")
 
   mapInstance.value.on("load", () => {
     mapReady.value = true
-    if (!shouldMountObservationOverlays()) {
-      app.clearMapVisibleLocationIds()
-      return
-    }
-
     ensureSource()
     ensureMyLocationOverlay()
     addLayers()
@@ -1305,11 +1277,6 @@ async function initializeMap() {
   })
 
   mapInstance.value.on("style.load", () => {
-    if (!shouldMountObservationOverlays()) {
-      app.clearMapVisibleLocationIds()
-      return
-    }
-
     ensureSource()
     ensureMyLocationOverlay()
     addLayers()
@@ -1340,13 +1307,11 @@ async function initializeMap() {
   mapInstance.value.on("mousemove", syncCursor)
   mapInstance.value.on("click", handleMapClick)
 
-  if (shouldObserveMapContainer()) {
-    resizeObserver = new ResizeObserver(() => {
-      resizeMap()
-    })
+  resizeObserver = new ResizeObserver(() => {
+    resizeMap()
+  })
 
-    resizeObserver.observe(mapContainer.value)
-  }
+  resizeObserver.observe(mapContainer.value)
 
   return mapInstance.value
 }
