@@ -127,7 +127,7 @@ function shouldDeferMapInitialization() {
 }
 
 function shouldMountObservationOverlays() {
-  return !app.isMobileLayout
+  return true
 }
 
 function shouldUseMobileLiteMap() {
