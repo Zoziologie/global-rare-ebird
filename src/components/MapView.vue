@@ -162,7 +162,7 @@ function createMobileRasterDiagnosticStyle() {
 }
 
 function getMountedMapStyle(style = app.mapStyle) {
-  return shouldMountObservationOverlays() ? style : createMobileRasterDiagnosticStyle()
+  return app.isMobileLayout ? createMobileRasterDiagnosticStyle() : style
 }
 
 function shouldSyncClusterRichness() {
