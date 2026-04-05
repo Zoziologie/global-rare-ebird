@@ -23,14 +23,6 @@ Spotted a bug or have a suggestion? Open a [GitHub Issue](https://github.com/Zoz
 
 The GitHub Pages workflow injects the same `MAPBOX_ACCESS_TOKEN` and `EBIRD_API_KEY` names from repository secrets during the production build.
 
-## PWA
-
-The app is installable as a Progressive Web App on supported browsers.
-
-- The app shell is cached for repeat visits and limited offline use.
-- Live eBird data and map tiles still require network access.
-- On Chrome, use the browser menu or install icon to add the app to your device.
-
 ## Taxonomy data
 
 The repository separates raw source data from generated app data:
