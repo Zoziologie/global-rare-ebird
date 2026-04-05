@@ -138,31 +138,30 @@ function shouldObserveMapContainer() {
   return !app.isMobileLayout
 }
 
-function createMobileRasterDiagnosticStyle() {
+function createMobileMapboxRasterStyle() {
   return {
     version: 8,
     sources: {
-      "mobile-raster-basemap": {
+      "mobile-mapbox-raster-basemap": {
         type: "raster",
-        tiles: ["https://tile.openstreetmap.org/{z}/{x}/{y}.png"],
+        url: "mapbox://mapbox.satellite",
         tileSize: 256,
-        attribution: "&copy; OpenStreetMap contributors",
       },
     },
     layers: [
       {
-        id: "mobile-raster-basemap",
+        id: "mobile-mapbox-raster-basemap",
         type: "raster",
-        source: "mobile-raster-basemap",
+        source: "mobile-mapbox-raster-basemap",
         minzoom: 0,
-        maxzoom: 19,
+        maxzoom: 22,
       },
     ],
   }
 }
 
 function getMountedMapStyle(style = app.mapStyle) {
-  return app.isMobileLayout ? createMobileRasterDiagnosticStyle() : style
+  return app.isMobileLayout ? createMobileMapboxRasterStyle() : style
 }
 
 function shouldSyncClusterRichness() {

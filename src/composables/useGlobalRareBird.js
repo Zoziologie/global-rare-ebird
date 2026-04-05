@@ -92,9 +92,6 @@ export function useGlobalRareBird() {
   const loadingStack = ref([]);
   const isLoading = computed(() => loadingStack.value.length > 0);
   const loadingLabel = computed(() => loadingStack.value[loadingStack.value.length - 1] || "");
-  const mobileMapDiagnosticLabel = computed(() =>
-    isMobileLayout.value ? "Mobile map test: raster OSM basemap, bird overlays on" : "",
-  );
 
   const mapStyle = computed(
     () => mapboxStyles.find((style) => style.key === mapStyleKey.value)?.url || mapboxStyles[0].url,
@@ -626,7 +623,6 @@ export function useGlobalRareBird() {
     fitRequest,
     isLoading,
     loadingLabel,
-    mobileMapDiagnosticLabel,
     activeStatusSystem,
     statusOptions,
     linkUrl,

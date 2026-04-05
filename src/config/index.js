@@ -5,12 +5,12 @@ export const mapboxStyles = [
   {
     key: "streets",
     label: "Streets",
-    url: "mapbox://styles/mapbox/streets-v12",
+    url: "mapbox://styles/mapbox/streets-v12?optimize=true",
   },
   {
     key: "satellite",
     label: "Satellite",
-    url: "mapbox://styles/mapbox/satellite-streets-v12",
+    url: "mapbox://styles/mapbox/satellite-streets-v12?optimize=true",
   },
 ];
 

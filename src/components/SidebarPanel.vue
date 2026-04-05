@@ -20,10 +20,6 @@
     </header>
 
     <div class="sidebar-panel__body">
-      <p v-if="app.mobileMapDiagnosticLabel" class="sidebar-panel__test-banner">
-        {{ app.mobileMapDiagnosticLabel }}
-      </p>
-
       <section class="query-block">
         <div class="mode-toggle btn-group" role="group" aria-label="Search mode">
           <button
