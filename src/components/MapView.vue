@@ -130,6 +130,26 @@ function shouldMountObservationOverlays() {
   return !app.isMobileLayout
 }
 
+function createMobileDiagnosticStyle() {
+  return {
+    version: 8,
+    sources: {},
+    layers: [
+      {
+        id: "mobile-diagnostic-background",
+        type: "background",
+        paint: {
+          "background-color": "#dfe7ef",
+        },
+      },
+    ],
+  }
+}
+
+function getMountedMapStyle(style = app.mapStyle) {
+  return shouldMountObservationOverlays() ? style : createMobileDiagnosticStyle()
+}
+
 function shouldSyncClusterRichness() {
   return !app.isMobileLayout
 }
@@ -1217,7 +1237,7 @@ async function initializeMap() {
   mapbox.accessToken = mapboxAccessToken
   mapInstance.value = new mapbox.Map({
     container: mapContainer.value,
-    style: app.mapStyle,
+    style: getMountedMapStyle(),
     projection: "mercator",
     center: [0, 20],
     zoom: 1,
@@ -1341,7 +1361,7 @@ watch(
   (nextStyle) => {
     if (mapInstance.value && nextStyle) {
       clearClusterMarkers()
-      mapInstance.value.setStyle(nextStyle)
+      mapInstance.value.setStyle(getMountedMapStyle(nextStyle))
     }
   }
 )
