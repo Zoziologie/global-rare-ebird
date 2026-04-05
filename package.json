@@ -1,6 +1,6 @@
 {
   "name": "global-rare-ebird",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "title": "Global Rare eBird",
   "description": "A map of all rare birds seen on the globe with eBird data.",
   "repository": {
@@ -13,11 +13,12 @@
   "scripts": {
     "dev": "vite",
     "generate:taxonomy": "node scripts/generate-taxonomy.mjs",
+    "generate:region-catalog": "node scripts/generate-region-catalog.mjs",
     "generate:aba-taxonomy": "node scripts/generate-aba-taxonomy.mjs",
     "generate:french-taxonomy": "node scripts/generate-french-taxonomy.mjs",
     "generate:german-taxonomy": "node scripts/generate-german-taxonomy.mjs",
     "generate:swiss-taxonomy": "node scripts/generate-swiss-taxonomy.mjs",
-    "generate:taxonomies": "npm run generate:taxonomy && npm run generate:aba-taxonomy && npm run generate:french-taxonomy && npm run generate:german-taxonomy && npm run generate:swiss-taxonomy",
+    "generate:taxonomies": "npm run generate:taxonomy && npm run generate:region-catalog && npm run generate:aba-taxonomy && npm run generate:french-taxonomy && npm run generate:german-taxonomy && npm run generate:swiss-taxonomy",
     "build": "vite build",
     "preview": "vite preview"
   },

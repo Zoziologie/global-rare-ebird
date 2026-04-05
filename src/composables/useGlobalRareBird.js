@@ -13,6 +13,7 @@ import { parseShareState, serializeShareState } from "../utils/query";
 import { loadTaxonomyResources } from "../utils/taxonomy-resources";
 import { createGeolocationController } from "./geolocationController.js";
 import { createSortOptionLabels, filterSearchOptions } from "./globalRareBirdOptions.js";
+import regionCatalog from "../../data/region-catalog.json";
 
 export const birdAppKey = Symbol("bird-app");
 
@@ -38,6 +39,7 @@ async function fetchJson(url) {
 
 export function useGlobalRareBird() {
   const initialState = parseShareState(window.location.search);
+  const regionCatalogLookup = new Map(regionCatalog.map((region) => [region.code, normalizeRegion(region)]));
 
   const isMylocation = ref(initialState.isMylocation);
   const locationCoords = ref(null);
@@ -63,8 +65,13 @@ export function useGlobalRareBird() {
   const mapStyleKey = ref(mapboxStyles[0].key);
   const mapVisibleLocationIds = ref(null);
   const mapVisibleLocationIdsSnapshot = ref(null);
-  const regionSearch = ref([]);
-  const regionSelected = ref([]);
+  const regionSearch = ref(regionCatalog.map(normalizeRegion));
+  const regionSelected = ref(
+    initialState.regionCodes
+      .map((code) => regionCatalogLookup.get(code))
+      .filter(Boolean)
+      .map(normalizeRegion),
+  );
   const observationsMylocation = ref([]);
   const observationsRegionByCode = reactive({});
   const popupLocationId = ref(null);
@@ -192,7 +199,6 @@ export function useGlobalRareBird() {
     return `${baseUrl}?${linkUrl.value}`;
   });
 
-  const pendingRegionCodes = ref(initialState.regionCodes);
   const shouldSyncUrl = ref(false);
   const { requestGeolocation, primeGeolocationForDisplay } = createGeolocationController({
     locationCoords,
@@ -368,33 +374,6 @@ export function useGlobalRareBird() {
   function clearRegionObservations() {
     for (const key of Object.keys(observationsRegionByCode)) {
       delete observationsRegionByCode[key];
-    }
-  }
-
-  async function loadRegionCatalog() {
-    try {
-      await withLoading("Loading regions…", async () => {
-        const [countries, usStates, caStates] = await Promise.all([
-          fetchJson(`${ebirdBaseUrl}/ref/region/list/country/world?key=${ebirdApiKey}`),
-          fetchJson(`${ebirdBaseUrl}/ref/region/list/subnational1/US?key=${ebirdApiKey}`),
-          fetchJson(`${ebirdBaseUrl}/ref/region/list/subnational1/CA?key=${ebirdApiKey}`),
-        ]);
-
-        regionSearch.value = [...countries, ...usStates, ...caStates]
-          .map(normalizeRegion)
-          .sort((left, right) => left.name.localeCompare(right.name));
-
-        const regionIndex = new Map(regionSearch.value.map((region) => [region.code, region]));
-        regionSelected.value = pendingRegionCodes.value
-          .map((code) => regionIndex.get(code))
-          .filter(Boolean);
-
-        isMylocation.value = initialState.isMylocation;
-        shouldSyncUrl.value = true;
-        syncUrl();
-      });
-    } catch (error) {
-      console.error("Unable to load regions", error);
     }
   }
 
@@ -646,7 +625,6 @@ export function useGlobalRareBird() {
     linkUrl,
     shareUrl,
     requestGeolocation,
-    loadRegionCatalog,
     loadNearbyObservations,
     loadRegionObservations,
     reload,
@@ -685,8 +663,8 @@ export function useGlobalRareBird() {
     };
     syncSidebarMode(mobileMediaQuery);
     mobileMediaQuery.addEventListener("change", syncSidebarMode);
-
-    await loadRegionCatalog();
+    shouldSyncUrl.value = true;
+    syncUrl();
 
     if (!initialState.isMylocation) {
       void primeGeolocationForDisplay();

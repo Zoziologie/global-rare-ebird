@@ -41,6 +41,7 @@ The repository separates raw source data from generated app data:
 The taxonomy data is generated in five separate files:
 
 - `npm run generate:taxonomy`
+- `npm run generate:region-catalog`
 - `npm run generate:aba-taxonomy`
 - `npm run generate:french-taxonomy`
 - `npm run generate:german-taxonomy`
@@ -48,6 +49,8 @@ The taxonomy data is generated in five separate files:
 - `npm run generate:taxonomies`
 
 The main taxonomy lookup is written to `data/taxo.json` as a compact code-keyed map with taxonomic order and category only.
+
+The region catalog is written to `data/region-catalog.json` as a compact searchable list of countries, US states, and Canadian provinces used by the region picker.
 
 The ABA checklist source lives in `raw-data/ABA_Checklist-8.19.csv`. The generated lookup is written to `data/aba-taxonomy.json` as a compact species-code status map and is only loaded when US or Canada regions are selected.
 
