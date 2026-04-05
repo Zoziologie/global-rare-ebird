@@ -41,7 +41,6 @@
 </template>
 
 <script setup>
-import mapboxgl from "mapbox-gl"
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
 
 import { mapboxAccessToken } from "../config/index.js"
@@ -92,12 +91,33 @@ const myLocationSourceId = "rare-birds-mylocation-radius"
 const myLocationFillLayerId = "rare-birds-mylocation-radius-fill"
 const myLocationLineLayerId = "rare-birds-mylocation-radius-line"
 const viewportPaddingPx = 32
+let mapboxgl = null
+let mapboxglPromise = null
 let highlightFrameId = null
 let clusterFrameId = null
 let clusterRevision = 0
 let clusterMarkersDirty = false
 const clusterRichnessCache = new Map()
 let myLocationMarker = null
+
+async function loadMapbox() {
+  if (mapboxgl) {
+    return mapboxgl
+  }
+
+  if (!mapboxglPromise) {
+    mapboxglPromise = import("mapbox-gl").then((module) => {
+      mapboxgl = module.default
+      return mapboxgl
+    })
+  }
+
+  return mapboxglPromise
+}
+
+function shouldDeferMapInitialization() {
+  return app.isMobileLayout && app.sidebarOpen
+}
 
 function buildGeoJson(visibleIds = null) {
   const visibleSet = visibleIds?.length ? new Set(visibleIds) : null
@@ -1058,13 +1078,23 @@ function handleMapClick(event) {
   app.openLocationPopup(feature.properties.locId)
 }
 
-function initializeMap() {
-  if (!mapContainer.value || !hasToken.value) {
-    return
+async function initializeMap() {
+  if (!mapContainer.value || !hasToken.value || mapInstance.value) {
+    return mapInstance.value
   }
 
-  mapboxgl.accessToken = mapboxAccessToken
-  mapInstance.value = new mapboxgl.Map({
+  if (shouldDeferMapInitialization()) {
+    return null
+  }
+
+  const mapbox = await loadMapbox()
+
+  if (!mapContainer.value || !hasToken.value || mapInstance.value || shouldDeferMapInitialization()) {
+    return mapInstance.value
+  }
+
+  mapbox.accessToken = mapboxAccessToken
+  mapInstance.value = new mapbox.Map({
     container: mapContainer.value,
     style: app.mapStyle,
     projection: "mercator",
@@ -1075,7 +1105,7 @@ function initializeMap() {
 
   styleSwitcherControl = createStyleSwitcherControl()
   mapInstance.value.addControl(styleSwitcherControl, "top-right")
-  mapInstance.value.addControl(new mapboxgl.NavigationControl({ showCompass: false }), "top-right")
+  mapInstance.value.addControl(new mapbox.NavigationControl({ showCompass: false }), "top-right")
 
   mapInstance.value.on("load", () => {
     mapReady.value = true
@@ -1124,6 +1154,8 @@ function initializeMap() {
   })
 
   resizeObserver.observe(mapContainer.value)
+
+  return mapInstance.value
 }
 
 watch(
@@ -1203,12 +1235,13 @@ watch(
 watch(
   () => [app.isMobileLayout, app.sidebarOpen],
   async () => {
-    if (!mapInstance.value) {
+    if (shouldDeferMapInitialization()) {
+      app.setMapVisibleLocationIds(null)
       return
     }
 
-    if (app.isMobileLayout && app.sidebarOpen) {
-      app.setMapVisibleLocationIds(null)
+    if (!mapInstance.value) {
+      await initializeMap()
       return
     }
 
@@ -1218,7 +1251,7 @@ watch(
 )
 
 onMounted(() => {
-  initializeMap()
+  void initializeMap()
 })
 
 onBeforeUnmount(() => {
