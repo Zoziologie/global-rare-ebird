@@ -1,6 +1,6 @@
 {
   "name": "global-rare-ebird",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "title": "Global Rare eBird",
   "description": "A map of all rare birds seen on the globe with eBird data.",
   "repository": {
@@ -12,29 +12,25 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "generate:taxonomy": "node scripts/generate-taxonomy.mjs",
+    "generate:aba-taxonomy": "node scripts/generate-aba-taxonomy.mjs",
+    "generate:french-taxonomy": "node scripts/generate-french-taxonomy.mjs",
+    "generate:german-taxonomy": "node scripts/generate-german-taxonomy.mjs",
+    "generate:swiss-taxonomy": "node scripts/generate-swiss-taxonomy.mjs",
+    "generate:taxonomies": "npm run generate:taxonomy && npm run generate:aba-taxonomy && npm run generate:french-taxonomy && npm run generate:german-taxonomy && npm run generate:swiss-taxonomy",
     "build": "vite build",
-    "preview": "vite preview",
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.7.1",
-    "@fortawesome/free-solid-svg-icons": "^6.7.1",
-    "@fortawesome/vue-fontawesome": "^2.0.10",
-    "bootstrap-vue": "^2.23.1",
-    "leaflet": "^1.9.4",
-    "vue": "^2.7.16",
-    "vue-cookie": "^1.1.4",
-    "vue-multiselect": "^2.1.9",
-    "vue2-leaflet": "^2.7.1",
-    "vite": "^6.0.2",
-    "@vitejs/plugin-vue2": "^2.3.3",
-    "vue2-leaflet-markercluster": "^3.1.0"
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "mapbox-gl": "^3.7.0",
+    "vue": "^3.5.13",
+    "vue-multiselect": "^3.5.0"
   },
   "devDependencies": {
-    "eslint": "^9.16.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "eslint-plugin-vue": "^9.32.0",
-    "prettier": "^3.4.2",
-    "sass": "^1.82.0"
+    "@vitejs/plugin-vue": "^5.2.1",
+    "sass": "^1.82.0",
+    "vite": "^6.0.2"
   }
 }

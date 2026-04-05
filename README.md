@@ -14,3 +14,47 @@ Global Rare eBird retrieves and visualizes recent notable bird observations (i.e
 You can share the url link at any point or bookmark it to save your region's specific page! Press `⌘ Cmd + D` (Mac) or `Ctrl + D` (Windows/Linux).
 
 Spotted a bug or have a suggestion? Open a [GitHub Issue](https://github.com/Zoziologie/global-rare-ebird/issues).
+
+## Local setup
+
+1. Install dependencies with `npm install`.
+2. Copy `.env.example` to `.env.local` and set `MAPBOX_ACCESS_TOKEN` and `EBIRD_API_KEY`.
+3. Start the app with `npm run dev`.
+
+The GitHub Pages workflow injects the same `MAPBOX_ACCESS_TOKEN` and `EBIRD_API_KEY` names from repository secrets during the production build.
+
+## PWA
+
+The app is installable as a Progressive Web App on supported browsers.
+
+- The app shell is cached for repeat visits and limited offline use.
+- Live eBird data and map tiles still require network access.
+- On Chrome, use the browser menu or install icon to add the app to your device.
+
+## Taxonomy data
+
+The repository separates raw source data from generated app data:
+
+- Raw source files live in `raw-data/`
+- Generated app data lives in `data/`
+
+The taxonomy data is generated in five separate files:
+
+- `npm run generate:taxonomy`
+- `npm run generate:aba-taxonomy`
+- `npm run generate:french-taxonomy`
+- `npm run generate:german-taxonomy`
+- `npm run generate:swiss-taxonomy`
+- `npm run generate:taxonomies`
+
+The main taxonomy lookup is written to `data/taxo.json` as a compact code-keyed map with taxonomic order and category only.
+
+The ABA checklist source lives in `raw-data/ABA_Checklist-8.19.csv`. The generated lookup is written to `data/aba-taxonomy.json` as a compact species-code status map and is only loaded when US or Canada regions are selected.
+
+The French rarity committee table is scraped from `https://www.chn-france.org/en/homologation/species/` and written to `data/french-rarity-taxonomy.json` as a compact species-code presence map. It is only loaded when France is selected.
+
+The German checklist source lives in `raw-data/meldeliste_d_ab2023_sys.csv`. The generated lookup is written to `data/german-taxonomy.json` as a compact species-code status map. It is only loaded when Germany is selected.
+
+The Swiss checklist source lives in `raw-data/CH-Artliste_6.csv`. The generated lookup is written to `data/swiss-taxonomy.json` as a compact species-code status map. It is only loaded when Switzerland is selected.
+
+Run `npm run generate:taxonomies` after updating the source data or when you want to refresh all five generated files.

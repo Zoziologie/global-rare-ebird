@@ -1,24 +1,20 @@
-import Vue from "vue";
-import App from "./App.vue";
+import { createApp } from "vue"
 
-import { BootstrapVue, BootstrapVueIcons } from "bootstrap-vue";
-Vue.use(BootstrapVue);
-Vue.use(BootstrapVueIcons);
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap-icons/font/bootstrap-icons.css"
+import "mapbox-gl/dist/mapbox-gl.css"
 
-//Vue.config.productionTip = false
+import "./style.scss"
+import App from "./App.vue"
 
-import Multiselect from "vue-multiselect";
-Vue.component("multiselect", Multiselect);
+const app = createApp(App)
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faDirections, faClone } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faDirections, faClone);
-Vue.component("font-awesome-icon", FontAwesomeIcon);
+app.mount("#app")
 
-import VueCookie from "vue-cookie";
-Vue.use(VueCookie);
+if ("serviceWorker" in navigator && import.meta.env.PROD) {
+  const swUrl = `${import.meta.env.BASE_URL}sw.js`
 
-new Vue({
-  render: (h) => h(App),
-}).$mount("#app");
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register(swUrl, { scope: import.meta.env.BASE_URL }).catch(() => {})
+  })
+}
