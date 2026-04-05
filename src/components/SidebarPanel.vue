@@ -10,7 +10,10 @@
         <i class="bi bi-map"></i>
         <span>Map</span>
       </button>
-      <h1 class="sidebar-panel__title">Global Rare eBird</h1>
+      <h1 class="sidebar-panel__title">
+        <img :src="logo" alt="" class="sidebar-panel__title-logo" />
+        <span>Global Rare eBird</span>
+      </h1>
       <button type="button" class="icon-button" @click="app.toggleInstruction(true)">
         <i class="bi bi-gear-fill"></i>
       </button>
@@ -452,8 +455,7 @@
           aria-label="Made by Zoziologie"
           title="Made by Zoziologie"
         >
-          <img :src="logo" alt="" class="sidebar-panel__logo" />
-          <span>Made by</span>
+          <img :src="zoziologieLogo" alt="" class="sidebar-panel__logo" />
         </a>
       </div>
     </footer>
@@ -465,6 +467,7 @@ import { nextTick, inject, ref, watch } from "vue";
 import Collapse from "bootstrap/js/dist/collapse";
 
 import logo from "../assets/logo.svg";
+import zoziologieLogo from "../assets/logo_zoziologie.svg";
 import RegionPicker from "./RegionPicker.vue";
 import { birdAppKey } from "../composables/useGlobalRareBird";
 import { formatDaysAgo, formatDistanceKm, formatObservationTime } from "../utils/formatters";

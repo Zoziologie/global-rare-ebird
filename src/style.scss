@@ -82,10 +82,21 @@ button {
 
 .sidebar-panel__title {
   margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   font-size: 1.05rem;
   line-height: 1.2;
   font-weight: 700;
   align-self: center;
+}
+
+.sidebar-panel__title-logo {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .sidebar-panel__body {
