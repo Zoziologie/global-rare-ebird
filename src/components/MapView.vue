@@ -42,14 +42,14 @@
 
 <script setup>
 import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
+import mapboxCssUrl from "mapbox-gl/dist/mapbox-gl.css?url"
 
 import { mapboxAccessToken } from "../config/index.js"
 import { birdAppKey } from "../composables/useGlobalRareBird"
 import { createBoundsFromPoints, toMapboxBounds } from "../utils/bounds"
 import { createGeodesicCircleBounds, createGeodesicCircleFeature } from "../utils/geo"
 import { escapeHtml, formatDaysAgo, formatObservationTime } from "../utils/formatters"
-import { groupObservations } from "../utils/observations"
-import { getRichnessColorExpression } from "../utils/richness"
+import { getClusterCountColorExpression, getRichnessColorExpression } from "../utils/richness"
 import { pointInViewport } from "../utils/viewport"
 
 const app = inject(birdAppKey)
@@ -93,14 +93,41 @@ const myLocationLineLayerId = "rare-birds-mylocation-radius-line"
 const viewportPaddingPx = 32
 let mapboxgl = null
 let mapboxglPromise = null
+let mapboxCssPromise = null
 let highlightFrameId = null
-let clusterFrameId = null
-let clusterRevision = 0
-let clusterMarkersDirty = false
-const clusterRichnessCache = new Map()
 let myLocationMarker = null
 let mapboxPreloadHandle = null
 let mapboxPreloadHandleType = null
+
+function loadMapboxCss() {
+  if (typeof document === "undefined") {
+    return Promise.resolve()
+  }
+
+  if (document.querySelector('link[data-mapbox-gl-css="true"]')) {
+    return Promise.resolve()
+  }
+
+  if (!mapboxCssPromise) {
+    mapboxCssPromise = new Promise((resolve, reject) => {
+      const link = document.createElement("link")
+      link.rel = "stylesheet"
+      link.href = mapboxCssUrl
+      link.dataset.mapboxGlCss = "true"
+      link.onload = () => {
+        resolve()
+      }
+      link.onerror = () => {
+        mapboxCssPromise = null
+        link.remove()
+        reject(new Error("Unable to load Mapbox styles"))
+      }
+      document.head.appendChild(link)
+    })
+  }
+
+  return mapboxCssPromise
+}
 
 async function loadMapbox() {
   if (mapboxgl) {
@@ -108,8 +135,8 @@ async function loadMapbox() {
   }
 
   if (!mapboxglPromise) {
-    mapboxglPromise = import("mapbox-gl")
-      .then((module) => {
+    mapboxglPromise = Promise.all([loadMapboxCss(), import("mapbox-gl")])
+      .then(([, module]) => {
         mapboxgl = module.default
         return mapboxgl
       })
@@ -164,26 +191,6 @@ function createMobileMapboxRasterStyle() {
 
 function getMountedMapStyle(style = app.mapStyle) {
   return shouldUseMobileRasterBasemap() ? createMobileMapboxRasterStyle() : style
-}
-
-function shouldSyncClusterRichness() {
-  return !app.isMobileLayout
-}
-
-function getClusterColorExpression() {
-  if (shouldSyncClusterRichness()) {
-    return getRichnessColorExpression([
-      "coalesce",
-      ["feature-state", "speciesCount"],
-      1,
-    ])
-  }
-
-  return getRichnessColorExpression([
-    "coalesce",
-    ["get", "point_count"],
-    1,
-  ])
 }
 
 function cancelMapboxPreload() {
@@ -259,14 +266,10 @@ function getMapOptions() {
   }
 }
 
-function buildGeoJson(visibleIds = null) {
-  const visibleSet = visibleIds?.length ? new Set(visibleIds) : null
-
+function buildGeoJson() {
   return {
     type: "FeatureCollection",
-    features: app.mapLocationCandidates
-      .filter((location) => !visibleSet || visibleSet.has(location.locId))
-      .map((location) => ({
+    features: app.mapLocationCandidates.map((location) => ({
         type: "Feature",
         id: location.locId,
         properties: {
@@ -283,29 +286,6 @@ function buildGeoJson(visibleIds = null) {
           coordinates: [location.latLng.lng, location.latLng.lat],
         },
       })),
-  }
-}
-
-function buildGeoJsonFromGroupedLocations(locations = []) {
-  return {
-    type: "FeatureCollection",
-    features: locations.map((location) => ({
-      type: "Feature",
-      id: location.locId,
-      properties: {
-        locId: location.locId,
-        locName: location.locName,
-        locationPrivate: location.locationPrivate,
-        regionCode: location.regionCode,
-        count: location.count,
-        speciesCount: location.speciesCount,
-        speciesCodes: location.speciesCodes,
-      },
-      geometry: {
-        type: "Point",
-        coordinates: [location.latLng.lng, location.latLng.lat],
-      },
-    })),
   }
 }
 
@@ -376,17 +356,6 @@ function removeMyLocationMarker() {
   myLocationMarker = null
 }
 
-function clearClusterMarkers() {
-  clusterRichnessCache.clear()
-  if (mapInstance.value?.removeFeatureState) {
-    try {
-      mapInstance.value.removeFeatureState({ source: sourceId })
-    } catch {
-      // Ignore cleanup failures across style/source transitions.
-    }
-  }
-}
-
 function syncTextCountLayers() {
   if (!mapInstance.value || !mapInstance.value.getSource(sourceId)) {
     return
@@ -448,80 +417,6 @@ function syncTextCountLayers() {
   }
 }
 
-function getClusterLeavesAsync(source, clusterId, limit) {
-  return new Promise((resolve, reject) => {
-    source.getClusterLeaves(clusterId, limit, 0, (error, leaves) => {
-      if (error) {
-        reject(error)
-        return
-      }
-
-      resolve(leaves || [])
-    })
-  })
-}
-
-async function resolveClusterRichness(clusterId, leafCount, revision) {
-  const cached = clusterRichnessCache.get(clusterId)
-
-  if (cached?.revision === revision) {
-    if (cached.value !== undefined) {
-      return cached.value
-    }
-
-    return cached.promise
-  }
-
-  const source = mapInstance.value?.getSource(sourceId)
-  if (!source) {
-    return 1
-  }
-
-  const promise = getClusterLeavesAsync(source, clusterId, Math.max(1, Number(leafCount) || 1))
-    .then((leaves) => {
-      const uniqueSpecies = new Set()
-
-      for (const leaf of leaves) {
-        const codes = Array.isArray(leaf.properties?.speciesCodes)
-          ? leaf.properties.speciesCodes
-          : null
-
-        if (codes?.length) {
-          for (const code of codes) {
-            if (code) {
-              uniqueSpecies.add(code)
-            }
-          }
-          continue
-        }
-
-        if (leaf.properties?.speciesCode) {
-          uniqueSpecies.add(leaf.properties.speciesCode)
-        }
-      }
-
-      const value = uniqueSpecies.size || 1
-
-      const current = clusterRichnessCache.get(clusterId)
-      if (current?.revision === revision) {
-        clusterRichnessCache.set(clusterId, {
-          revision,
-          value,
-        })
-      }
-
-      return value
-    })
-    .catch(() => 1)
-
-  clusterRichnessCache.set(clusterId, {
-    revision,
-    promise,
-  })
-
-  return promise
-}
-
 function zoomToCluster(clusterId, lngLat = null) {
   const source = mapInstance.value?.getSource(sourceId)
 
@@ -568,89 +463,6 @@ function handlePopupClick(event) {
       app.openStatusBadgeModal(systemId)
     }
   }
-}
-
-function syncClusterFeatureState(feature, revision) {
-  const clusterId = Number(feature.properties?.cluster_id)
-  const pointCount = Number(feature.properties?.point_count ?? 0)
-
-  if (!Number.isFinite(clusterId)) {
-    return
-  }
-
-  resolveClusterRichness(clusterId, pointCount, revision).then((speciesCount) => {
-    if (!mapInstance.value || revision !== clusterRevision) {
-      return
-    }
-
-    mapInstance.value.setFeatureState(
-      { source: sourceId, id: clusterId },
-      { speciesCount },
-    )
-  })
-}
-
-function syncClusterStates() {
-  if (!mapInstance.value || !mapReady.value || !mapInstance.value.getSource(sourceId)) {
-    clearClusterMarkers()
-    return
-  }
-
-  if (!shouldSyncClusterRichness()) {
-    clearClusterMarkers()
-    clusterMarkersDirty = false
-    return
-  }
-
-  if (!app.mapSelected) {
-    clearClusterMarkers()
-    clusterMarkersDirty = false
-    return
-  }
-
-  if (!mapInstance.value.isSourceLoaded(sourceId)) {
-    clusterMarkersDirty = true
-    return
-  }
-
-  const revision = clusterRevision
-  const clusterFeatures = mapInstance.value.queryRenderedFeatures({
-    layers: [clusterLayerId],
-  })
-
-  for (const feature of clusterFeatures) {
-    const clusterId = Number(feature.properties?.cluster_id)
-    if (!Number.isFinite(clusterId)) {
-      continue
-    }
-
-    syncClusterFeatureState(feature, revision)
-  }
-
-  clusterMarkersDirty = false
-}
-
-function scheduleClusterMarkerSync(force = false) {
-  if (!shouldSyncClusterRichness()) {
-    if (force) {
-      clearClusterMarkers()
-    }
-    clusterMarkersDirty = false
-    return
-  }
-
-  if (clusterFrameId !== null) {
-    cancelAnimationFrame(clusterFrameId)
-  }
-
-  clusterFrameId = requestAnimationFrame(() => {
-    clusterFrameId = null
-    if (!force && !clusterMarkersDirty) {
-      return
-    }
-
-    syncClusterStates()
-  })
 }
 
 function buildPopupSpeciesHtml(location) {
@@ -939,19 +751,26 @@ function createHighlightFilter(ids) {
   return ["all", ["!", ["has", "point_count"]], ["in", ["get", "locId"], ["literal", ids]]]
 }
 
+function getHighlightedLocationIds() {
+  if (app.highlightedLocationIds.length) {
+    return app.highlightedLocationIds
+  }
+
+  if (!app.highlightedSpeciesCode) {
+    return []
+  }
+
+  return app.mapLocationCandidates
+    .filter((location) => location.speciesCodes?.includes(app.highlightedSpeciesCode))
+    .map((location) => location.locId)
+}
+
 function syncHighlightLayer() {
   if (!mapInstance.value?.getLayer(pointHighlightLayerId)) {
     return
   }
 
-  const ids = app.highlightedLocationIds
-
-  if (!ids.length) {
-    mapInstance.value.setFilter(pointHighlightLayerId, ["==", ["get", "locId"], "__none__"])
-    return
-  }
-
-  mapInstance.value.setFilter(pointHighlightLayerId, createHighlightFilter(ids))
+  mapInstance.value.setFilter(pointHighlightLayerId, createHighlightFilter(getHighlightedLocationIds()))
 }
 
 function scheduleHighlightLayerSync() {
@@ -961,7 +780,8 @@ function scheduleHighlightLayerSync() {
 
   highlightFrameId = requestAnimationFrame(() => {
     highlightFrameId = null
-    syncSourceData()
+    syncHighlightLayer()
+    renderPopup()
   })
 }
 
@@ -1050,7 +870,7 @@ function addLayers() {
       source: sourceId,
       filter: ["has", "point_count"],
       paint: {
-        "circle-color": getClusterColorExpression(),
+        "circle-color": getClusterCountColorExpression(),
         "circle-radius": [
           "interpolate",
           ["linear"],
@@ -1074,43 +894,15 @@ function addLayers() {
   syncTextCountLayers()
 }
 
-function syncClusterPaint() {
-  if (!mapInstance.value?.getLayer(clusterLayerId)) {
-    return
-  }
-
-  mapInstance.value.setPaintProperty(clusterLayerId, "circle-color", getClusterColorExpression())
-}
-
 function syncSourceData() {
   if (!mapInstance.value?.getSource(sourceId)) {
     return
   }
 
-  clusterRevision += 1
-  if (shouldSyncClusterRichness()) {
-    clearClusterMarkers()
-    clusterMarkersDirty = true
-  } else {
-    clusterMarkersDirty = false
-  }
-
-  if (app.highlightedSpeciesCode) {
-    const grouped = groupObservations(
-      app.candidateObservations.filter((obs) => obs.speciesCode === app.highlightedSpeciesCode),
-    )
-    mapInstance.value.getSource(sourceId).setData(buildGeoJsonFromGroupedLocations(grouped.locations))
-  } else {
-    const visibleIds = app.highlightedLocationIds.length ? app.highlightedLocationIds : null
-    mapInstance.value.getSource(sourceId).setData(buildGeoJson(visibleIds))
-  }
+  mapInstance.value.getSource(sourceId).setData(buildGeoJson())
 
   syncHighlightLayer()
   renderPopup()
-  syncClusterPaint()
-  if (shouldSyncClusterRichness()) {
-    scheduleClusterMarkerSync(true)
-  }
 }
 
 function removePopup() {
@@ -1307,22 +1099,12 @@ async function initializeMap() {
 
   mapInstance.value.on("moveend", () => {
     syncVisibleLocations()
-    scheduleClusterMarkerSync(true)
   })
   mapInstance.value.on("zoomend", () => {
     syncVisibleLocations()
-    scheduleClusterMarkerSync(true)
   })
   mapInstance.value.on("resize", () => {
     syncVisibleLocations()
-    scheduleClusterMarkerSync(true)
-  })
-  mapInstance.value.on("move", scheduleClusterMarkerSync)
-  mapInstance.value.on("sourcedata", (event) => {
-    if (event.sourceId === sourceId && event.isSourceLoaded) {
-      clusterMarkersDirty = true
-      scheduleClusterMarkerSync(true)
-    }
   })
   mapInstance.value.on("mousemove", syncCursor)
   mapInstance.value.on("click", handleMapClick)
@@ -1349,12 +1131,10 @@ watch(
   (selected) => {
     if (!selected) {
       app.clearMapVisibleLocationIds()
-      clearClusterMarkers()
       return
     }
 
     syncVisibleLocations()
-    scheduleClusterMarkerSync(true)
   }
 )
 
@@ -1369,12 +1149,9 @@ watch(
   { immediate: true },
 )
 
-watch(
-  () => app.highlightedLocationIds,
-  () => {
-    scheduleHighlightLayerSync()
-  }
-)
+watch([() => app.highlightedLocationIds, () => app.highlightedSpeciesCode], () => {
+  scheduleHighlightLayerSync()
+})
 
 watch(
   [() => app.popupLocation, () => app.isMobileLayout],
@@ -1387,7 +1164,6 @@ watch(
   () => app.mapStyle,
   (nextStyle) => {
     if (mapInstance.value && nextStyle) {
-      clearClusterMarkers()
       mapInstance.value.setStyle(getMountedMapStyle(nextStyle))
     }
   }
@@ -1408,16 +1184,6 @@ watch(
     }
 
     syncTextCountLayers()
-    syncClusterPaint()
-
-    if (shouldSyncClusterRichness()) {
-      clusterMarkersDirty = true
-      scheduleClusterMarkerSync(true)
-      return
-    }
-
-    clearClusterMarkers()
-    clusterMarkersDirty = false
   }
 )
 
@@ -1467,13 +1233,8 @@ onBeforeUnmount(() => {
     cancelAnimationFrame(highlightFrameId)
     highlightFrameId = null
   }
-  if (clusterFrameId !== null) {
-    cancelAnimationFrame(clusterFrameId)
-    clusterFrameId = null
-  }
   removePopup()
   removeMyLocationMarker()
-  clearClusterMarkers()
   resizeObserver?.disconnect()
   resizeObserver = null
   styleSwitcherControl = null

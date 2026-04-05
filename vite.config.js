@@ -7,6 +7,22 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [vue()],
     base: "/global-rare-ebird/",
+    build: {
+      chunkSizeWarningLimit: 2000,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("node_modules/mapbox-gl")) {
+              return "mapbox-gl";
+            }
+
+            if (id.includes("node_modules")) {
+              return "vendor";
+            }
+          },
+        },
+      },
+    },
     define: {
       "import.meta.env.MAPBOX_ACCESS_TOKEN": JSON.stringify(
         env.MAPBOX_ACCESS_TOKEN || ""

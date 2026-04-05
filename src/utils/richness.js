@@ -7,6 +7,15 @@ const richnessColorStops = [
   [32, "#51382a"],
 ]
 
+const clusterCountColorStops = [
+  [2, "#d7c090"],
+  [5, "#c6aa7a"],
+  [10, "#af8b5e"],
+  [20, "#916847"],
+  [50, "#714f38"],
+  [100, "#51382a"],
+]
+
 export function getRichnessColor(value) {
   const richness = Number(value)
   const fallback = richnessColorStops[0][1]
@@ -29,6 +38,16 @@ export function getRichnessColorExpression(propertyExpression = ["coalesce", ["g
   const expression = ["interpolate", ["linear"], propertyExpression]
 
   for (const [threshold, color] of richnessColorStops) {
+    expression.push(threshold, color)
+  }
+
+  return expression
+}
+
+export function getClusterCountColorExpression(propertyExpression = ["coalesce", ["get", "point_count"], 1]) {
+  const expression = ["interpolate", ["linear"], propertyExpression]
+
+  for (const [threshold, color] of clusterCountColorStops) {
     expression.push(threshold, color)
   }
 
