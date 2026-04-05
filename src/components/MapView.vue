@@ -130,24 +130,8 @@ function shouldMountObservationOverlays() {
   return !app.isMobileLayout
 }
 
-function createMobileDiagnosticStyle() {
-  return {
-    version: 8,
-    sources: {},
-    layers: [
-      {
-        id: "mobile-diagnostic-background",
-        type: "background",
-        paint: {
-          "background-color": "#dfe7ef",
-        },
-      },
-    ],
-  }
-}
-
-function getMountedMapStyle(style = app.mapStyle) {
-  return shouldMountObservationOverlays() ? style : createMobileDiagnosticStyle()
+function shouldObserveMapContainer() {
+  return !app.isMobileLayout
 }
 
 function shouldSyncClusterRichness() {
@@ -1237,7 +1221,7 @@ async function initializeMap() {
   mapbox.accessToken = mapboxAccessToken
   mapInstance.value = new mapbox.Map({
     container: mapContainer.value,
-    style: getMountedMapStyle(),
+    style: app.mapStyle,
     projection: "mercator",
     center: [0, 20],
     zoom: 1,
@@ -1300,11 +1284,13 @@ async function initializeMap() {
   mapInstance.value.on("mousemove", syncCursor)
   mapInstance.value.on("click", handleMapClick)
 
-  resizeObserver = new ResizeObserver(() => {
-    resizeMap()
-  })
+  if (shouldObserveMapContainer()) {
+    resizeObserver = new ResizeObserver(() => {
+      resizeMap()
+    })
 
-  resizeObserver.observe(mapContainer.value)
+    resizeObserver.observe(mapContainer.value)
+  }
 
   return mapInstance.value
 }
@@ -1361,7 +1347,7 @@ watch(
   (nextStyle) => {
     if (mapInstance.value && nextStyle) {
       clearClusterMarkers()
-      mapInstance.value.setStyle(getMountedMapStyle(nextStyle))
+      mapInstance.value.setStyle(nextStyle)
     }
   }
 )
