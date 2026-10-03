@@ -1,0 +1,26 @@
+{
+  "aba": {
+    "edition": "8.19 (January 2026)",
+    "url": "https://www.aba.org/wp-content/uploads/2026/03/ABA_Checklist-8.19.csv.zip",
+    "retrievedAt": "2026-10-03T10:38:05.786Z",
+    "downloadedSha256": "f036c47429585a00ff16417fc4d6d152fd3b600044e7b283c6371718d7c91e07"
+  },
+  "fr": {
+    "edition": "Current CHN page; removals effective 2026-01-01 confirmed on 2026-10-03",
+    "url": "https://www.chn-france.org/en/homologation/species/",
+    "retrievedAt": "2026-10-03T10:38:06.207Z",
+    "downloadedSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053"
+  },
+  "de": {
+    "edition": "Effective 2023-01-01; DDA lists it for 2023–2026",
+    "url": "https://www.dda-web.de/downloads/dak/meldeliste_d_ab2023_sys.pdf",
+    "retrievedAt": "2026-10-03T10:38:06.669Z",
+    "downloadedSha256": "0867a9a67e2d4026a571116cb3f2cc2fc5def1ad1009ee2edbaccd99e265da36"
+  },
+  "ch": {
+    "edition": 2026,
+    "url": "https://www.vogelwarte.ch/wp-content/uploads/2024/04/ch-artliste-6.pdf",
+    "retrievedAt": "2026-10-03T10:38:07.127Z",
+    "downloadedSha256": "6cd0c541edbe5ce191352ba48d93b4b61678afcd6247a2df7c1b5b85b38630e4"
+  }
+}

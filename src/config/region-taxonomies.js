@@ -16,7 +16,7 @@ function createSwissStatusOptions() {
     { value: 1, label: "Regular" },
     { value: 2, label: "Irregular" },
     { value: 3, label: "Accidental" },
-    { value: 4, label: "Rare" },
+    { value: 4, label: "Historical" },
   ]
 }
 
@@ -142,7 +142,7 @@ export const regionTaxonomySystems = [
     shortLabel: "Switzerland",
     defaultStatus: 1,
     minStatus: 1,
-    maxStatus: 5,
+    maxStatus: 4,
     statusOptions: createSwissStatusOptions(),
     filterable: true,
     showBadge: true,
@@ -162,7 +162,7 @@ export const regionTaxonomySystems = [
         case 3:
           return "accidental"
         case 4:
-          return "rare"
+          return "historical"
         default:
           return ""
       }
@@ -185,13 +185,13 @@ export const regionTaxonomySystems = [
 
       switch (code) {
         case 1:
-          return "Swiss status 1, Regular: species recorded in at least 9 years out of 10 between 2005 and 2014."
+          return "Swiss status 1, Regular: species recorded in at least 9 years out of 10 between 2015 and 2024."
         case 2:
-          return "Swiss status 2, Irregular: species recorded more than 10 times and in more than 5 years between 1965 and 2014, but in fewer than 9 years out of 10 between 2005 and 2014."
+          return "Swiss status 2, Irregular: species recorded more than 10 times and in more than 5 years between 1975 and 2024, but in fewer than 9 years out of 10 between 2015 and 2024."
         case 3:
-          return "Swiss status 3, Accidental: species recorded 1-10 times or in 1-5 years between 1965 and 2014, or for the first time after 2014."
+          return "Swiss status 3, Accidental: species recorded 1-10 times or in 1-5 years between 1975 and 2024, or for the first time after 2024."
         case 4:
-          return "Swiss status 4: species recorded at least once but not since 1965."
+          return "Swiss status 4, Historical: species recorded at least once but not since 1975."
         default:
           return ""
       }

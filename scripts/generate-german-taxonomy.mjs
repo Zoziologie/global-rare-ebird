@@ -1,5 +1,5 @@
 import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { readFile, writeFile } from "node:fs/promises";
 
 import {
@@ -16,7 +16,7 @@ const rootDir = resolve(scriptDir, "..");
 const germanChecklistPath = resolve(rootDir, GERMAN_CHECKLIST_PATH);
 const outputPath = resolve(rootDir, "data/german-taxonomy.json");
 
-function normalizeLookupLabel(value) {
+export function normalizeLookupLabel(value) {
   return normalizeScientificName(value)
     .replace(/["“”]/g, "")
     .replace(/[’']/g, "")
@@ -66,7 +66,7 @@ function buildCommonLookup(rows, get) {
   return lookup;
 }
 
-function buildManualAliasLookup() {
+export function buildManualAliasLookup() {
   return new Map([
     [normalizeLookupLabel("Accipiter gentilis buteoides"), "norgos1"],
     [normalizeLookupLabel("Acanthis flammea rostrata"), "comred4"],
@@ -78,7 +78,7 @@ function buildManualAliasLookup() {
   ]);
 }
 
-function parseGermanChecklist(csvText) {
+export function parseGermanChecklist(csvText) {
   const rows = parseCsv(csvText);
   const header = rows.shift();
 
@@ -106,6 +106,7 @@ function parseGermanChecklist(csvText) {
       germanName,
       englishName,
       scientificName,
+      restriction: normalizeScientificName(get(row, "Einschränkungen")),
     });
   }
 
@@ -159,7 +160,9 @@ async function main() {
   console.log(`Wrote ${Object.keys(taxonomy).length} German taxonomy rows to ${outputPath}.`);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}

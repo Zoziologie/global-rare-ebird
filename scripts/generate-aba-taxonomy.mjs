@@ -1,5 +1,5 @@
 import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { readFile, writeFile } from "node:fs/promises";
 
 import {
@@ -36,7 +36,7 @@ function buildAbaLookup(rows) {
   return { lookup, sourceByEbirdScientificName };
 }
 
-function normalizeScientificNameForMatch(value) {
+export function normalizeScientificNameForMatch(value) {
   return normalizeScientificName(value)
     .replace(/\s*\([^)]*\)\s*/g, " ")
     .replace(/\s+/g, " ")
@@ -44,7 +44,7 @@ function normalizeScientificNameForMatch(value) {
     .toLowerCase();
 }
 
-const manualEbirdScientificNameByAbaScientificName = new Map([
+export const manualEbirdScientificNameByAbaScientificName = new Map([
   ["dryobates borealis", "leuconotopicus borealis"],
   ["dryobates villosus", "leuconotopicus villosus"],
   ["dryobates albolarvatus", "leuconotopicus albolarvatus"],
@@ -158,7 +158,9 @@ async function main() {
   );
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}

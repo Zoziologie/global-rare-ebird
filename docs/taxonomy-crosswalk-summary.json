@@ -1,0 +1,43 @@
+{
+  "version": 2025,
+  "checklistPath": "raw-data/taxonomy-review/clements-2025-concepts.csv",
+  "checklistSha256": "e3c74808f313394b2a492ba4372b3d138ee8406fa94a0081c50fa249c6d0d661",
+  "taxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+  "conceptRows": 35853,
+  "coverage": {
+    "species": {
+      "total": 11167,
+      "withConceptId": 11167
+    },
+    "slash": {
+      "total": 1035,
+      "withConceptId": 1035
+    },
+    "issf": {
+      "total": 3952,
+      "withConceptId": 3952
+    },
+    "hybrid": {
+      "total": 792,
+      "withConceptId": 792
+    },
+    "spuh": {
+      "total": 722,
+      "withConceptId": 722
+    },
+    "form": {
+      "total": 156,
+      "withConceptId": 156
+    },
+    "domestic": {
+      "total": 25,
+      "withConceptId": 25
+    },
+    "intergrade": {
+      "total": 42,
+      "withConceptId": 42
+    }
+  },
+  "ambiguousReportableIds": [],
+  "missingReportableCodes": []
+}

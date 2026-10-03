@@ -1,0 +1,26 @@
+{
+  "aba": {
+    "edition": "8.19 (January 2026)",
+    "url": "https://www.aba.org/wp-content/uploads/2026/03/ABA_Checklist-8.19.csv.zip",
+    "downloadFile": "aba-8.19.zip",
+    "path": "raw-data/taxonomy-review/aba-latest.csv"
+  },
+  "fr": {
+    "edition": "Current CHN page; removals effective 2026-01-01 confirmed on 2026-10-03",
+    "url": "https://www.chn-france.org/en/homologation/species/",
+    "downloadFile": "france.html",
+    "path": "raw-data/taxonomy-review/france.html"
+  },
+  "de": {
+    "edition": "Effective 2023-01-01; DDA lists it for 2023–2026",
+    "url": "https://www.dda-web.de/downloads/dak/meldeliste_d_ab2023_sys.pdf",
+    "downloadFile": "germany-current.pdf",
+    "path": "raw-data/taxonomy-review/germany-current.csv"
+  },
+  "ch": {
+    "edition": 2026,
+    "url": "https://www.vogelwarte.ch/wp-content/uploads/2024/04/ch-artliste-6.pdf",
+    "downloadFile": "switzerland-current.pdf",
+    "path": "raw-data/taxonomy-review/switzerland-current.csv"
+  }
+}

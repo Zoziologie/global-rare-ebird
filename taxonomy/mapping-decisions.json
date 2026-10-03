@@ -1,0 +1,519 @@
+[
+  {
+    "source": "aba",
+    "sourceKey": "595558e3bff56f0ff2415636a7233d3956a7d3807953ae5478580357018f5086",
+    "scientificName": "Dryobates borealis",
+    "avibaseId": "0BFCAE79",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Dryobates borealis corresponds to Leuconotopicus borealis; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=0BFCAE79"
+  },
+  {
+    "source": "aba",
+    "sourceKey": "023d0f409b63bddbda3faee3060c09bd89ea43b55e660ff38af78811324907f9",
+    "scientificName": "Dryobates villosus",
+    "avibaseId": "9D06AF89",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Dryobates villosus corresponds to Leuconotopicus villosus; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=9D06AF89"
+  },
+  {
+    "source": "aba",
+    "sourceKey": "575cdf9c2296d215a54cb715fc727db4b40c0907249c6ac5368435825531a616",
+    "scientificName": "Dryobates albolarvatus",
+    "avibaseId": "6C74415D",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Dryobates albolarvatus corresponds to Leuconotopicus albolarvatus; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=6C74415D"
+  },
+  {
+    "source": "aba",
+    "sourceKey": "fa8544924ffbdfb25dafb036e7c720a42d8ba7f863702ec7e6d526ca5eb0dbe4",
+    "scientificName": "Dryobates arizonae",
+    "avibaseId": "0DA5CC35",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Dryobates arizonae corresponds to Leuconotopicus arizonae; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=0DA5CC35"
+  },
+  {
+    "source": "aba",
+    "sourceKey": "c8a7c082b34596a328e13215cac0c189fc382a98546e27ac85edfcf8173088a4",
+    "scientificName": "Milvago chimachima",
+    "avibaseId": "BA33DDD5",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Milvago chimachima corresponds to Daptrius chimachima; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=BA33DDD5"
+  },
+  {
+    "source": "aba",
+    "sourceKey": "4b6cf85049b1c7c6cb92345aa720a75cdcc4d2a44b6b2e1d6561e89073fa25a7",
+    "scientificName": "Coccothraustes vespertinus",
+    "avibaseId": "C6B5497C",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Coccothraustes vespertinus corresponds to Hesperiphona vespertina; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=C6B5497C"
+  },
+  {
+    "source": "aba",
+    "sourceKey": "9ffb71922b4cdb27b5cba866221fa33574d4b1100783d23490febda453d0bf92",
+    "scientificName": "Basileuterus lachrymosus (Euthlypis lachrymosa)",
+    "avibaseId": "C35381D0",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Basileuterus lachrymosus (Euthlypis lachrymosa) corresponds to Euthlypis lachrymosa; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=C35381D0"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "509543736af815aefe3978ea68f2a8322a07838d722f4dab0ac784c107944c0b",
+    "scientificName": "Acanthis hornemanni",
+    "avibaseId": "D23A3F75",
+    "decision": "accepted",
+    "reason": "Avibase D23A3F75 retains the former Hoary/Arctic Redpoll concept as the hornemanni/exilipes form after lumping. Do not map to all Redpolls.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=D23A3F75"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "069acbd79e9693a0af93b20af6182f233abd9ece26300220ed7835ec11c1b8b0",
+    "scientificName": "Acanthis hornemanni exilipes",
+    "avibaseId": "43AFE986",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Acanthis hornemanni exilipes corresponds to Acanthis flammea exilipes; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=43AFE986"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "b80a5d03829f18fcff3d3357b3bc37d60486181a97d314d724b70bc92101f01b",
+    "scientificName": "Ammomanes cincturus",
+    "avibaseId": "20A0844D",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Ammomanes cincturus corresponds to Ammomanes cinctura; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=20A0844D"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "99ae7b1e3828b3ee47582ee53cf9cc984801bb4f3ff5aacb8881b8d0b86c5a20",
+    "scientificName": "Coccyzus erythrophtalmus",
+    "avibaseId": "41E9F54B",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Coccyzus erythrophtalmus corresponds to Coccyzus erythropthalmus; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=41E9F54B"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "2f58364bf8b27a0fc3beb2d2c6a7dff6882365635319733612b021b3b2a4676b",
+    "scientificName": "Anthus rubescens japonicus",
+    "avibaseId": "CEF9CA9D",
+    "decision": "accepted",
+    "reason": "Avibase CEF9CA9D identifies the former japonicus subspecies and the current Siberian Pipit species; population scope is preserved across the elevation.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=CEF9CA9D"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "7b5c8b4827db49af7f8a9e4f73cfd2680d378f44276c0930e75f818213b34a55",
+    "scientificName": "Curruca curruca halimodendri/minula/margelanica",
+    "decision": "accepted",
+    "reason": "User review: the eastern Lesser Whitethroat taxa listed are rare in France; include their exact reportable concepts and the minula/margelanica group.",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md.",
+    "targets": [
+      {
+        "avibaseId": "ED68D163",
+        "component": "Curruca curruca halimodendri",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "108B1E9F",
+        "component": "Curruca curruca minula",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "86F2FA70",
+        "component": "Curruca curruca margelanica",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "26486657",
+        "component": "Curruca curruca minula/margelanica",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "3cdc08e81154db41092ca1c244810761c1e8a2e1b8acd94837a3901824f018d2",
+    "scientificName": "Pterodroma feae/madeira/deserta",
+    "avibaseId": "51F9CE39",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Pterodroma feae/madeira/deserta corresponds to Pterodroma madeira/feae/deserta; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=51F9CE39"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "3b1829e30ffcd985820333b34e4452413d6c288fd78ed59ec94abd21b3504710",
+    "scientificName": "Helopsaltes fasciolata",
+    "avibaseId": "2F6F30EF",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Helopsaltes fasciolata corresponds to Helopsaltes fasciolatus; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=2F6F30EF"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "8a8ba0fc4bc75385f167ad75406242f6a8b95dd055f697cab8327683e194eefb",
+    "scientificName": "Acanthis hornemanni hornemanni",
+    "avibaseId": "BA358215",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Acanthis hornemanni hornemanni corresponds to Acanthis flammea hornemanni; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=BA358215"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "da41527a96deb88dcf70e5d8c0adfbb7a43b599e31b0fba0baeb1a15b95a9258",
+    "scientificName": "Anas carolinensis",
+    "avibaseId": "DE24B98D",
+    "decision": "accepted",
+    "reason": "Anas carolinensis is the American taxon, represented by Anas crecca carolinensis; gnwtea also includes Eurasian birds and is too broad.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=DE24B98D"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "26af44a92219782a6594fd74e653af679d0fae6a4f5451bcbec1afbec6a4d99e",
+    "scientificName": "Ficedula hypoleuca iberiae/Ficedula speculigera",
+    "decision": "accepted",
+    "reason": "User review: Atlas Flycatcher is rare in France; Iberian Pied Flycatcher is not recognized and remains unresolved.",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md.",
+    "targets": [
+      {
+        "avibaseId": "CD1B2156",
+        "component": "Ficedula speculigera (Atlas Flycatcher)",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "C6509A6B",
+        "component": "Ficedula hypoleuca iberiae (Iberian Pied Flycatcher)",
+        "decision": "unresolved"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "b33a10c51aefe64b87e3429e4f2d62d07f2d21687686f7dde63c82e4b48209bd",
+    "scientificName": "Lanius isabellinus/phoenicuroides",
+    "avibaseId": "959151D9",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Lanius isabellinus/phoenicuroides corresponds to Lanius phoenicuroides/isabellinus; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=959151D9"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "5db19618935f7a75c9eaa5b9ef6d21ad9570aa40faf53c2d8a4b0c2bfe7743c4",
+    "scientificName": "Larus ichthyaetus",
+    "avibaseId": "EF930CDC",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Larus ichthyaetus corresponds to Ichthyaetus ichthyaetus; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=EF930CDC"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "bf03724e680778bcf33927d51b1263cfddf42de177ef6d29d8ce62669351d68b",
+    "scientificName": "Actitis macularia",
+    "avibaseId": "0D88C072",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Actitis macularia corresponds to Actitis macularius; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=0D88C072"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "d7015c4d989aa5a8d4b44fe1ae67d518e7b5b43f179e873863095c5333eb34d4",
+    "scientificName": "Hydrobates [castro, jabejabe, monteroi]",
+    "avibaseId": "D0BDB12C",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Hydrobates [castro, jabejabe, monteroi] corresponds to Hydrobates sp. (Band-rumped complex); retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=D0BDB12C"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "09dba8aed9e73eca0e949b1d3107a05d4b1bd9eac0877b03a18d21059c7de7af",
+    "scientificName": "Thalasseus maximus/albididorsalis",
+    "avibaseId": "68EDCC23",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Thalasseus maximus/albididorsalis corresponds to Thalasseus albididorsalis/maximus; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=68EDCC23"
+  },
+  {
+    "source": "de",
+    "sourceKey": "6f3d7ddc1cc42f739680cb9f2dc1a8a9354f7b25098ea2fd1434199587237d54",
+    "scientificName": "Anas carolinensis",
+    "avibaseId": "DE24B98D",
+    "decision": "accepted",
+    "reason": "Anas carolinensis is the American taxon, represented by Anas crecca carolinensis; gnwtea also includes Eurasian birds and is too broad.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=DE24B98D"
+  },
+  {
+    "source": "de",
+    "sourceKey": "143197be7fc449f6cf30235a79cc3f345937cd62fbcf97c520574351d8b7457e",
+    "scientificName": "Charadrius leschenaultii",
+    "avibaseId": "98B9C10B",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Charadrius leschenaultii corresponds to Anarhynchus leschenaultii; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=98B9C10B"
+  },
+  {
+    "source": "de",
+    "sourceKey": "a1a95d4e33cf9ab812171b73c51e21fc76fe3365d0c0a2c2a0ab306ac5bc3bcd",
+    "scientificName": "Charadrius mongolus",
+    "decision": "accepted",
+    "reason": "User review: mark both component species and their reportable slash taxon rare in Germany.",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md.",
+    "targets": [
+      {
+        "avibaseId": "66DA1FB3",
+        "component": "Anarhynchus mongolus (Siberian Sand-Plover)",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "828D3D5A",
+        "component": "Anarhynchus atrifrons (Tibetan Sand-Plover)",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "8A4C4629",
+        "component": "Anarhynchus mongolus/atrifrons (Siberian/Tibetan Sand-Plover)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747"
+  },
+  {
+    "source": "de",
+    "sourceKey": "236428d85ea5b912b016d9b8056b50c39a4eb2d15852b4d3197805e9ccf0488c",
+    "scientificName": "Charadrius asiaticus",
+    "avibaseId": "264D0351",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Charadrius asiaticus corresponds to Anarhynchus asiaticus; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=264D0351"
+  },
+  {
+    "source": "de",
+    "sourceKey": "6bfb0a8946b62fd8fcac0be95677249287c108821615b33c1c746fd820e46028",
+    "scientificName": "Accipiter gentilis buteoides",
+    "avibaseId": "8C6B8BEA",
+    "decision": "unresolved",
+    "reason": "Renamed to Astur gentilis buteoides (Avibase 8C6B8BEA), which is not reportable. Do not assign the whole Eurasian Goshawk code.",
+    "evidence": "https://www.birds.cornell.edu/clementschecklist/introduction/updateindex/october-2025/"
+  },
+  {
+    "source": "de",
+    "sourceKey": "ecf0081ddd56b00590d177f0b311762d4e6e28f2d83808ed73c23aa0b3a749e8",
+    "scientificName": "Sylvia curruca blythi / halimodendri",
+    "decision": "accepted",
+    "reason": "User review: approximate eastern Lesser Whitethroat groups are rare in Germany; include the reportable blythi/curruca group and halimodendri. The approximation includes nominate curruca within the eBird group.",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md.",
+    "targets": [
+      {
+        "avibaseId": "D8E180FB",
+        "component": "Curruca curruca curruca/blythi reportable group",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "ED68D163",
+        "component": "Curruca curruca halimodendri",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747"
+  },
+  {
+    "source": "de",
+    "sourceKey": "ccbb93f8e628edc559b3f17b272ba927e584adb9e5c42095f46f63a5b4131dfc",
+    "scientificName": "Acanthis hornemanni",
+    "avibaseId": "D23A3F75",
+    "decision": "accepted",
+    "reason": "Avibase D23A3F75 retains the former Hoary/Arctic Redpoll concept as the hornemanni/exilipes form after lumping. Do not map to all Redpolls.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=D23A3F75"
+  },
+  {
+    "source": "ch",
+    "sourceKey": "30064fef03477ab25459b2555841242cc2231d8e690fd74ff2013a8fe04c83de",
+    "scientificName": "Anas carolinensis",
+    "avibaseId": "DE24B98D",
+    "decision": "accepted",
+    "reason": "Anas carolinensis is the American taxon, represented by Anas crecca carolinensis; gnwtea also includes Eurasian birds and is too broad.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=DE24B98D"
+  },
+  {
+    "source": "ch",
+    "sourceKey": "dda07903dfdbf406f29b4860d829c705b0b4cc18573c0860d872ea2b6419374b",
+    "scientificName": "Columba livia domestica",
+    "avibaseId": "533DD36C",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Columba livia domestica corresponds to Columba livia (Feral Pigeon); retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=533DD36C"
+  },
+  {
+    "source": "ch",
+    "sourceKey": "f73f1b2a919eb143d0109d377febf140b79d3aaead2b13cc2d9b593545ff32f4",
+    "scientificName": "Charadrius dubius",
+    "avibaseId": "35EC3BBF",
+    "decision": "accepted",
+    "reason": "Reviewed nomenclature/identity exception: Charadrius dubius corresponds to Thinornis dubius; retain this exact concept, not a parent or broader common-name match.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=35EC3BBF"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "57a77f69531c23ef2a7a255eaafd587f67766bdc277e072aee00f334beea0ed4",
+    "scientificName": "Anthus rubescens rubescens",
+    "decision": "accepted",
+    "reason": "French Buff-bellied Pipit maps to the reportable Siberian/American Pipit slash group, which explicitly includes rubescens and also includes the already listed rare Siberian Pipit.",
+    "targets": [
+      {
+        "avibaseId": "8F268682",
+        "component": "Anthus japonicus/rubescens (Siberian/American Pipit)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "fr",
+    "sourceKey": "bee73d22c2dec048ec90f4558e63728a2efe9ace0d12420ed4c659767a5c84c1",
+    "scientificName": "Phoenicurus ochruros phoenicuroides",
+    "decision": "accepted",
+    "reason": "The reportable eastern Black Redstart ochruros group includes the listed phoenicuroides population (Avibase group record).",
+    "targets": [
+      {
+        "avibaseId": "E305404E",
+        "component": "Phoenicurus ochruros [ochruros Group]",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "fr",
+    "sourceKey": "74f9b373978a9c5652a8f5c2654371b0e8c46ccb111938e0f06a8908d8fe7e57",
+    "scientificName": "Buteo buteo vulpinus",
+    "decision": "accepted",
+    "reason": "The official regional Steppe Buzzard entry maps to the eBird reportable vulpinus/menetriesi group, explicitly containing the listed subspecies.",
+    "targets": [
+      {
+        "avibaseId": "02AD152F",
+        "component": "Buteo buteo vulpinus/menetriesi (Steppe Buzzard group)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "de",
+    "sourceKey": "b25e11a1e4224d4a7bbbd00ddd6f0183e10850cf727d1f37ee71ba2c5a788fb5",
+    "scientificName": "Buteo buteo vulpinus",
+    "decision": "accepted",
+    "reason": "The official regional Steppe Buzzard entry maps to the eBird reportable vulpinus/menetriesi group, explicitly containing the listed subspecies.",
+    "targets": [
+      {
+        "avibaseId": "02AD152F",
+        "component": "Buteo buteo vulpinus/menetriesi (Steppe Buzzard group)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "fr",
+    "sourceKey": "3c03d620365293e9f5b14c8dac3065fa4c46a86b2dae65e71553ca8880b67836",
+    "scientificName": "Dendrocopos leucotos leucotos",
+    "decision": "accepted",
+    "reason": "The French White-backed Woodpecker entry maps to eBird\u2019s reportable leucotos group, whose circumscription includes the nominate population.",
+    "targets": [
+      {
+        "avibaseId": "0101E8F9",
+        "component": "Dendrocopos leucotos [leucotos Group]",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "de",
+    "sourceKey": "27c10cb39332c0c65164790e6dd0d58071823513243e3a8178209e606b319ab5",
+    "scientificName": "Lanius excubitor homeyeri",
+    "decision": "accepted",
+    "reason": "The Great Grey Shrike excubitor group includes homeyeri among its concept alternatives; map the German restricted entry to that group.",
+    "targets": [
+      {
+        "avibaseId": "61C2E0E1",
+        "component": "Lanius excubitor [excubitor Group] (excubitor/homeyeri)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "de",
+    "sourceKey": "2324702d65538f48a0d01bab0e001c0804e61be33a7a5eb47d46ce99f67e0197",
+    "scientificName": "Phoenicurus ochruros phoenicuroides",
+    "decision": "accepted",
+    "reason": "The reportable eastern Black Redstart ochruros group includes the listed phoenicuroides population (Avibase group record).",
+    "targets": [
+      {
+        "avibaseId": "E305404E",
+        "component": "Phoenicurus ochruros [ochruros Group]",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "de",
+    "sourceKey": "64f52382c859a2664e4aac68a8b0515bd12aba2db8101e72f53fba4847cb04fe",
+    "scientificName": "Acanthis flammea rostrata",
+    "decision": "accepted",
+    "reason": "The German Greenland Redpoll entry maps to the reportable rostrata/islandica group, which explicitly contains rostrata.",
+    "targets": [
+      {
+        "avibaseId": "8D2F2621",
+        "component": "Acanthis flammea rostrata/islandica",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "fr",
+    "sourceKey": "0ea95dd41294857ccd38e3d396d6a4742fa74b913e37b6cf87d46d0242e5277c",
+    "scientificName": "Curruca curruca blythi",
+    "decision": "accepted",
+    "reason": "User review: approximate eastern Lesser Whitethroat groups are rare in France. The reportable curruca/blythi group is the closest eBird group and includes nominate curruca as an approximation.",
+    "targets": [
+      {
+        "avibaseId": "D8E180FB",
+        "component": "Curruca curruca curruca/blythi reportable group",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03; target concept and group name checked in Cornell eBird/Clements v2025."
+  }
+]

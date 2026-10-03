@@ -1,0 +1,8 @@
+{
+  "version": 2025,
+  "url": "https://www.birds.cornell.edu/clementschecklist/wp-content/uploads/2025/10/eBird-Clements_v2025-integrated-checklist-October-2025.csv",
+  "path": "raw-data/taxonomy-review/clements-2025-concepts.csv",
+  "sha256": "e3c74808f313394b2a492ba4372b3d138ee8406fa94a0081c50fa249c6d0d661",
+  "acquisition": "User-owned local copy found in defile-dataset/taxonomy/reference; direct Cornell download returned HTTP 403.",
+  "verifiedOn": "2026-10-03"
+}

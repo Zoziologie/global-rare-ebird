@@ -1,0 +1,8 @@
+"source","scientificName","commonName","component","status","restriction","avibaseId","reason"
+"fr","Porphyrio poliocephalus seistanicus","Grey-headed Swamphen","","1","Committee list; review identification groups and subspecies","F7BB8A30","User policy: retain an exact nonreportable concept as unresolved; never assign its parent species."
+"fr","Ficedula hypoleuca iberiae/Ficedula speculigera","Iberian Pied Flycatcher/Atlas Flycatcher","Ficedula hypoleuca iberiae (Iberian Pied Flycatcher)","1","Committee list; review identification groups and subspecies","C6509A6B","User review: Atlas Flycatcher is rare in France; Iberian Pied Flycatcher is not recognized and remains unresolved."
+"de","Gallinago gallinago faeroeensis","Common Snipe","","1","nur diese Unterart","15EC3171","User policy: retain an exact nonreportable concept as unresolved; never assign its parent species."
+"de","Accipiter gentilis buteoides","Northern Goshawk","","1","nur diese Unterart","8C6B8BEA","Renamed to Astur gentilis buteoides (Avibase 8C6B8BEA), which is not reportable. Do not assign the whole Eurasian Goshawk code."
+"de","Dryobates minor minor","Lesser Spotted Woodpecker","","1","nur diese Unterart","8A437763","User policy: retain an exact nonreportable concept as unresolved; never assign its parent species."
+"de","Panurus biarmicus russicus","Bearded Reedling","","1","nur diese Unterart","BD42843C","User policy: retain an exact nonreportable concept as unresolved; never assign its parent species."
+"de","Emberiza schoeniclus tschusii","Common Reed Bunting","","1","nur diese Unterart","0A2CF8A1","User policy: retain an exact nonreportable concept as unresolved; never assign its parent species."

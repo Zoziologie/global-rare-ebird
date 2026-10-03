@@ -1,5 +1,5 @@
 import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { writeFile } from "node:fs/promises";
 
 import {
@@ -14,7 +14,7 @@ const scriptDir = dirname(fileURLToPath(import.meta.url));
 const rootDir = resolve(scriptDir, "..");
 const outputPath = resolve(rootDir, "data/french-rarity-taxonomy.json");
 
-function extractFrenchSpeciesRows(html) {
+export function extractFrenchSpeciesRows(html) {
   const tableMatch = html.match(
     /<div[^>]*id="species-modal"[\s\S]*?<div[^>]*class="modal-body"[^>]*>[\s\S]*?(<table[\s\S]*?<\/table>)/i,
   );
@@ -95,7 +95,7 @@ function buildCommonLookup(rows, get) {
   return lookup;
 }
 
-function buildManualAliasLookup() {
+export function buildManualAliasLookup() {
   return new Map([
     ["acanthis hornemanni", "hoared"],
     ["acanthis hornemanni exilipes", "hoared2"],
@@ -156,7 +156,9 @@ async function main() {
   console.log(`Wrote ${Object.keys(taxonomy).length} French rarity taxonomy rows to ${outputPath}.`);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
