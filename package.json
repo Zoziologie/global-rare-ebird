@@ -1,13 +1,13 @@
 {
   "name": "global-rare-ebird",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "title": "Global Rare eBird",
   "description": "A map of all rare birds seen on the globe with eBird data.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zoziologie/global-rare-ebird.git"
   },
-  "homepage": "http://zoziologie.raphaelnussbaumer.com/global-rare-ebird/",
+  "homepage": "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/",
   "private": true,
   "type": "module",
   "scripts": {
@@ -20,17 +20,32 @@
     "generate:swiss-taxonomy": "node scripts/generate-swiss-taxonomy.mjs",
     "generate:taxonomies": "npm run generate:taxonomy && npm run generate:region-catalog && npm run generate:aba-taxonomy && npm run generate:french-taxonomy && npm run generate:german-taxonomy && npm run generate:swiss-taxonomy",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run lint && npm test && npm run check:release && npm run build",
+    "check:release": "node scripts/check-release.mjs"
   },
   "dependencies": {
-    "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.11.3",
-    "mapbox-gl": "^3.21.0",
-    "vue": "^3.5.13",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "mapbox-gl": "^3.32.0",
+    "vue": "^3.5.43",
     "vue-multiselect": "^3.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.5",
-    "vite": "^8.0.3"
+    "@eslint/js": "^10.0.1",
+    "@vitejs/plugin-vue": "^6.0.9",
+    "eslint": "^10.12.0",
+    "eslint-plugin-vue": "^10.11.1",
+    "globals": "^17.13.0",
+    "happy-dom": "^20.14.5",
+    "vite": "^8.3.2",
+    "vitest": "^5.0.3"
+  },
+  "engines": {
+    "node": "^22.13.0 || ^24.0.0 || >=26.0.0"
   }
 }

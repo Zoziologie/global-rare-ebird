@@ -5,7 +5,7 @@
         <div class="instruction-modal__header-copy">
           <h2>Settings</h2>
         </div>
-        <button type="button" class="icon-button" @click="app.toggleInstruction(false)">
+        <button type="button" class="icon-button" aria-label="Close settings" @click="app.toggleInstruction(false)">
           <i class="bi bi-x-lg"></i>
         </button>
       </header>
@@ -22,7 +22,7 @@
               <input
                 v-model.number="app.backMax"
                 type="number"
-                min="0"
+                min="1"
                 max="30"
                 step="1"
                 class="form-control"
@@ -33,7 +33,7 @@
               <input
                 v-model.number="app.distMax"
                 type="number"
-                min="0"
+                min="1"
                 max="50"
                 step="1"
                 class="form-control"
@@ -195,6 +195,9 @@
       </div>
 
       <footer class="instruction-modal__footer">
+        <button type="button" class="btn btn-brand-outline" @click="app.reload(); app.toggleInstruction(false)">
+          Refresh sightings
+        </button>
         <button type="button" class="btn btn-brand" @click="app.toggleInstruction(false)">
           Close
         </button>

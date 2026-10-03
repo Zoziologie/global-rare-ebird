@@ -17,11 +17,23 @@ Spotted a bug or have a suggestion? Open a [GitHub Issue](https://github.com/Zoz
 
 ## Local setup
 
-1. Install dependencies with `npm install`.
+1. Use a supported Node.js version (22.13+, 24, or 26+) and install the locked dependencies with `npm ci`.
 2. Copy `.env.example` to `.env.local` and set `MAPBOX_ACCESS_TOKEN` and `EBIRD_API_KEY`.
 3. Start the app with `npm run dev`.
 
 The GitHub Pages workflow injects the same `MAPBOX_ACCESS_TOKEN` and `EBIRD_API_KEY` names from repository secrets during the production build.
+
+Both credentials are included in the public website bundle. Use a dedicated Mapbox public token (`pk.`) with only the required read scopes and URL restrictions for the production site and local development. Secret Mapbox tokens (`sk.`) are rejected by the build. See [Mapbox token management](https://docs.mapbox.com/accounts/guides/tokens/).
+
+The eBird key is sent in the `X-eBirdApiToken` header to keep it out of request URLs, but remains visible to visitors. Keeping it private requires a backend proxy; GitHub Pages alone cannot do that. See the [eBird API documentation](https://documenter.getpostman.com/view/664302/S1ENwy59).
+
+Region results are cached for the current browser session. Use **Refresh sightings** in Settings to fetch fresh data or apply changes to the fetched duration and nearby radius. Requests time out after 20 seconds, and failed regions can be retried without preventing successful regions from displaying.
+
+Pull requests run lint, regression tests, release metadata checks, the production build, and a dependency audit. Only pushes to `main` deploy to GitHub Pages. Dependabot checks npm packages and GitHub Actions weekly.
+
+## Development and releases
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue/PR workflow, debugging commands, semantic versions, and publishing a release. Run `npm run check` for the local checks. Release history is recorded in [CHANGELOG.md](CHANGELOG.md).
 
 ## Taxonomy data
 

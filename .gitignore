@@ -6,6 +6,9 @@ node_modules
 # local env files
 .env.local
 .env.*.local
+.env
+.env.*
+!.env.example
 
 # Log files
 npm-debug.log*
@@ -22,3 +25,7 @@ pnpm-debug.log*
 *.sln
 *.sw?
 /raw-data
+/output/playwright/
+/.playwright-cli/
+
+/coverage/

@@ -1,0 +1,23 @@
+name: Bug report
+description: Report a reproducible problem with the site.
+body:
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction and expected behavior
+      description: Include steps, a share link if useful, and what should happen.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Browser and device
+      description: Include the browser, device, and desktop/mobile layout.
+  - type: textarea
+    id: plan
+    attributes:
+      label: Plan and progress
+      value: |
+        - [ ] Reproduce and identify the cause.
+        - [ ] Fix the issue and add a regression test.
+        - [ ] Run checks and update the PR.

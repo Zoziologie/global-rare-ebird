@@ -1,0 +1,21 @@
+name: Improvement or maintenance
+description: Plan a feature, cleanup, dependency update, or performance change.
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Problem and intended result
+      description: Describe what needs to improve and what completion looks like.
+    validations:
+      required: true
+  - type: textarea
+    id: plan
+    attributes:
+      label: Plan and progress
+      value: |
+        - [ ] Inspect the existing behavior.
+        - [ ] Implement the change.
+        - [ ] Add regression tests and run checks.
+        - [ ] Open or update the PR with validation results.
+    validations:
+      required: true
