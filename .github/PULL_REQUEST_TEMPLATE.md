@@ -8,7 +8,7 @@ Closes #
 
 - [ ] Implement the change.
 - [ ] Add relevant regression tests and pass `npm run check` and `npm audit`.
-- [ ] Update release notes/version when preparing a release.
+- [ ] Update the changelog and package version when preparing a version bump.
 - [ ] Record browser checks if interactions changed.
 
 ## Validation

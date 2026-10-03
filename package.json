@@ -1,6 +1,6 @@
 {
   "name": "global-rare-ebird",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "title": "Global Rare eBird",
   "description": "A map of all rare birds seen on the globe with eBird data.",
   "repository": {
@@ -25,8 +25,8 @@
     "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest",
-    "check": "npm run lint && npm test && npm run check:release && npm run build",
-    "check:release": "node scripts/check-release.mjs"
+    "check": "npm run lint && npm test && npm run check:version && npm run build",
+    "check:version": "node scripts/check-version.mjs"
   },
   "dependencies": {
     "bootstrap": "^5.3.8",

@@ -16,13 +16,13 @@ assert.ok(start >= 0, `CHANGELOG.md is missing version ${pkg.version}`);
 assert.match(lines[start].slice(`## [${pkg.version}] - `.length), /^\d{4}-\d{2}-\d{2}$/, "Date the changelog entry as YYYY-MM-DD");
 const next = lines.findIndex((line, index) => index > start && line.startsWith("## ["));
 const notes = lines.slice(start + 1, next === -1 ? undefined : next).join("\n").trim();
-assert.ok(notes.length > 0, "Release notes must describe the changes");
+assert.ok(notes.length > 0, "Version notes must describe the changes");
 
-if (process.env.RELEASE_BASE_REF) {
-  const base = JSON.parse(execFileSync("git", ["show", `${process.env.RELEASE_BASE_REF}:package.json`], { encoding: "utf8" })).version.split(".").map(Number);
+if (process.env.VERSION_BASE_REF) {
+  const base = JSON.parse(execFileSync("git", ["show", `${process.env.VERSION_BASE_REF}:package.json`], { encoding: "utf8" })).version.split(".").map(Number);
   const current = pkg.version.split(".").map(Number);
   const different = current.findIndex((part, index) => part !== base[index]);
   assert.ok(different === -1 || current[different] > base[different], "Package version must not go backwards");
 }
 
-console.log(process.argv.includes("--notes") ? notes : `Release metadata valid: v${pkg.version}`);
+console.log(`Version metadata valid: ${pkg.version}`);

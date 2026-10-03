@@ -29,11 +29,11 @@ The eBird key is sent in the `X-eBirdApiToken` header to keep it out of request 
 
 Region results are cached for the current browser session. Use **Refresh sightings** in Settings to fetch fresh data or apply changes to the fetched duration and nearby radius. Requests time out after 20 seconds, and failed regions can be retried without preventing successful regions from displaying.
 
-Pull requests run lint, regression tests, release metadata checks, the production build, and a dependency audit. Only pushes to `main` deploy to GitHub Pages. Dependabot checks npm packages and GitHub Actions weekly.
+Pull requests run lint, regression tests, version metadata checks, the production build, and a dependency audit. Only pushes to `main` deploy to GitHub Pages. Dependencies and GitHub Actions are updated manually through maintenance PRs.
 
-## Development and releases
+## Development and versioning
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue/PR workflow, debugging commands, semantic versions, and publishing a release. Run `npm run check` for the local checks. Release history is recorded in [CHANGELOG.md](CHANGELOG.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue/PR workflow, debugging commands, semantic versions, and manual dependency maintenance. Run `npm run check` for the local checks. Version history is recorded in [CHANGELOG.md](CHANGELOG.md).
 
 ## Taxonomy data
 
