@@ -52,12 +52,13 @@ async function fetchJson(url, options = {}) {
 export const searchPreferenceKey = "global-rare-ebird.last-search";
 
 export function useGlobalRareBird() {
-  const hasSharedSearch = ["mode", "r", "d", "t", "c", "l"].some(key => new URLSearchParams(window.location.search).has(key));
+  const searchParams = new URLSearchParams(window.location.search);
+  const hasSharedSearch = ["mode", "r", "d", "t", "c", "l"].some(key => searchParams.has(key));
   let savedSearch;
   try {
     savedSearch = JSON.parse(window.localStorage.getItem(searchPreferenceKey));
   } catch { /* Storage may be unavailable or cleared by the browser. */ }
-  const restoreSearch = !hasSharedSearch && savedSearch;
+  const restoreSearch = !hasSharedSearch && Boolean(savedSearch);
   const initialState = parseShareState(hasSharedSearch ? window.location.search : savedSearch?.search || "");
   if (restoreSearch && initialState.isMylocation) initialState.regionCodes = savedSearch.regionCodes;
   const estimatedRegionCode = ref(restoreSearch ? savedSearch.estimatedRegionCode : "");
@@ -444,6 +445,7 @@ export function useGlobalRareBird() {
 
   function beginObservationRequest() {
     rememberSearch = true;
+    syncUrl();
     defaultRegionController?.abort();
     observationController?.abort();
     observationController = new AbortController();
