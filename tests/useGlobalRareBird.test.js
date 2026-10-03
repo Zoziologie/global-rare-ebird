@@ -8,7 +8,7 @@ vi.mock("../src/utils/analytics.js", () => ({ trackEvent: vi.fn() }));
 
 vi.mock("../src/config/index.js", () => ({
   ebirdApiKey: "fixture-token", ebirdBaseUrl: "https://api.ebird.org/v2",
-  mapboxStyles: [{ key: "streets", url: "mapbox://styles/mapbox/streets-v12" }],
+  mapboxStyles: [{ key: "streets", url: "mapbox://styles/mapbox/streets-v12" }, { key: "satellite", url: "mapbox://styles/mapbox/satellite-streets-v12" }],
 }));
 vi.mock("../src/utils/taxonomy-resources.js", () => ({
   loadTaxonomyResources: vi.fn(async () => ({ taxonomyLookup: { amewig: { tax: 1, category: "species" } }, regionTaxonomyLookups: {} })),
@@ -207,8 +207,23 @@ describe("analytics interactions", () => {
   });
   it("counts explicit layer changes once and never sends free-text filters", async () => {
     app.setMapStyleKey("streets");
+    app.setMapStyleKey("satellite");
+    app.setMapStyleKey("satellite");
     app.filterSearch = "private search";
     app.trackSetting("media_filter", true);
-    expect(trackEvent.mock.calls).toEqual([["setting_change", { setting_name: "media_filter", setting_value: "true" }]]);
+    expect(trackEvent.mock.calls).toEqual([["map_layer_change", { layer: "satellite" }], ["setting_change", { setting_name: "media_filter", setting_value: "true" }]]);
   });
+});
+
+
+it("records around loads and mode switches without coordinates", async () => {
+  app.locationCoords = { latitude: 46.8, longitude: 8.2 };
+  fetchMock.mockResolvedValueOnce(response([row()]));
+  await app.myLocation();
+  await app.loadRegionObservations([]);
+  expect(trackEvent.mock.calls).toEqual([
+    ["mode_change", { mode: "around" }],
+    ["data_load", { mode: "around", outcome: "success", source: "network" }],
+    ["mode_change", { mode: "region" }],
+  ]);
 });

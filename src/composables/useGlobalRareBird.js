@@ -426,6 +426,7 @@ export function useGlobalRareBird() {
     try {
       await withLoading("Loading sightings…", async () => {
         const coords = locationCoords.value || (await requestGeolocation().catch(() => null));
+        controller.signal.throwIfAborted();
         if (!coords) {
           trackEvent("data_load", { mode: "around", outcome: "failure", source: "network" });
           return;
@@ -472,8 +473,8 @@ export function useGlobalRareBird() {
       clearRegionObservations();
       return;
     }
-    const cachedCodes = regionCodes.filter((code) => regionCache.get(code)?.key === `${backMax.value}:${sppLocale.value}`);
     const cacheKey = `${backMax.value}:${sppLocale.value}`;
+    const cachedCodes = regionCodes.filter((code) => regionCache.get(code)?.key === cacheKey);
     const params = new URLSearchParams({ detail: "full", back: backMax.value, sppLocale: sppLocale.value });
 
     try {

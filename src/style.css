@@ -2007,7 +2007,8 @@ button {
 .analytics-preferences {
   position: fixed;
   bottom: 0.5rem;
-  left: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1100;
   padding: 0.3rem 0.6rem;
   background: white;

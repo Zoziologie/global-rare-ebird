@@ -13,7 +13,7 @@ const allowedValues = {
   method: /^(native|clipboard)$/,
   layer: /^(streets|satellite)$/,
   setting_name: /^(species_language|radius_filter|days_filter|search_fields|sort|rarity|days_fetched|radius_fetched|map_filter|media_filter|hotspot_filter)$/,
-  setting_value: /^(true|false|[0-9]+|[a-z]{2,3}(?:_[A-Z]{2,3})?|tax|daysAgo|distToMe|comName|sciName|locName|(?:comName|sciName|locName)(?:,(?:comName|sciName|locName))*)$/,
+  setting_value: /^(|true|false|[0-9]+|[a-z]{2,3}(?:_[A-Z]{2,3})?|tax|daysAgo|distToMe|comName|sciName|locName|(?:comName|sciName|locName)(?:,(?:comName|sciName|locName))*)$/,
 };
 const eventFields = {
   data_load: ["region_code", "mode", "outcome", "source"],
