@@ -56,6 +56,7 @@ import { escapeHtml, formatDaysAgo, formatObservationTime } from "../utils/forma
 import { groupObservations } from "../utils/observations"
 import { getClusterCountColorExpression, getRichnessColorExpression } from "../utils/richness"
 import { pointInViewport } from "../utils/viewport"
+import { createMapCountOverlay } from "../utils/map-count-overlay.js"
 
 const app = inject(birdAppKey)
 
@@ -104,6 +105,7 @@ let mapboxglPromise = null
 let mapboxCssPromise = null
 let highlightFrameId = null
 let myLocationMarker = null
+let countOverlay = null
 let mapboxPreloadHandle = null
 let mapboxPreloadHandleType = null
 
@@ -399,6 +401,7 @@ function syncTextCountLayers() {
   }
 
   if (app.isMobileLayout) {
+    if (!countOverlay) countOverlay = createMapCountOverlay(mapInstance.value, [pointLayerId, clusterLayerId])
     if (mapInstance.value.getLayer(pointLabelLayerId)) {
       mapInstance.value.removeLayer(pointLabelLayerId)
     }
@@ -409,6 +412,9 @@ function syncTextCountLayers() {
 
     return
   }
+
+  countOverlay?.remove()
+  countOverlay = null
 
   if (!mapInstance.value.getLayer(pointLabelLayerId)) {
     mapInstance.value.addLayer({
@@ -1252,7 +1258,8 @@ watch(
   (nextStyle) => {
     if (mapInstance.value && nextStyle) {
       mapReady.value = false
-      mapInstance.value.setStyle(getMountedMapStyle(nextStyle))
+      countOverlay?.clear()
+      mapInstance.value.setStyle(getMountedMapStyle(nextStyle), { diff: false })
     }
   }
 )
@@ -1272,7 +1279,8 @@ watch(
     }
 
     mapReady.value = false
-    mapInstance.value.setStyle(getMountedMapStyle())
+    countOverlay?.clear()
+    mapInstance.value.setStyle(getMountedMapStyle(), { diff: false })
   }
 )
 
@@ -1325,6 +1333,8 @@ onBeforeUnmount(() => {
   }
   removePopup()
   removeMyLocationMarker()
+  countOverlay?.remove()
+  countOverlay = null
   resizeObserver?.disconnect()
   resizeObserver = null
   styleSwitcherControl = null

@@ -4,8 +4,11 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-10-03
+
 ### Fixed
 
+- Restore mobile map marker counts with a canvas overlay, avoiding Mapbox glyph rendering.
 - Removed the white top edge above the mobile header.
 
 ## [0.7.0] - 2026-10-03
