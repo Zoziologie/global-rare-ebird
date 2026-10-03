@@ -39,6 +39,25 @@ afterEach(() => {
 });
 
 describe("sightings requests", () => {
+  it("combines shared checklist rows in the sidebar and popup while retaining media access", async () => {
+    fetchMock.mockResolvedValueOnce(response([
+      { ...row(), howMany: 2, userDisplayName: "Alice" },
+      { ...row("S2"), howMany: 5, userDisplayName: "Bob", hasRichMedia: true },
+    ]));
+    app.regionSelected = [{ code: "CH", name: "Switzerland" }];
+    await app.loadRegionObservations();
+    expect(app.allObservations).toHaveLength(1);
+    expect(app.speciesFiltered[0].loc[0].obs[0]).toMatchObject({ howMany: 5, userDisplayName: "Alice, Bob", subId: "S2" });
+    expect(app.locationFeatures[0].count).toBe(1);
+    app.openLocationPopup("L1");
+    expect(app.popupLocation.sp[0].obs[0].userDisplayName).toBe("Alice, Bob");
+    app.mediaSelected = true;
+    expect(app.filteredObservations[0].userDisplayName).toBe("Alice, Bob");
+    fetchMock.mockResolvedValueOnce(response([{ assetId: "photo1" }]));
+    await app.loadMedia("S2");
+    expect(app.popupLocation.sp[0].obs[0].media).toEqual(["photo1"]);
+  });
+
   it("loads checklist details on demand and reuses the completed response", async () => {
     fetchMock.mockResolvedValueOnce(response([row()]));
     app.regionSelected = [{ code: "CH", name: "Switzerland" }];
@@ -80,7 +99,7 @@ describe("sightings requests", () => {
   });
 
   it("authenticates with a header and reuses regions when adding a selection", async () => {
-    fetchMock.mockResolvedValueOnce(response([row("FR")])).mockResolvedValueOnce(response([row("CH")]));
+    fetchMock.mockResolvedValueOnce(response([row("FR")])).mockResolvedValueOnce(response([{ ...row("CH"), locId: "L2" }]));
     app.applyRegionSelection({ code: "FR", name: "France" });
     await app.loadRegionObservations();
     app.applyRegionSelection({ code: "CH", name: "Switzerland" });
@@ -114,7 +133,7 @@ describe("sightings requests", () => {
   it("retains successful regions and retries only a failed region", async () => {
     fetchMock.mockResolvedValueOnce(response([row("FR")]))
       .mockResolvedValueOnce(new Response("Unavailable", { status: 503 }))
-      .mockResolvedValueOnce(response([row("CH")]));
+      .mockResolvedValueOnce(response([{ ...row("CH"), locId: "L2" }]));
     app.regionSelected = [{ code: "FR", name: "France" }, { code: "CH", name: "Switzerland" }];
     await app.loadRegionObservations();
     expect(app.allObservations.map(obs => obs.subId)).toEqual(["FR"]);

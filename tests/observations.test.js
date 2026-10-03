@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { filterObservations, groupObservations, normalizeObservationRows } from "../src/utils/observations.js";
+import { combineSharedObservations, filterObservations, groupObservations, normalizeObservationRows } from "../src/utils/observations.js";
 
 const rows = [
   { speciesCode: "amewig", comName: "American Wigeon", sciName: "Mareca americana", locId: "L1", locName: "Lake", subId: "S1", obsId: "O1", obsDt: "2026-10-03 09:00", lat: 46.8, lng: 8.2, hasRichMedia: true },
@@ -18,6 +18,35 @@ const filters = {
 };
 
 describe("observation processing", () => {
+  it("combines shared sightings before filtering and counts them once in species and locations", () => {
+    const observations = normalizeObservationRows([
+      { ...rows[0], howMany: 2, userDisplayName: "Alice", hasRichMedia: false },
+      { ...rows[0], subId: "S4", obsId: "O4", howMany: 5, userDisplayName: "Bob" },
+      { ...rows[0], subId: "S5", obsId: "O5", userDisplayName: "Alice", hasRichMedia: false },
+      { ...rows[0], subId: "S6", obsId: "O6", userDisplayName: "", hasRichMedia: false },
+      rows[1], rows[2],
+      { ...rows[0], subId: "S7", obsId: "O7", obsDt: "2026-10-03 09:01" },
+    ], options);
+    const combined = combineSharedObservations(observations);
+    expect(combined).toHaveLength(4);
+    expect(combined[0]).toMatchObject({ howMany: 5, userDisplayName: "Alice, Bob", subId: "S4", obsId: "O4", hasRichMedia: true });
+    expect(observations[0]).toMatchObject({ howMany: 2, userDisplayName: "Alice" });
+    expect(filterObservations(combined, { ...filters, mediaSelected: true })[0].userDisplayName).toBe("Alice, Bob");
+    const grouped = groupObservations(combined);
+    expect(grouped.species[0].count).toBe(3);
+    expect(grouped.species[0].loc.find(location => location.locId === "L1").count).toBe(2);
+    expect(grouped.locations.find(location => location.locId === "L1")).toMatchObject({ count: 3, speciesCount: 2 });
+  });
+
+  it("keeps unknown counts as x, accepts zero counts, and does not merge different locations", () => {
+    const observations = normalizeObservationRows([
+      rows[0], { ...rows[0], subId: "S4", obsId: "O4" },
+      { ...rows[0], locId: "L3", subId: "S5", obsId: "O5", howMany: 0 },
+      { ...rows[0], locId: "L3", subId: "S6", obsId: "O6" },
+    ], options);
+    expect(combineSharedObservations(observations).map(obs => obs.howMany)).toEqual(["x", 0]);
+  });
+
   it("removes duplicate checklist/species pairs while retaining other species on the checklist", () => {
     const observations = normalizeObservationRows([...rows, rows[0]], options);
     expect(observations).toHaveLength(3);

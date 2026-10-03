@@ -4,6 +4,10 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+### Added
+
+- Combine sightings of the same species at the same location and checklist start date/time, keeping the maximum individual count and joining observer names.
+
 ## [0.7.1] - 2026-10-03
 
 ### Fixed

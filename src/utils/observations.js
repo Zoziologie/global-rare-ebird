@@ -67,6 +67,32 @@ export function dedupeObservations(rows) {
   })
 }
 
+export function combineSharedObservations(observations) {
+  const groups = new Map()
+
+  for (const obs of observations) {
+    const key = `${obs.speciesCode}::${obs.locId}::${obs.obsDt}`
+    const group = groups.get(key)
+    if (!group) {
+      groups.set(key, { observation: { ...obs }, names: new Set([obs.userDisplayName]) })
+      continue
+    }
+
+    const howMany = Math.max(...[group.observation.howMany, obs.howMany].map(Number).filter(Number.isFinite))
+    // Keep media controls linked to a checklist that actually has media.
+    if (obs.hasRichMedia && !group.observation.hasRichMedia) {
+      group.observation = { ...obs }
+    }
+    group.observation.howMany = Number.isFinite(howMany) ? howMany : "x"
+    group.names.add(obs.userDisplayName)
+  }
+
+  return Array.from(groups.values(), ({ observation, names }) => ({
+    ...observation,
+    userDisplayName: [...names].filter(Boolean).join(", "),
+  }))
+}
+
 function normalizeStatusCode(system, rawStatus, fallbackStatus) {
   const fallback = fallbackStatus ?? system?.defaultStatus ?? null
 

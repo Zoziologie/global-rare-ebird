@@ -4,6 +4,7 @@ import { ebirdApiKey, ebirdBaseUrl, mapboxStyles } from "../config/index.js";
 import { getUniformRegionTaxonomySystem } from "../config/region-taxonomies.js";
 import {
   applyDistanceToObservations,
+  combineSharedObservations,
   dedupeObservations,
   filterObservations,
   groupLocationPopups,
@@ -149,7 +150,7 @@ export function useGlobalRareBird() {
   );
 
   const allObservations = computed(() =>
-    isMylocation.value ? observationsMylocation.value : regionObservations.value,
+    combineSharedObservations(isMylocation.value ? observationsMylocation.value : regionObservations.value),
   );
 
   const candidateObservations = computed(() =>
