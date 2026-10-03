@@ -4,6 +4,10 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+### Added
+
+- Home-screen app metadata and installation guidance for phone users; sightings remain live-only.
+
 ## [0.5.0] - 2026-10-03
 
 ### Added

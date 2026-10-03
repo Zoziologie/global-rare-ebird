@@ -15,6 +15,12 @@
           Set the search radius, filters, language, and share link below.
         </p>
 
+        <div class="alert alert-light border" role="note">
+          <strong>Open Global Rare eBird from your Home Screen</strong>
+          <p class="mb-1 mt-2">On iPhone, use Share, then Add to Home Screen. On Android, open your browser menu and choose Install app or Add to Home screen.</p>
+          <span class="small text-body-secondary">Sightings and map tiles load live and need an internet connection.</span>
+        </div>
+
         <div class="instruction-section instruction-section--compact">
           <div class="settings-grid settings-grid--two">
             <label class="instruction-field">
