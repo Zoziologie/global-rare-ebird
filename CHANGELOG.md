@@ -8,8 +8,12 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ### Added
 
-- First-visit country defaults from approximate IP location, preferring US states and Canadian provinces, with a labelled estimate and manual fallback.
+- First-visit country defaults from approximate IP location, preferring US states and Canadian provinces, with manual fallback.
 - Restore the last search on the default URL while keeping shared searches authoritative and fetching fresh sightings.
+
+### Fixed
+
+- Retry timed-out data requests once, report exhausted timeouts clearly, and suppress empty-result guidance when loading fails.
 
 ### Changed
 

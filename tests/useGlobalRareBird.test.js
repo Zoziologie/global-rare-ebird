@@ -157,7 +157,7 @@ describe("sightings requests", () => {
     expect(app.distSelected).toBe(10);
   });
 
-  it("ends a stalled request after 20 seconds and exposes retry feedback", async () => {
+  it("retries a stalled request once and exposes timeout feedback if both attempts stall", async () => {
     vi.useFakeTimers();
     fetchMock.mockImplementation((url, { signal }) => new Promise((resolve, reject) => {
       signal.addEventListener("abort", () => reject(new DOMException("Aborted", "AbortError")), { once: true });
@@ -166,9 +166,26 @@ describe("sightings requests", () => {
     const loading = app.loadRegionObservations();
     await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
     await vi.advanceTimersByTimeAsync(20000);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    await vi.advanceTimersByTimeAsync(20000);
     await loading;
-    expect(app.observationError).toContain("try again");
+    expect(app.observationError).toContain("automatic retry");
     expect(app.isLoading).toBe(false);
+  });
+
+  it("loads sightings when the automatic timeout retry succeeds", async () => {
+    vi.useFakeTimers();
+    fetchMock.mockImplementationOnce((url, { signal }) => new Promise((resolve, reject) => {
+      signal.addEventListener("abort", () => reject(signal.reason), { once: true });
+    })).mockResolvedValueOnce(response([row()]));
+    app.regionSelected = [{ code: "FR", name: "France" }];
+    const loading = app.loadRegionObservations();
+    await vi.waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    await vi.advanceTimersByTimeAsync(20000);
+    await loading;
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(app.allObservations).toHaveLength(1);
+    expect(app.observationError).toBe("");
   });
 });
 

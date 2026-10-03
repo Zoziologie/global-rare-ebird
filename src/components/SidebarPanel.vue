@@ -44,16 +44,11 @@
 
         <div v-if="!app.isMylocation" class="query-block__picker">
           <RegionPicker
-            ref="regionPicker"
             :regions="app.regionSearch"
             :selected-regions="app.regionSelected"
             @add-region="app.selectRegion"
             @remove-region="app.removeRegion"
           />
-          <p v-if="app.estimatedRegionCode" class="small text-secondary mt-2 mb-0">
-            Region estimated from your connection ·
-            <button type="button" class="link-button" @click="regionPicker.$el.querySelector('input').focus()">Change</button>
-          </p>
           <p v-if="app.regionFallbackFeedback" class="small mt-2 mb-0" role="status">
             {{ app.regionFallbackFeedback }} Showing regions instead.
           </p>
@@ -224,7 +219,7 @@
         </div>
 
         <p
-          v-if="!app.hasCandidateObservations && !app.isLoading"
+          v-if="!app.hasCandidateObservations && !app.isLoading && !app.observationError"
           class="species-accordion-shell__empty"
         >
           <template v-if="!app.isMylocation && !app.regionSelected.length">
@@ -555,7 +550,6 @@ if (!app) {
 }
 
 const openSpeciesCode = ref(null);
-const regionPicker = ref(null)
 const showFilterOptions = ref(false);
 const speciesCollapseRefs = new Map();
 

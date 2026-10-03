@@ -31,21 +31,28 @@ function normalizeRegion(region) {
 }
 
 async function fetchJson(url, options = {}) {
-  const controller = new AbortController();
-  const abort = () => controller.abort(options.signal.reason);
-  options.signal?.addEventListener("abort", abort, { once: true });
-  if (options.signal?.aborted) abort();
-  const timeout = setTimeout(() => controller.abort(), 20000);
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const controller = new AbortController();
+    const abort = () => controller.abort(options.signal.reason);
+    options.signal?.addEventListener("abort", abort, { once: true });
+    if (options.signal?.aborted) abort();
+    const timeout = setTimeout(() => controller.abort(new DOMException("Sightings request timed out", "TimeoutError")), 20000);
 
-  try {
-    const response = await fetch(url, { ...options, signal: controller.signal });
-    if (!response.ok) {
-      throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+    try {
+      const response = await fetch(url, { ...options, signal: controller.signal });
+      if (!response.ok) throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+      return await response.json();
+    } catch (error) {
+      if (options.signal?.aborted) throw error;
+      if (controller.signal.reason?.name === "TimeoutError") {
+        if (attempt === 0) continue;
+        throw controller.signal.reason;
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeout);
+      options.signal?.removeEventListener("abort", abort);
     }
-    return await response.json();
-  } finally {
-    clearTimeout(timeout);
-    options.signal?.removeEventListener("abort", abort);
   }
 }
 
@@ -562,7 +569,9 @@ export function useGlobalRareBird() {
             observationsRegionByCode[regionCodes[index]] = result.value;
             applyDistanceToObservations(result.value, locationCoords.value);
           } else {
-            observationError.value = "Some sightings could not be loaded. Please try again.";
+            observationError.value = result.reason?.name === "TimeoutError"
+              ? "Sightings took too long to load after an automatic retry. Please try again."
+              : "Some sightings could not be loaded. Please try again.";
             console.error(`Unable to load sightings for ${regionCodes[index]}`, result.reason);
           }
         });
