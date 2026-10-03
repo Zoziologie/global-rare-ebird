@@ -112,15 +112,15 @@ export function createGeolocationController({
       return
     }
 
-    if (navigator.permissions?.query) {
-      try {
-        const result = await navigator.permissions.query({ name: "geolocation" })
-        if (result?.state !== "granted") {
-          return
-        }
-      } catch {
-        return
-      }
+    if (!navigator.permissions?.query) {
+      return;
+    }
+
+    try {
+      const result = await navigator.permissions.query({ name: "geolocation" })
+      if (result?.state !== "granted") return
+    } catch {
+      return
     }
 
     await requestGeolocation({ silent: true }).catch(() => null)

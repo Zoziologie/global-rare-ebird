@@ -4,6 +4,7 @@ import { ebirdApiKey, ebirdBaseUrl, mapboxStyles } from "../config/index.js";
 import { getUniformRegionTaxonomySystem } from "../config/region-taxonomies.js";
 import {
   applyDistanceToObservations,
+  dedupeObservations,
   filterObservations,
   groupLocationPopups,
   groupObservations,
@@ -18,9 +19,7 @@ import regionCatalog from "../../data/region-catalog.json";
 export const birdAppKey = Symbol("bird-app");
 const MOBILE_LAYOUT_MEDIA_QUERY = "(max-width: 900px)";
 
-const MEDIA_BASE_URL = `${
-  typeof window !== "undefined" ? window.location.protocol : "https:"
-}//tripreport.raphaelnussbaumer.com/obsservice/media`;
+const MEDIA_BASE_URL = "https://tripreport.raphaelnussbaumer.com/obsservice/media";
 
 function normalizeRegion(region) {
   return {
@@ -29,13 +28,23 @@ function normalizeRegion(region) {
   };
 }
 
-async function fetchJson(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Request failed: ${response.status} ${response.statusText}`);
-  }
+async function fetchJson(url, options = {}) {
+  const controller = new AbortController();
+  const abort = () => controller.abort(options.signal.reason);
+  options.signal?.addEventListener("abort", abort, { once: true });
+  if (options.signal?.aborted) abort();
+  const timeout = setTimeout(() => controller.abort(), 20000);
 
-  return response.json();
+  try {
+    const response = await fetch(url, { ...options, signal: controller.signal });
+    if (!response.ok) {
+      throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+    }
+    return await response.json();
+  } finally {
+    clearTimeout(timeout);
+    options.signal?.removeEventListener("abort", abort);
+  }
 }
 
 export function useGlobalRareBird() {
@@ -77,6 +86,10 @@ export function useGlobalRareBird() {
   );
   const observationsMylocation = ref([]);
   const observationsRegionByCode = reactive({});
+  const observationError = ref("");
+  const regionCache = new Map();
+  const mediaRequests = new Map();
+  let observationController = null;
   const popupLocationId = ref(null);
   const highlightedLocationIds = ref([]);
   const highlightedSpeciesCode = ref(null);
@@ -105,7 +118,7 @@ export function useGlobalRareBird() {
   const statusOptions = computed(() => activeStatusFilterSystem.value?.statusOptions || []);
 
   const regionObservations = computed(() =>
-    selectedRegionCodes.value.flatMap((code) => observationsRegionByCode[code] || []),
+    dedupeObservations(selectedRegionCodes.value.flatMap((code) => observationsRegionByCode[code] || [])),
   );
 
   const allObservations = computed(() =>
@@ -158,7 +171,9 @@ export function useGlobalRareBird() {
   });
 
   const groupedObservations = computed(() =>
-    groupObservations(filteredObservations.value, filterSortOptionsSelected.value),
+    activeMapVisibleLocationIds.value === null
+      ? candidateGroupedObservations.value
+      : groupObservations(filteredObservations.value, filterSortOptionsSelected.value),
   );
 
   const speciesFiltered = computed(() => groupedObservations.value.species);
@@ -245,6 +260,11 @@ export function useGlobalRareBird() {
   }
 
   watch(linkUrl, syncUrl);
+  watch(isMylocation, () => {
+    observationController?.abort();
+    observationError.value = "";
+    clearMapVisibleLocationIds();
+  }, { flush: "sync" });
   watch(
     activeStatusSystem,
     (system) => {
@@ -353,7 +373,7 @@ export function useGlobalRareBird() {
   }
 
   function updateBackMax(nextValue) {
-    backMax.value = nextValue;
+    backMax.value = Math.max(1, Math.min(30, Number(nextValue)));
     backSelected.value = Math.min(backSelected.value, backMax.value);
   }
 
@@ -380,112 +400,114 @@ export function useGlobalRareBird() {
     }
   }
 
+  function beginObservationRequest() {
+    observationController?.abort();
+    observationController = new AbortController();
+    observationError.value = "";
+    return observationController;
+  }
+
   async function loadNearbyObservations() {
     isMylocation.value = true;
-
-    const coords = locationCoords.value || (await requestGeolocation().catch(() => null));
-    if (!coords) {
-      return;
-    }
-
-    fitRequest.value += 1;
+    const controller = beginObservationRequest();
 
     try {
       await withLoading("Loading sightings…", async () => {
-        const { taxonomyLookup: loadedTaxonomyLookup } = await loadTaxonomyResources([]);
+        const coords = locationCoords.value || (await requestGeolocation().catch(() => null));
+        if (!coords) return;
+        controller.signal.throwIfAborted();
+
+        const { taxonomyLookup } = await loadTaxonomyResources([]);
+        controller.signal.throwIfAborted();
         const params = new URLSearchParams({
           lat: coords.latitude,
           lng: coords.longitude,
-          key: ebirdApiKey,
           detail: "full",
           back: backMax.value,
           dist: distMax.value,
-          hotspot: hotspotSelected.value ? "true" : "false",
           sppLocale: sppLocale.value,
         });
-
-        const json = await fetchJson(
-          `${ebirdBaseUrl}/data/obs/geo/recent/notable?${params.toString()}`,
-        );
-
+        const json = await fetchJson(`${ebirdBaseUrl}/data/obs/geo/recent/notable?${params}`, {
+          signal: controller.signal,
+          headers: { "X-eBirdApiToken": ebirdApiKey },
+        });
+        controller.signal.throwIfAborted();
         observationsMylocation.value = normalizeObservationRows(json, {
           regionCode: "mylocation",
-          taxonomyLookup: loadedTaxonomyLookup,
+          taxonomyLookup,
           location: coords,
         });
-        applyDistanceToObservations(observationsMylocation.value, coords);
+        clearMapVisibleLocationIds();
+        fitRequest.value += 1;
       });
     } catch (error) {
+      if (controller.signal.aborted) return;
+      observationError.value = "Unable to load sightings. Please try again.";
       console.error("Unable to load nearby observations", error);
-    } finally {
-      fitRequest.value += 1;
     }
   }
 
   async function loadRegionObservations(regionCodes = selectedRegionCodes.value) {
+    isMylocation.value = false;
+    const controller = beginObservationRequest();
     if (!regionCodes.length) {
       clearRegionObservations();
       return;
     }
-
-    isMylocation.value = false;
+    const cacheKey = `${backMax.value}:${sppLocale.value}`;
+    const params = new URLSearchParams({ detail: "full", back: backMax.value, sppLocale: sppLocale.value });
 
     try {
       await withLoading("Loading sightings…", async () => {
-        const {
-          taxonomyLookup: loadedTaxonomyLookup,
-          regionTaxonomyLookups: loadedRegionTaxonomyLookups,
-        } = await loadTaxonomyResources(regionCodes);
-
-        const results = await Promise.all(
-          regionCodes.map(async (code) => {
-            const params = new URLSearchParams({
-              key: ebirdApiKey,
-              detail: "full",
-              back: backMax.value,
-              hotspot: hotspotSelected.value ? "true" : "false",
-              sppLocale: sppLocale.value,
-            });
-
-            const json = await fetchJson(
-              `${ebirdBaseUrl}/data/obs/${code}/recent/notable?${params}`,
-            );
-            return {
-              code,
-              observations: normalizeObservationRows(json, {
-                regionCode: code,
-                taxonomyLookup: loadedTaxonomyLookup,
-                regionTaxonomyLookups: loadedRegionTaxonomyLookups,
-                location: locationCoords.value || null,
-              }),
-            };
-          }),
-        );
-
+        const { taxonomyLookup, regionTaxonomyLookups } = await loadTaxonomyResources(regionCodes);
+        controller.signal.throwIfAborted();
+        const results = await Promise.allSettled(regionCodes.map(async (code) => {
+          if (regionCache.get(code)?.key === cacheKey) return regionCache.get(code).observations;
+          const json = await fetchJson(`${ebirdBaseUrl}/data/obs/${encodeURIComponent(code)}/recent/notable?${params}`, {
+            signal: controller.signal,
+            headers: { "X-eBirdApiToken": ebirdApiKey },
+          });
+          controller.signal.throwIfAborted();
+          const observations = normalizeObservationRows(json, {
+            regionCode: code,
+            taxonomyLookup,
+            regionTaxonomyLookups,
+            location: locationCoords.value,
+          });
+          regionCache.set(code, { key: cacheKey, observations });
+          return observations;
+        }));
+        controller.signal.throwIfAborted();
         clearRegionObservations();
 
-        for (const result of results) {
-          observationsRegionByCode[result.code] = result.observations;
-          applyDistanceToObservations(result.observations, locationCoords.value);
-        }
-
-        if (regionObservations.value.length > 0) {
-          fitRequest.value += 1;
-        }
+        results.forEach((result, index) => {
+          if (result.status === "fulfilled") {
+            observationsRegionByCode[regionCodes[index]] = result.value;
+            applyDistanceToObservations(result.value, locationCoords.value);
+          } else {
+            observationError.value = "Some sightings could not be loaded. Please try again.";
+            console.error(`Unable to load sightings for ${regionCodes[index]}`, result.reason);
+          }
+        });
+        clearMapVisibleLocationIds();
+        fitRequest.value += 1;
       });
     } catch (error) {
+      if (controller.signal.aborted) return;
+      observationError.value = "Unable to load sightings. Please try again.";
       console.error("Unable to load region observations", error);
     }
   }
 
-  async function reload(newBackMax) {
+  async function reload(newBackMax = backMax.value) {
     updateBackMax(newBackMax);
-
+    distMax.value = Math.max(1, Math.min(50, Number(distMax.value)));
+    distSelected.value = Math.min(distSelected.value, distMax.value);
+    regionCache.clear();
     if (isMylocation.value) {
       await loadNearbyObservations();
       return;
     }
-
     await loadRegionObservations();
   }
 
@@ -505,20 +527,22 @@ export function useGlobalRareBird() {
   }
 
   async function loadMedia(obsId) {
-    const observation = [...observationsMylocation.value, ...regionObservations.value].find(
+    const observations = [...observationsMylocation.value, ...regionObservations.value].filter(
       (entry) => entry.obsId === obsId,
     );
+    if (!observations.length || observations.every((entry) => entry.media)) return;
 
-    if (!observation || observation.media) {
-      return;
+    if (!mediaRequests.has(obsId)) {
+      mediaRequests.set(obsId, fetchJson(`${MEDIA_BASE_URL}?${new URLSearchParams({ obsId })}`));
     }
-
     try {
-      const json = await fetchJson(`${MEDIA_BASE_URL}?obsId=${obsId}`);
-      observation.media = json.map((item) => item.assetId);
+      const json = await mediaRequests.get(obsId);
+      for (const observation of observations) observation.media = json.map((item) => item.assetId);
       mediaRevision.value += 1;
     } catch (error) {
       console.error("Unable to load media", error);
+    } finally {
+      mediaRequests.delete(obsId);
     }
   }
 
@@ -623,6 +647,7 @@ export function useGlobalRareBird() {
     fitRequest,
     isLoading,
     loadingLabel,
+    observationError,
     activeStatusSystem,
     statusOptions,
     linkUrl,
@@ -681,6 +706,7 @@ export function useGlobalRareBird() {
   });
 
   onBeforeUnmount(() => {
+    observationController?.abort();
     if (mobileMediaQuery && syncSidebarMode) {
       mobileMediaQuery.removeEventListener("change", syncSidebarMode);
     }

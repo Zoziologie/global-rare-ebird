@@ -33,7 +33,11 @@
         </div>
       </div>
     </Transition>
-    <div v-if="!hasToken" class="map-pane__warning">
+    <div v-if="mapError" class="map-pane__warning" role="alert">
+      <p>{{ mapError }}</p>
+      <button type="button" class="btn btn-brand" @click="initializeMap">Retry map</button>
+    </div>
+    <div v-else-if="!hasToken" class="map-pane__warning">
       <h2>Mapbox token missing</h2>
       <p>Set <code>MAPBOX_ACCESS_TOKEN</code> and reload the app.</p>
     </div>
@@ -41,7 +45,7 @@
 </template>
 
 <script setup>
-import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, watch } from "vue"
+import { computed, inject, nextTick, onBeforeUnmount, onMounted, ref, shallowRef, watch } from "vue"
 import mapboxCssUrl from "mapbox-gl/dist/mapbox-gl.css?url"
 
 import { mapboxAccessToken } from "../config/index.js"
@@ -60,9 +64,11 @@ if (!app) {
 }
 
 const mapContainer = ref(null)
-const mapInstance = ref(null)
-const popupInstance = ref(null)
+const mapInstance = shallowRef(null)
+const popupInstance = shallowRef(null)
 const mapReady = ref(false)
+const mapError = ref("")
+let isUnmounted = false
 const lastFitRequest = ref(-1)
 const hasToken = computed(() => Boolean(mapboxAccessToken))
 const mobilePopupHeaderHtml = computed(() => {
@@ -104,6 +110,8 @@ function loadMapboxCss() {
   if (typeof document === "undefined") {
     return Promise.resolve()
   }
+
+  if (mapboxCssPromise) return mapboxCssPromise
 
   if (document.querySelector('link[data-mapbox-gl-css="true"]')) {
     return Promise.resolve()
@@ -175,7 +183,7 @@ function createMobileMapboxRasterStyle() {
         ],
         tileSize: 512,
         attribution:
-          '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://www.mapbox.com/about/maps/">Mapbox</a>',
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> © <a href="https://www.mapbox.com/about/maps/">Mapbox</a>',
       },
     },
     layers: [
@@ -223,7 +231,7 @@ function scheduleMapboxPreload() {
   const preload = () => {
     mapboxPreloadHandle = null
     mapboxPreloadHandleType = null
-    void loadMapbox()
+    void loadMapbox().catch(() => {})
   }
 
   if ("requestIdleCallback" in window) {
@@ -528,7 +536,7 @@ function buildPopupSpeciesHtml(location) {
                   <div class="map-popup__observation">
                     <small class="species-location__meta map-popup__observation-meta d-flex flex-nowrap align-items-center gap-1 flex-grow-1 min-w-0 text-body-secondary">
                       <a
-                        href="https://ebird.org/checklist/${obs.subId}#${obs.speciesCode}"
+                        href="https://ebird.org/checklist/${encodeURIComponent(obs.subId)}#${encodeURIComponent(obs.speciesCode)}"
                         target="_blank"
                         rel="noreferrer"
                         class="map-popup__observation-link species-location__obs-link"
@@ -545,7 +553,7 @@ function buildPopupSpeciesHtml(location) {
                     <span class="map-popup__flags">
                       ${
                         obs.hasRichMedia
-                          ? `<button type="button" class="map-popup__flag map-popup__flag--media" data-media-id="${obs.obsId}" title="Has media" aria-label="Has media">
+                          ? `<button type="button" class="map-popup__flag map-popup__flag--media" data-media-id="${escapeHtml(obs.obsId)}" title="Has media" aria-label="Has media">
                                <i class="bi bi-camera-fill"></i>
                              </button>`
                           : ""
@@ -563,7 +571,9 @@ function buildPopupSpeciesHtml(location) {
                               .map(
                                 (mediaId) => `
                                   <img
-                                    src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${mediaId}/320"
+                                    src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${encodeURIComponent(mediaId)}/320"
+                                    loading="lazy"
+                                    decoding="async"
                                     alt=""
                                   />
                                 `
@@ -589,7 +599,7 @@ function buildPopupLocationHeaderHtml(location) {
         location.locName,
       )}</span>`
     : `<a
-        href="https://ebird.org/hotspot/${location.locId}"
+        href="https://ebird.org/hotspot/${encodeURIComponent(location.locId)}"
         target="_blank"
         rel="noreferrer"
         class="map-popup__title species-location__title species-location__title--link fw-semibold text-body"
@@ -619,7 +629,7 @@ function buildPopupLocationHeaderHtml(location) {
 }
 
 function ensureMyLocationOverlay() {
-  if (!mapInstance.value) {
+  if (!mapInstance.value || !mapReady.value) {
     return
   }
 
@@ -1010,7 +1020,7 @@ function fitToFeatures() {
     return
   }
 
-  if (app.mapLocationCandidates.length === 1) {
+  if (!app.isMylocation && app.mapLocationCandidates.length === 1) {
     mapInstance.value.easeTo({
       center: [app.mapLocationCandidates[0].latLng.lng, app.mapLocationCandidates[0].latLng.lat],
       zoom: 9,
@@ -1092,9 +1102,17 @@ async function initializeMap() {
     return null
   }
 
-  const mapbox = await loadMapbox()
+  mapError.value = ""
+  let mapbox
+  try {
+    mapbox = await loadMapbox()
+  } catch (error) {
+    mapError.value = "Unable to load the map. Please try again."
+    console.error("Unable to load Mapbox", error)
+    return null
+  }
 
-  if (!mapContainer.value || !hasToken.value || mapInstance.value || shouldDeferMapInitialization()) {
+  if (isUnmounted || !mapContainer.value || !hasToken.value || mapInstance.value || shouldDeferMapInitialization()) {
     return mapInstance.value
   }
 
@@ -1117,6 +1135,7 @@ async function initializeMap() {
   })
 
   mapInstance.value.on("style.load", () => {
+    mapReady.value = true
     ensureSource()
     ensureMyLocationOverlay()
     addLayers()
@@ -1126,9 +1145,6 @@ async function initializeMap() {
   })
 
   mapInstance.value.on("moveend", () => {
-    syncVisibleLocations()
-  })
-  mapInstance.value.on("zoomend", () => {
     syncVisibleLocations()
   })
   mapInstance.value.on("resize", () => {
@@ -1192,6 +1208,7 @@ watch(
   () => app.mapStyle,
   (nextStyle) => {
     if (mapInstance.value && nextStyle) {
+      mapReady.value = false
       mapInstance.value.setStyle(getMountedMapStyle(nextStyle))
     }
   }
@@ -1207,11 +1224,12 @@ watch(
 watch(
   () => app.isMobileLayout,
   () => {
-    if (!mapInstance.value || !mapReady.value) {
+    if (!mapInstance.value) {
       return
     }
 
-    syncTextCountLayers()
+    mapReady.value = false
+    mapInstance.value.setStyle(getMountedMapStyle())
   }
 )
 
@@ -1256,6 +1274,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  isUnmounted = true
   cancelMapboxPreload()
   if (highlightFrameId !== null) {
     cancelAnimationFrame(highlightFrameId)

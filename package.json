@@ -7,7 +7,7 @@
     "type": "git",
     "url": "git+https://github.com/zoziologie/global-rare-ebird.git"
   },
-  "homepage": "http://zoziologie.raphaelnussbaumer.com/global-rare-ebird/",
+  "homepage": "https://zoziologie.raphaelnussbaumer.com/global-rare-ebird/",
   "private": true,
   "type": "module",
   "scripts": {
@@ -23,14 +23,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "bootstrap": "^5.3.3",
-    "bootstrap-icons": "^1.11.3",
-    "mapbox-gl": "^3.21.0",
-    "vue": "^3.5.13",
+    "bootstrap": "^5.3.8",
+    "bootstrap-icons": "^1.13.1",
+    "mapbox-gl": "^3.32.0",
+    "vue": "^3.5.43",
     "vue-multiselect": "^3.5.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.5",
-    "vite": "^8.0.3"
+    "@vitejs/plugin-vue": "^6.0.9",
+    "vite": "^8.3.2"
+  },
+  "engines": {
+    "node": ">=22.12.0"
   }
 }

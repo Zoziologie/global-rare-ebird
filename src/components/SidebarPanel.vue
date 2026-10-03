@@ -14,7 +14,7 @@
         <img :src="logo" alt="" class="sidebar-panel__title-logo" />
         <span>Global Rare eBird</span>
       </h1>
-      <button type="button" class="icon-button" @click="app.toggleInstruction(true)">
+      <button type="button" class="icon-button" aria-label="Settings" @click="app.toggleInstruction(true)">
         <i class="bi bi-gear-fill"></i>
       </button>
     </header>
@@ -26,7 +26,7 @@
             type="button"
             class="btn"
             :class="app.isMylocation ? 'btn-brand-outline' : 'btn-brand'"
-            @click="app.isMylocation = false"
+            @click="app.loadRegionObservations()"
           >
             <i class="bi bi-globe2 me-1"></i>
             Regions
@@ -67,6 +67,7 @@
               <i class="bi bi-geo-alt"></i>
             </span>
             <input
+              aria-label="Search radius in kilometers"
               class="form-control"
               type="number"
               min="0"
@@ -84,6 +85,7 @@
               <i class="bi bi-calendar-date"></i>
             </span>
             <input
+              aria-label="Days ago"
               class="form-control"
               type="number"
               min="0"
@@ -112,6 +114,7 @@
               v-model="app.filterSearch"
               class="form-control"
               type="search"
+              aria-label="Search observations"
               placeholder="Search species..."
             />
             <button
@@ -177,7 +180,7 @@
             <div v-if="app.activeStatusSystem?.filterable" class="status-panel">
               <div class="status-panel__row">
                 <span class="status-panel__title">Filter minimal rarity status:</span>
-                <select v-model.number="app.statusLimit" class="form-select status-panel__select">
+                <select aria-label="Minimum rarity status" v-model.number="app.statusLimit" class="form-select status-panel__select">
                   <option
                     v-for="option in app.statusOptions"
                     :key="option.value"
@@ -201,6 +204,11 @@
         </div>
       </section>
 
+      <p v-if="app.observationError" class="alert alert-danger py-2 px-3" role="alert">
+        {{ app.observationError }}
+        <button type="button" class="link-button" @click="app.reload()">Retry</button>
+      </p>
+
       <section class="accordion accordion-flush species-accordion-shell">
         <div v-if="app.isLoading" class="species-accordion-shell__loading">
           <div class="spinner-border text-success" role="status" aria-hidden="true"></div>
@@ -214,8 +222,8 @@
           No observations to show yet.
         </p>
 
-        <template v-for="(species, index) in app.speciesFiltered" :key="species.speciesCode">
-          <div v-if="index <= app.speIndexMax" class="accordion-item">
+        <template v-for="species in app.speciesFiltered.slice(0, app.speIndexMax)" :key="species.speciesCode">
+          <div class="accordion-item">
             <h2 class="accordion-header" :id="`species-heading-${species.speciesCode}`">
               <button
                 type="button"
@@ -261,7 +269,7 @@
               class="accordion-collapse collapse species-collapse"
               :aria-labelledby="`species-heading-${species.speciesCode}`"
             >
-              <div class="accordion-body p-0">
+              <div v-if="openSpeciesCode === species.speciesCode" class="accordion-body p-0">
                 <div class="card border-0 rounded-0 shadow-none">
                   <div class="list-group list-group-flush">
                     <div
@@ -376,6 +384,8 @@
                             :key="mediaId"
                             class="col-4 col-sm-3 rounded object-fit-cover"
                             :src="`https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${mediaId}/320`"
+                            loading="lazy"
+                            decoding="async"
                             alt=""
                           />
                         </template>
@@ -463,7 +473,7 @@
 </template>
 
 <script setup>
-import { nextTick, inject, ref, watch } from "vue";
+import { nextTick, inject, onBeforeUnmount, ref, watch } from "vue";
 import Collapse from "bootstrap/js/dist/collapse";
 
 import logo from "../assets/logo.svg";
@@ -489,6 +499,7 @@ function setSpeciesCollapseRef(code) {
       return;
     }
 
+    Collapse.getInstance(speciesCollapseRefs.get(code))?.dispose();
     speciesCollapseRefs.delete(code);
   };
 }
@@ -533,4 +544,7 @@ watch(
   },
   { immediate: true },
 );
+onBeforeUnmount(() => {
+  for (const el of speciesCollapseRefs.values()) Collapse.getInstance(el)?.dispose();
+});
 </script>
