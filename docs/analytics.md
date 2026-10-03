@@ -2,18 +2,33 @@
 
 Issue: https://github.com/Zoziologie/global-rare-ebird/issues/43
 
-Keep the existing GA4 property and web stream `G-0B2T8GT7JC`. No paid service is added.
+Keep the existing Zoziologie GA4 property (`269867498`) and Global Rare eBird web stream (`14305280477`, measurement ID `G-0B2T8GT7JC`). This property contains nine tools; property/account changes affect the others too. No paid service is added.
 
 ## Before deployment (property owner)
 
-- [ ] Export the existing 90-day reports as CSV/PDF, recording the exact date range and property timezone. The reported baseline is 329 users, 144 returning users, and 3m40 engagement; these are owner-reported, not independently verified. Record whether users means active or total users and whether engagement is per active user or per session.
+- [ ] Export the existing 90-day reports as CSV/PDF, recording the exact date range and property timezone. The baseline was independently verified in the standard User acquisition report on 3 October 2026; details below. GA CSV download did not complete, so retain an export when available.
 - [ ] In Admin → Data streams → web stream, **turn Enhanced measurement off entirely**. This prevents duplicate outbound events and automatic browser-history/page URL collection. The app sends one sanitised page view per consenting page load; automatic GA session/engagement events remain.
 - [ ] Disable Google Signals and advertising personalisation in data collection settings. Disable unused account data-sharing options and confirm no Ads links, user-provided data collection, or cross-domain measurement are enabled.
-- [ ] Set event-data retention to **2 months** and turn off resetting retention on new activity. Confirm the actual value and update the on-site notice to state it before deployment. Aggregated standard reports have separate retention; cookie lifetime is capped at one year in code.
+- [ ] Event-data retention is already **2 months**; user-data retention is **14 months**. Preserve both periods and turn off resetting retention on new activity (currently enabled). These settings were verified on 3 October 2026 and are stated in the on-site notice. Aggregated standard reports have separate retention; cookie lifetime is capped at one year in code.
 - [ ] Register the event-scoped custom dimensions listed below (Admin → Custom definitions). These apply prospectively and may take time to populate.
 - [ ] Record the actual production deployment date/time and version below after merge/deployment. Compare equal time windows and annotate the consent boundary in reports.
 
-Deployment: pending. Version: 0.6.0. Baseline export and exact metrics: pending owner verification.
+Deployment: pending. Version: 0.6.0. Shared privacy changes: awaiting owner approval.
+
+## Verified pre-consent baseline
+
+User acquisition report, filtered to stream `global-rare-ebird` (`14305280477`), **5 July–2 October 2026**, reporting timezone **France Time (Europe/Paris)**. The report states that it uses 100% of available data.
+
+| Metric | Value |
+| --- | --- |
+| Total users | 329 |
+| New users | 288 |
+| Returning users | 144 |
+| Average engagement time per active user | 3m 40s |
+| Engaged sessions per active user | 3.07 |
+| Event count (all events) | 10,300 |
+
+Verified directly in Chrome on 3 October 2026. CSV export did not complete; these are transcribed report totals. The existing custom “Tool usage” report did not render correctly, so the standard report was used. This baseline predates the consent implementation and measures unconditional collection.
 
 ## Events and dimensions
 
