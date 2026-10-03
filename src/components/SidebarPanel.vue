@@ -316,89 +316,87 @@
                       </div>
 
                       <div class="d-grid gap-0">
-                        <div
-                          v-for="obs in location.obs"
-                          :key="obs.subId"
-                          class="species-location__obs d-flex align-items-center justify-content-between gap-2"
-                        >
-                          <small
-                            class="species-location__meta text-body-secondary d-flex flex-nowrap align-items-center gap-1 flex-grow-1 min-w-0"
-                          >
-                            <a
-                              :href="`https://ebird.org/checklist/${obs.subId}#${obs.speciesCode}`"
-                              target="_blank"
-                              rel="noreferrer"
-                              class="species-location__obs-link text-decoration-none text-body"
+                        <template v-for="obs in location.obs" :key="obs.subId">
+                            <div class="species-location__obs d-flex align-items-center justify-content-between gap-2">
+                            <small
+                              class="species-location__meta text-body-secondary d-flex flex-nowrap align-items-center gap-1 flex-grow-1 min-w-0"
                             >
-                              <span class="species-location__obs-date">
-                                {{ formatDaysAgo(obs.daysAgo) }}
-                                {{ formatObservationTime(obs.obsDt) }}
-                              </span>
-                            </a>
-                            <span class="species-location__obs-separator">•</span>
-                            <span class="species-location__obs-count">{{ obs.howMany }} ind.</span>
-                            <template v-if="Number.isFinite(obs.distToMe)">
+                              <a
+                                :href="`https://ebird.org/checklist/${obs.subId}#${obs.speciesCode}`"
+                                target="_blank"
+                                rel="noreferrer"
+                                class="species-location__obs-link text-decoration-none text-body"
+                              >
+                                <span class="species-location__obs-date">
+                                  {{ formatDaysAgo(obs.daysAgo) }}
+                                  {{ formatObservationTime(obs.obsDt) }}
+                                </span>
+                              </a>
                               <span class="species-location__obs-separator">•</span>
-                              <span class="species-location__obs-distance">
-                                {{ formatDistanceKm(obs.distToMe) }}
+                              <span class="species-location__obs-count">{{ obs.howMany }} ind.</span>
+                              <template v-if="Number.isFinite(obs.distToMe)">
+                                <span class="species-location__obs-separator">•</span>
+                                <span class="species-location__obs-distance">
+                                  {{ formatDistanceKm(obs.distToMe) }}
+                                </span>
+                              </template>
+                              <span class="species-location__obs-separator">•</span>
+                              <span class="species-location__user">{{ obs.userDisplayName }}</span>
+                            </small>
+
+                            <span
+                              class="species-location__flags"
+                            >
+                              <button
+                                type="button"
+                                class="species-location__flag species-location__flag--details"
+                                :aria-expanded="Boolean(app.observationDetails[obs.obsId]?.isOpen)"
+                                :aria-label="app.observationDetails[obs.obsId]?.isOpen ? 'Hide observation details' : 'Show observation details'"
+                                title="Observation details"
+                                @click="app.toggleObservationDetails(obs.obsId)"
+                              >
+                                <i class="bi bi-card-text"></i>
+                              </button>
+                              <span
+                                v-if="obs.hasRichMedia"
+                                class="species-location__flag species-location__flag--media"
+                                title="Has media"
+                                aria-label="Has media"
+                              >
+                                <i class="bi bi-camera-fill"></i>
+                              </span>
+                              <span
+                                v-if="obs.hasComments"
+                                class="species-location__flag species-location__flag--comments"
+                                title="Has comments"
+                                aria-label="Has comments"
+                              >
+                                <i class="bi bi-chat-square-text-fill"></i>
+                              </span>
+                            </span>
+                            </div>
+                            <div
+                            v-if="app.observationDetails[obs.obsId]"
+                            class="species-location__details small text-body-secondary"
+                            role="status"
+                          >
+                            <template v-if="app.observationDetails[obs.obsId].status === 'loading'">
+                              Loading details…
+                            </template>
+                            <template v-else-if="app.observationDetails[obs.obsId].status === 'error'">
+                              Details could not be loaded. Open the checklist for comments and media.
+                            </template>
+                            <template v-else-if="app.observationDetails[obs.obsId].isOpen">
+                              <p v-if="app.observationDetails[obs.obsId].comments" class="mb-1 text-body">
+                                {{ app.observationDetails[obs.obsId].comments }}
+                              </p>
+                              <p v-else class="mb-1">No comment returned for this observation.</p>
+                              <span v-for="(count, type) in app.observationDetails[obs.obsId].mediaCounts" :key="type" class="me-2">
+                                {{ type === 'P' ? 'Photos' : type === 'A' ? 'Audio' : type === 'V' ? 'Video' : 'Media' }}: {{ count }}
                               </span>
                             </template>
-                            <span class="species-location__obs-separator">•</span>
-                            <span class="species-location__user">{{ obs.userDisplayName }}</span>
-                          </small>
-
-                          <span
-                            class="species-location__flags"
-                          >
-                            <button
-                              type="button"
-                              class="species-location__flag species-location__flag--details"
-                              :aria-expanded="Boolean(app.observationDetails[obs.obsId]?.isOpen)"
-                              :aria-label="app.observationDetails[obs.obsId]?.isOpen ? 'Hide observation details' : 'Show observation details'"
-                              title="Observation details"
-                              @click="app.toggleObservationDetails(obs.obsId)"
-                            >
-                              <i class="bi bi-card-text"></i>
-                            </button>
-                            <span
-                              v-if="obs.hasRichMedia"
-                              class="species-location__flag species-location__flag--media"
-                              title="Has media"
-                              aria-label="Has media"
-                            >
-                              <i class="bi bi-camera-fill"></i>
-                            </span>
-                            <span
-                              v-if="obs.hasComments"
-                              class="species-location__flag species-location__flag--comments"
-                              title="Has comments"
-                              aria-label="Has comments"
-                            >
-                              <i class="bi bi-chat-square-text-fill"></i>
-                            </span>
-                          </span>
-                        </div>
-                        <div
-                          v-if="app.observationDetails[obs.obsId]"
-                          class="species-location__details small text-body-secondary"
-                          role="status"
-                        >
-                          <template v-if="app.observationDetails[obs.obsId].status === 'loading'">
-                            Loading details…
-                          </template>
-                          <template v-else-if="app.observationDetails[obs.obsId].status === 'error'">
-                            Details could not be loaded. Open the checklist for comments and media.
-                          </template>
-                          <template v-else-if="app.observationDetails[obs.obsId].isOpen">
-                            <p v-if="app.observationDetails[obs.obsId].comments" class="mb-1 text-body">
-                              {{ app.observationDetails[obs.obsId].comments }}
-                            </p>
-                            <p v-else class="mb-1">No comment returned for this observation.</p>
-                            <span v-for="(count, type) in app.observationDetails[obs.obsId].mediaCounts" :key="type" class="me-2">
-                              {{ type === 'P' ? 'Photos' : type === 'A' ? 'Audio' : type === 'V' ? 'Video' : 'Media' }}: {{ count }}
-                            </span>
-                          </template>
-                        </div>
+                            </div>
+                        </template>
                       </div>
 
                       <div
