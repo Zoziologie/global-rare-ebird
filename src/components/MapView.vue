@@ -542,7 +542,7 @@ function buildPopupSpeciesHtml(location) {
               .map(
                 (obs) => `
                   <div class="map-popup__observation">
-                    <small class="species-location__meta map-popup__observation-meta d-flex flex-nowrap align-items-center gap-1 flex-grow-1 min-w-0 text-body-secondary">
+                    <small class="species-location__meta map-popup__observation-meta d-flex align-items-center gap-1 min-w-0 text-body-secondary">
                       <a
                         data-analytics-link="ebird_checklist"
                         href="https://ebird.org/checklist/${encodeURIComponent(obs.subId)}#${encodeURIComponent(obs.speciesCode)}"

@@ -1578,14 +1578,15 @@ button {
 
 .map-popup__observations {
   display: grid;
-  gap: 0.1rem;
-  padding: 0 0.75rem 0.35rem;
+  gap: 0.35rem;
+  padding: 0.35rem 0.45rem;
 }
 
 .map-popup__observation {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.25rem 0.5rem;
 }
 
 .map-popup__observation-link {
@@ -1604,9 +1605,11 @@ button {
 
 .map-popup__flags {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.35rem;
-  flex-shrink: 0;
+  max-width: 8rem;
 }
 
 .map-popup__flag {
@@ -1639,8 +1642,16 @@ button {
 }
 
 .map-popup__observation-details {
-  margin-top: 0.1rem;
+  grid-column: 1 / -1;
+  min-width: 0;
+  padding-bottom: 0.15rem;
+  font-size: 0.72rem;
   overflow-wrap: anywhere;
+}
+
+.map-popup__comment-quote {
+  display: flex;
+  padding: 0.2rem 0.4rem;
 }
 
 .map-popup__media-count {

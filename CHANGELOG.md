@@ -4,6 +4,10 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+### Fixed
+
+- Aligned map popup sighting rows and controls, with comments placed on their own full-width row and consistent spacing.
+
 ## [0.6.0] - 2026-10-03
 
 ### Added
