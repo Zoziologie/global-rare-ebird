@@ -42,7 +42,9 @@ The repository separates raw source data from generated app data:
 - Raw source files live in `raw-data/`
 - Generated app data lives in `data/`
 
-The taxonomy data is generated in five separate files:
+The taxonomy review and offline audit are documented in [docs/taxonomy-review.md](docs/taxonomy-review.md). Run `npm run audit:taxonomies -- --fetch` to capture versioned inputs, then `npm run audit:taxonomies` to reuse them and write local matching reports.
+
+The current taxonomy data is generated in five separate files:
 
 - `npm run generate:taxonomy`
 - `npm run generate:region-catalog`

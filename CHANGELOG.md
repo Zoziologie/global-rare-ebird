@@ -4,6 +4,10 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+### Added
+
+- A local, offline taxonomy audit with pinned eBird inputs, source checksums, and row-level review reports for issue #39.
+
 ## [0.4.1] - 2026-10-03
 
 ### Changed

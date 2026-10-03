@@ -1,0 +1,98 @@
+{
+  "snapshot": {
+    "version": 2025,
+    "taxonomyUrl": "https://api.ebird.org/v2/ref/taxonomy/ebird?version=2025&fmt=csv&locale=en",
+    "franceUrl": "https://www.chn-france.org/en/homologation/species/",
+    "retrievedAt": "2026-10-03T10:07:19.324Z"
+  },
+  "provenance": {
+    "ebird": {
+      "path": "raw-data/taxonomy-review/ebird.csv",
+      "sha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19"
+    },
+    "aba": {
+      "path": "raw-data/ABA_Checklist-8.19.csv",
+      "sha256": "9c9539b70e3d2ce2d2d46eb9354528e649e999990ec2ab416c1db222b86331d3"
+    },
+    "fr": {
+      "path": "raw-data/taxonomy-review/france.html",
+      "sha256": "a573f3d882fa57d31ab2ecdaea359eed4028e3b776bf28154c30a09dc6ccf998"
+    },
+    "de": {
+      "path": "raw-data/meldeliste_d_ab2023_sys.csv",
+      "sha256": "77d0e48c594a47c455ae5f69e148338c45eaecfb817a3d64bde1458327ca5945"
+    },
+    "ch": {
+      "path": "raw-data/CH-Artliste_6.csv",
+      "sha256": "549be6e85d49191524941d0bd34481649466d642b23d3a985a4d801c11b5d59e"
+    }
+  },
+  "taxonomyRows": 17891,
+  "sources": {
+    "aba": {
+      "rows": 1161,
+      "methods": {
+        "scientific": 1154,
+        "legacy-alias": 7,
+        "common": 0,
+        "none": 0
+      },
+      "needsReview": 7
+    },
+    "fr": {
+      "rows": 248,
+      "methods": {
+        "scientific": 226,
+        "legacy-alias": 12,
+        "common": 7,
+        "none": 3
+      },
+      "needsReview": 32
+    },
+    "de": {
+      "rows": 223,
+      "methods": {
+        "scientific": 208,
+        "legacy-alias": 7,
+        "common": 5,
+        "none": 3
+      },
+      "needsReview": 21
+    },
+    "ch": {
+      "rows": 414,
+      "methods": {
+        "scientific": 386,
+        "legacy-alias": 7,
+        "common": 21,
+        "none": 0
+      },
+      "needsReview": 28
+    }
+  },
+  "outputs": {
+    "taxo.json": {
+      "codes": 17891,
+      "obsoleteCodes": [],
+      "missingCodes": [],
+      "orderDifferences": 0,
+      "fractionalOrders": 0
+    },
+    "aba-taxonomy.json": {
+      "codes": 1078,
+      "obsoleteCodes": []
+    },
+    "french-rarity-taxonomy.json": {
+      "codes": 237,
+      "obsoleteCodes": []
+    },
+    "german-taxonomy.json": {
+      "codes": 223,
+      "obsoleteCodes": []
+    },
+    "swiss-taxonomy.json": {
+      "codes": 125,
+      "obsoleteCodes": []
+    }
+  }
+}

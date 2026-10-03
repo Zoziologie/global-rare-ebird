@@ -12,6 +12,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "audit:taxonomies": "node scripts/audit-taxonomies.mjs",
     "generate:taxonomy": "node scripts/generate-taxonomy.mjs",
     "generate:region-catalog": "node scripts/generate-region-catalog.mjs",
     "generate:aba-taxonomy": "node scripts/generate-aba-taxonomy.mjs",

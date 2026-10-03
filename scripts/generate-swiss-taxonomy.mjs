@@ -1,5 +1,5 @@
 import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { readFile, writeFile } from "node:fs/promises";
 
 import {
@@ -58,7 +58,7 @@ function buildCommonLookup(rows, get) {
   return lookup;
 }
 
-function buildManualAliasLookup() {
+export function buildManualAliasLookup() {
   return new Map([
     ["accipiter gentilis", "norgos1"],
     ["bubulcus ibis", "categr1"],
@@ -77,7 +77,7 @@ function buildManualAliasLookup() {
   ]);
 }
 
-function parseSwissChecklist(csvText) {
+export function parseSwissChecklist(csvText) {
   const rows = parseCsv(csvText);
   const header = rows.shift();
 
@@ -171,7 +171,9 @@ async function main() {
   console.log(`Wrote ${Object.keys(taxonomy).length} Swiss taxonomy rows to ${outputPath}.`);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  main().catch((error) => {
+    console.error(error);
+    process.exitCode = 1;
+  });
+}
