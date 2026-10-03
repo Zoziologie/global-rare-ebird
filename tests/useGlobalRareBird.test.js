@@ -35,6 +35,46 @@ afterEach(() => {
 });
 
 describe("sightings requests", () => {
+  it("loads checklist details on demand and reuses the completed response", async () => {
+    fetchMock.mockResolvedValueOnce(response([row()]));
+    app.regionSelected = [{ code: "CH", name: "Switzerland" }];
+    await app.loadRegionObservations();
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+
+    fetchMock.mockResolvedValueOnce(response({ obs: [{
+      obsId: "S1", speciesCode: "amewig", comments: "A comment", mediaCounts: { P: 2, A: 1 },
+    }] }));
+    await app.toggleObservationDetails("S1");
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+    expect(fetchMock.mock.calls[1][0]).toContain("/product/checklist/view/S1");
+    expect(fetchMock.mock.calls[1][1].headers).toEqual({ "X-eBirdApiToken": "fixture-token" });
+    expect(app.observationDetails.S1).toMatchObject({
+      status: "loaded", comments: "A comment", mediaCounts: { P: 2, A: 1 }, isOpen: true,
+    });
+
+    await app.toggleObservationDetails("S1");
+    expect(app.observationDetails.S1.isOpen).toBe(false);
+    await app.toggleObservationDetails("S1");
+    expect(app.observationDetails.S1.isOpen).toBe(true);
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("shows a retryable error when checklist details fail", async () => {
+    fetchMock.mockResolvedValueOnce(response([row()]));
+    app.regionSelected = [{ code: "CH", name: "Switzerland" }];
+    await app.loadRegionObservations();
+    fetchMock.mockResolvedValueOnce(new Response("Unavailable", { status: 503 }));
+    await app.toggleObservationDetails("S1");
+    expect(app.observationDetails.S1.status).toBe("error");
+
+    fetchMock.mockResolvedValueOnce(response({ obs: [{
+      obsId: "S1", speciesCode: "amewig", comments: "", mediaCounts: {},
+    }] }));
+    await app.toggleObservationDetails("S1");
+    expect(app.observationDetails.S1.status).toBe("loaded");
+    expect(app.observationDetails.S1.comments).toBe("");
+  });
+
   it("authenticates with a header and reuses regions when adding a selection", async () => {
     fetchMock.mockResolvedValueOnce(response([row("FR")])).mockResolvedValueOnce(response([row("CH")]));
     app.applyRegionSelection({ code: "FR", name: "France" });

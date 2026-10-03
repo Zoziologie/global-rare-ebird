@@ -980,6 +980,83 @@ button {
   color: #6b7280;
 }
 
+.species-location__flag--details {
+  cursor: pointer;
+}
+
+.species-location__media-count {
+  width: auto;
+  gap: 0.15rem;
+  padding: 0 0.1rem;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.species-location__media-thumbs,
+.map-popup__media-thumbs {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  max-width: 7rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.species-location__media-thumbs a,
+.map-popup__media-thumbs a {
+  display: inline-flex;
+  flex: 0 0 auto;
+  border-radius: 0.2rem;
+  overflow: hidden;
+}
+
+.species-location__media-thumbs img,
+.map-popup__media-thumbs img {
+  display: block;
+  width: 1.45rem;
+  height: 1.45rem;
+  object-fit: cover;
+}
+
+.species-location__media-more,
+.map-popup__media-more {
+  flex: 0 0 auto;
+  font-size: 0.65rem;
+  color: #6b7280;
+}
+
+.species-location__details {
+  padding: 0.1rem 0 0.2rem 0.25rem;
+  overflow-wrap: anywhere;
+}
+
+.species-location__comment-quote,
+.map-popup__comment-quote {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0.05rem 0.3rem;
+  border-left: 2px solid rgba(76, 168, 0, 0.45);
+  border-radius: 0.15rem;
+  background: rgba(76, 168, 0, 0.045);
+  color: #4b5563;
+  font-size: 0.72rem;
+  font-style: italic;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.species-location__comment-quote .bi-quote,
+.map-popup__comment-quote .bi-quote {
+  flex: 0 0 auto;
+  color: var(--brand-dark);
+}
+
+.species-location__details-empty {
+  font-size: 0.68rem;
+}
+
 .species-location__meta {
   font-size: 0.72rem;
   line-height: 1.2;
@@ -1557,17 +1634,22 @@ button {
   background: rgba(15, 23, 42, 0.06);
 }
 
-.map-popup__media {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
-  gap: 0.35rem;
-  margin-top: 0.15rem;
+.map-popup__flag--details {
+  color: #334155;
 }
 
-.map-popup__media img {
-  width: 100%;
-  border-radius: 0.65rem;
-  object-fit: cover;
+.map-popup__observation-details {
+  margin-top: 0.1rem;
+  overflow-wrap: anywhere;
+}
+
+.map-popup__media-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  color: #475569;
+  font-size: 0.7rem;
+  white-space: nowrap;
 }
 
 .instruction-overlay {

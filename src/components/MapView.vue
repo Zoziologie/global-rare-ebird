@@ -83,6 +83,7 @@ const mobilePopupSpeciesHtml = computed(() => {
     return ""
   }
 
+  app.detailRevision
   return buildPopupSpeciesHtml(app.popupLocation)
 })
 let resizeObserver = null
@@ -492,6 +493,13 @@ function handlePopupClick(event) {
     return
   }
 
+  const detailsButton = target.closest("[data-details-id]")
+  if (detailsButton) {
+    const detailsId = detailsButton.getAttribute("data-details-id")
+    if (detailsId) app.toggleObservationDetails(detailsId)
+    return
+  }
+
   const statusButton = target.closest("[data-status-system-id]")
   if (statusButton) {
     const systemId = statusButton.getAttribute("data-status-system-id")
@@ -551,37 +559,25 @@ function buildPopupSpeciesHtml(location) {
                       <span class="species-location__user">${escapeHtml(obs.userDisplayName)}</span>
                     </small>
                     <span class="map-popup__flags">
+                      <button type="button" class="map-popup__flag map-popup__flag--details" data-details-id="${escapeHtml(obs.obsId)}" title="${app.observationDetails[obs.obsId]?.isOpen ? "Hide" : "Show"} observation details" aria-label="${app.observationDetails[obs.obsId]?.isOpen ? "Hide" : "Show"} observation details" aria-expanded="${Boolean(app.observationDetails[obs.obsId]?.isOpen)}">
+                        <i class="bi bi-card-text"></i>
+                      </button>
                       ${
                         obs.hasRichMedia
-                          ? `<button type="button" class="map-popup__flag map-popup__flag--media" data-media-id="${escapeHtml(obs.obsId)}" title="Has media" aria-label="Has media">
-                               <i class="bi bi-camera-fill"></i>
+                          ? `<button type="button" class="map-popup__flag map-popup__flag--media" data-media-id="${escapeHtml(obs.obsId)}" title="Load media${app.observationDetails[obs.obsId]?.mediaCounts?.P ? ` — ${escapeHtml(app.observationDetails[obs.obsId].mediaCounts.P)} ${app.observationDetails[obs.obsId].mediaCounts.P === 1 ? "photo" : "photos"}` : ""}" aria-label="${app.observationDetails[obs.obsId]?.mediaCounts?.P ? `Load ${escapeHtml(app.observationDetails[obs.obsId].mediaCounts.P)} ${app.observationDetails[obs.obsId].mediaCounts.P === 1 ? "photo" : "photos"}` : "Load observation media"}">
+                               <i class="bi bi-camera-fill"></i>${app.observationDetails[obs.obsId]?.mediaCounts?.P ? ` ${escapeHtml(app.observationDetails[obs.obsId].mediaCounts.P)}` : ""}
                              </button>`
                           : ""
                       }
+                      ${buildMediaCountsHtml(obs)}
+                      ${buildObservationMediaHtml(obs)}
                       ${
                         obs.hasComments
                           ? `<span class="map-popup__flag map-popup__flag--comments" title="Has comments" aria-label="Has comments"><i class="bi bi-chat-square-text-fill"></i></span>`
                           : ""
                       }
                     </span>
-                    ${
-                      obs.media?.length
-                        ? `<div class="map-popup__media">
-                            ${obs.media
-                              .map(
-                                (mediaId) => `
-                                  <img
-                                    src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${encodeURIComponent(mediaId)}/320"
-                                    loading="lazy"
-                                    decoding="async"
-                                    alt=""
-                                  />
-                                `
-                              )
-                              .join("")}
-                          </div>`
-                        : ""
-                    }
+                    ${buildObservationDetailsHtml(obs)}
                   </div>
                 `
               )
@@ -591,6 +587,50 @@ function buildPopupSpeciesHtml(location) {
       `,
     )
     .join("")
+}
+
+function buildMediaCountsHtml(obs) {
+  const details = app.observationDetails[obs.obsId]
+  if (details?.status !== "loaded") return ""
+
+  const icons = { P: "bi-camera-fill", A: "bi-soundwave", V: "bi-camera-video-fill" }
+  const labels = { P: ["photo", "photos"], A: ["audio recording", "audio recordings"], V: ["video", "videos"] }
+  return Object.entries(details.mediaCounts)
+    .filter(([type, count]) => count > 0 && !(type === "P" && obs.hasRichMedia))
+    .map(([type, count]) => {
+      const label = labels[type] ? labels[type][count === 1 ? 0 : 1] : "media items"
+      return `<span class="map-popup__media-count" title="${escapeHtml(count)} ${escapeHtml(label)}" aria-label="${escapeHtml(count)} ${escapeHtml(label)}"><i class="bi ${icons[type] || "bi-file-earmark-music"}"></i> ${escapeHtml(count)}</span>`
+    })
+    .join("")
+}
+
+function buildObservationMediaHtml(obs) {
+  if (!obs.media?.length) return ""
+  const thumbnails = obs.media.slice(0, 3).map((mediaId) => `
+    <a href="https://macaulaylibrary.org/asset/${encodeURIComponent(mediaId)}" target="_blank" rel="noreferrer" aria-label="View Macaulay Library asset ${escapeHtml(mediaId)}" title="View Macaulay Library asset ${escapeHtml(mediaId)}">
+      <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${encodeURIComponent(mediaId)}/320" loading="lazy" decoding="async" alt="" />
+    </a>
+  `).join("")
+  const remaining = obs.media.length > 3 ? `<span class="map-popup__media-more">+${obs.media.length - 3}</span>` : ""
+  return `<span class="map-popup__media-thumbs">${thumbnails}${remaining}</span>`
+}
+
+function buildObservationDetailsHtml(obs) {
+  const details = app.observationDetails[obs.obsId]
+  if (!details) return ""
+  if (details.status === "loading") {
+    return '<div class="map-popup__observation-details text-body-secondary" role="status">Loading details…</div>'
+  }
+  if (details.status === "error") {
+    return '<div class="map-popup__observation-details text-body-secondary" role="status">Details could not be loaded. Open the checklist for comments and media.</div>'
+  }
+  if (!details.isOpen) return ""
+
+  const comment = details.comments
+    ? `<blockquote class="map-popup__comment-quote"><i class="bi bi-quote" aria-hidden="true"></i><span>${escapeHtml(details.comments)}</span></blockquote>`
+    : '<span class="text-body-secondary">No comment returned.</span>'
+
+  return `<div class="map-popup__observation-details">${comment}</div>`
 }
 
 function buildPopupLocationHeaderHtml(location) {
@@ -1198,7 +1238,7 @@ watch([() => app.highlightedLocationIds, () => app.highlightedSpeciesCode], () =
 })
 
 watch(
-  [() => app.popupLocation, () => app.isMobileLayout],
+  [() => app.popupLocation, () => app.isMobileLayout, () => app.detailRevision],
   () => {
     renderPopup()
   }

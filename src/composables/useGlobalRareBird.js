@@ -89,11 +89,15 @@ export function useGlobalRareBird() {
   const observationError = ref("");
   const regionCache = new Map();
   const mediaRequests = new Map();
+  const checklistCache = new Map();
+  const checklistRequests = new Map();
+  const observationDetails = reactive({});
   let observationController = null;
   const popupLocationId = ref(null);
   const highlightedLocationIds = ref([]);
   const highlightedSpeciesCode = ref(null);
   const mediaRevision = ref(0);
+  const detailRevision = ref(0);
   const statusBadgeModalSystemId = ref(null);
   const showInstruction = ref(false);
   const sidebarOpen = ref(true);
@@ -546,6 +550,50 @@ export function useGlobalRareBird() {
     }
   }
 
+  async function toggleObservationDetails(obsId) {
+    const observations = [...observationsMylocation.value, ...regionObservations.value];
+    const observation = observations.find((entry) => entry.obsId === obsId);
+    if (!observation) return;
+
+    const current = observationDetails[obsId];
+    if (current?.status === "loaded") {
+      current.isOpen = !current.isOpen;
+      detailRevision.value += 1;
+      return;
+    }
+    if (current?.status === "loading") return;
+
+    observationDetails[obsId] = { status: "loading", isOpen: true };
+    detailRevision.value += 1;
+    try {
+      let checklist = checklistCache.get(observation.subId);
+      if (!checklistRequests.has(observation.subId) && !checklist) {
+        checklistRequests.set(observation.subId, fetchJson(
+          `${ebirdBaseUrl}/product/checklist/view/${encodeURIComponent(observation.subId)}`,
+          { headers: { "X-eBirdApiToken": ebirdApiKey } },
+        ));
+      }
+      if (!checklist) {
+        checklist = await checklistRequests.get(observation.subId);
+        checklistCache.set(observation.subId, checklist);
+      }
+      const details = checklist.obs.find((entry) => entry.obsId === obsId) ||
+        checklist.obs.find((entry) => entry.speciesCode === observation.speciesCode);
+      observationDetails[obsId] = {
+        status: "loaded",
+        isOpen: true,
+        comments: details?.comments || "",
+        mediaCounts: details?.mediaCounts || {},
+      };
+    } catch (error) {
+      observationDetails[obsId] = { status: "error", isOpen: true };
+      console.error("Unable to load observation details", error);
+    } finally {
+      checklistRequests.delete(observation.subId);
+      detailRevision.value += 1;
+    }
+  }
+
   function openLocationPopup(locationId) {
     popupLocationId.value = locationId;
   }
@@ -642,6 +690,8 @@ export function useGlobalRareBird() {
     popupLocation,
     highlightedLocationIds,
     highlightedSpeciesCode,
+    observationDetails,
+    detailRevision,
     statusBadgeModalSystemId,
     showInstruction,
     sidebarOpen,
@@ -675,6 +725,7 @@ export function useGlobalRareBird() {
     setSidebarOpen,
     toggleSidebar,
     loadMedia,
+    toggleObservationDetails,
     openLocationPopup,
     closeLocationPopup,
     shareLink,
