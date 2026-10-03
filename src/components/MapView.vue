@@ -83,6 +83,7 @@ const mobilePopupSpeciesHtml = computed(() => {
     return ""
   }
 
+  app.detailRevision
   return buildPopupSpeciesHtml(app.popupLocation)
 })
 let resizeObserver = null
@@ -492,6 +493,13 @@ function handlePopupClick(event) {
     return
   }
 
+  const detailsButton = target.closest("[data-details-id]")
+  if (detailsButton) {
+    const detailsId = detailsButton.getAttribute("data-details-id")
+    if (detailsId) app.toggleObservationDetails(detailsId)
+    return
+  }
+
   const statusButton = target.closest("[data-status-system-id]")
   if (statusButton) {
     const systemId = statusButton.getAttribute("data-status-system-id")
@@ -551,6 +559,9 @@ function buildPopupSpeciesHtml(location) {
                       <span class="species-location__user">${escapeHtml(obs.userDisplayName)}</span>
                     </small>
                     <span class="map-popup__flags">
+                      <button type="button" class="map-popup__flag map-popup__flag--details" data-details-id="${escapeHtml(obs.obsId)}" title="${app.observationDetails[obs.obsId]?.isOpen ? "Hide" : "Show"} observation details" aria-label="${app.observationDetails[obs.obsId]?.isOpen ? "Hide" : "Show"} observation details" aria-expanded="${Boolean(app.observationDetails[obs.obsId]?.isOpen)}">
+                        <i class="bi bi-card-text"></i>
+                      </button>
                       ${
                         obs.hasRichMedia
                           ? `<button type="button" class="map-popup__flag map-popup__flag--media" data-media-id="${escapeHtml(obs.obsId)}" title="Has media" aria-label="Has media">
@@ -564,6 +575,7 @@ function buildPopupSpeciesHtml(location) {
                           : ""
                       }
                     </span>
+                    ${buildObservationDetailsHtml(obs)}
                     ${
                       obs.media?.length
                         ? `<div class="map-popup__media">
@@ -591,6 +603,28 @@ function buildPopupSpeciesHtml(location) {
       `,
     )
     .join("")
+}
+
+function buildObservationDetailsHtml(obs) {
+  const details = app.observationDetails[obs.obsId]
+  if (!details) return ""
+  if (details.status === "loading") {
+    return '<div class="map-popup__observation-details text-body-secondary" role="status">Loading details…</div>'
+  }
+  if (details.status === "error") {
+    return '<div class="map-popup__observation-details text-body-secondary" role="status">Details could not be loaded. Open the checklist for comments and media.</div>'
+  }
+  if (!details.isOpen) return ""
+
+  const mediaLabels = { P: "Photos", A: "Audio", V: "Video" }
+  const media = Object.entries(details.mediaCounts)
+    .filter(([, count]) => count > 0)
+    .map(([type, count]) => `${escapeHtml(mediaLabels[type] || "Media")}: ${escapeHtml(count)}`)
+  const comment = details.comments
+    ? `<p class="mb-1">${escapeHtml(details.comments)}</p>`
+    : '<p class="mb-1 text-body-secondary">No comment returned for this observation.</p>'
+
+  return `<div class="map-popup__observation-details">${comment}${media.length ? `<div class="text-body-secondary">${media.join(" · ")}</div>` : ""}</div>`
 }
 
 function buildPopupLocationHeaderHtml(location) {
@@ -1198,7 +1232,7 @@ watch([() => app.highlightedLocationIds, () => app.highlightedSpeciesCode], () =
 })
 
 watch(
-  [() => app.popupLocation, () => app.isMobileLayout],
+  [() => app.popupLocation, () => app.isMobileLayout, () => app.detailRevision],
   () => {
     renderPopup()
   }

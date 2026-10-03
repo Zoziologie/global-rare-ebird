@@ -980,6 +980,15 @@ button {
   color: #6b7280;
 }
 
+.species-location__flag--details {
+  cursor: pointer;
+}
+
+.species-location__details {
+  padding: 0.25rem 0 0.35rem 1rem;
+  overflow-wrap: anywhere;
+}
+
 .species-location__meta {
   font-size: 0.72rem;
   line-height: 1.2;
@@ -1555,6 +1564,18 @@ button {
 .map-popup__flag--comments {
   color: #0f172a;
   background: rgba(15, 23, 42, 0.06);
+}
+
+.map-popup__flag--details {
+  color: #334155;
+}
+
+.map-popup__observation-details {
+  margin-top: 0.25rem;
+  padding: 0.45rem 0.6rem;
+  border-radius: 0.5rem;
+  background: rgba(15, 23, 42, 0.04);
+  overflow-wrap: anywhere;
 }
 
 .map-popup__media {

@@ -348,9 +348,18 @@
                           </small>
 
                           <span
-                            v-if="obs.hasRichMedia || obs.hasComments"
                             class="species-location__flags"
                           >
+                            <button
+                              type="button"
+                              class="species-location__flag species-location__flag--details"
+                              :aria-expanded="Boolean(app.observationDetails[obs.obsId]?.isOpen)"
+                              :aria-label="app.observationDetails[obs.obsId]?.isOpen ? 'Hide observation details' : 'Show observation details'"
+                              title="Observation details"
+                              @click="app.toggleObservationDetails(obs.obsId)"
+                            >
+                              <i class="bi bi-card-text"></i>
+                            </button>
                             <span
                               v-if="obs.hasRichMedia"
                               class="species-location__flag species-location__flag--media"
@@ -368,6 +377,27 @@
                               <i class="bi bi-chat-square-text-fill"></i>
                             </span>
                           </span>
+                        </div>
+                        <div
+                          v-if="app.observationDetails[obs.obsId]"
+                          class="species-location__details small text-body-secondary"
+                          role="status"
+                        >
+                          <template v-if="app.observationDetails[obs.obsId].status === 'loading'">
+                            Loading details…
+                          </template>
+                          <template v-else-if="app.observationDetails[obs.obsId].status === 'error'">
+                            Details could not be loaded. Open the checklist for comments and media.
+                          </template>
+                          <template v-else-if="app.observationDetails[obs.obsId].isOpen">
+                            <p v-if="app.observationDetails[obs.obsId].comments" class="mb-1 text-body">
+                              {{ app.observationDetails[obs.obsId].comments }}
+                            </p>
+                            <p v-else class="mb-1">No comment returned for this observation.</p>
+                            <span v-for="(count, type) in app.observationDetails[obs.obsId].mediaCounts" :key="type" class="me-2">
+                              {{ type === 'P' ? 'Photos' : type === 'A' ? 'Audio' : type === 'V' ? 'Video' : 'Media' }}: {{ count }}
+                            </span>
+                          </template>
                         </div>
                       </div>
 
