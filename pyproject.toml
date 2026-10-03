@@ -1,0 +1,10 @@
+[project]
+name = "global-rare-ebird"
+version = "0.5.0"
+requires-python = ">=3.10"
+dependencies = [
+    "pdfplumber==0.11.9",
+]
+
+[tool.uv]
+package = false
