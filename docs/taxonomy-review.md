@@ -1,6 +1,6 @@
 # Taxonomy review — issue #39
 
-Implementation is tracked in [issue #39](https://github.com/Zoziologie/global-rare-ebird/issues/39) and [draft PR #42](https://github.com/Zoziologie/global-rare-ebird/pull/42). The Avibase workflow, refreshed application lookups, and Swiss 2026 status definitions are implemented for review. Nineteen source entries remain explicitly unresolved.
+Implementation is tracked in [issue #39](https://github.com/Zoziologie/global-rare-ebird/issues/39) and [draft PR #42](https://github.com/Zoziologie/global-rare-ebird/pull/42). The Avibase workflow, refreshed application lookups, and Swiss 2026 status definitions are implemented for review. Seven source entries remain unresolved after checking every previously unmatched subspecies against reportable eBird groups: two French entries and five German entries.
 
 ## Run linearly
 
@@ -34,11 +34,11 @@ The 2025 integrated file contains 35,853 coded rows. Joining by exact Cornell co
 | Source | Accepted bindings | Explicit unresolved | Pending proposals |
 | --- | ---: | ---: | ---: |
 | ABA | 1,161 | 0 | 0 |
-| France | 240 | 8 | 0 |
-| Germany | 212 | 11 | 0 |
+| France | 250 | 2 | 0 |
+| Germany | 221 | 5 | 0 |
 | Switzerland | 433 | 0 | 0 |
 
-The initial baseline uses unique exact scientific-name concepts. These initial matches are automatic, not individually certified biological reviews. Thirty-three exceptional entries record reviewed name/rank equivalents or unresolved scope. The 19 unresolved rows are listed in [taxonomy-unresolved.csv](taxonomy-unresolved.csv). Fuzzy and common-name candidates are never automatically accepted. Exact nonreportable subspecies remain unresolved under the user's policy; they never acquire a parent species' code. Ambiguous whitethroat/flycatcher groups and the German Lesser Sand-Plover scope also remain unresolved.
+The initial baseline uses unique exact scientific-name concepts. These initial matches are automatic, not individually certified biological reviews. Forty-two explicit decisions record nomenclature exceptions and reviewed group mappings. The unresolved subspecies were checked against reportable eBird issf, form, slash, and other group taxa; where a reportable group clearly included the listed population, the exact group was accepted. The seven unresolved rows are listed in [taxonomy-unresolved.csv](taxonomy-unresolved.csv). Fuzzy and common-name candidates are never automatically accepted. A nonreportable subspecies remains unresolved when the only available eBird code is the full parent species or a broader group without a defensible scope match. The Eastern Lesser Whitethroat approximation uses the reportable curruca/blythi group (which also includes nominate curruca), as approved by the user. The reportable whbwoo9, grgshr2, blkred1, combuz5, and comred4 concepts cover the named White-backed Woodpecker, Great Grey Shrike, Eastern Black Redstart, Steppe Buzzard, and Greenland Redpoll populations respectively. The French Buff-bellied Pipit entry uses the Siberian/American Pipit slash (japonicus/rubescens), including the already rare Siberian taxon. The Siberian/American Pipit slash includes rubescens; the Sand-Plover decision includes both species and their slash taxon. Iberian Pied Flycatcher, Grey-headed Swamphen seistanicus, Faroe Snipe, Goshawk buteoides, Lesser Spotted Woodpecker minor, Bearded Reedling russicus, and Reed Bunting tschusii remain unresolved because no suitable reportable subspecies/group mapping is available.
 
 The baseline retains exact Avibase IDs on subsequent runs. New regional rows become proposals even if their names match uniquely. Changes in source status, reportability, category, or REPORT_AS require review; persistent alias decisions cannot silently approve them. To explicitly approve a flagged status/category change, add `reviewedTaxonomySha256` and `reviewedSourceSha256` to the decision using the inspected current report hashes. Conflicting statuses for the same code block generation rather than selecting a numeric maximum.
 

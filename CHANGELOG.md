@@ -9,7 +9,7 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 ### Added
 
 - A local, offline taxonomy audit with pinned eBird inputs, source checksums, and row-level review reports for issue #39.
-- A versioned Avibase concept crosswalk, comparison reports, persistent mapping review inputs, and a guarded linear regeneration command.
+- A versioned Avibase concept crosswalk, comparison reports, persistent mappings, a guarded linear regeneration command, and reviewed reportable groups for source subspecies.
 - Reproducible regional-source downloads/conversion and a monthly eBird version monitor that opens one review issue per new version.
 
 ### Changed

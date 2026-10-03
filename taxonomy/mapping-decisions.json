@@ -111,10 +111,33 @@
     "source": "fr",
     "sourceKey": "7b5c8b4827db49af7f8a9e4f73cfd2680d378f44276c0930e75f818213b34a55",
     "scientificName": "Curruca curruca halimodendri/minula/margelanica",
-    "avibaseId": "",
-    "decision": "unresolved",
-    "reason": "No exact reportable concept for this union; leswhi1 includes a different set of subspecies. Retain unresolved rather than broadening scope.",
-    "evidence": "https://www.birds.cornell.edu/clementschecklist/introduction/updateindex/october-2025/"
+    "decision": "accepted",
+    "reason": "User review: the eastern Lesser Whitethroat taxa listed are rare in France; include their exact reportable concepts and the minula/margelanica group.",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md.",
+    "targets": [
+      {
+        "avibaseId": "ED68D163",
+        "component": "Curruca curruca halimodendri",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "108B1E9F",
+        "component": "Curruca curruca minula",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "86F2FA70",
+        "component": "Curruca curruca margelanica",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "26486657",
+        "component": "Curruca curruca minula/margelanica",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053"
   },
   {
     "source": "fr",
@@ -156,10 +179,23 @@
     "source": "fr",
     "sourceKey": "26af44a92219782a6594fd74e653af679d0fae6a4f5451bcbec1afbec6a4d99e",
     "scientificName": "Ficedula hypoleuca iberiae/Ficedula speculigera",
-    "avibaseId": "",
-    "decision": "unresolved",
-    "reason": "No exact reportable concept for the source union. y00819 includes all Pied Flycatcher populations, rather than just iberiae.",
-    "evidence": "https://www.birds.cornell.edu/clementschecklist/introduction/updateindex/october-2025/"
+    "decision": "accepted",
+    "reason": "User review: Atlas Flycatcher is rare in France; Iberian Pied Flycatcher is not recognized and remains unresolved.",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md.",
+    "targets": [
+      {
+        "avibaseId": "CD1B2156",
+        "component": "Ficedula speculigera (Atlas Flycatcher)",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "C6509A6B",
+        "component": "Ficedula hypoleuca iberiae (Iberian Pied Flycatcher)",
+        "decision": "unresolved"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053"
   },
   {
     "source": "fr",
@@ -228,10 +264,28 @@
     "source": "de",
     "sourceKey": "a1a95d4e33cf9ab812171b73c51e21fc76fe3365d0c0a2c2a0ab306ac5bc3bcd",
     "scientificName": "Charadrius mongolus",
-    "avibaseId": "66DA1FB3",
-    "decision": "unresolved",
-    "reason": "The 2023 source name historically covered the Lesser Sand-Plover complex. The current narrow Siberian concept is confirmed in IOC 13.2, but equivalence to the source edition has not been established. Leave unresolved rather than assigning the narrow concept by its English name.",
-    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=66DA1FB3"
+    "decision": "accepted",
+    "reason": "User review: mark both component species and their reportable slash taxon rare in Germany.",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md.",
+    "targets": [
+      {
+        "avibaseId": "66DA1FB3",
+        "component": "Anarhynchus mongolus (Siberian Sand-Plover)",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "828D3D5A",
+        "component": "Anarhynchus atrifrons (Tibetan Sand-Plover)",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "8A4C4629",
+        "component": "Anarhynchus mongolus/atrifrons (Siberian/Tibetan Sand-Plover)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747"
   },
   {
     "source": "de",
@@ -255,10 +309,23 @@
     "source": "de",
     "sourceKey": "ecf0081ddd56b00590d177f0b311762d4e6e28f2d83808ed73c23aa0b3a749e8",
     "scientificName": "Sylvia curruca blythi / halimodendri",
-    "avibaseId": "",
-    "decision": "unresolved",
-    "reason": "No exact reportable union for just these two subspecies; current reportable groups contain additional populations.",
-    "evidence": "https://www.birds.cornell.edu/clementschecklist/introduction/updateindex/october-2025/"
+    "decision": "accepted",
+    "reason": "User review: approximate eastern Lesser Whitethroat groups are rare in Germany; include the reportable blythi/curruca group and halimodendri. The approximation includes nominate curruca within the eBird group.",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md.",
+    "targets": [
+      {
+        "avibaseId": "D8E180FB",
+        "component": "Curruca curruca curruca/blythi reportable group",
+        "decision": "accepted"
+      },
+      {
+        "avibaseId": "ED68D163",
+        "component": "Curruca curruca halimodendri",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747"
   },
   {
     "source": "de",
@@ -295,5 +362,158 @@
     "decision": "accepted",
     "reason": "Reviewed nomenclature/identity exception: Charadrius dubius corresponds to Thinornis dubius; retain this exact concept, not a parent or broader common-name match.",
     "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=35EC3BBF"
+  },
+  {
+    "source": "fr",
+    "sourceKey": "57a77f69531c23ef2a7a255eaafd587f67766bdc277e072aee00f334beea0ed4",
+    "scientificName": "Anthus rubescens rubescens",
+    "decision": "accepted",
+    "reason": "French Buff-bellied Pipit maps to the reportable Siberian/American Pipit slash group, which explicitly includes rubescens and also includes the already listed rare Siberian Pipit.",
+    "targets": [
+      {
+        "avibaseId": "8F268682",
+        "component": "Anthus japonicus/rubescens (Siberian/American Pipit)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "fr",
+    "sourceKey": "bee73d22c2dec048ec90f4558e63728a2efe9ace0d12420ed4c659767a5c84c1",
+    "scientificName": "Phoenicurus ochruros phoenicuroides",
+    "decision": "accepted",
+    "reason": "The reportable eastern Black Redstart ochruros group includes the listed phoenicuroides population (Avibase group record).",
+    "targets": [
+      {
+        "avibaseId": "E305404E",
+        "component": "Phoenicurus ochruros [ochruros Group]",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "fr",
+    "sourceKey": "74f9b373978a9c5652a8f5c2654371b0e8c46ccb111938e0f06a8908d8fe7e57",
+    "scientificName": "Buteo buteo vulpinus",
+    "decision": "accepted",
+    "reason": "The official regional Steppe Buzzard entry maps to the eBird reportable vulpinus/menetriesi group, explicitly containing the listed subspecies.",
+    "targets": [
+      {
+        "avibaseId": "02AD152F",
+        "component": "Buteo buteo vulpinus/menetriesi (Steppe Buzzard group)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "de",
+    "sourceKey": "b25e11a1e4224d4a7bbbd00ddd6f0183e10850cf727d1f37ee71ba2c5a788fb5",
+    "scientificName": "Buteo buteo vulpinus",
+    "decision": "accepted",
+    "reason": "The official regional Steppe Buzzard entry maps to the eBird reportable vulpinus/menetriesi group, explicitly containing the listed subspecies.",
+    "targets": [
+      {
+        "avibaseId": "02AD152F",
+        "component": "Buteo buteo vulpinus/menetriesi (Steppe Buzzard group)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "fr",
+    "sourceKey": "3c03d620365293e9f5b14c8dac3065fa4c46a86b2dae65e71553ca8880b67836",
+    "scientificName": "Dendrocopos leucotos leucotos",
+    "decision": "accepted",
+    "reason": "The French White-backed Woodpecker entry maps to eBird\u2019s reportable leucotos group, whose circumscription includes the nominate population.",
+    "targets": [
+      {
+        "avibaseId": "0101E8F9",
+        "component": "Dendrocopos leucotos [leucotos Group]",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "de",
+    "sourceKey": "27c10cb39332c0c65164790e6dd0d58071823513243e3a8178209e606b319ab5",
+    "scientificName": "Lanius excubitor homeyeri",
+    "decision": "accepted",
+    "reason": "The Great Grey Shrike excubitor group includes homeyeri among its concept alternatives; map the German restricted entry to that group.",
+    "targets": [
+      {
+        "avibaseId": "61C2E0E1",
+        "component": "Lanius excubitor [excubitor Group] (excubitor/homeyeri)",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "de",
+    "sourceKey": "2324702d65538f48a0d01bab0e001c0804e61be33a7a5eb47d46ce99f67e0197",
+    "scientificName": "Phoenicurus ochruros phoenicuroides",
+    "decision": "accepted",
+    "reason": "The reportable eastern Black Redstart ochruros group includes the listed phoenicuroides population (Avibase group record).",
+    "targets": [
+      {
+        "avibaseId": "E305404E",
+        "component": "Phoenicurus ochruros [ochruros Group]",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "de",
+    "sourceKey": "64f52382c859a2664e4aac68a8b0515bd12aba2db8101e72f53fba4847cb04fe",
+    "scientificName": "Acanthis flammea rostrata",
+    "decision": "accepted",
+    "reason": "The German Greenland Redpoll entry maps to the reportable rostrata/islandica group, which explicitly contains rostrata.",
+    "targets": [
+      {
+        "avibaseId": "8D2F2621",
+        "component": "Acanthis flammea rostrata/islandica",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747",
+    "evidence": "User review on 2026-10-03 and exact concept/group names in Cornell eBird/Clements v2025; scope documented in docs/taxonomy-review.md."
+  },
+  {
+    "source": "fr",
+    "sourceKey": "0ea95dd41294857ccd38e3d396d6a4742fa74b913e37b6cf87d46d0242e5277c",
+    "scientificName": "Curruca curruca blythi",
+    "decision": "accepted",
+    "reason": "User review: approximate eastern Lesser Whitethroat groups are rare in France. The reportable curruca/blythi group is the closest eBird group and includes nominate curruca as an approximation.",
+    "targets": [
+      {
+        "avibaseId": "D8E180FB",
+        "component": "Curruca curruca curruca/blythi reportable group",
+        "decision": "accepted"
+      }
+    ],
+    "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "evidence": "User review on 2026-10-03; target concept and group name checked in Cornell eBird/Clements v2025."
   }
 ]
