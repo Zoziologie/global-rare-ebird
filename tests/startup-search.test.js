@@ -56,13 +56,15 @@ describe("initial region lookup", () => {
   });
 
   it("times out a lookup without leaving startup blocked", async () => {
-    vi.useFakeTimers();
+    const timeout = new AbortController();
+    const timeoutSignal = vi.spyOn(AbortSignal, "timeout").mockReturnValueOnce(timeout.signal);
     fetchMock.mockImplementationOnce((url, { signal }) => new Promise((resolve, reject) => {
       signal.addEventListener("abort", () => reject(signal.reason));
     }));
     const lookup = lookupDefaultRegion(regions, new AbortController().signal);
-    await vi.advanceTimersByTimeAsync(4000);
+    timeout.abort(new DOMException("Timed out", "TimeoutError"));
     expect(await lookup).toBeNull();
+    expect(timeoutSignal).toHaveBeenCalledWith(4000);
   });
 });
 
