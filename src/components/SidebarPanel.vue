@@ -357,14 +357,19 @@
                               >
                                 <i class="bi bi-card-text"></i>
                               </button>
-                              <span
+                              <button
                                 v-if="obs.hasRichMedia"
-                                class="species-location__flag species-location__flag--media"
-                                title="Has media"
-                                aria-label="Has media"
+                                type="button"
+                                class="species-location__flag species-location__flag--media species-location__media-count"
+                                title="Load observation media"
+                                aria-label="Load observation media"
+                                @click="app.loadMedia(obs.obsId)"
                               >
                                 <i class="bi bi-camera-fill"></i>
-                              </span>
+                                <span v-if="app.observationDetails[obs.obsId]?.mediaCounts?.P">
+                                  {{ app.observationDetails[obs.obsId].mediaCounts.P }}
+                                </span>
+                              </button>
                               <span
                                 v-if="obs.hasComments"
                                 class="species-location__flag species-location__flag--comments"
@@ -372,6 +377,43 @@
                                 aria-label="Has comments"
                               >
                                 <i class="bi bi-chat-square-text-fill"></i>
+                              </span>
+                              <template v-if="app.observationDetails[obs.obsId]?.status === 'loaded'">
+                                <template
+                                  v-for="(count, type) in app.observationDetails[obs.obsId].mediaCounts"
+                                  :key="type"
+                                >
+                                  <span
+                                    v-if="count > 0 && !(type === 'P' && obs.hasRichMedia)"
+                                    class="species-location__flag species-location__flag--media species-location__media-count"
+                                    :title="`${count} ${type === 'P' ? 'photos' : type === 'A' ? 'audio recordings' : type === 'V' ? 'videos' : 'media items'}`"
+                                    :aria-label="`${count} ${type === 'P' ? 'photos' : type === 'A' ? 'audio recordings' : type === 'V' ? 'videos' : 'media items'}`"
+                                  >
+                                    <i :class="type === 'P' ? 'bi bi-camera-fill' : type === 'A' ? 'bi bi-soundwave' : type === 'V' ? 'bi bi-camera-video-fill' : 'bi bi-file-earmark-music'"></i>
+                                    <span>{{ count }}</span>
+                                  </span>
+                                </template>
+                              </template>
+                              <span v-if="obs.media?.length" class="species-location__media-thumbs">
+                                <a
+                                  v-for="mediaId in obs.media.slice(0, 3)"
+                                  :key="mediaId"
+                                  :href="`https://macaulaylibrary.org/asset/${encodeURIComponent(mediaId)}`"
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  :aria-label="`View Macaulay Library asset ${mediaId}`"
+                                  :title="`View Macaulay Library asset ${mediaId}`"
+                                >
+                                  <img
+                                    :src="`https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${encodeURIComponent(mediaId)}/320`"
+                                    loading="lazy"
+                                    decoding="async"
+                                    alt=""
+                                  />
+                                </a>
+                                <span v-if="obs.media.length > 3" class="species-location__media-more">
+                                  +{{ obs.media.length - 3 }}
+                                </span>
                               </span>
                             </span>
                             </div>
@@ -387,37 +429,16 @@
                               Details could not be loaded. Open the checklist for comments and media.
                             </template>
                             <template v-else-if="app.observationDetails[obs.obsId].isOpen">
-                              <p v-if="app.observationDetails[obs.obsId].comments" class="mb-1 text-body">
-                                {{ app.observationDetails[obs.obsId].comments }}
-                              </p>
-                              <p v-else class="mb-1">No comment returned for this observation.</p>
-                              <span v-for="(count, type) in app.observationDetails[obs.obsId].mediaCounts" :key="type" class="me-2">
-                                {{ type === 'P' ? 'Photos' : type === 'A' ? 'Audio' : type === 'V' ? 'Video' : 'Media' }}: {{ count }}
-                              </span>
+                                <blockquote v-if="app.observationDetails[obs.obsId].comments" class="species-location__comment-quote">
+                                  <i class="bi bi-quote" aria-hidden="true"></i>
+                                  <span>{{ app.observationDetails[obs.obsId].comments }}</span>
+                                </blockquote>
+                                <span v-else class="species-location__details-empty">No comment returned.</span>
                             </template>
                             </div>
                         </template>
                       </div>
 
-                      <div
-                        v-if="location.obs.some((obs) => obs.media?.length)"
-                        class="species-location__media-row row g-1 pt-1"
-                      >
-                        <template
-                          v-for="obs in location.obs.filter((item) => item.media?.length)"
-                          :key="obs.obsId"
-                        >
-                          <img
-                            v-for="mediaId in obs.media"
-                            :key="mediaId"
-                            class="col-4 col-sm-3 rounded object-fit-cover"
-                            :src="`https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${mediaId}/320`"
-                            loading="lazy"
-                            decoding="async"
-                            alt=""
-                          />
-                        </template>
-                      </div>
                     </div>
                   </div>
                 </div>

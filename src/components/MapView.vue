@@ -564,11 +564,13 @@ function buildPopupSpeciesHtml(location) {
                       </button>
                       ${
                         obs.hasRichMedia
-                          ? `<button type="button" class="map-popup__flag map-popup__flag--media" data-media-id="${escapeHtml(obs.obsId)}" title="Has media" aria-label="Has media">
-                               <i class="bi bi-camera-fill"></i>
+                          ? `<button type="button" class="map-popup__flag map-popup__flag--media" data-media-id="${escapeHtml(obs.obsId)}" title="Load media${app.observationDetails[obs.obsId]?.mediaCounts?.P ? ` — ${escapeHtml(app.observationDetails[obs.obsId].mediaCounts.P)} ${app.observationDetails[obs.obsId].mediaCounts.P === 1 ? "photo" : "photos"}` : ""}" aria-label="Load observation media">
+                               <i class="bi bi-camera-fill"></i>${app.observationDetails[obs.obsId]?.mediaCounts?.P ? ` ${escapeHtml(app.observationDetails[obs.obsId].mediaCounts.P)}` : ""}
                              </button>`
                           : ""
                       }
+                      ${buildMediaCountsHtml(obs)}
+                      ${buildObservationMediaHtml(obs)}
                       ${
                         obs.hasComments
                           ? `<span class="map-popup__flag map-popup__flag--comments" title="Has comments" aria-label="Has comments"><i class="bi bi-chat-square-text-fill"></i></span>`
@@ -576,24 +578,6 @@ function buildPopupSpeciesHtml(location) {
                       }
                     </span>
                     ${buildObservationDetailsHtml(obs)}
-                    ${
-                      obs.media?.length
-                        ? `<div class="map-popup__media">
-                            ${obs.media
-                              .map(
-                                (mediaId) => `
-                                  <img
-                                    src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${encodeURIComponent(mediaId)}/320"
-                                    loading="lazy"
-                                    decoding="async"
-                                    alt=""
-                                  />
-                                `
-                              )
-                              .join("")}
-                          </div>`
-                        : ""
-                    }
                   </div>
                 `
               )
@@ -603,6 +587,32 @@ function buildPopupSpeciesHtml(location) {
       `,
     )
     .join("")
+}
+
+function buildMediaCountsHtml(obs) {
+  const details = app.observationDetails[obs.obsId]
+  if (details?.status !== "loaded") return ""
+
+  const icons = { P: "bi-camera-fill", A: "bi-soundwave", V: "bi-camera-video-fill" }
+  const labels = { P: ["photo", "photos"], A: ["audio recording", "audio recordings"], V: ["video", "videos"] }
+  return Object.entries(details.mediaCounts)
+    .filter(([type, count]) => count > 0 && !(type === "P" && obs.hasRichMedia))
+    .map(([type, count]) => {
+      const label = labels[type] ? labels[type][count === 1 ? 0 : 1] : "media items"
+      return `<span class="map-popup__media-count" title="${escapeHtml(count)} ${escapeHtml(label)}" aria-label="${escapeHtml(count)} ${escapeHtml(label)}"><i class="bi ${icons[type] || "bi-file-earmark-music"}"></i> ${escapeHtml(count)}</span>`
+    })
+    .join("")
+}
+
+function buildObservationMediaHtml(obs) {
+  if (!obs.media?.length) return ""
+  const thumbnails = obs.media.slice(0, 3).map((mediaId) => `
+    <a href="https://macaulaylibrary.org/asset/${encodeURIComponent(mediaId)}" target="_blank" rel="noreferrer" aria-label="View Macaulay Library asset ${escapeHtml(mediaId)}" title="View Macaulay Library asset ${escapeHtml(mediaId)}">
+      <img src="https://cdn.download.ams.birds.cornell.edu/api/v1/asset/${encodeURIComponent(mediaId)}/320" loading="lazy" decoding="async" alt="" />
+    </a>
+  `).join("")
+  const remaining = obs.media.length > 3 ? `<span class="map-popup__media-more">+${obs.media.length - 3}</span>` : ""
+  return `<span class="map-popup__media-thumbs">${thumbnails}${remaining}</span>`
 }
 
 function buildObservationDetailsHtml(obs) {
@@ -616,15 +626,11 @@ function buildObservationDetailsHtml(obs) {
   }
   if (!details.isOpen) return ""
 
-  const mediaLabels = { P: "Photos", A: "Audio", V: "Video" }
-  const media = Object.entries(details.mediaCounts)
-    .filter(([, count]) => count > 0)
-    .map(([type, count]) => `${escapeHtml(mediaLabels[type] || "Media")}: ${escapeHtml(count)}`)
   const comment = details.comments
-    ? `<p class="mb-1">${escapeHtml(details.comments)}</p>`
-    : '<p class="mb-1 text-body-secondary">No comment returned for this observation.</p>'
+    ? `<blockquote class="map-popup__comment-quote"><i class="bi bi-quote" aria-hidden="true"></i><span>${escapeHtml(details.comments)}</span></blockquote>`
+    : '<span class="text-body-secondary">No comment returned.</span>'
 
-  return `<div class="map-popup__observation-details">${comment}${media.length ? `<div class="text-body-secondary">${media.join(" · ")}</div>` : ""}</div>`
+  return `<div class="map-popup__observation-details">${comment}</div>`
 }
 
 function buildPopupLocationHeaderHtml(location) {
