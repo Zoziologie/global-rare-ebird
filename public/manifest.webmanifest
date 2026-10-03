@@ -1,0 +1,23 @@
+{
+  "id": "/global-rare-ebird/",
+  "name": "Global Rare eBird",
+  "short_name": "Rare eBird",
+  "description": "Explore recent notable bird sightings from eBird around the world.",
+  "start_url": "/global-rare-ebird/",
+  "scope": "/global-rare-ebird/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#123226",
+  "icons": [
+    {
+      "src": "/global-rare-ebird/pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/global-rare-ebird/pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
