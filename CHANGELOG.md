@@ -8,6 +8,21 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 - Removed the white top edge above the mobile header.
 
+## [0.7.0] - 2026-10-03
+
+### Added
+
+- First-visit country defaults from approximate IP location, preferring US states and Canadian provinces, with manual fallback.
+- Restore the last search on the default URL while keeping shared searches authoritative and fetching fresh sightings.
+
+### Fixed
+
+- Retry timed-out data requests once, report exhausted timeouts clearly, and suppress empty-result guidance when loading fails.
+
+### Changed
+
+- Explain how to start an empty search and fall back to regions when nearby location is unavailable, without prompting returning visitors on page load.
+
 ## [0.6.1] - 2026-10-03
 
 ### Fixed
