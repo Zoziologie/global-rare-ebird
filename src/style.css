@@ -1078,6 +1078,7 @@ button {
 }
 
 .species-location__meta {
+  min-width: 0;
   font-size: 0.72rem;
   line-height: 1.2;
   text-decoration-color: transparent;
