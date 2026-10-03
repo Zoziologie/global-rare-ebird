@@ -14,6 +14,7 @@ import { parseShareState, serializeShareState } from "../utils/query";
 import { loadTaxonomyResources } from "../utils/taxonomy-resources";
 import { createGeolocationController } from "./geolocationController.js";
 import { createSortOptionLabels, filterSearchOptions } from "./globalRareBirdOptions.js";
+import { trackEvent } from "../utils/analytics.js";
 import regionCatalog from "../../data/region-catalog.json";
 
 export const birdAppKey = Symbol("bird-app");
@@ -360,6 +361,7 @@ export function useGlobalRareBird() {
 
   function setMapStyleKey(key) {
     if (mapboxStyles.some((style) => style.key === key)) {
+      if (key !== mapStyleKey.value) trackEvent("map_layer_change", { layer: key });
       mapStyleKey.value = key;
     }
   }
@@ -369,11 +371,16 @@ export function useGlobalRareBird() {
       return;
     }
 
+    trackSetting("species_language", locale);
     sppLocale.value = locale;
 
     if (typeof window !== "undefined") {
       window.location.replace(shareUrl.value);
     }
+  }
+
+  function trackSetting(name, value) {
+    trackEvent("setting_change", { setting_name: name, setting_value: Array.isArray(value) ? value.join(",") : String(value) });
   }
 
   function updateBackMax(nextValue) {
@@ -412,13 +419,17 @@ export function useGlobalRareBird() {
   }
 
   async function loadNearbyObservations() {
+    if (!isMylocation.value) trackEvent("mode_change", { mode: "around" });
     isMylocation.value = true;
     const controller = beginObservationRequest();
 
     try {
       await withLoading("Loading sightings…", async () => {
         const coords = locationCoords.value || (await requestGeolocation().catch(() => null));
-        if (!coords) return;
+        if (!coords) {
+          trackEvent("data_load", { mode: "around", outcome: "failure", source: "network" });
+          return;
+        }
         controller.signal.throwIfAborted();
 
         const { taxonomyLookup } = await loadTaxonomyResources([]);
@@ -441,23 +452,27 @@ export function useGlobalRareBird() {
           taxonomyLookup,
           location: coords,
         });
+        trackEvent("data_load", { mode: "around", outcome: "success", source: "network" });
         clearMapVisibleLocationIds();
         fitRequest.value += 1;
       });
     } catch (error) {
       if (controller.signal.aborted) return;
       observationError.value = "Unable to load sightings. Please try again.";
+      trackEvent("data_load", { mode: "around", outcome: "failure", source: "network" });
       console.error("Unable to load nearby observations", error);
     }
   }
 
   async function loadRegionObservations(regionCodes = selectedRegionCodes.value) {
+    if (isMylocation.value) trackEvent("mode_change", { mode: "region" });
     isMylocation.value = false;
     const controller = beginObservationRequest();
     if (!regionCodes.length) {
       clearRegionObservations();
       return;
     }
+    const cachedCodes = regionCodes.filter((code) => regionCache.get(code)?.key === `${backMax.value}:${sppLocale.value}`);
     const cacheKey = `${backMax.value}:${sppLocale.value}`;
     const params = new URLSearchParams({ detail: "full", back: backMax.value, sppLocale: sppLocale.value });
 
@@ -485,6 +500,7 @@ export function useGlobalRareBird() {
         clearRegionObservations();
 
         results.forEach((result, index) => {
+          trackEvent("data_load", { region_code: regionCodes[index], mode: "region", outcome: result.status === "fulfilled" ? "success" : "failure", source: cachedCodes.includes(regionCodes[index]) ? "cache" : "network" });
           if (result.status === "fulfilled") {
             observationsRegionByCode[regionCodes[index]] = result.value;
             applyDistanceToObservations(result.value, locationCoords.value);
@@ -499,6 +515,7 @@ export function useGlobalRareBird() {
     } catch (error) {
       if (controller.signal.aborted) return;
       observationError.value = "Unable to load sightings. Please try again.";
+      for (const code of regionCodes) trackEvent("data_load", { region_code: code, mode: "region", outcome: "failure", source: "network" });
       console.error("Unable to load region observations", error);
     }
   }
@@ -518,15 +535,10 @@ export function useGlobalRareBird() {
   async function selectRegion(region) {
     applyRegionSelection(region);
 
-    if (isMylocation.value) {
-      isMylocation.value = false;
-    }
-
     await loadRegionObservations();
   }
 
   async function myLocation() {
-    isMylocation.value = true;
     await loadNearbyObservations();
   }
 
@@ -612,11 +624,14 @@ export function useGlobalRareBird() {
     if (navigator.share) {
       try {
         await navigator.share(sharePayload);
+        trackEvent("share", { method: "native", outcome: "completed" });
         return;
       } catch (error) {
         if (error?.name !== "AbortError") {
+          trackEvent("share", { method: "native", outcome: "failed" });
           console.warn("Native share failed, falling back to clipboard", error);
         } else {
+          trackEvent("share", { method: "native", outcome: "cancelled" });
           return;
         }
       }
@@ -628,7 +643,9 @@ export function useGlobalRareBird() {
       }
 
       await navigator.clipboard.writeText(shareUrl.value);
+      trackEvent("share", { method: "clipboard", outcome: "copied" });
     } catch (error) {
+      trackEvent("share", { method: "clipboard", outcome: "failed" });
       console.warn("Unable to copy share link", error);
     }
   }
@@ -641,10 +658,6 @@ export function useGlobalRareBird() {
   }
 
   function updateRegionSelectionFromPicker(region) {
-    if (isMylocation.value) {
-      isMylocation.value = false;
-    }
-
     void selectRegion(region);
   }
 
@@ -716,6 +729,7 @@ export function useGlobalRareBird() {
     fitToAllSightings,
     setMapStyleKey,
     setSpeciesLocale,
+    trackSetting,
     setHighlightLocationIds,
     setHighlightSpeciesCode,
     clearHighlight,

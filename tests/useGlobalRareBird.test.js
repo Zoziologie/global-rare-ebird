@@ -1,7 +1,10 @@
 // @vitest-environment happy-dom
 import { createApp, h } from "vue";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { trackEvent } from "../src/utils/analytics.js";
 import { useGlobalRareBird } from "../src/composables/useGlobalRareBird.js";
+
+vi.mock("../src/utils/analytics.js", () => ({ trackEvent: vi.fn() }));
 
 vi.mock("../src/config/index.js", () => ({
   ebirdApiKey: "fixture-token", ebirdBaseUrl: "https://api.ebird.org/v2",
@@ -165,5 +168,47 @@ describe("sightings requests", () => {
     await loading;
     expect(app.observationError).toContain("try again");
     expect(app.isLoading).toBe(false);
+  });
+});
+
+
+describe("analytics interactions", () => {
+  it("records network and cached loads, refreshes and failures without observation data", async () => {
+    fetchMock.mockResolvedValueOnce(response([row()]));
+    app.regionSelected = [{ code: "CH", name: "Switzerland" }];
+    await app.loadRegionObservations();
+    await app.loadRegionObservations();
+    fetchMock.mockResolvedValueOnce(new Response("Unavailable", { status: 503 }));
+    await app.reload();
+    expect(trackEvent.mock.calls).toEqual([
+      ["data_load", { region_code: "CH", mode: "region", outcome: "success", source: "network" }],
+      ["data_load", { region_code: "CH", mode: "region", outcome: "success", source: "cache" }],
+      ["data_load", { region_code: "CH", mode: "region", outcome: "failure", source: "network" }],
+    ]);
+  });
+  it("records native completion, cancellation, failure and clipboard outcomes", async () => {
+    vi.stubGlobal("navigator", { share: vi.fn().mockResolvedValue(undefined), clipboard: { writeText: vi.fn().mockResolvedValue(undefined) } });
+    await app.shareLink();
+    navigator.share.mockRejectedValueOnce(new DOMException("Cancelled", "AbortError"));
+    await app.shareLink();
+    expect(navigator.clipboard.writeText).not.toHaveBeenCalled();
+    navigator.share.mockRejectedValueOnce(new Error("Failed"));
+    await app.shareLink();
+    navigator.share = undefined;
+    navigator.clipboard.writeText.mockRejectedValueOnce(new Error("Failed"));
+    await app.shareLink();
+    expect(trackEvent.mock.calls).toEqual([
+      ["share", { method: "native", outcome: "completed" }],
+      ["share", { method: "native", outcome: "cancelled" }],
+      ["share", { method: "native", outcome: "failed" }],
+      ["share", { method: "clipboard", outcome: "copied" }],
+      ["share", { method: "clipboard", outcome: "failed" }],
+    ]);
+  });
+  it("counts explicit layer changes once and never sends free-text filters", async () => {
+    app.setMapStyleKey("streets");
+    app.filterSearch = "private search";
+    app.trackSetting("media_filter", true);
+    expect(trackEvent.mock.calls).toEqual([["setting_change", { setting_name: "media_filter", setting_value: "true" }]]);
   });
 });

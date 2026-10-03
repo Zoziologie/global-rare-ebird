@@ -1,6 +1,6 @@
 {
   "name": "global-rare-ebird",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "title": "Global Rare eBird",
   "description": "A map of all rare birds seen on the globe with eBird data.",
   "repository": {

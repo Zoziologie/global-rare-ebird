@@ -4,12 +4,14 @@
     <MapView />
     <InstructionModal />
     <StatusBadgeModal />
+    <AnalyticsConsent />
   </div>
 </template>
 
 <script setup>
 import { computed, provide } from "vue"
 
+import AnalyticsConsent from "./components/AnalyticsConsent.vue"
 import InstructionModal from "./components/InstructionModal.vue"
 import MapView from "./components/MapView.vue"
 import StatusBadgeModal from "./components/StatusBadgeModal.vue"

@@ -4,6 +4,13 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-10-03
+
+### Added
+
+- Optional GA4 analytics with explicit consent, persistent privacy controls, withdrawal, and privacy notice.
+- Privacy-conscious feature, load, link, and sharing events with an Analytics setup and baseline guide.
+
 ### Added
 
 - Home-screen app metadata and installation guidance for phone users; sightings remain live-only.

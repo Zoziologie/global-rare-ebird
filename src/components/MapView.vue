@@ -544,6 +544,7 @@ function buildPopupSpeciesHtml(location) {
                   <div class="map-popup__observation">
                     <small class="species-location__meta map-popup__observation-meta d-flex flex-nowrap align-items-center gap-1 flex-grow-1 min-w-0 text-body-secondary">
                       <a
+                        data-analytics-link="ebird_checklist"
                         href="https://ebird.org/checklist/${encodeURIComponent(obs.subId)}#${encodeURIComponent(obs.speciesCode)}"
                         target="_blank"
                         rel="noreferrer"
@@ -639,6 +640,7 @@ function buildPopupLocationHeaderHtml(location) {
         location.locName,
       )}</span>`
     : `<a
+        data-analytics-link="ebird_hotspot"
         href="https://ebird.org/hotspot/${encodeURIComponent(location.locId)}"
         target="_blank"
         rel="noreferrer"
@@ -655,6 +657,7 @@ function buildPopupLocationHeaderHtml(location) {
         ${locationTitle}
       </span>
       <a
+        data-analytics-link="directions"
         href="https://www.google.com/maps/dir/?api=1&destination=${location.latLng.lat},${location.latLng.lng}&dir_action=navigate"
         target="_blank"
         rel="noreferrer"

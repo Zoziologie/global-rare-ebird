@@ -2003,3 +2003,33 @@ button {
     white-space: normal;
   }
 }
+
+.analytics-preferences {
+  position: fixed;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  z-index: 1100;
+  padding: 0.3rem 0.6rem;
+  background: white;
+  border: 1px solid #52645b;
+  border-radius: 0.4rem;
+  font-size: 0.8rem;
+}
+.analytics-banner {
+  position: fixed;
+  bottom: 2.8rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  z-index: 1100;
+  max-width: 42rem;
+  max-height: 75dvh;
+  overflow: auto;
+  padding: 1rem;
+  border: 1px solid #52645b;
+  border-radius: 0.5rem;
+  background: white;
+  box-shadow: 0 4px 24px #0003;
+  font-size: 0.9rem;
+}
+.analytics-banner h2 { font-size: 1.15rem; }
+.analytics-banner__actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
