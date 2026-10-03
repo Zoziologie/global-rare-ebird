@@ -10,6 +10,7 @@ import {
   groupObservations,
   normalizeObservationRows,
 } from "../utils/observations";
+import { lookupDefaultRegion } from "../utils/default-region.js";
 import { parseShareState, serializeShareState } from "../utils/query";
 import { loadTaxonomyResources } from "../utils/taxonomy-resources";
 import { createGeolocationController } from "./geolocationController.js";
@@ -30,26 +31,47 @@ function normalizeRegion(region) {
 }
 
 async function fetchJson(url, options = {}) {
-  const controller = new AbortController();
-  const abort = () => controller.abort(options.signal.reason);
-  options.signal?.addEventListener("abort", abort, { once: true });
-  if (options.signal?.aborted) abort();
-  const timeout = setTimeout(() => controller.abort(), 20000);
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const controller = new AbortController();
+    const abort = () => controller.abort(options.signal.reason);
+    options.signal?.addEventListener("abort", abort, { once: true });
+    if (options.signal?.aborted) abort();
+    const timeout = setTimeout(() => controller.abort(new DOMException("Sightings request timed out", "TimeoutError")), 20000);
 
-  try {
-    const response = await fetch(url, { ...options, signal: controller.signal });
-    if (!response.ok) {
-      throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+    try {
+      const response = await fetch(url, { ...options, signal: controller.signal });
+      if (!response.ok) throw new Error(`Request failed: ${response.status} ${response.statusText}`);
+      return await response.json();
+    } catch (error) {
+      if (options.signal?.aborted) throw error;
+      if (controller.signal.reason?.name === "TimeoutError") {
+        if (attempt === 0) continue;
+        throw controller.signal.reason;
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeout);
+      options.signal?.removeEventListener("abort", abort);
     }
-    return await response.json();
-  } finally {
-    clearTimeout(timeout);
-    options.signal?.removeEventListener("abort", abort);
   }
 }
 
+export const searchPreferenceKey = "global-rare-ebird.last-search";
+
 export function useGlobalRareBird() {
-  const initialState = parseShareState(window.location.search);
+  const searchParams = new URLSearchParams(window.location.search);
+  const hasSharedSearch = ["mode", "r", "d", "t", "c", "l"].some(key => searchParams.has(key));
+  let savedSearch;
+  try {
+    savedSearch = JSON.parse(window.localStorage.getItem(searchPreferenceKey));
+  } catch { /* Storage may be unavailable or cleared by the browser. */ }
+  const restoreSearch = !hasSharedSearch && Boolean(savedSearch);
+  const initialState = parseShareState(hasSharedSearch ? window.location.search : savedSearch?.search || "");
+  if (restoreSearch && initialState.isMylocation) initialState.regionCodes = savedSearch.regionCodes;
+  const estimatedRegionCode = ref(restoreSearch ? savedSearch.estimatedRegionCode : "");
+  const regionFallbackFeedback = ref("");
+  let rememberSearch = Boolean(hasSharedSearch || savedSearch);
+  let defaultRegionController;
   const regionCatalogLookup = new Map(regionCatalog.map((region) => [region.code, normalizeRegion(region)]));
   const initialMobileLayout =
     typeof window !== "undefined" ? window.matchMedia(MOBILE_LAYOUT_MEDIA_QUERY).matches : false;
@@ -262,9 +284,16 @@ export function useGlobalRareBird() {
     const baseUrl = new URL(import.meta.env.BASE_URL, window.location.origin).toString();
     const nextUrl = linkUrl.value ? `${baseUrl}?${linkUrl.value}` : baseUrl;
     history.replaceState(null, "", nextUrl);
+    if (rememberSearch) {
+      try {
+        window.localStorage.setItem(searchPreferenceKey, JSON.stringify({
+          search: linkUrl.value, regionCodes: selectedRegionCodes.value, estimatedRegionCode: estimatedRegionCode.value,
+        }));
+      } catch { /* Searches still work when browser storage is unavailable. */ }
+    }
   }
 
-  watch(linkUrl, syncUrl);
+  watch([linkUrl, estimatedRegionCode], syncUrl);
   watch(isMylocation, () => {
     observationController?.abort();
     observationError.value = "";
@@ -389,6 +418,13 @@ export function useGlobalRareBird() {
   }
 
   function applyRegionSelection(region) {
+    defaultRegionController?.abort();
+    if (estimatedRegionCode.value && region.code !== estimatedRegionCode.value) {
+      regionSelected.value = regionSelected.value.filter(entry => entry.code !== estimatedRegionCode.value);
+      clearRegionObservations();
+    }
+    estimatedRegionCode.value = "";
+    rememberSearch = true;
     if (regionSelected.value.some((entry) => entry.code === region.code)) {
       return;
     }
@@ -397,6 +433,9 @@ export function useGlobalRareBird() {
   }
 
   function removeRegion(region) {
+    defaultRegionController?.abort();
+    estimatedRegionCode.value = "";
+    rememberSearch = true;
     regionSelected.value = regionSelected.value.filter((entry) => entry.code !== region.code);
     delete observationsRegionByCode[region.code];
 
@@ -412,13 +451,36 @@ export function useGlobalRareBird() {
   }
 
   function beginObservationRequest() {
+    rememberSearch = true;
+    syncUrl();
+    defaultRegionController?.abort();
     observationController?.abort();
     observationController = new AbortController();
     observationError.value = "";
     return observationController;
   }
 
+  async function chooseDefaultRegion() {
+    defaultRegionController = new AbortController();
+    const controller = defaultRegionController;
+    const region = await withLoading("Finding your region…", () => lookupDefaultRegion(regionCatalogLookup, controller.signal));
+    if (controller.signal.aborted) return false;
+    if (region) {
+      regionSelected.value = [region];
+      estimatedRegionCode.value = region.code;
+    }
+    return true;
+  }
+
+  async function fallbackToRegions(signal) {
+    if (!regionSelected.value.length) await chooseDefaultRegion();
+    if (signal.aborted) return;
+    regionFallbackFeedback.value = locationFeedback.value || "Location access is unavailable. Choose a region or try Around me again.";
+    await loadRegionObservations();
+  }
+
   async function loadNearbyObservations() {
+    regionFallbackFeedback.value = "";
     if (!isMylocation.value) trackEvent("mode_change", { mode: "around" });
     isMylocation.value = true;
     const controller = beginObservationRequest();
@@ -429,6 +491,7 @@ export function useGlobalRareBird() {
         controller.signal.throwIfAborted();
         if (!coords) {
           trackEvent("data_load", { mode: "around", outcome: "failure", source: "network" });
+          await fallbackToRegions(controller.signal);
           return;
         }
         controller.signal.throwIfAborted();
@@ -506,7 +569,9 @@ export function useGlobalRareBird() {
             observationsRegionByCode[regionCodes[index]] = result.value;
             applyDistanceToObservations(result.value, locationCoords.value);
           } else {
-            observationError.value = "Some sightings could not be loaded. Please try again.";
+            observationError.value = result.reason?.name === "TimeoutError"
+              ? "Sightings took too long to load after an automatic retry. Please try again."
+              : "Some sightings could not be loaded. Please try again.";
             console.error(`Unable to load sightings for ${regionCodes[index]}`, result.reason);
           }
         });
@@ -664,6 +729,8 @@ export function useGlobalRareBird() {
 
   const api = {
     isMylocation,
+    estimatedRegionCode,
+    regionFallbackFeedback,
     locationCoords,
     locationPermission,
     locationFeedback,
@@ -767,13 +834,24 @@ export function useGlobalRareBird() {
     }
 
     if (initialState.isMylocation) {
+      if (restoreSearch) {
+        const controller = beginObservationRequest();
+        await primeGeolocationForDisplay();
+        if (controller.signal.aborted) return;
+        if (!locationCoords.value) {
+          await fallbackToRegions(controller.signal);
+          return;
+        }
+      }
       await myLocation();
-    } else if (regionSelected.value.length > 0) {
-      await loadRegionObservations();
+    } else {
+      if (!hasSharedSearch && !savedSearch && !await chooseDefaultRegion()) return;
+      if (regionSelected.value.length > 0) await loadRegionObservations();
     }
   });
 
   onBeforeUnmount(() => {
+    defaultRegionController?.abort();
     observationController?.abort();
     if (mobileMediaQuery && syncSidebarMode) {
       mobileMediaQuery.removeEventListener("change", syncSidebarMode);
