@@ -47,7 +47,7 @@ Build Explorations for loads by region/mode/outcome/source, links by category, s
 
 Basic consent mode: no Google script or analytics request for undecided/rejected visitors. Restored acceptance starts GA on reload; events before acceptance are discarded. Advertising consent stays denied. All configured page fields use the fixed public homepage, empty referrer, and fixed title. Event fields and values are allowlisted; no coordinates, tokens, free text, URLs, or observation identifiers are sent.
 
-Withdrawal sets the GA disable flag before cookie deletion and reloads to unload the tag's listeners/timers. Existing in-flight requests or already collected data cannot be recalled. The local choice is stored separately from GA cookies. Reopening preferences moves keyboard focus to the controls and returns it on closing. The banner is a non-modal region; it does not block the app.
+Withdrawal sets the GA disable flag before cookie deletion and reloads to unload the tag's listeners/timers. Existing in-flight requests or already collected data cannot be recalled. The local choice is stored separately from GA cookies. The Settings modal contains the Privacy & cookies control. Reopening preferences moves keyboard focus to the controls and returns it on closing. The banner is a non-modal region; it does not block the app.
 
 ## Deployment verification and review
 

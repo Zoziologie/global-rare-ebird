@@ -207,6 +207,9 @@
         <button type="button" class="btn btn-brand" @click="app.toggleInstruction(false)">
           Close
         </button>
+        <button type="button" class="btn btn-brand-outline" @click="$emit('privacy', $event)">
+          Privacy &amp; cookies
+        </button>
         <a data-analytics-link="github" href="https://github.com/Zoziologie/global-rare-ebird/issues" target="_blank" rel="noreferrer">
           Report an issue
         </a>
@@ -220,6 +223,7 @@ import { inject } from "vue"
 
 import { birdAppKey } from "../composables/useGlobalRareBird"
 
+defineEmits(["privacy"])
 const app = inject(birdAppKey)
 
 if (!app) {

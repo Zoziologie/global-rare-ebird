@@ -1,9 +1,8 @@
 <template>
-  <button type="button" class="analytics-preferences" @click="openPreferences">Privacy &amp; cookies</button>
   <section v-if="!analytics.state.choice || analytics.state.open" class="analytics-banner" aria-labelledby="analytics-title" @keydown.esc="closePreferences">
     <h2 id="analytics-title">A little help for this rare bird?</h2>
     <p>Allow Google Analytics cookies to help us spot popular features and fix mishaps? No ads, no precise locations—just a better birding tool.</p>
-    <p>Your choice. Change it anytime in “Privacy &amp; cookies”.</p>
+    <p>Your choice. Change it anytime in Settings → “Privacy &amp; cookies”.</p>
     <p v-if="analytics.state.choice">Current choice: {{ analytics.state.choice === "accepted" ? "analytics accepted" : "analytics rejected" }}.</p>
     <details>
       <summary>Privacy and cookie notice</summary>
@@ -21,6 +20,7 @@
 import { nextTick, ref } from "vue"
 import { getAnalytics } from "../utils/analytics.js"
 const analytics = getAnalytics()
+defineExpose({ openPreferences })
 const acceptButton = ref(null)
 let opener
 async function openPreferences(event) {
