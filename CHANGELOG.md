@@ -4,6 +4,10 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+### Fixed
+
+- Keep observer names compact with ellipsis and click-to-expand beneath the sighting, without wrapping the distance onto another line.
+
 ### Added
 
 - Combine sightings of the same species at the same location and checklist start date/time, keeping the maximum individual count and joining observer names.
