@@ -891,6 +891,42 @@ button {
   background: rgba(17, 24, 39, 0.08);
 }
 
+.species-location__travel {
+  min-height: 1.5rem;
+  padding: 0.1rem 0 0.2rem;
+}
+
+.travel-estimate-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.12rem 0.45rem;
+  border: 1px solid rgba(18, 50, 38, 0.24);
+  border-radius: 999px;
+  background: #fff;
+  color: #123226;
+  font: inherit;
+  line-height: 1.35;
+  cursor: pointer;
+}
+
+.travel-estimate-button:hover,
+.travel-estimate-button:focus-visible,
+.travel-estimate-button--active {
+  border-color: #123226;
+  background: rgba(18, 50, 38, 0.08);
+}
+
+.travel-estimate-button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
+.species-location__distance-type {
+  font-size: 0.65rem;
+  white-space: nowrap;
+}
+
 .species-location__obs-list {
   margin-top: 0.2rem;
 }

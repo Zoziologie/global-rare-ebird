@@ -23,11 +23,13 @@ Spotted a bug or have a suggestion? Open a [GitHub Issue](https://github.com/Zoz
 
 The GitHub Pages workflow injects the same `MAPBOX_ACCESS_TOKEN` and `EBIRD_API_KEY` names from repository secrets during the production build.
 
-Both credentials are included in the public website bundle. Use a dedicated Mapbox public token (`pk.`) with only the required read scopes and URL restrictions for the production site and local development. Secret Mapbox tokens (`sk.`) are rejected by the build. See [Mapbox token management](https://docs.mapbox.com/accounts/guides/tokens/).
+Both credentials are included in the public website bundle. Use a dedicated Mapbox public token (`pk.`) with `styles:read` and `fonts:read` scopes and URL restrictions for the production site and local development. Secret Mapbox tokens (`sk.`) are rejected by the build. See [Mapbox token management](https://docs.mapbox.com/accounts/guides/tokens/).
 
 The eBird key is sent in the `X-eBirdApiToken` header to keep it out of request URLs, but remains visible to visitors. Keeping it private requires a backend proxy; GitHub Pages alone cannot do that. See the [eBird API documentation](https://documenter.getpostman.com/view/664302/S1ENwy59).
 
 Region results are cached for the current browser session. Use **Refresh sightings** in Settings to fetch fresh data or apply changes to the fetched duration and nearby radius. Requests time out after 20 seconds, and failed regions can be retried without preventing successful regions from displaying.
+
+Travel-time estimates are requested from Mapbox Directions only when selected. The request includes the current location and sighting coordinates; no route is requested while browsing. Driving estimates do not include live traffic. The app flags when Mapbox routes to a road or path more than 300 m from the reported coordinate.
 
 Pull requests run lint, regression tests, version metadata checks, the production build, and a dependency audit. Only pushes to `main` deploy to GitHub Pages. Dependencies and GitHub Actions are updated manually through maintenance PRs.
 

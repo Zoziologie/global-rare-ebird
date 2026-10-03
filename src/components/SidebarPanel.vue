@@ -304,7 +304,7 @@
                           </span>
                         </span>
                         <a
-                          :href="`https://www.google.com/maps/dir/?api=1&destination=${location.latLng.lat},${location.latLng.lng}&dir_action=navigate`"
+                          :href="getDirectionsUrl(location)"
                           target="_blank"
                           rel="noreferrer"
                           class="species-location__direction text-body-secondary flex-shrink-0"
@@ -313,6 +313,58 @@
                         >
                           <i class="bi bi-sign-turn-right-fill"></i>
                         </a>
+                      </div>
+
+                      <div class="species-location__travel small d-flex flex-wrap align-items-center gap-2">
+                        <template v-if="app.getTravelEstimate(location)?.selectedMode">
+                          <button
+                            v-for="mode in travelModes"
+                            :key="mode"
+                            type="button"
+                            class="travel-estimate-button"
+                            :class="{ 'travel-estimate-button--active': app.getTravelEstimate(location).selectedMode === mode }"
+                            :disabled="app.getTravelEstimate(location).routes[mode]?.status === 'loading'"
+                            :title="app.getTravelEstimate(location).routes[mode]?.message || `${mode === 'walking' ? 'Walking' : 'Driving'} time estimate`"
+                            @click="app.estimateTravelTime(location, mode)"
+                          >
+                            <i :class="mode === 'walking' ? 'bi bi-person-walking' : 'bi bi-car-front-fill'" aria-hidden="true"></i>
+                            <template v-if="app.getTravelEstimate(location).routes[mode]?.status === 'ready'">
+                              {{ mode === 'walking' ? 'Walk' : 'Drive' }} {{ formatTravelDuration(app.getTravelEstimate(location).routes[mode].duration) }}
+                            </template>
+                            <template v-else-if="app.getTravelEstimate(location).routes[mode]?.status === 'loading'">
+                              {{ mode === 'walking' ? 'Walking…' : 'Driving…' }}
+                            </template>
+                            <template v-else>
+                              {{ app.getTravelEstimate(location).routes[mode]?.status === 'error' ? `Retry ${mode === 'walking' ? 'walk' : 'drive'}` : mode === 'walking' ? 'Walk' : 'Drive' }}
+                            </template>
+                          </button>
+                          <span
+                            v-if="app.getTravelEstimate(location).routes[app.getTravelEstimate(location).selectedMode]?.status === 'ready' && app.getTravelEstimate(location).routes[app.getTravelEstimate(location).selectedMode].snapDistance > 300"
+                            class="text-body-secondary"
+                          >
+                            Route ends {{ formatDistanceKm(app.getTravelEstimate(location).routes[app.getTravelEstimate(location).selectedMode].snapDistance / 1000) }} from report
+                          </span>
+                        </template>
+                        <button
+                          v-else
+                          type="button"
+                          class="travel-estimate-button"
+                          :disabled="app.getTravelEstimate(location)?.locationStatus === 'loading'"
+                          :title="app.getTravelEstimate(location)?.locationMessage || 'Your location is sent to Mapbox only when you request an estimate.'"
+                          @click="app.estimateTravelTime(location)"
+                        >
+                          <i class="bi bi-clock-history" aria-hidden="true"></i>
+                          {{ app.getTravelEstimate(location)?.locationStatus === 'loading' ? 'Getting location…' : app.getTravelEstimate(location)?.locationStatus === 'error' ? 'Retry travel estimate' : 'Estimate travel time' }}
+                        </button>
+                        <span v-if="app.getTravelEstimate(location)?.routes[app.getTravelEstimate(location).selectedMode]?.message" class="text-danger">
+                          {{ app.getTravelEstimate(location).routes[app.getTravelEstimate(location).selectedMode].message }}
+                        </span>
+                        <span v-else-if="app.getTravelEstimate(location)?.routes[app.getTravelEstimate(location).selectedMode]?.status === 'ready'" class="text-body-secondary">
+                          {{ app.getTravelEstimate(location).selectedMode === 'driving' ? 'No live traffic' : 'From your current location' }}
+                        </span>
+                        <span v-else-if="!app.getTravelEstimate(location)?.selectedMode" class="text-body-secondary">
+                          Uses your location; sent to Mapbox only for this estimate.
+                        </span>
                       </div>
 
                       <div class="d-grid gap-0">
@@ -341,6 +393,7 @@
                               <span class="species-location__obs-separator">•</span>
                               <span class="species-location__obs-distance">
                                 {{ formatDistanceKm(obs.distToMe) }}
+                                <span class="species-location__distance-type">straight-line</span>
                               </span>
                             </template>
                             <span class="species-location__obs-separator">•</span>
@@ -481,6 +534,7 @@ import zoziologieLogo from "../assets/logo_zoziologie.svg";
 import RegionPicker from "./RegionPicker.vue";
 import { birdAppKey } from "../composables/useGlobalRareBird";
 import { formatDaysAgo, formatDistanceKm, formatObservationTime } from "../utils/formatters";
+import { formatTravelDuration } from "../utils/routing.js";
 
 const app = inject(birdAppKey);
 
@@ -491,6 +545,12 @@ if (!app) {
 const openSpeciesCode = ref(null);
 const showFilterOptions = ref(false);
 const speciesCollapseRefs = new Map();
+const travelModes = ["walking", "driving"];
+
+function getDirectionsUrl(location) {
+  const mode = app.getTravelEstimate(location)?.selectedMode === "walking" ? "walking" : "driving";
+  return `https://www.google.com/maps/dir/?api=1&destination=${location.latLng.lat},${location.latLng.lng}&travelmode=${mode}&dir_action=navigate`;
+}
 
 function setSpeciesCollapseRef(code) {
   return (el) => {

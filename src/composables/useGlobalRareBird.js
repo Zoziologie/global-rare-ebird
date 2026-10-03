@@ -1,6 +1,6 @@
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from "vue";
 
-import { ebirdApiKey, ebirdBaseUrl, mapboxStyles } from "../config/index.js";
+import { ebirdApiKey, ebirdBaseUrl, mapboxAccessToken, mapboxStyles } from "../config/index.js";
 import { getUniformRegionTaxonomySystem } from "../config/region-taxonomies.js";
 import {
   applyDistanceToObservations,
@@ -12,6 +12,7 @@ import {
 } from "../utils/observations";
 import { parseShareState, serializeShareState } from "../utils/query";
 import { loadTaxonomyResources } from "../utils/taxonomy-resources";
+import { fetchRouteEstimate } from "../utils/routing.js";
 import { createGeolocationController } from "./geolocationController.js";
 import { createSortOptionLabels, filterSearchOptions } from "./globalRareBirdOptions.js";
 import regionCatalog from "../../data/region-catalog.json";
@@ -87,6 +88,8 @@ export function useGlobalRareBird() {
   const observationsMylocation = ref([]);
   const observationsRegionByCode = reactive({});
   const observationError = ref("");
+  const travelEstimates = reactive({});
+  const travelRequests = new Map();
   const regionCache = new Map();
   const mediaRequests = new Map();
   let observationController = null;
@@ -237,6 +240,86 @@ export function useGlobalRareBird() {
     const index = loadingStack.value.lastIndexOf(label);
     if (index > -1) {
       loadingStack.value.splice(index, 1);
+    }
+  }
+
+  function getTravelEstimateKey(location, origin = locationCoords.value) {
+    const originKey = origin
+      ? `${Number(origin.latitude).toFixed(4)},${Number(origin.longitude).toFixed(4)}`
+      : "unknown";
+    const destinationKey = `${Number(location.latLng.lat).toFixed(5)},${Number(location.latLng.lng).toFixed(5)}`;
+    return `${originKey}|${location.locId}|${destinationKey}`;
+  }
+
+  function getTravelEstimate(location) {
+    return travelEstimates[getTravelEstimateKey(location)] || null;
+  }
+
+  async function loadTravelRoute(location, origin, entry, key, mode) {
+    const requestKey = `${key}|${mode}`;
+    if (entry.routes[mode]?.status === "ready") {
+      return entry.routes[mode];
+    }
+    if (travelRequests.has(requestKey)) {
+      return travelRequests.get(requestKey);
+    }
+
+    const request = fetchRouteEstimate({
+      origin,
+      destination: location.latLng,
+      mode,
+      accessToken: mapboxAccessToken,
+    })
+      .then((route) => {
+        entry.routes[mode] = { status: "ready", ...route };
+        return route;
+      })
+      .catch((error) => {
+        const message = error.name === "AbortError"
+          ? "Travel estimate timed out. Try again or open directions."
+          : error.message;
+        entry.routes[mode] = { status: "error", message };
+        return null;
+      })
+      .finally(() => travelRequests.delete(requestKey));
+
+    entry.routes[mode] = { status: "loading" };
+    travelRequests.set(requestKey, request);
+    return request;
+  }
+
+  async function estimateTravelTime(location, mode = null) {
+    let origin = locationCoords.value;
+    let key = getTravelEstimateKey(location, origin);
+    let entry = travelEstimates[key];
+
+    if (!origin) {
+      entry ||= { selectedMode: null, routes: {} };
+      travelEstimates[key] = entry;
+      entry.locationStatus = "loading";
+
+      try {
+        origin = await requestGeolocation();
+      } catch {
+        entry.locationStatus = "error";
+        entry.locationMessage = locationFeedback.value || "Allow location access to estimate travel time.";
+        return;
+      }
+
+      key = getTravelEstimateKey(location, origin);
+      entry = travelEstimates[key] || entry;
+      travelEstimates[key] = entry;
+      entry.locationStatus = "ready";
+    }
+
+    const straightLineKm = Math.min(...location.obs.map((observation) => observation.distToMe).filter(Number.isFinite));
+    const selectedMode = mode || (straightLineKm < 2 ? "walking" : "driving");
+    entry.selectedMode = selectedMode;
+    const route = await loadTravelRoute(location, origin, entry, key, selectedMode);
+
+    if (!mode && selectedMode === "walking" && route && route.duration > 25 * 60) {
+      entry.selectedMode = "driving";
+      await loadTravelRoute(location, origin, entry, key, "driving");
     }
   }
 
@@ -632,6 +715,9 @@ export function useGlobalRareBird() {
     candidateObservations,
     hasCandidateObservations,
     hasLocationCoords,
+    travelEstimates,
+    getTravelEstimate,
+    estimateTravelTime,
     allObservations,
     filteredObservations,
     speciesFiltered,

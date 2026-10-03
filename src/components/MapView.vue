@@ -52,7 +52,7 @@ import { mapboxAccessToken } from "../config/index.js"
 import { birdAppKey } from "../composables/useGlobalRareBird"
 import { createBoundsFromPoints, toMapboxBounds } from "../utils/bounds"
 import { createGeodesicCircleBounds, createGeodesicCircleFeature } from "../utils/geo"
-import { escapeHtml, formatDaysAgo, formatObservationTime } from "../utils/formatters"
+import { escapeHtml, formatDaysAgo, formatDistanceKm, formatObservationTime } from "../utils/formatters"
 import { groupObservations } from "../utils/observations"
 import { getClusterCountColorExpression, getRichnessColorExpression } from "../utils/richness"
 import { pointInViewport } from "../utils/viewport"
@@ -483,6 +483,13 @@ function handlePopupClick(event) {
     return
   }
 
+  const travelButton = target.closest("[data-travel-mode]")
+  if (travelButton && app.popupLocation) {
+    const mode = travelButton.getAttribute("data-travel-mode")
+    void app.estimateTravelTime(app.popupLocation, mode === "auto" ? null : mode)
+    return
+  }
+
   const mediaButton = target.closest("[data-media-id]")
   if (mediaButton) {
     const mediaId = mediaButton.getAttribute("data-media-id")
@@ -610,22 +617,61 @@ function buildPopupLocationHeaderHtml(location) {
       </a>`
 
   return `
-    <div class="species-location__head d-flex align-items-center justify-content-between gap-2 map-popup__location-head">
-      <span class="species-location__title-group d-flex align-items-center gap-2 min-w-0 flex-grow-1">
-        ${locationTitle}
-      </span>
-      <a
-        href="https://www.google.com/maps/dir/?api=1&destination=${location.latLng.lat},${location.latLng.lng}&dir_action=navigate"
-        target="_blank"
-        rel="noreferrer"
-        class="species-location__direction text-body-secondary flex-shrink-0"
-        title="Directions"
-        aria-label="Directions"
-      >
-        <i class="bi bi-sign-turn-right-fill"></i>
-      </a>
+    <div class="map-popup__location-header">
+      <div class="species-location__head d-flex align-items-center justify-content-between gap-2 map-popup__location-head">
+        <span class="species-location__title-group d-flex align-items-center gap-2 min-w-0 flex-grow-1">
+          ${locationTitle}
+        </span>
+        <a
+          href="${getDirectionsUrl(location)}"
+          target="_blank"
+          rel="noreferrer"
+          class="species-location__direction text-body-secondary flex-shrink-0"
+          title="Open ${app.getTravelEstimate(location)?.selectedMode === "walking" ? "walking" : "driving"} directions"
+          aria-label="Open ${app.getTravelEstimate(location)?.selectedMode === "walking" ? "walking" : "driving"} directions"
+        >
+          <i class="bi bi-sign-turn-right-fill"></i>
+        </a>
+      </div>
+      ${buildTravelEstimateHtml(location)}
     </div>
   `
+}
+
+function getDirectionsUrl(location) {
+  const mode = app.getTravelEstimate(location)?.selectedMode === "walking" ? "walking" : "driving"
+  return `https://www.google.com/maps/dir/?api=1&destination=${location.latLng.lat},${location.latLng.lng}&travelmode=${mode}&dir_action=navigate`
+}
+
+function buildTravelEstimateHtml(location) {
+  const estimate = app.getTravelEstimate(location)
+  const activeRoute = estimate?.routes?.[estimate.selectedMode]
+  const controls = estimate?.selectedMode
+    ? ["walking", "driving"].map((mode) => {
+        const route = estimate.routes[mode]
+        const label = mode === "walking" ? "Walk" : "Drive"
+        const duration = route?.status === "ready"
+          ? `${Math.round(route.duration / 60)} min`
+          : route?.status === "loading"
+            ? "Loading…"
+            : route?.status === "error"
+              ? `Retry ${label.toLowerCase()}`
+              : label
+        const icon = mode === "walking" ? "person-walking" : "car-front-fill"
+        return `<button type="button" class="travel-estimate-button ${estimate.selectedMode === mode ? "travel-estimate-button--active" : ""}" data-travel-mode="${mode}" ${route?.status === "loading" ? "disabled" : ""} title="${escapeHtml(route?.message || `${label} time estimate`)}"><i class="bi bi-${icon}" aria-hidden="true"></i> ${label} ${duration}</button>`
+      }).join("")
+    : `<button type="button" class="travel-estimate-button" data-travel-mode="auto" ${estimate?.locationStatus === "loading" ? "disabled" : ""} title="${escapeHtml(estimate?.locationMessage || "Your location is sent to Mapbox only when you request an estimate.")}"><i class="bi bi-clock-history" aria-hidden="true"></i> ${estimate?.locationStatus === "loading" ? "Getting location…" : estimate?.locationStatus === "error" ? "Retry travel estimate" : "Estimate travel time"}</button>`
+  const snapMessage = activeRoute?.status === "ready" && activeRoute.snapDistance > 300
+    ? `<span class="text-body-secondary">Route ends ${escapeHtml(formatDistanceKm(activeRoute.snapDistance / 1000))} from report</span>`
+    : ""
+  const routeMessage = activeRoute?.status === "error" ? `<span class="text-danger">${escapeHtml(activeRoute.message)}</span>` : ""
+  const estimateNote = activeRoute?.status === "ready"
+    ? `<span class="text-body-secondary">${estimate.selectedMode === "driving" ? "No live traffic" : "From your current location"}</span>`
+    : estimate?.selectedMode
+      ? ""
+      : `<span class="text-body-secondary">Uses your location; sent to Mapbox only for this estimate.</span>`
+
+  return `<div class="species-location__travel small d-flex flex-wrap align-items-center gap-2">${controls}${snapMessage}${routeMessage}${estimateNote}</div>`
 }
 
 function ensureMyLocationOverlay() {
@@ -1202,6 +1248,24 @@ watch(
   () => {
     renderPopup()
   }
+)
+
+watch(
+  () => {
+    if (!app.popupLocation) return null
+    const estimate = app.getTravelEstimate(app.popupLocation)
+    if (!estimate) return null
+    return [
+      estimate.locationStatus,
+      estimate.locationMessage,
+      estimate.selectedMode,
+      ...["walking", "driving"].flatMap((mode) => {
+        const route = estimate.routes[mode]
+        return [route?.status, route?.duration, route?.distance, route?.snapDistance, route?.message]
+      }),
+    ]
+  },
+  () => renderPopup(),
 )
 
 watch(

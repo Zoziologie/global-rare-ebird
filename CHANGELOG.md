@@ -4,6 +4,10 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+### Added
+
+- On-demand walking and driving time estimates for sighting locations, with route mode switching and a warning when a route endpoint is far from the report coordinate.
+
 ## [0.5.0] - 2026-10-03
 
 ### Added
