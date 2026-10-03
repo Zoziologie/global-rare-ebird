@@ -564,7 +564,7 @@ function buildPopupSpeciesHtml(location) {
                       </button>
                       ${
                         obs.hasRichMedia
-                          ? `<button type="button" class="map-popup__flag map-popup__flag--media" data-media-id="${escapeHtml(obs.obsId)}" title="Load media${app.observationDetails[obs.obsId]?.mediaCounts?.P ? ` — ${escapeHtml(app.observationDetails[obs.obsId].mediaCounts.P)} ${app.observationDetails[obs.obsId].mediaCounts.P === 1 ? "photo" : "photos"}` : ""}" aria-label="Load observation media">
+                          ? `<button type="button" class="map-popup__flag map-popup__flag--media" data-media-id="${escapeHtml(obs.obsId)}" title="Load media${app.observationDetails[obs.obsId]?.mediaCounts?.P ? ` — ${escapeHtml(app.observationDetails[obs.obsId].mediaCounts.P)} ${app.observationDetails[obs.obsId].mediaCounts.P === 1 ? "photo" : "photos"}` : ""}" aria-label="${app.observationDetails[obs.obsId]?.mediaCounts?.P ? `Load ${escapeHtml(app.observationDetails[obs.obsId].mediaCounts.P)} ${app.observationDetails[obs.obsId].mediaCounts.P === 1 ? "photo" : "photos"}` : "Load observation media"}">
                                <i class="bi bi-camera-fill"></i>${app.observationDetails[obs.obsId]?.mediaCounts?.P ? ` ${escapeHtml(app.observationDetails[obs.obsId].mediaCounts.P)}` : ""}
                              </button>`
                           : ""

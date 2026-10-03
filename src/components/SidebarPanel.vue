@@ -361,8 +361,8 @@
                                 v-if="obs.hasRichMedia"
                                 type="button"
                                 class="species-location__flag species-location__flag--media species-location__media-count"
-                                title="Load observation media"
-                                aria-label="Load observation media"
+                                :title="app.observationDetails[obs.obsId]?.mediaCounts?.P ? `Load ${app.observationDetails[obs.obsId].mediaCounts.P} ${app.observationDetails[obs.obsId].mediaCounts.P === 1 ? 'photo' : 'photos'}` : 'Load observation media'"
+                                :aria-label="app.observationDetails[obs.obsId]?.mediaCounts?.P ? `Load ${app.observationDetails[obs.obsId].mediaCounts.P} ${app.observationDetails[obs.obsId].mediaCounts.P === 1 ? 'photo' : 'photos'}` : 'Load observation media'"
                                 @click="app.loadMedia(obs.obsId)"
                               >
                                 <i class="bi bi-camera-fill"></i>
