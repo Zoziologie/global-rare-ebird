@@ -1,8 +1,9 @@
 // @vitest-environment happy-dom
-import { createApp, h } from "vue";
+import { createApp, h, nextTick } from "vue";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { trackEvent } from "../src/utils/analytics.js";
-import { useGlobalRareBird } from "../src/composables/useGlobalRareBird.js";
+import { birdAppKey, useGlobalRareBird } from "../src/composables/useGlobalRareBird.js";
+import SidebarPanel from "../src/components/SidebarPanel.vue";
 
 vi.mock("../src/utils/analytics.js", () => ({ trackEvent: vi.fn() }));
 
@@ -49,6 +50,27 @@ describe("sightings requests", () => {
     expect(app.allObservations).toHaveLength(1);
     expect(app.speciesFiltered[0].loc[0].obs[0]).toMatchObject({ howMany: 5, userDisplayName: "Alice, Bob", subId: "S2" });
     expect(app.locationFeatures[0].count).toBe(1);
+    const host = document.createElement("div");
+    const sidebar = createApp(SidebarPanel);
+    sidebar.provide(birdAppKey, app);
+    sidebar.mount(host);
+    try {
+      host.querySelector(".accordion-button").click();
+      await nextTick();
+      await vi.waitFor(() => expect(host.querySelector(".accordion-collapse").classList.contains("show")).toBe(true));
+      expect(host.querySelector(".species-location__observers")).toBeNull();
+      const namesButton = host.querySelector("button.species-location__user");
+      expect(namesButton.textContent).toBe("Alice, Bob");
+      namesButton.click();
+      await nextTick();
+      expect(host.querySelector(".species-location__observers").textContent).toBe("Alice, Bob");
+      expect(namesButton.getAttribute("aria-expanded")).toBe("true");
+      namesButton.click();
+      await nextTick();
+      expect(host.querySelector(".species-location__observers")).toBeNull();
+    } finally {
+      sidebar.unmount();
+    }
     app.openLocationPopup("L1");
     expect(app.popupLocation.sp[0].obs[0].userDisplayName).toBe("Alice, Bob");
     app.mediaSelected = true;

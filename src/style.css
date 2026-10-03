@@ -937,9 +937,29 @@ button {
 
 .species-location__user {
   display: inline-block;
+  flex: 1 1 0;
+  min-width: 1em;
   max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.species-location__observers {
+  grid-column: 1 / -1;
+  font-size: 0.72rem;
+  overflow-wrap: anywhere;
+}
+
+.species-location__obs-link,
+.species-location__obs-distance {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .species-location__obs-count {
@@ -1602,7 +1622,7 @@ button {
 
 .map-popup__observation-meta {
   display: inline-flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.1rem 0.25rem;
   line-height: 1.25;
   font-size: 0.72rem;
