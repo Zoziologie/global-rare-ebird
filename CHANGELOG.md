@@ -1,8 +1,22 @@
 # Changelog
 
-User-visible changes are recorded here. Versions follow Semantic Versioning; release tags use `vX.Y.Z`.
+User-visible changes are recorded here. Versions follow Semantic Versioning. The site does not publish GitHub releases or require release tags.
 
 ## [Unreleased]
+
+## [0.4.1] - 2026-10-03
+
+### Changed
+
+- Updated checkout/setup-node to their latest stable v7 releases and Pages artifact/deployment Actions to v5, preserving exact commit pins.
+- Moved CI to Node.js 24 and confirmed all direct npm packages are already at their latest stable versions.
+- Kept package versions, the lockfile, and a changelog as the versioning system; renamed CI metadata checks accordingly.
+- Documented focused issues and manual dependency maintenance.
+
+### Removed
+
+- Dependabot version-update configuration and GitHub release publication workflow.
+- Requirements for GitHub releases and release tags.
 
 ## [0.4.0] - 2026-10-03
 
