@@ -45,7 +45,7 @@ Use the linear Avibase workflow in [docs/taxonomy-review.md](docs/taxonomy-revie
 4. Run `npm run taxonomy:update`, then inspect local concept and matching reports.
 5. Resolve exceptions before publishing with `npm run generate:taxonomies`.
 
-Raw inputs and full reports stay local. Persistent concept bindings, exceptional decisions, source URLs, and summary checksums are tracked in Git. ABA species statuses are inherited only by reportable `issf` groups through `REPORT_AS`. The weekly Action opens a review issue when eBird's latest version changes.
+Raw inputs and full reports stay local. Persistent concept bindings, exceptional decisions, source URLs, and summary checksums are tracked in Git. ABA species statuses are inherited only by reportable `issf` groups through `REPORT_AS`. The monthly Action opens a review issue when eBird's latest version changes.
 
 The app uses compact code-keyed files in `data/`: `taxo.json` stores order/category; the four regional lookups store rarity statuses and load when their region is selected. The existing individual generator commands remain for comparison during the migration; use the reviewed workflow for publication.
 

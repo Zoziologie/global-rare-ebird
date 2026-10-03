@@ -1,7 +1,7 @@
 name: Check eBird taxonomy updates
 on:
   schedule:
-    - cron: '17 8 * * 1'
+    - cron: '17 8 1 * *'
   workflow_dispatch:
 
 permissions:
