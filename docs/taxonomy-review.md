@@ -50,4 +50,20 @@ Scientific names and common names are indexed to all candidates. Ambiguous names
 - **Swiss meaning:** the UI calls status 4 “Rare”, while its own description says “recorded at least once but not since 1965”. Verify the official source definitions and current edition before adjusting labels or filters. Selecting the numerically highest conflicting status requires an explicit policy.
 - **Observation meaning:** fetched observations come from eBird's `recent/notable` endpoint; committee membership and ABA occurrence codes are additional regional classifications. Membership alone does not establish that a particular observation meets season, location, or subspecies restrictions.
 
-Next, record approved equivalences and unresolved cases in one small exception table with source/version/rationale, replace the separate generators with one linear workflow, and build the annual version-check Action around that same workflow. Keep the complete workstream in #39.
+## Avibase concept IDs for annual updates
+
+Use `avibase_id` as the persistent concept identifier in the reviewed regional mappings. Cornell calls this field **Taxon Concept Id** and recommends it for comparing taxonomy versions: [2025 field documentation](https://www.birds.cornell.edu/clementschecklist/introduction/updateindex/october-2025/). The identifier follows the circumscribed taxon rather than its name or rank. Renaming or elevating the same subspecies concept can preserve the ID; changing the included populations can require a different ID. Cornell documents the American Crow lump as an example in its [concept-ID explanation](https://www.birds.cornell.edu/clementschecklist/introduction/updateindex/december-2023/).
+
+Keep the process linear:
+
+1. Download matching versions of the API taxonomy and the [official eBird/Clements checklists](https://www.birds.cornell.edu/clementschecklist/introduction/updateindex/october-2025/2025-citation-checklist-downloads/). Record each file's URL, edition, retrieval date, and checksum.
+2. Build a versioned `avibase_id ↔ ebird_code` crosswalk with names, categories, and reportable status. The current API CSV has no concept-ID field. The integrated checklist adds subspecies that are absent from eBird's reportable taxonomy; do not treat every Cornell internal code as queryable in eBird.
+3. Review each regional source row once and store its exact concept ID, original names, source edition, status, restrictions, and rationale. Name matching is used for initial assignment and genuinely new rows, rather than repeated annual rematching of accepted rows.
+4. On the next update, join accepted concepts to the new crosswalk. Preserve status/restrictions only for exact, unique concept matches. Flag missing/changed concepts, changed reportability, duplicate crosswalk candidates, splits, lumps, and changed group composition.
+5. Generate the app's code-keyed lookups only from approved reportable mappings. A source subspecies without a reportable equivalent stays explicitly unresolved rather than inheriting the whole species code.
+
+Avibase includes hybrid concepts—for example [Common × Arctic Tern](https://avibase.bsc-eoc.org/species.jsp?avibaseid=FAD4A2E2)—but coverage and uniqueness in the downloaded crosswalk must be measured for **each** eBird category, including hybrids, slash taxa, forms, domestic taxa, and unidentified taxa. Do not assume every row has an ID or that concept-to-code mapping is universally one-to-one. Store IDs as strings and retain the source representation until the published identifier format has been inspected.
+
+The official CSV downloads returned HTTP 403 in this environment on 2026-10-03. Their per-category coverage and exact column formatting remain unverified; the API-only audit has not yet implemented this crosswalk.
+
+Next, obtain and inspect those concept-bearing files, record approved equivalences and unresolved cases in one small table, replace the separate generators with one linear workflow, and build the annual version-check Action around concept comparisons. Keep the complete workstream in #39.
