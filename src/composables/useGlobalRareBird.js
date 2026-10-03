@@ -580,7 +580,9 @@ export function useGlobalRareBird() {
       }
 
       await navigator.clipboard.writeText(shareUrl.value);
-    } catch {}
+    } catch (error) {
+      console.warn("Unable to copy share link", error);
+    }
   }
 
   function removeRegionAndRefresh(region) {
