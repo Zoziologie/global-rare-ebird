@@ -1,6 +1,6 @@
 <template>
   <section v-if="!analytics.state.choice || analytics.state.open" class="analytics-banner" aria-labelledby="analytics-title" @keydown.esc="closePreferences">
-    <h2 id="analytics-title">A little help for this rare bird?</h2>
+    <h2 id="analytics-title">Better tools, more birding</h2>
     <p>Help us understand what works and what needs fixing? Optional analytics cookies show us how this tool is used. No ads, no precise locations—just better birding.</p>
     <p>Your choice. Change it anytime in Settings → “Privacy &amp; cookies”.</p>
     <details>
