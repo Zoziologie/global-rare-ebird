@@ -4,6 +4,10 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+### Fixed
+
+- Removed the white top edge above the mobile header.
+
 ## [0.7.0] - 2026-10-03
 
 ### Added
