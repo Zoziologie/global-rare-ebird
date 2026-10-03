@@ -73,7 +73,7 @@
               min="0"
               :max="app.distMax"
               step="1"
-              v-model.number="app.distSelected"
+              v-model.number="app.distSelected" @change="app.trackSetting('radius_filter', app.distSelected)"
             />
             <span class="input-group-text">km</span>
           </div>
@@ -91,7 +91,7 @@
               min="0"
               :max="app.backMax"
               step="1"
-              v-model.number="app.backSelected"
+              v-model.number="app.backSelected" @change="app.trackSetting('days_filter', app.backSelected)"
             />
             <span class="input-group-text query-block__label-prefix">days ago</span>
           </div>
@@ -147,7 +147,7 @@
                     class="form-check"
                   >
                     <input
-                      v-model="app.filterSearchOptionsSelected"
+                      v-model="app.filterSearchOptionsSelected" @change="app.trackSetting('search_fields', app.filterSearchOptionsSelected)"
                       class="form-check-input"
                       type="checkbox"
                       :value="option.value"
@@ -166,7 +166,7 @@
                     class="form-check"
                   >
                     <input
-                      v-model="app.filterSortOptionsSelected"
+                      v-model="app.filterSortOptionsSelected" @change="app.trackSetting('sort', app.filterSortOptionsSelected)"
                       class="form-check-input"
                       type="radio"
                       :value="option.value"
@@ -180,7 +180,7 @@
             <div v-if="app.activeStatusSystem?.filterable" class="status-panel">
               <div class="status-panel__row">
                 <span class="status-panel__title">Filter minimal rarity status:</span>
-                <select aria-label="Minimum rarity status" v-model.number="app.statusLimit" class="form-select status-panel__select">
+                <select aria-label="Minimum rarity status" v-model.number="app.statusLimit" @change="app.trackSetting('rarity', app.statusLimit)" class="form-select status-panel__select">
                   <option
                     v-for="option in app.statusOptions"
                     :key="option.value"
@@ -287,6 +287,7 @@
                         >
                           <a
                             v-if="!location.locationPrivate"
+                            data-analytics-link="ebird_hotspot"
                             :href="`https://ebird.org/hotspot/${location.locId}`"
                             target="_blank"
                             rel="noreferrer"
@@ -304,6 +305,7 @@
                           </span>
                         </span>
                         <a
+                          data-analytics-link="directions"
                           :href="`https://www.google.com/maps/dir/?api=1&destination=${location.latLng.lat},${location.latLng.lng}&dir_action=navigate`"
                           target="_blank"
                           rel="noreferrer"
@@ -322,6 +324,7 @@
                               class="species-location__meta text-body-secondary d-flex flex-nowrap align-items-center gap-1 flex-grow-1 min-w-0"
                             >
                               <a
+                                data-analytics-link="ebird_checklist"
                                 :href="`https://ebird.org/checklist/${obs.subId}#${obs.speciesCode}`"
                                 target="_blank"
                                 rel="noreferrer"
@@ -484,6 +487,7 @@
         </button>
         <a
           class="sidebar-panel__footer-action"
+          data-analytics-link="support"
           href="https://github.com/sponsors/Zoziologie"
           target="_blank"
           rel="noreferrer"
@@ -497,6 +501,7 @@
       <div class="sidebar-panel__footer-group sidebar-panel__footer-group--right">
         <a
           class="sidebar-panel__footer-action"
+          data-analytics-link="github"
           href="https://github.com/Zoziologie/global-rare-ebird/"
           target="_blank"
           rel="noreferrer"
@@ -507,6 +512,7 @@
           <span>GitHub</span>
         </a>
         <a
+          data-analytics-link="zoziologie"
           href="https://zoziologie.raphaelnussbaumer.com/"
           target="_blank"
           rel="noreferrer"

@@ -26,7 +26,7 @@
             <label class="instruction-field">
               <span class="form-label">Days back fetched</span>
               <input
-                v-model.number="app.backMax"
+                v-model.number="app.backMax" @change="app.trackSetting('days_fetched', app.backMax)"
                 type="number"
                 min="1"
                 max="30"
@@ -37,7 +37,7 @@
             <label class="instruction-field">
               <span class="form-label">Around me search radius</span>
               <input
-                v-model.number="app.distMax"
+                v-model.number="app.distMax" @change="app.trackSetting('radius_fetched', app.distMax)"
                 type="number"
                 min="1"
                 max="50"
@@ -53,7 +53,7 @@
                 Synchronize the observation list with the map view.
               </span>
               <input
-                v-model="app.mapSelected"
+                v-model="app.mapSelected" @change="app.trackSetting('map_filter', app.mapSelected)"
                 class="form-check-input instruction-switch__control"
                 type="checkbox"
                 role="switch"
@@ -63,7 +63,7 @@
             <label class="instruction-switch">
               <span class="instruction-switch__label">Only show observations with media.</span>
               <input
-                v-model="app.mediaSelected"
+                v-model="app.mediaSelected" @change="app.trackSetting('media_filter', app.mediaSelected)"
                 class="form-check-input instruction-switch__control"
                 type="checkbox"
                 role="switch"
@@ -73,7 +73,7 @@
             <label class="instruction-switch">
               <span class="instruction-switch__label">Only show observations made at a hotspot.</span>
               <input
-                v-model="app.hotspotSelected"
+                v-model="app.hotspotSelected" @change="app.trackSetting('hotspot_filter', app.hotspotSelected)"
                 class="form-check-input instruction-switch__control"
                 type="checkbox"
                 role="switch"
@@ -207,7 +207,10 @@
         <button type="button" class="btn btn-brand" @click="app.toggleInstruction(false)">
           Close
         </button>
-        <a href="https://github.com/Zoziologie/global-rare-ebird/issues" target="_blank" rel="noreferrer">
+        <button type="button" class="btn btn-brand-outline" @click="$emit('privacy', $event)">
+          Privacy &amp; cookies
+        </button>
+        <a data-analytics-link="github" href="https://github.com/Zoziologie/global-rare-ebird/issues" target="_blank" rel="noreferrer">
           Report an issue
         </a>
       </footer>
@@ -220,6 +223,7 @@ import { inject } from "vue"
 
 import { birdAppKey } from "../composables/useGlobalRareBird"
 
+defineEmits(["privacy"])
 const app = inject(birdAppKey)
 
 if (!app) {
