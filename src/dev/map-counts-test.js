@@ -10,7 +10,7 @@ const basemap = document.querySelector("#basemap");
 const report = document.querySelector("#report");
 const run = document.querySelector("#run");
 const map = new mapboxgl.Map({
-  container: "map", style: { version: 8, sources: {}, layers: [{ id: "background", type: "background", paint: { "background-color": "#dce6ec" } }] },
+  accessToken: mapboxAccessToken, container: "map", style: { version: 8, sources: {}, layers: [{ id: "background", type: "background", paint: { "background-color": "#dce6ec" } }] },
   center: [8, 47], zoom: 5, attributionControl: true, renderWorldCopies: false,
   dragRotate: false, touchPitch: false, fadeDuration: 0, crossSourceCollisions: false,
   precompilePrograms: false, performanceMetricsCollection: false,
@@ -20,9 +20,12 @@ let started = 0;
 let previousFrame = 0;
 const frameIntervals = [];
 const drawTimes = [];
-let lastReport = 0;
+let lastReport = -Infinity;
 
 function mountScenario() {
+  frameIntervals.length = 0;
+  drawTimes.length = 0;
+  previousFrame = 0;
   overlay?.remove();
   if (map.getLayer("clusters")) map.removeLayer("clusters");
   if (map.getLayer("points")) map.removeLayer("points");
@@ -54,6 +57,7 @@ function updateReport() {
 }
 
 map.on("load", mountScenario);
+map.on("idle", updateReport);
 for (const input of [density, clustered, counts]) input.addEventListener("change", () => { mountScenario(); updateReport(); });
 basemap.addEventListener("change", () => {
   if (basemap.value !== "blank" && !mapboxAccessToken) {
@@ -66,7 +70,7 @@ basemap.addEventListener("change", () => {
   const styleId = basemap.value === "satellite" ? "satellite-streets-v12" : "streets-v12";
   map.setStyle(basemap.value === "blank"
     ? { version: 8, sources: {}, layers: [{ id: "background", type: "background", paint: { "background-color": "#dce6ec" } }] }
-    : { version: 8, sources: { basemap: { type: "raster", tileSize: 512, tiles: [`https://api.mapbox.com/styles/v1/mapbox/${styleId}/tiles/512/{z}/{x}/{y}?access_token=${mapboxAccessToken}`], attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' } }, layers: [{ id: "basemap", type: "raster", source: "basemap" }] });
+    : { version: 8, sources: { basemap: { type: "raster", tileSize: 512, tiles: [`https://api.mapbox.com/styles/v1/mapbox/${styleId}/tiles/512/{z}/{x}/{y}?access_token=${mapboxAccessToken}`], attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' } }, layers: [{ id: "basemap", type: "raster", source: "basemap" }] }, { diff: false });
 });
 run.addEventListener("click", () => {
   map.stop();

@@ -1259,7 +1259,7 @@ watch(
     if (mapInstance.value && nextStyle) {
       mapReady.value = false
       countOverlay?.clear()
-      mapInstance.value.setStyle(getMountedMapStyle(nextStyle))
+      mapInstance.value.setStyle(getMountedMapStyle(nextStyle), { diff: false })
     }
   }
 )
@@ -1280,7 +1280,7 @@ watch(
 
     mapReady.value = false
     countOverlay?.clear()
-    mapInstance.value.setStyle(getMountedMapStyle())
+    mapInstance.value.setStyle(getMountedMapStyle(), { diff: false })
   }
 )
 

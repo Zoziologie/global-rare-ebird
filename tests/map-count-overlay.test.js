@@ -67,3 +67,27 @@ it("skips offscreen centers and removes the render listener and canvas", () => {
   expect(container.children).toHaveLength(0);
   expect(listeners.has("render")).toBe(false);
 });
+
+it("draws dense data without retaining labels removed by a filter", () => {
+  features = Array.from({ length: 5000 }, (_, i) => ({
+    properties: { locId: String(i), count: i + 1 }, geometry: { coordinates: [i % 200, i % 100] },
+  }));
+  const overlay = createMapCountOverlay(map, ["points"]);
+  overlay.render();
+  expect(overlay.stats.count).toBe(5000);
+  expect(context.fillText).toHaveBeenLastCalledWith("5000", 199, 99, 32);
+  features = [];
+  overlay.render();
+  expect(overlay.stats.count).toBe(0);
+  expect(context.clearRect).toHaveBeenCalledTimes(2);
+});
+
+it("uses location counts and cluster point totals when observation totals are absent", () => {
+  delete features[0].properties.obsCount;
+  const overlay = createMapCountOverlay(map, ["clusters"]);
+  overlay.render();
+  expect(context.fillText).toHaveBeenCalledWith("2", 10, 20, 28);
+  features[0].properties.obsCount = 0;
+  overlay.render();
+  expect(context.fillText).toHaveBeenCalledWith("0", 10, 20, 28);
+});
