@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mobile map count test</title>
+  <style>
+    body { margin: 0; font: 14px system-ui; color: #16202c; }
+    header { padding: 12px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    h1 { font-size: 17px; margin: 0; width: 100%; }
+    button, select { font: inherit; padding: 6px; }
+    #map { height: 65vh; min-height: 280px; }
+    #report, p { margin: 12px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mobile counts · canvas experiment v1</h1>
+    <label>Locations <select id="density"><option>50</option><option selected>500</option><option>5000</option></select></label>
+    <label><input id="cluster" type="checkbox" checked> Cluster</label>
+    <label><input id="counts" type="checkbox" checked> Counts</label>
+    <label>Basemap <select id="basemap"><option value="blank">Blank (offline)</option><option value="streets">Raster streets</option><option value="satellite">Raster satellite</option></select></label>
+    <button id="run" type="button">Run 12-second camera test</button>
+  </header>
+  <div id="map"></div>
+  <p id="report" role="status">Loading fixed data…</p>
+  <p>Compare the same run with Counts on and off. Try pan/pinch, rotate the phone, change density and clustering, and switch basemaps. All observations are synthetic. Raster tiles require the configured public Mapbox token and internet; the blank map needs neither.</p>
+  <script type="module" src="/src/dev/map-counts-test.js"></script>
+</body>
+</html>
