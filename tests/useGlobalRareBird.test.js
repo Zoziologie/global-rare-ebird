@@ -25,7 +25,8 @@ let component;
 let app;
 let fetchMock;
 beforeEach(() => {
-  window.history.replaceState(null, "", "/global-rare-ebird/");
+  window.localStorage.clear();
+  window.history.replaceState(null, "", "/global-rare-ebird/?mode=r");
   fetchMock = vi.fn();
   vi.stubGlobal("fetch", fetchMock);
   vi.spyOn(console, "error").mockImplementation(() => {});

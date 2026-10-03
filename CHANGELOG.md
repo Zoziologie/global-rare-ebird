@@ -4,6 +4,15 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+### Added
+
+- First-visit country defaults from approximate IP location, preferring US states and Canadian provinces, with a labelled estimate and manual fallback.
+- Restore the last search on the default URL while keeping shared searches authoritative and fetching fresh sightings.
+
+### Changed
+
+- Explain how to start an empty search and fall back to regions when nearby location is unavailable, without prompting returning visitors on page load.
+
 ## [0.6.1] - 2026-10-03
 
 ### Fixed

@@ -44,11 +44,19 @@
 
         <div v-if="!app.isMylocation" class="query-block__picker">
           <RegionPicker
+            ref="regionPicker"
             :regions="app.regionSearch"
             :selected-regions="app.regionSelected"
             @add-region="app.selectRegion"
             @remove-region="app.removeRegion"
           />
+          <p v-if="app.estimatedRegionCode" class="small text-secondary mt-2 mb-0">
+            Region estimated from your connection ·
+            <button type="button" class="link-button" @click="regionPicker.$el.querySelector('input').focus()">Change</button>
+          </p>
+          <p v-if="app.regionFallbackFeedback" class="small mt-2 mb-0" role="status">
+            {{ app.regionFallbackFeedback }} Showing regions instead.
+          </p>
         </div>
 
         <div v-else class="query-block__distance">
@@ -219,7 +227,10 @@
           v-if="!app.hasCandidateObservations && !app.isLoading"
           class="species-accordion-shell__empty"
         >
-          No observations to show yet.
+          <template v-if="!app.isMylocation && !app.regionSelected.length">
+            Choose a region above to see recent rare birds, or use Around me.
+          </template>
+          <template v-else>No sightings match this search. Try increasing the number of days.</template>
         </p>
 
         <template v-for="species in app.speciesFiltered.slice(0, app.speIndexMax)" :key="species.speciesCode">
@@ -544,6 +555,7 @@ if (!app) {
 }
 
 const openSpeciesCode = ref(null);
+const regionPicker = ref(null)
 const showFilterOptions = ref(false);
 const speciesCollapseRefs = new Map();
 
