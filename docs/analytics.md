@@ -4,16 +4,17 @@ Issue: https://github.com/Zoziologie/global-rare-ebird/issues/43
 
 Keep the existing Zoziologie GA4 property (`269867498`) and Global Rare eBird web stream (`14305280477`, measurement ID `G-0B2T8GT7JC`). This property contains nine tools; property/account changes affect the others too. No paid service is added.
 
-## Before deployment (property owner)
+## Dashboard setup
 
 - [ ] Export the existing 90-day reports as CSV/PDF, recording the exact date range and property timezone. The baseline was independently verified in the standard User acquisition report on 3 October 2026; details below. GA CSV download did not complete, so retain an export when available.
-- [ ] In Admin → Data streams → web stream, **turn Enhanced measurement off entirely**. This prevents duplicate outbound events and automatic browser-history/page URL collection. The app sends one sanitised page view per consenting page load; automatic GA session/engagement events remain.
-- [ ] Disable Google Signals and advertising personalisation in data collection settings. Disable unused account data-sharing options and confirm no Ads links, user-provided data collection, or cross-domain measurement are enabled.
+- [x] In Admin → Data streams → web stream, **turn Enhanced measurement off entirely**. This prevents duplicate outbound events and automatic browser-history/page URL collection. The app sends one sanitised page view per consenting page load; automatic GA session/engagement events remain.
+- [x] Disable user-provided data capabilities in the Global Rare eBird Google tag. Its only destination is this stream, with no connected site tags.
+- [ ] Optional shared-property review: disable Google Signals, advertising personalisation and unused account data sharing; review Ads links and retention reset. These changes affect the other eight tools and still await owner approval. This app independently disables Google Signals/ad personalisation in its tag configuration and always denies advertising consent.
 - [ ] Event-data retention is already **2 months**; user-data retention is **14 months**. Preserve both periods and turn off resetting retention on new activity (currently enabled). These settings were verified on 3 October 2026 and are stated in the on-site notice. Aggregated standard reports have separate retention; cookie lifetime is capped at one year in code.
-- [ ] Register the event-scoped custom dimensions listed below (Admin → Custom definitions). These apply prospectively and may take time to populate.
+- [x] Register the event-scoped custom dimensions listed below (Admin → Custom definitions). All nine were registered on 3 October 2026, with display names prefixed `GRE`. They apply prospectively and may take time to populate.
 - [ ] Record the actual production deployment date/time and version below after merge/deployment. Compare equal time windows and annotate the consent boundary in reports.
 
-Deployment: pending. Version: 0.6.0. Shared privacy changes: awaiting owner approval.
+Deployment: pending. Version: 0.6.0. Stream Enhanced measurement and tag user-provided data capabilities: disabled on 3 October 2026. Shared privacy changes: awaiting owner approval; shared retention reset remains enabled.
 
 ## Verified pre-consent baseline
 
