@@ -12,9 +12,11 @@ export function createMapCountOverlay(map, layerIds) {
     const started = performance.now();
     const { clientWidth: width, clientHeight: height } = map.getCanvas();
     const ratio = Math.min(window.devicePixelRatio || 1, 2);
-    if (canvas.width !== Math.round(width * ratio) || canvas.height !== Math.round(height * ratio)) {
-      canvas.width = Math.round(width * ratio);
-      canvas.height = Math.round(height * ratio);
+    const pixelWidth = Math.round(width * ratio);
+    const pixelHeight = Math.round(height * ratio);
+    if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+      canvas.width = pixelWidth;
+      canvas.height = pixelHeight;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
     }
@@ -38,11 +40,11 @@ export function createMapCountOverlay(map, layerIds) {
         seen.add(key);
         const { x, y } = map.project(coordinates);
         if (x < 0 || x > width || y < 0 || y > height) continue;
-        const count = feature.properties.obsCount ?? feature.properties.count ?? feature.properties.point_count;
+        const count = String(feature.properties.obsCount ?? feature.properties.count ?? feature.properties.point_count);
         // Fit exact counts inside the existing circles, including very large totals.
         const maxWidth = feature.properties.point_count ? Math.min(54, 26 + feature.properties.point_count) : 32;
-        context.strokeText(String(count), x, y, maxWidth);
-        context.fillText(String(count), x, y, maxWidth);
+        context.strokeText(count, x, y, maxWidth);
+        context.fillText(count, x, y, maxWidth);
         stats.count += 1;
       }
     }

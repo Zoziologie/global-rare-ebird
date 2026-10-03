@@ -49,4 +49,4 @@ The unclustered stress case had 4,115 visible labels at the end of the camera se
 
 Raster streets/satellite, portrait/landscape resizing, and counts toggling retained one overlay and visible counts. The live-data app displayed mobile point/cluster counts, and a point tap opened its normal detail sheet. The style-switch test exposed observation layers being removed by Mapbox's style diff; explicit style reloads now rebuild them on `style.load`. An offline component regression covers this rebuild, desktop text restoration, mobile re-entry, and unmount cleanup.
 
-Pixel 8 responsiveness and alignment are still awaiting an on-device run. Keep the PR draft until that test is satisfactory.
+The user confirmed the test works on their phone on 2026-10-03 and approved merging. No phone timing measurements were recorded.
