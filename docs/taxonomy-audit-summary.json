@@ -2,7 +2,6 @@
   "snapshot": {
     "version": 2025,
     "taxonomyUrl": "https://api.ebird.org/v2/ref/taxonomy/ebird?version=2025&fmt=csv&locale=en",
-    "franceUrl": "https://www.chn-france.org/en/homologation/species/",
     "retrievedAt": "2026-10-03T10:07:19.324Z"
   },
   "provenance": {
@@ -11,20 +10,24 @@
       "sha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19"
     },
     "aba": {
-      "path": "raw-data/ABA_Checklist-8.19.csv",
+      "path": "raw-data/taxonomy-review/aba-latest.csv",
+      "edition": "8.19 (January 2026)",
       "sha256": "9c9539b70e3d2ce2d2d46eb9354528e649e999990ec2ab416c1db222b86331d3"
     },
     "fr": {
       "path": "raw-data/taxonomy-review/france.html",
-      "sha256": "a573f3d882fa57d31ab2ecdaea359eed4028e3b776bf28154c30a09dc6ccf998"
+      "edition": "Current CHN page; removals effective 2026-01-01 confirmed on 2026-10-03",
+      "sha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053"
     },
     "de": {
-      "path": "raw-data/meldeliste_d_ab2023_sys.csv",
-      "sha256": "77d0e48c594a47c455ae5f69e148338c45eaecfb817a3d64bde1458327ca5945"
+      "path": "raw-data/taxonomy-review/germany-current.csv",
+      "edition": "Effective 2023-01-01; DDA lists it for 2023–2026",
+      "sha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747"
     },
     "ch": {
-      "path": "raw-data/CH-Artliste_6.csv",
-      "sha256": "549be6e85d49191524941d0bd34481649466d642b23d3a985a4d801c11b5d59e"
+      "path": "raw-data/taxonomy-review/switzerland-current.csv",
+      "edition": 2026,
+      "sha256": "422cecf790f7800f6f0bb5716a69fdb4bb881185a24790d74e4e8c6c30dfed01"
     }
   },
   "taxonomyRows": 17891,
@@ -60,14 +63,14 @@
       "needsReview": 21
     },
     "ch": {
-      "rows": 414,
+      "rows": 433,
       "methods": {
-        "scientific": 386,
-        "legacy-alias": 7,
-        "common": 21,
+        "scientific": 430,
+        "legacy-alias": 1,
+        "common": 2,
         "none": 0
       },
-      "needsReview": 28
+      "needsReview": 4
     }
   },
   "outputs": {

@@ -2,7 +2,7 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseCsv, parseTaxonomyCsv, fetchText, FRENCH_SPECIES_URL, TAXONOMY_URL } from "./taxonomy-helpers.mjs";
+import { parseCsv, parseTaxonomyCsv, fetchText, TAXONOMY_URL } from "./taxonomy-helpers.mjs";
 import { manualEbirdScientificNameByAbaScientificName, normalizeScientificNameForMatch } from "./generate-aba-taxonomy.mjs";
 import { extractFrenchSpeciesRows, buildManualAliasLookup as frenchAliases } from "./generate-french-taxonomy.mjs";
 import { parseGermanChecklist, normalizeLookupLabel, buildManualAliasLookup as germanAliases } from "./generate-german-taxonomy.mjs";
@@ -24,26 +24,18 @@ if (process.argv.includes("--fetch")) {
   const taxonomyUrl = `${TAXONOMY_URL}?version=${version}&fmt=csv&locale=en`;
   const taxonomyText = fetchText(taxonomyUrl);
   parseTaxonomyCsv(taxonomyText);
-  const franceText = fetchText(FRENCH_SPECIES_URL);
-  extractFrenchSpeciesRows(franceText);
   await writeFile(resolve(snapshotDir, "ebird.csv"), taxonomyText);
-  await writeFile(resolve(snapshotDir, "france.html"), franceText);
-  await writeFile(manifestPath, JSON.stringify({ version, taxonomyUrl, franceUrl: FRENCH_SPECIES_URL, retrievedAt: new Date().toISOString() }, null, 2) + "\n");
+  await writeFile(manifestPath, JSON.stringify({ version, taxonomyUrl, retrievedAt: new Date().toISOString() }, null, 2) + "\n");
 }
 const snapshot = JSON.parse(await readFile(manifestPath, "utf8"));
-const inputPaths = {
-  ebird: "raw-data/taxonomy-review/ebird.csv",
-  aba: "raw-data/ABA_Checklist-8.19.csv",
-  fr: "raw-data/taxonomy-review/france.html",
-  de: "raw-data/meldeliste_d_ab2023_sys.csv",
-  ch: "raw-data/CH-Artliste_6.csv",
-};
+const sourceInputs = JSON.parse(await readFile(resolve(root, "taxonomy/source-inputs.json"), "utf8"));
+const inputPaths = { ebird: "raw-data/taxonomy-review/ebird.csv", ...Object.fromEntries(Object.entries(sourceInputs).map(([source, input]) => [source, input.path])) };
 const inputs = {};
 const provenance = {};
 for (const [source, path] of Object.entries(inputPaths)) {
   const bytes = await readFile(resolve(root, path));
   inputs[source] = bytes.toString("utf8");
-  provenance[source] = { path, sha256: createHash("sha256").update(bytes).digest("hex") };
+  provenance[source] = { path, edition: sourceInputs[source]?.edition, sha256: createHash("sha256").update(bytes).digest("hex") };
 }
 
 // Expose taxonomy and regional rows ----------------------------------------

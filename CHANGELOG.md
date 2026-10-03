@@ -4,9 +4,18 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-10-03
+
 ### Added
 
 - A local, offline taxonomy audit with pinned eBird inputs, source checksums, and row-level review reports for issue #39.
+- A versioned Avibase concept crosswalk, comparison reports, persistent mapping review inputs, and a guarded linear regeneration command.
+- Reproducible regional-source downloads/conversion and a weekly eBird version monitor that opens one review issue per new version.
+
+### Changed
+
+- Refreshed official regional lists and generated rarity lookups through exact Avibase concepts; 19 ambiguous or nonreportable entries remain explicitly unresolved.
+- Preserved ABA status inheritance only for reportable issf groups and corrected Swiss 2026 occurrence periods and the historical status label.
 
 ## [0.4.1] - 2026-10-03
 

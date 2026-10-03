@@ -37,33 +37,16 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the issue/PR workflow, debugging comm
 
 ## Taxonomy data
 
-The repository separates raw source data from generated app data:
+Use the linear Avibase workflow in [docs/taxonomy-review.md](docs/taxonomy-review.md):
 
-- Raw source files live in `raw-data/`
-- Generated app data lives in `data/`
+1. Refresh official regional inputs: `npm run taxonomy:refresh-sources`.
+2. Capture the versioned eBird API: `npm run audit:taxonomies -- --fetch`.
+3. Supply the matching Cornell integrated checklist in `raw-data/taxonomy-review/`.
+4. Run `npm run taxonomy:update`, then inspect local concept and matching reports.
+5. Resolve exceptions before publishing with `npm run generate:taxonomies`.
 
-The taxonomy review and offline audit are documented in [docs/taxonomy-review.md](docs/taxonomy-review.md). Run `npm run audit:taxonomies -- --fetch` to capture versioned inputs, then `npm run audit:taxonomies` to reuse them and write local matching reports.
+Raw inputs and full reports stay local. Persistent concept bindings, exceptional decisions, source URLs, and summary checksums are tracked in Git. ABA species statuses are inherited only by reportable `issf` groups through `REPORT_AS`. The weekly Action opens a review issue when eBird's latest version changes.
 
-The current taxonomy data is generated in five separate files:
+The app uses compact code-keyed files in `data/`: `taxo.json` stores order/category; the four regional lookups store rarity statuses and load when their region is selected. The existing individual generator commands remain for comparison during the migration; use the reviewed workflow for publication.
 
-- `npm run generate:taxonomy`
-- `npm run generate:region-catalog`
-- `npm run generate:aba-taxonomy`
-- `npm run generate:french-taxonomy`
-- `npm run generate:german-taxonomy`
-- `npm run generate:swiss-taxonomy`
-- `npm run generate:taxonomies`
-
-The main taxonomy lookup is written to `data/taxo.json` as a compact code-keyed map with taxonomic order and category only.
-
-The region catalog is written to `data/region-catalog.json` as a compact searchable list of countries, US states, and Canadian provinces used by the region picker.
-
-The ABA checklist source lives in `raw-data/ABA_Checklist-8.19.csv`. The generated lookup is written to `data/aba-taxonomy.json` as a compact species-code status map and is only loaded when US or Canada regions are selected.
-
-The French rarity committee table is scraped from `https://www.chn-france.org/en/homologation/species/` and written to `data/french-rarity-taxonomy.json` as a compact species-code presence map. It is only loaded when France is selected.
-
-The German checklist source lives in `raw-data/meldeliste_d_ab2023_sys.csv`. The generated lookup is written to `data/german-taxonomy.json` as a compact species-code status map. It is only loaded when Germany is selected.
-
-The Swiss checklist source lives in `raw-data/CH-Artliste_6.csv`. The generated lookup is written to `data/swiss-taxonomy.json` as a compact species-code status map. It is only loaded when Switzerland is selected.
-
-Run `npm run generate:taxonomies` after updating the source data or when you want to refresh all five generated files.
+The independent region catalog can be refreshed with `npm run generate:region-catalog`.

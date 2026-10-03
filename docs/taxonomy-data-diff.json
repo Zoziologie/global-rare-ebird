@@ -1,0 +1,184 @@
+{
+  "taxo.json": {
+    "previousCodes": 17891,
+    "currentCodes": 17891,
+    "added": [],
+    "removed": [],
+    "changed": []
+  },
+  "aba-taxonomy.json": {
+    "previousCodes": 1078,
+    "currentCodes": 1063,
+    "added": [],
+    "removed": [
+      "gragoo1",
+      "musduc3",
+      "indpea1",
+      "redjun1",
+      "afrcod1",
+      "hawcoo1",
+      "hawcoo2",
+      "bkcpet4",
+      "bkcpet3",
+      "budger1",
+      "roflov3",
+      "piewhe2",
+      "trimun1",
+      "trimun2",
+      "islcan1"
+    ],
+    "changed": []
+  },
+  "french-rarity-taxonomy.json": {
+    "previousCodes": 237,
+    "currentCodes": 240,
+    "added": [
+      "amufal1",
+      "batlar1",
+      "bkbcuc",
+      "bfoboo",
+      "sibpip1",
+      "agwtea1",
+      "gbhgul2",
+      "sposan",
+      "taweag1",
+      "grewar2",
+      "manwar1"
+    ],
+    "removed": [
+      "blkred1",
+      "leswhi1",
+      "gnwtea",
+      "purswa3",
+      "y00819",
+      "leswhi2",
+      "combuz5",
+      "whbwoo1"
+    ],
+    "changed": []
+  },
+  "german-taxonomy.json": {
+    "previousCodes": 223,
+    "currentCodes": 212,
+    "added": [
+      "agwtea1"
+    ],
+    "removed": [
+      "gnwtea",
+      "lessap2",
+      "comsni",
+      "norgos1",
+      "combuz5",
+      "leswoo1",
+      "norshr1",
+      "bearee1",
+      "leswhi1",
+      "blkred1",
+      "comred4",
+      "reebun"
+    ],
+    "changed": []
+  },
+  "swiss-taxonomy.json": {
+    "previousCodes": 125,
+    "currentCodes": 137,
+    "added": [
+      "taibeg1",
+      "agwtea1",
+      "sursco",
+      "rudduc",
+      "ortdov",
+      "purswa1",
+      "wessan",
+      "lesyel",
+      "marsan",
+      "sacibi2",
+      "dalpel1",
+      "booeag1",
+      "steeag1",
+      "boneag2",
+      "brnshr",
+      "lotshr1",
+      "aquwar1",
+      "barwar1",
+      "subwar6",
+      "subwar8",
+      "easwar1",
+      "refblu1",
+      "sibsto1",
+      "isawhe1",
+      "bkewhe2",
+      "spaspa1",
+      "comyel"
+    ],
+    "removed": [
+      "rinduc",
+      "gloibi",
+      "bkskit1",
+      "cinvul1",
+      "whteag",
+      "isashr1",
+      "zitcis1",
+      "mouwar1",
+      "yebwar3",
+      "comchi4",
+      "cetwar1",
+      "sarwar1",
+      "vitpar1",
+      "ricpip1",
+      "citwag"
+    ],
+    "changed": [
+      {
+        "code": "slbcur",
+        "previous": 3,
+        "current": 4
+      },
+      {
+        "code": "audgul1",
+        "previous": 3,
+        "current": 2
+      },
+      {
+        "code": "pygcor2",
+        "previous": 3,
+        "current": 2
+      },
+      {
+        "code": "leseag1",
+        "previous": 3,
+        "current": 2
+      },
+      {
+        "code": "leskes1",
+        "previous": 3,
+        "current": 2
+      },
+      {
+        "code": "grewar3",
+        "previous": 3,
+        "current": 2
+      },
+      {
+        "code": "spewar2",
+        "previous": 3,
+        "current": 2
+      },
+      {
+        "code": "bkewhe1",
+        "previous": 2,
+        "current": 3
+      },
+      {
+        "code": "pingro",
+        "previous": 3,
+        "current": 4
+      },
+      {
+        "code": "pinbun",
+        "previous": 3,
+        "current": 2
+      }
+    ]
+  }
+}
