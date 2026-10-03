@@ -23,7 +23,7 @@ for (const source of ["aba", "fr", "de", "ch"]) {
 // Convert the published inputs without changing taxon scope -----------------
 await writeFile(resolve(root, config.aba.path), execFileSync("unzip", ["-p", resolve(directory, config.aba.downloadFile), "ABA_Checklist-8.19.csv"]));
 extractFrenchSpeciesRows(await readFile(resolve(root, config.fr.path), "utf8"));
-execFileSync(process.env.TAXONOMY_PYTHON || "python3", [resolve(root, "scripts/extract-german-checklist.py"), resolve(directory, config.de.downloadFile), resolve(root, config.de.path)], { stdio: "inherit" });
+execFileSync("uv", ["run", "--project", root, "--locked", "python", resolve(root, "scripts/extract-german-checklist.py"), resolve(directory, config.de.downloadFile), resolve(root, config.de.path)], { stdio: "inherit" });
 const swissText = execFileSync("pdftotext", ["-layout", resolve(directory, config.ch.downloadFile), "-"], { encoding: "utf8" });
 if (!swissText.includes(`Switzerland – ${config.ch.edition}`)) throw new Error("Swiss PDF edition differs from source-inputs.json; inspect the new edition before conversion.");
 const swiss = swissText.split(/\r?\n/).filter((line) => /^\d{2,}\s/.test(line)).map((line) => {

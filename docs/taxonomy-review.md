@@ -4,7 +4,7 @@ Implementation is tracked in [issue #39](https://github.com/Zoziologie/global-ra
 
 ## Run linearly
 
-Requires Node.js, curl, unzip, Poppler (`pdftotext`), and Python with `pdfplumber` from `taxonomy/requirements.txt`. Set `TAXONOMY_PYTHON` if the desired Python executable is not `python3`.
+Requires Node.js, `uv`, curl, unzip, and Poppler (`pdftotext`). Run `uv sync` once to install the locked Python environment; the refresh command uses it to run the German checklist extraction.
 
 1. Check the publishers for new regional editions and update `taxonomy/source-inputs.json` if needed. Run `npm run taxonomy:refresh-sources` to download and convert the specified official inputs. Inspect PDFs and CSV counts after changing an edition.
 2. Run `npm run audit:taxonomies -- --fetch` to discover the latest eBird version and download its explicitly versioned English API CSV. This replaces local API snapshots; retain previous snapshots first.
