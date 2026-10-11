@@ -41,6 +41,7 @@ afterEach(() => {
 
 describe("sightings requests", () => {
   it("combines shared checklist rows in the sidebar and popup while retaining media access", async () => {
+    vi.setSystemTime(new Date("2026-10-04T12:00:00Z"));
     fetchMock.mockResolvedValueOnce(response([
       { ...row(), howMany: 2, userDisplayName: "Alice" },
       { ...row("S2"), howMany: 5, userDisplayName: "Bob", hasRichMedia: true },
@@ -59,13 +60,11 @@ describe("sightings requests", () => {
       await nextTick();
       await vi.waitFor(() => expect(host.querySelector(".accordion-collapse").classList.contains("show")).toBe(true));
       expect(host.querySelector(".species-location__observers")).toBeNull();
-      const namesButton = host.querySelector("button.species-location__user");
-      expect(namesButton.textContent).toBe("Alice, Bob");
-      namesButton.click();
-      await nextTick();
-      expect(host.querySelector(".species-location__observers").textContent).toBe("Alice, Bob");
-      expect(namesButton.getAttribute("aria-expanded")).toBe("true");
-      namesButton.click();
+      const observerName = host.querySelector(".species-location__user");
+      expect(observerName.tagName).toBe("SPAN");
+      expect(observerName.textContent).toBe("Alice, Bob");
+      expect(observerName.title).toBe("Alice, Bob");
+      observerName.click();
       await nextTick();
       expect(host.querySelector(".species-location__observers")).toBeNull();
     } finally {

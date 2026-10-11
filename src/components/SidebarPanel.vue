@@ -350,15 +350,12 @@
                                 </span>
                               </template>
                               <span class="species-location__obs-separator">•</span>
-                              <button
+                              <span
                                 v-if="obs.userDisplayName"
-                                type="button"
                                 class="species-location__user"
                                 :title="obs.userDisplayName"
-                                :aria-expanded="Boolean(expandedObservers[obs.obsId])"
-                                :aria-label="expandedObservers[obs.obsId] ? 'Hide observer names' : `Show observer names: ${obs.userDisplayName}`"
-                                @click="expandedObservers[obs.obsId] = !expandedObservers[obs.obsId]"
-                              >{{ obs.userDisplayName }}</button>
+                              >{{ obs.userDisplayName }}
+                              </span>
                             </small>
 
                             <span
@@ -434,10 +431,6 @@
                               </span>
                             </span>
                             </div>
-                            <div
-                            v-if="expandedObservers[obs.obsId]"
-                            class="species-location__observers text-body-secondary"
-                          >{{ obs.userDisplayName }}</div>
                           <div
                             v-if="app.observationDetails[obs.obsId]"
                             class="species-location__details small text-body-secondary"
@@ -563,7 +556,6 @@ if (!app) {
 }
 
 const openSpeciesCode = ref(null);
-const expandedObservers = ref({});
 const showFilterOptions = ref(false);
 const speciesCollapseRefs = new Map();
 
