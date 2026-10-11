@@ -6,6 +6,7 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ### Fixed
 
+- Make checklist date/time links visible before hover in both the sidebar and map popup.
 - Keep observer names compact with ellipsis and click-to-expand beneath the sighting, without wrapping the distance onto another line.
 
 ### Added
