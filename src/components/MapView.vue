@@ -57,6 +57,7 @@ import { groupObservations } from "../utils/observations"
 import { getClusterCountColorExpression, getRichnessColorExpression } from "../utils/richness"
 import { pointInViewport } from "../utils/viewport"
 import { createMapCountOverlay } from "../utils/map-count-overlay.js"
+import { getGoogleMapsDirectionsUrl } from "../utils/maps.js"
 
 const app = inject(birdAppKey)
 
@@ -664,7 +665,7 @@ function buildPopupLocationHeaderHtml(location) {
       </span>
       <a
         data-analytics-link="directions"
-        href="https://www.google.com/maps/dir/?api=1&destination=${location.latLng.lat},${location.latLng.lng}&dir_action=navigate"
+        href="${getGoogleMapsDirectionsUrl(location.latLng)}"
         target="_blank"
         rel="noreferrer"
         class="species-location__direction text-body-secondary flex-shrink-0"
