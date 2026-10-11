@@ -312,7 +312,7 @@
                         </span>
                         <a
                           data-analytics-link="directions"
-                          :href="`https://www.google.com/maps/dir/?api=1&destination=${location.latLng.lat},${location.latLng.lng}&dir_action=navigate`"
+                          :href="getGoogleMapsDirectionsUrl(location.latLng)"
                           target="_blank"
                           rel="noreferrer"
                           class="species-location__direction text-body-secondary flex-shrink-0"
@@ -334,7 +334,7 @@
                                 :href="`https://ebird.org/checklist/${obs.subId}#${obs.speciesCode}`"
                                 target="_blank"
                                 rel="noreferrer"
-                                class="species-location__obs-link text-decoration-none text-body"
+                                class="species-location__obs-link"
                               >
                                 <span class="species-location__obs-date">
                                   {{ formatDaysAgo(obs.daysAgo) }}
@@ -350,15 +350,12 @@
                                 </span>
                               </template>
                               <span class="species-location__obs-separator">•</span>
-                              <button
+                              <span
                                 v-if="obs.userDisplayName"
-                                type="button"
                                 class="species-location__user"
                                 :title="obs.userDisplayName"
-                                :aria-expanded="Boolean(expandedObservers[obs.obsId])"
-                                :aria-label="expandedObservers[obs.obsId] ? 'Hide observer names' : `Show observer names: ${obs.userDisplayName}`"
-                                @click="expandedObservers[obs.obsId] = !expandedObservers[obs.obsId]"
-                              >{{ obs.userDisplayName }}</button>
+                              >{{ obs.userDisplayName }}
+                              </span>
                             </small>
 
                             <span
@@ -434,10 +431,6 @@
                               </span>
                             </span>
                             </div>
-                            <div
-                            v-if="expandedObservers[obs.obsId]"
-                            class="species-location__observers text-body-secondary"
-                          >{{ obs.userDisplayName }}</div>
                           <div
                             v-if="app.observationDetails[obs.obsId]"
                             class="species-location__details small text-body-secondary"
@@ -554,6 +547,7 @@ import zoziologieLogo from "../assets/logo_zoziologie.svg";
 import RegionPicker from "./RegionPicker.vue";
 import { birdAppKey } from "../composables/useGlobalRareBird";
 import { formatDaysAgo, formatDistanceKm, formatObservationTime } from "../utils/formatters";
+import { getGoogleMapsDirectionsUrl } from "../utils/maps.js";
 
 const app = inject(birdAppKey);
 
@@ -562,7 +556,6 @@ if (!app) {
 }
 
 const openSpeciesCode = ref(null);
-const expandedObservers = ref({});
 const showFilterOptions = ref(false);
 const speciesCollapseRefs = new Map();
 

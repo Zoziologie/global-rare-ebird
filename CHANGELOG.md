@@ -7,7 +7,12 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 ### Fixed
 
 - Preserve the logo's original proportions in PWA and Apple touch icons.
-- Keep observer names compact with ellipsis and click-to-expand beneath the sighting, without wrapping the distance onto another line.
+- Make checklist date/time links visible before hover in both the sidebar and map popup.
+- Let the mobile map popup grow to the available viewport height when observation details open.
+- Open Google Maps directions without launching driving navigation.
+- Keep observer names truncated in the sighting row without adding a second line.
+- Keep mobile popup content within the viewport so sighting controls remain visible.
+- Update source-map-js to fix the source map denial-of-service advisory.
 
 ### Added
 
