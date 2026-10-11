@@ -6,6 +6,7 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ### Fixed
 
+- Preserve the logo's original proportions in PWA and Apple touch icons.
 - Make checklist date/time links visible before hover in both the sidebar and map popup.
 - Let the mobile map popup grow to the available viewport height when observation details open.
 - Open Google Maps directions without launching driving navigation.
