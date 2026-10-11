@@ -908,10 +908,10 @@ button {
   max-width: 100%;
   padding: 0.1rem 0.2rem;
   border-radius: 0.35rem;
-  color: var(--brand-dark);
-  font-weight: 600;
+  color: inherit;
+  font-weight: inherit;
   text-decoration: underline;
-  text-decoration-color: currentColor;
+  text-decoration-color: rgba(17, 24, 39, 0.25);
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
   transition:
@@ -931,7 +931,9 @@ button {
 
 .species-location__obs-link:hover,
 .species-location__obs-link:focus-visible {
+  color: var(--brand-dark);
   background: rgba(76, 168, 0, 0.08);
+  text-decoration-color: currentColor;
   text-decoration-thickness: 2px;
 }
 
