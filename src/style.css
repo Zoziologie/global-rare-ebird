@@ -908,6 +908,12 @@ button {
   max-width: 100%;
   padding: 0.1rem 0.2rem;
   border-radius: 0.35rem;
+  color: inherit;
+  font-weight: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(17, 24, 39, 0.25);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
   transition:
     background-color 0.15s ease,
     color 0.15s ease,
@@ -925,14 +931,15 @@ button {
 
 .species-location__obs-link:hover,
 .species-location__obs-link:focus-visible {
-  background: rgba(17, 24, 39, 0.04);
+  color: var(--brand-dark);
+  background: rgba(76, 168, 0, 0.08);
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
 }
 
-.species-location__obs-link:hover .species-location__meta,
-.species-location__obs-link:focus-visible .species-location__meta {
-  color: var(--bs-body-color) !important;
-  text-decoration: underline;
-  text-decoration-color: currentColor;
+.species-location__obs-link:focus-visible {
+  outline: 2px solid rgba(54, 121, 0, 0.45);
+  outline-offset: 2px;
 }
 
 .species-location__user {
@@ -1619,8 +1626,6 @@ button {
 
 .map-popup__observation-link {
   min-width: 0;
-  color: inherit;
-  text-decoration: none;
 }
 
 .map-popup__observation-meta {

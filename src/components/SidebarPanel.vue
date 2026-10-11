@@ -334,7 +334,7 @@
                                 :href="`https://ebird.org/checklist/${obs.subId}#${obs.speciesCode}`"
                                 target="_blank"
                                 rel="noreferrer"
-                                class="species-location__obs-link text-decoration-none text-body"
+                                class="species-location__obs-link"
                               >
                                 <span class="species-location__obs-date">
                                   {{ formatDaysAgo(obs.daysAgo) }}
