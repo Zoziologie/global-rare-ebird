@@ -554,6 +554,7 @@ import zoziologieLogo from "../assets/logo_zoziologie.svg";
 import RegionPicker from "./RegionPicker.vue";
 import { birdAppKey } from "../composables/useGlobalRareBird";
 import { formatDaysAgo, formatDistanceKm, formatObservationTime } from "../utils/formatters";
+import { getGoogleMapsDirectionsUrl } from "../utils/maps.js";
 
 const app = inject(birdAppKey);
 
