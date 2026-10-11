@@ -6,6 +6,7 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ### Fixed
 
+- Let the mobile map popup grow to the available viewport height when observation details open.
 - Keep observer names compact with ellipsis and click-to-expand beneath the sighting, without wrapping the distance onto another line.
 
 ### Added

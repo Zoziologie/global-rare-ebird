@@ -1496,6 +1496,7 @@ button {
 .map-pane__mobile-popup-sheet {
   pointer-events: auto;
   display: grid;
+  max-height: 100dvh;
   overflow: hidden;
   border-radius: 1rem 1rem 0 0;
   background: rgba(255, 255, 255, 0.98);
@@ -1528,7 +1529,7 @@ button {
 }
 
 .map-pane__mobile-popup-body {
-  max-height: min(58vh, 32rem);
+  max-height: calc(100dvh - 5rem);
   overflow: auto;
 }
 
