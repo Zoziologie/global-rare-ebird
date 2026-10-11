@@ -8,6 +8,7 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 - Keep observer names truncated in the sighting row without adding a second line.
 - Keep mobile popup content within the viewport so sighting controls remain visible.
+- Update source-map-js to fix the source map denial-of-service advisory.
 
 ### Added
 
