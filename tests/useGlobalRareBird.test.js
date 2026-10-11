@@ -41,6 +41,7 @@ afterEach(() => {
 
 describe("sightings requests", () => {
   it("combines shared checklist rows in the sidebar and popup while retaining media access", async () => {
+    vi.setSystemTime(new Date("2026-10-04T12:00:00Z"));
     fetchMock.mockResolvedValueOnce(response([
       { ...row(), howMany: 2, userDisplayName: "Alice" },
       { ...row("S2"), howMany: 5, userDisplayName: "Bob", hasRichMedia: true },
