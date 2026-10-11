@@ -28,6 +28,9 @@ it("keeps expanded comments beneath their sighting controls and toggles them ind
   component.provide(birdAppKey, app);
   component.mount(host);
   try {
+    expect(host.querySelector('[data-analytics-link="directions"]').getAttribute("href")).toBe(
+      "https://www.google.com/maps/dir/?api=1&destination=47.6,8.2",
+    );
     const rows = host.querySelectorAll(".map-popup__observation");
     expect(rows).toHaveLength(2);
     expect(host.querySelector(".species-location__observers")).toBeNull();
