@@ -65,7 +65,6 @@ if (!app) {
 }
 
 const mapContainer = ref(null)
-const expandedObservers = ref({})
 const mapInstance = shallowRef(null)
 const popupInstance = shallowRef(null)
 const mapReady = ref(false)
@@ -491,13 +490,6 @@ function handlePopupClick(event) {
     return
   }
 
-  const observersButton = target.closest("[data-observers-id]")
-  if (observersButton) {
-    const id = observersButton.getAttribute("data-observers-id")
-    expandedObservers.value = { ...expandedObservers.value, [id]: !expandedObservers.value[id] }
-    return
-  }
-
   const mediaButton = target.closest("[data-media-id]")
   if (mediaButton) {
     const mediaId = mediaButton.getAttribute("data-media-id")
@@ -571,7 +563,7 @@ function buildPopupSpeciesHtml(location) {
                       <span class="species-location__obs-separator">•</span>
                       <span class="species-location__obs-count">${escapeHtml(obs.howMany)} ind.</span>
                       <span class="species-location__obs-separator">•</span>
-                      ${obs.userDisplayName ? `<button type="button" class="species-location__user" data-observers-id="${escapeHtml(obs.obsId)}" title="${escapeHtml(obs.userDisplayName)}" aria-expanded="${Boolean(expandedObservers.value[obs.obsId])}" aria-label="${expandedObservers.value[obs.obsId] ? "Hide observer names" : `Show observer names: ${escapeHtml(obs.userDisplayName)}`}">${escapeHtml(obs.userDisplayName)}</button>` : ""}
+                      ${obs.userDisplayName ? `<span class="species-location__user" title="${escapeHtml(obs.userDisplayName)}">${escapeHtml(obs.userDisplayName)}</span>` : ""}
                     </small>
                     <span class="map-popup__flags">
                       <button type="button" class="map-popup__flag map-popup__flag--details" data-details-id="${escapeHtml(obs.obsId)}" title="${app.observationDetails[obs.obsId]?.isOpen ? "Hide" : "Show"} observation details" aria-label="${app.observationDetails[obs.obsId]?.isOpen ? "Hide" : "Show"} observation details" aria-expanded="${Boolean(app.observationDetails[obs.obsId]?.isOpen)}">
@@ -592,7 +584,6 @@ function buildPopupSpeciesHtml(location) {
                           : ""
                       }
                     </span>
-                    ${expandedObservers.value[obs.obsId] ? `<div class="species-location__observers text-body-secondary">${escapeHtml(obs.userDisplayName)}</div>` : ""}
                     ${buildObservationDetailsHtml(obs)}
                   </div>
                 `
@@ -1256,7 +1247,7 @@ watch([() => app.highlightedLocationIds, () => app.highlightedSpeciesCode], () =
 })
 
 watch(
-  [() => app.popupLocation, () => app.isMobileLayout, () => app.detailRevision, expandedObservers],
+  [() => app.popupLocation, () => app.isMobileLayout, () => app.detailRevision],
   () => {
     renderPopup()
   }
