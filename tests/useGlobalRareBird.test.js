@@ -59,13 +59,11 @@ describe("sightings requests", () => {
       await nextTick();
       await vi.waitFor(() => expect(host.querySelector(".accordion-collapse").classList.contains("show")).toBe(true));
       expect(host.querySelector(".species-location__observers")).toBeNull();
-      const namesButton = host.querySelector("button.species-location__user");
-      expect(namesButton.textContent).toBe("Alice, Bob");
-      namesButton.click();
-      await nextTick();
-      expect(host.querySelector(".species-location__observers").textContent).toBe("Alice, Bob");
-      expect(namesButton.getAttribute("aria-expanded")).toBe("true");
-      namesButton.click();
+      const observerName = host.querySelector(".species-location__user");
+      expect(observerName.tagName).toBe("SPAN");
+      expect(observerName.textContent).toBe("Alice, Bob");
+      expect(observerName.title).toBe("Alice, Bob");
+      observerName.click();
       await nextTick();
       expect(host.querySelector(".species-location__observers")).toBeNull();
     } finally {
