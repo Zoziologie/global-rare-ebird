@@ -6,6 +6,7 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ### Fixed
 
+- Update source-map-js to fix the source map denial-of-service advisory.
 - Keep observer names compact with ellipsis and click-to-expand beneath the sighting, without wrapping the distance onto another line.
 
 ### Added
