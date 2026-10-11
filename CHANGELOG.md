@@ -6,6 +6,7 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ### Fixed
 
+- Let the mobile map popup grow to the available viewport height when observation details open.
 - Open Google Maps directions without launching driving navigation.
 - Keep observer names truncated in the sighting row without adding a second line.
 - Keep mobile popup content within the viewport so sighting controls remain visible.

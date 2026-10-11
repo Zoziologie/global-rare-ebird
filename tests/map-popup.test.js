@@ -50,6 +50,7 @@ it("keeps observer names on one line and toggles comments beneath their sighting
     await nextTick();
     expect(host.querySelectorAll(".map-popup__comment-quote")).toHaveLength(1);
     expect(host.querySelector(".map-popup__comment-quote").textContent).toBe("See pictures");
+    expect(host.querySelector(".map-pane__mobile-popup-body .map-popup__comment-quote").textContent).toBe("See pictures");
     expect(host.querySelector('[data-details-id="S1"]').getAttribute("aria-expanded")).toBe("false");
   } finally {
     component.unmount();
