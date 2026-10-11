@@ -6,7 +6,7 @@ import { birdAppKey } from "../src/composables/useGlobalRareBird.js";
 
 vi.mock("../src/config/index.js", () => ({ mapboxAccessToken: "" }));
 
-it("keeps expanded comments beneath their sighting controls and toggles them independently", async () => {
+it("keeps observer names on one line and toggles comments beneath their sighting controls", async () => {
   const app = reactive({
     isMobileLayout: true, sidebarOpen: false, highlightedSpeciesCode: null, detailRevision: 0,
     popupLocation: {
@@ -28,19 +28,18 @@ it("keeps expanded comments beneath their sighting controls and toggles them ind
   component.provide(birdAppKey, app);
   component.mount(host);
   try {
+    expect(host.querySelector('[data-analytics-link="directions"]').getAttribute("href")).toBe(
+      "https://www.google.com/maps/dir/?api=1&destination=47.6,8.2",
+    );
     const rows = host.querySelectorAll(".map-popup__observation");
     expect(rows).toHaveLength(2);
     expect(host.querySelector(".species-location__observers")).toBeNull();
-    const namesButton = rows[0].querySelector("[data-observers-id]");
-    expect(namesButton.getAttribute("aria-expanded")).toBe("false");
-    namesButton.click();
-    await nextTick();
-    expect(host.querySelector(".species-location__observers").textContent).toBe("Dennis Rieder, Hichem MACHOUK, Emilien Vadam <observer>");
-    expect(host.querySelector('[data-observers-id="S1"]').getAttribute("aria-expanded")).toBe("true");
-    host.querySelector('[data-observers-id="S1"]').click();
+    const observerName = rows[0].querySelector(".species-location__user");
+    expect(observerName.tagName).toBe("SPAN");
+    expect(observerName.title).toBe("Dennis Rieder, Hichem MACHOUK, Emilien Vadam <observer>");
+    observerName.click();
     await nextTick();
     expect(host.querySelector(".species-location__observers")).toBeNull();
-    // Popup HTML is rebuilt after toggling names.
     const currentRows = host.querySelectorAll(".map-popup__observation");
     expect(currentRows[0].lastElementChild.className).toBe("map-popup__observation-details");
     expect(currentRows[0].querySelector(".map-popup__comment-quote").textContent).toBe("Twitch <near the lake>");
