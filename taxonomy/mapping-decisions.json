@@ -436,7 +436,7 @@
     "sourceKey": "3c03d620365293e9f5b14c8dac3065fa4c46a86b2dae65e71553ca8880b67836",
     "scientificName": "Dendrocopos leucotos leucotos",
     "decision": "accepted",
-    "reason": "The French White-backed Woodpecker entry maps to eBird\u2019s reportable leucotos group, whose circumscription includes the nominate population.",
+    "reason": "The French White-backed Woodpecker entry maps to eBird’s reportable leucotos group, whose circumscription includes the nominate population.",
     "targets": [
       {
         "avibaseId": "0101E8F9",
@@ -515,5 +515,229 @@
     "reviewedTaxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
     "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
     "evidence": "User review on 2026-10-03; target concept and group name checked in Cornell eBird/Clements v2025."
+  },
+  {
+    "source": "aba",
+    "sourceKey": "e7971b76f43082cc4ee4f0e46e8a71dff591319845fdb9a6067d9079c46e8a69",
+    "scientificName": "Tringa semipalmata",
+    "decision": "accepted",
+    "reason": "2026 review: the old Willet concept survives as Saltmarsh/Prairie Willet slash. Retain that exact combined scope and explicitly include both daughter species; both were in the listed Willet scope. This is a reviewed split, not automatic slash or species inheritance.",
+    "evidence": "https://www.aba.org/2026-checklist-redux/; retained 2025 Willet subgroup IDs and 2026 Sparse/API crosswalk",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "9c9539b70e3d2ce2d2d46eb9354528e649e999990ec2ab416c1db222b86331d3",
+    "targets": [
+      {
+        "avibaseId": "E7A14E91",
+        "component": "former-willet-scope"
+      },
+      {
+        "avibaseId": "6D372C9F",
+        "component": "saltmarsh-willet"
+      },
+      {
+        "avibaseId": "750C014A",
+        "component": "prairie-willet"
+      }
+    ]
+  },
+  {
+    "source": "aba",
+    "sourceKey": "de0cb66e0d5c26bd900a9dce4a409543b2d327f389e22d5e2ea569632b898b04",
+    "scientificName": "Bubo virginianus",
+    "decision": "accepted",
+    "reason": "2026 review: the ABA Great Horned Owl entry refers to the North American species, now AC8B8FC6 (the retained Northern group). ABA confirms the other split species occur in South America. Do not transfer the ABA status to them or reuse the changed concept at grhowl by name alone.",
+    "evidence": "https://www.aba.org/2026-checklist-redux/",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "9c9539b70e3d2ce2d2d46eb9354528e649e999990ec2ab416c1db222b86331d3",
+    "targets": [
+      {
+        "avibaseId": "AC8B8FC6",
+        "component": "north-american-great-horned-owl"
+      }
+    ]
+  },
+  {
+    "source": "aba",
+    "sourceKey": "227e1311b3b373bed644ca38a4bcb11f37db58e8a4bfc12c0553067abcda56de",
+    "scientificName": "Mitrephanes phaeocercus",
+    "decision": "accepted",
+    "reason": "2026 review: ABA explicitly identifies Tawny Tufted-Flycatcher as the species recorded in the ABA Area. Transfer code 4 to its retained Mexican-group concept 857ECA98; Lemon-bellied Tufted-Flycatcher and its groups do not inherit that code.",
+    "evidence": "https://www.aba.org/2026-checklist-redux/",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "9c9539b70e3d2ce2d2d46eb9354528e649e999990ec2ab416c1db222b86331d3",
+    "targets": [
+      {
+        "avibaseId": "857ECA98",
+        "component": "tawny-tufted-flycatcher"
+      }
+    ]
+  },
+  {
+    "source": "aba",
+    "sourceKey": "aca46c2e7af03988e3b3d0419d92229f540b1f5cfc02241e997a5575f8fa418c",
+    "scientificName": "Cistothorus palustris",
+    "decision": "accepted",
+    "reason": "2026 review: retain the old Marsh Wren concept as the Western/Eastern slash and explicitly include both daughter species, both breeding in the ABA Area. These receive the existing default code 1; no other slash or hybrid inherits status.",
+    "evidence": "https://www.aba.org/2026-checklist-redux/",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "9c9539b70e3d2ce2d2d46eb9354528e649e999990ec2ab416c1db222b86331d3",
+    "targets": [
+      {
+        "avibaseId": "787E0536",
+        "component": "former-marsh-wren-scope"
+      },
+      {
+        "avibaseId": "2B20EB43",
+        "component": "western-marsh-wren"
+      },
+      {
+        "avibaseId": "5D56DAAA",
+        "component": "eastern-marsh-wren"
+      }
+    ]
+  },
+  {
+    "source": "aba",
+    "sourceKey": "7b0842eed72ab6b35bb3b48d39d35423db4d845b623692e3e377333cdd20a833",
+    "scientificName": "Muscicapa striata",
+    "decision": "accepted",
+    "reason": "2026 review: retain the exact old combined concept as a slash for records at that scope, and explicitly bind the ABA-listed species to its current restricted concept. Do not assign the listed rarity code to the newly separated Mediterranean Flycatcher or Canary Islands Robin without ABA evidence.",
+    "evidence": "Retained 2025 integrated checklist and 2026 Sparse/API crosswalk; https://avibase.bsc-eoc.org/species.jsp?avibaseid=EE8206E7; https://americanornithologistsunion.org/bulletin/Withrow_et_al_2025_Bull_Amer_Ornithol_Union_Birds_of_Alaska.pdf (Spotted Flycatcher neumanni)",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "9c9539b70e3d2ce2d2d46eb9354528e649e999990ec2ab416c1db222b86331d3",
+    "targets": [
+      {
+        "avibaseId": "EE8206E7",
+        "component": "retained-pre-split-scope"
+      },
+      {
+        "avibaseId": "B142856F",
+        "component": "aba-recorded-species"
+      }
+    ]
+  },
+  {
+    "source": "aba",
+    "sourceKey": "f2c50e50172a1a8577ab37f3e0f99d5eb4514380e8b0867bfd27b6f649cd90e8",
+    "scientificName": "Erithacus rubecula",
+    "decision": "accepted",
+    "reason": "2026 review: retain the exact old combined concept as a slash for records at that scope, and explicitly bind the ABA-listed species to its current restricted concept. Do not assign the listed rarity code to the newly separated Mediterranean Flycatcher or Canary Islands Robin without ABA evidence.",
+    "evidence": "Retained 2025 integrated checklist and 2026 Sparse/API crosswalk; https://avibase.bsc-eoc.org/species.jsp?avibaseid=C809B2B9; https://www.birdpop.org/docs/pubs/Pyle_et_al_2018_29th_Report_of_the_ABA_Checklist_Committee.pdf (accepted European Robin record); https://avibase.bsc-eoc.org/species.jsp?avibaseid=E68C3C70",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "9c9539b70e3d2ce2d2d46eb9354528e649e999990ec2ab416c1db222b86331d3",
+    "targets": [
+      {
+        "avibaseId": "C809B2B9",
+        "component": "retained-pre-split-scope"
+      },
+      {
+        "avibaseId": "E68C3C70",
+        "component": "aba-recorded-species"
+      }
+    ]
+  },
+  {
+    "source": "fr",
+    "sourceKey": "2170363285a6482634af640c096bbc581d6453d9cc5fb482da554b37283cdda0",
+    "scientificName": "Apus affinis",
+    "decision": "accepted",
+    "reason": "2026 review: the old Little Swift species excludes House Swift. Its exact extent is covered by the retained affinis group plus bannermani and singalensis concepts, all still reportable. Map those three components explicitly; the new full Apus affinis species also includes the House group and would broaden the committee list.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=D209A90C; https://avibase.bsc-eoc.org/species.jsp?avibaseid=6B552CE9A167E2AB; retained 2025 integrated checklist and 2026 Sparse/API crosswalk",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "targets": [
+      {
+        "avibaseId": "6B552CE9",
+        "component": "little-swift-affinis-group"
+      },
+      {
+        "avibaseId": "C0240117",
+        "component": "little-swift-bannermani"
+      },
+      {
+        "avibaseId": "B2F1B315",
+        "component": "little-swift-singalensis"
+      }
+    ]
+  },
+  {
+    "source": "fr",
+    "sourceKey": "ce69d04f75956afeacbe638003e1dd739886e6257065285e29a08320e0da7bff",
+    "scientificName": "Tringa semipalmata",
+    "decision": "accepted",
+    "reason": "2026 review: the old Willet concept survives as Saltmarsh/Prairie Willet slash. Retain that exact combined scope and explicitly include both daughter species; both were in the listed Willet scope. This is a reviewed split, not automatic slash or species inheritance.",
+    "evidence": "https://www.aba.org/2026-checklist-redux/; retained 2025 Willet subgroup IDs and 2026 Sparse/API crosswalk",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "9f9ac828def05d5622fe2d7343354577b7eee823906fa9a7ee2cffd9c2910053",
+    "targets": [
+      {
+        "avibaseId": "E7A14E91",
+        "component": "former-willet-scope"
+      },
+      {
+        "avibaseId": "6D372C9F",
+        "component": "saltmarsh-willet"
+      },
+      {
+        "avibaseId": "750C014A",
+        "component": "prairie-willet"
+      }
+    ]
+  },
+  {
+    "source": "de",
+    "sourceKey": "0d2361bbcd4907019b4edc457476f0e7f251d353c9f788510b6410700d5a9166",
+    "scientificName": "Apus affinis",
+    "decision": "accepted",
+    "reason": "2026 review: the old Little Swift species excludes House Swift. Its exact extent is covered by the retained affinis group plus bannermani and singalensis concepts, all still reportable. Map those three components explicitly; the new full Apus affinis species also includes the House group and would broaden the committee list.",
+    "evidence": "https://avibase.bsc-eoc.org/species.jsp?avibaseid=D209A90C; https://avibase.bsc-eoc.org/species.jsp?avibaseid=6B552CE9A167E2AB; retained 2025 integrated checklist and 2026 Sparse/API crosswalk",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "4ce2e0a89800f09959f3de64b302c36d9e162271c8bdcd32bbddd2cb4717d747",
+    "targets": [
+      {
+        "avibaseId": "6B552CE9",
+        "component": "little-swift-affinis-group"
+      },
+      {
+        "avibaseId": "C0240117",
+        "component": "little-swift-bannermani"
+      },
+      {
+        "avibaseId": "B2F1B315",
+        "component": "little-swift-singalensis"
+      }
+    ]
+  },
+  {
+    "source": "ch",
+    "sourceKey": "c255de90bf7349b02af387828dfe11f77c60b5edf5cf8678364774ea4d05593f",
+    "scientificName": "Muscicapa striata",
+    "decision": "accepted",
+    "reason": "2026 review: retain the exact old broad concept as its new slash taxon. Swiss status 1 on the pre-split entry does not establish separate occurrence-period statuses for either daughter species; do not invent those from a name match.",
+    "evidence": "Retained 2025 integrated checklist and 2026 Sparse/API crosswalk; https://avibase.bsc-eoc.org/species.jsp?avibaseid=EE8206E7",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "422cecf790f7800f6f0bb5716a69fdb4bb881185a24790d74e4e8c6c30dfed01",
+    "targets": [
+      {
+        "avibaseId": "EE8206E7",
+        "component": "retained-pre-split-scope"
+      }
+    ]
+  },
+  {
+    "source": "ch",
+    "sourceKey": "349f95da06b1dcdfb9978a355f1564ca679cc29e43db466d87e1743146651900",
+    "scientificName": "Erithacus rubecula",
+    "decision": "accepted",
+    "reason": "2026 review: retain the exact old broad concept as its new slash taxon. Swiss status 1 on the pre-split entry does not establish separate occurrence-period statuses for either daughter species; do not invent those from a name match.",
+    "evidence": "Retained 2025 integrated checklist and 2026 Sparse/API crosswalk; https://avibase.bsc-eoc.org/species.jsp?avibaseid=C809B2B9",
+    "reviewedTaxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+    "reviewedSourceSha256": "422cecf790f7800f6f0bb5716a69fdb4bb881185a24790d74e4e8c6c30dfed01",
+    "targets": [
+      {
+        "avibaseId": "C809B2B9",
+        "component": "retained-pre-split-scope"
+      }
+    ]
   }
 ]

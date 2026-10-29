@@ -45,7 +45,7 @@ Use the linear Avibase workflow in [docs/taxonomy-review.md](docs/taxonomy-revie
 
 1. Refresh official regional inputs: `npm run taxonomy:refresh-sources`.
 2. Capture the versioned eBird API: `npm run audit:taxonomies -- --fetch`.
-3. Supply the matching Cornell integrated checklist in `raw-data/taxonomy-review/`.
+3. Supply the matching Cornell integrated checklist or extract the eBird five-tab workbook into `raw-data/taxonomy-review/`; the reviewed source is recorded in `taxonomy/concept-source.json`.
 4. Run `npm run taxonomy:update`, then inspect local concept and matching reports.
 5. Resolve exceptions before publishing with `npm run generate:taxonomies`.
 

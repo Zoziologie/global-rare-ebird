@@ -1,37 +1,37 @@
 {
-  "version": 2025,
-  "checklistPath": "raw-data/taxonomy-review/clements-2025-concepts.csv",
-  "checklistSha256": "e3c74808f313394b2a492ba4372b3d138ee8406fa94a0081c50fa249c6d0d661",
-  "taxonomySha256": "ce31c8c908308bb404677b783219344182c81b2a430a3ad1ad17b91f38442f19",
-  "conceptRows": 35853,
+  "version": 2026,
+  "checklistPath": "raw-data/taxonomy-review/ebird-2026-concepts.csv",
+  "checklistSha256": "c8b647d4ac9315de581884a940971ed63ea2c7fe160f1132539a575b3ea83a88",
+  "taxonomySha256": "2be3acd8c06638f9b01f572caeae6b4affae355d46f71557959273e61590371a",
+  "conceptRows": 18631,
   "coverage": {
     "species": {
-      "total": 11167,
-      "withConceptId": 11167
+      "total": 11201,
+      "withConceptId": 11201
     },
     "slash": {
-      "total": 1035,
-      "withConceptId": 1035
+      "total": 1066,
+      "withConceptId": 1066
     },
     "issf": {
-      "total": 3952,
-      "withConceptId": 3952
+      "total": 4542,
+      "withConceptId": 4542
     },
     "hybrid": {
-      "total": 792,
-      "withConceptId": 792
+      "total": 864,
+      "withConceptId": 864
     },
     "spuh": {
-      "total": 722,
-      "withConceptId": 722
-    },
-    "form": {
-      "total": 156,
-      "withConceptId": 156
+      "total": 727,
+      "withConceptId": 727
     },
     "domestic": {
       "total": 25,
       "withConceptId": 25
+    },
+    "form": {
+      "total": 164,
+      "withConceptId": 164
     },
     "intergrade": {
       "total": 42,
