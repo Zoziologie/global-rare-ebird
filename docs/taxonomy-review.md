@@ -16,6 +16,26 @@ Requires Node.js, `uv`, curl, unzip, and Poppler (`pdftotext`). Run `uv sync` on
 
 Raw files and full row reports are ignored. In particular, the ABA source prohibits redistribution without express written permission. Do not attach the whole checklist or full row report to a public issue. The tracked registry contains identifiers, statuses, restrictions, hashes, and rationale; it omits the full source name table.
 
+## Using the 2026 five-tab eBird workbook
+
+The user-supplied `eBird_Taxonomy_v2026_5-tab_27Oct2026.xlsx` can supply the reportable concept crosswalk while Cornell's integrated checklist is unavailable. Its `Sparse` sheet includes `bio_concept_code` Avibase IDs. The extractor checks the `Fleshed` sheet's authority version against the local API snapshot, preserves the original IDs, and records workbook/CSV SHA-256 hashes alongside the extracted CSV. The workbook is read without modification.
+
+After retaining the previous crosswalk and fetching the new API snapshot, run:
+
+```sh
+uv sync --locked
+uv run --locked python scripts/extract-ebird-concepts.py /path/to/eBird_Taxonomy_v2026_5-tab_27Oct2026.xlsx
+TAXONOMY_CONCEPT_CHECKLIST=raw-data/taxonomy-review/ebird-2026-concepts.csv \
+  TAXONOMY_PREVIOUS_CROSSWALK=output/taxonomy-review/crosswalk-2025.json \
+  npm run taxonomy:update
+```
+
+`TAXONOMY_CONCEPT_CHECKLIST` overrides the integrated CSV input for the complete workflow; omitting it retains the existing integrated-checklist default. The 2026 workbook matches all 18,631 API codes, categories, scientific names, and primary common names, with 100% concept-ID coverage and no ambiguous reportable IDs. The crosswalk takes REPORT_AS from the API, whose empty/self-parent conventions differ from the workbook.
+
+This workbook contains reportable taxa only. Comparison with the 2025 integrated crosswalk cannot establish disappearance of a nonreportable subspecies. Existing explicit unresolved decisions stay unresolved, and new nonreportable matches require the integrated checklist or separate concept evidence. Do not approve a same-name replacement when its concept ID has changed.
+
+The initial 2026 run stops before generation with 11 accepted regional bindings needing review: six ABA, two French, one German, and two Swiss. They involve Willet, Great Horned Owl, Tufted Flycatcher, Marsh Wren, Spotted Flycatcher, European Robin, and Little Swift. The seven previously explicit unresolved entries remain unresolved. See `docs/taxonomy-2026-review.json` for the candidate-source provenance, coverage, and focused queue. The published application baseline and reviewed 2025 registry remain unchanged pending these decisions.
+
 ## Latest official inputs, checked 2026-10-03
 
 | Source | Official edition | Parsed rows |

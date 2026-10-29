@@ -4,12 +4,13 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../", import.meta.url));
 const previousRegistry = process.env.TAXONOMY_PREVIOUS_REGISTRY;
 const previousCrosswalk = process.env.TAXONOMY_PREVIOUS_CROSSWALK;
+const conceptChecklist = process.env.TAXONOMY_CONCEPT_CHECKLIST || "";
 
 // Read sources and expose the initial name/alias audit ----------------------
 execFileSync(process.execPath, ["scripts/audit-taxonomies.mjs"], { cwd: root, stdio: "inherit" });
 
 // Build the matching-version concept crosswalk ------------------------------
-execFileSync(process.execPath, ["scripts/build-taxonomy-crosswalk.mjs", ...previousCrosswalk ? ["", "", previousCrosswalk] : []], { cwd: root, stdio: "inherit" });
+execFileSync(process.execPath, ["scripts/build-taxonomy-crosswalk.mjs", conceptChecklist, "", previousCrosswalk || ""], { cwd: root, stdio: "inherit" });
 
 // Retain reviewed Avibase bindings; propose matches only for new rows --------
 execFileSync(process.execPath, ["scripts/match-taxonomy-concepts.mjs", ...previousRegistry ? [previousRegistry] : []], { cwd: root, stdio: "inherit" });
