@@ -48,12 +48,12 @@
   "ambiguousReportableIds": [],
   "missingReportableCodes": [],
   "previousReportableChanges": {
-    "concept-changed-at-code": 56,
+    "unchanged": 17255,
+    "rank-or-category-changed": 70,
+    "name-changed": 441,
     "concept-missing": 60,
-    "name-changed": 241,
-    "rank-or-category-changed": 3890,
-    "report-as-changed": 1,
-    "unchanged": 13643
+    "concept-changed-at-code": 56,
+    "report-as-changed": 9
   },
   "limitations": [
     "Reportable taxa only; absent 2025 nonreportable concepts cannot be classified as taxonomic losses.",
@@ -171,5 +171,6 @@
       "previousReportAs": ""
     }
   ],
-  "retainedExplicitUnresolved": 7
+  "retainedExplicitUnresolved": 7,
+  "comparisonNote": "Counts compare API categories for reportable taxa. The full concept-changes.csv also flags differences between integrated-checklist rank labels and workbook category labels; those are not necessarily biological rank changes."
 }
