@@ -6,6 +6,8 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ### Fixed
 
+- Refresh all npm packages, Python processing dependencies, and the setup-node Action; resolve dependency advisories blocking CI.
+
 - Preserve the logo's original proportions in PWA and Apple touch icons.
 - Make checklist date/time links visible before hover in both the sidebar and map popup.
 - Let the mobile map popup grow to the available viewport height when observation details open.
