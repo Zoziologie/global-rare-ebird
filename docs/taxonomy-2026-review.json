@@ -1,6 +1,6 @@
 {
   "version": 2026,
-  "reviewed": false,
+  "reviewed": true,
   "source": {
     "version": 2026,
     "sourceFile": "eBird_Taxonomy_v2026_5-tab_27Oct2026.xlsx",
@@ -57,120 +57,263 @@
   },
   "limitations": [
     "Reportable taxa only; absent 2025 nonreportable concepts cannot be classified as taxonomic losses.",
-    "The application baseline and accepted regional registry remain at 2025 until the pending mappings are reviewed."
+    "Swiss pre-split Spotted Flycatcher and European Robin status 1 is retained on the exact combined slash concepts; separate occurrence-period statuses for their daughter species are not inferred."
   ],
-  "pendingRegionalBindings": [
+  "retainedExplicitUnresolved": 7,
+  "comparisonNote": "Counts compare API categories for reportable taxa. The full concept-changes.csv also flags differences between integrated-checklist rank labels and workbook category labels; those are not necessarily biological rank changes.",
+  "reviewedOn": "2026-10-29",
+  "reviewedRegionalBindings": [
     {
       "source": "aba",
       "sourceKey": "e7971b76f43082cc4ee4f0e46e8a71dff591319845fdb9a6067d9079c46e8a69",
-      "avibaseId": "E7A14E91",
-      "code": "willet1",
-      "candidateIds": "6D372C9F",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "E7A14E91",
+      "acceptedTargets": [
+        {
+          "avibaseId": "E7A14E91",
+          "code": "willet1",
+          "category": "slash",
+          "status": 1
+        },
+        {
+          "avibaseId": "6D372C9F",
+          "code": "willet2",
+          "category": "species",
+          "status": 1
+        },
+        {
+          "avibaseId": "750C014A",
+          "code": "willet3",
+          "category": "species",
+          "status": 1
+        }
+      ]
     },
     {
       "source": "aba",
       "sourceKey": "de0cb66e0d5c26bd900a9dce4a409543b2d327f389e22d5e2ea569632b898b04",
-      "avibaseId": "FC366114",
-      "code": "",
-      "candidateIds": "AC8B8FC6",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "FC366114",
+      "acceptedTargets": [
+        {
+          "avibaseId": "AC8B8FC6",
+          "code": "grhowl",
+          "category": "species",
+          "status": 1
+        }
+      ]
     },
     {
       "source": "aba",
       "sourceKey": "227e1311b3b373bed644ca38a4bcb11f37db58e8a4bfc12c0553067abcda56de",
-      "avibaseId": "806301B3",
-      "code": "",
-      "candidateIds": "857ECA98",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "806301B3",
+      "acceptedTargets": [
+        {
+          "avibaseId": "857ECA98",
+          "code": "tuffly1",
+          "category": "species",
+          "status": 4
+        }
+      ]
     },
     {
       "source": "aba",
       "sourceKey": "aca46c2e7af03988e3b3d0419d92229f540b1f5cfc02241e997a5575f8fa418c",
-      "avibaseId": "787E0536",
-      "code": "marwre",
-      "candidateIds": "5D56DAAA",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "787E0536",
+      "acceptedTargets": [
+        {
+          "avibaseId": "787E0536",
+          "code": "marwre",
+          "category": "slash",
+          "status": 1
+        },
+        {
+          "avibaseId": "2B20EB43",
+          "code": "marwre1",
+          "category": "species",
+          "status": 1
+        },
+        {
+          "avibaseId": "5D56DAAA",
+          "code": "eamwre1",
+          "category": "species",
+          "status": 1
+        }
+      ]
     },
     {
       "source": "aba",
       "sourceKey": "7b0842eed72ab6b35bb3b48d39d35423db4d845b623692e3e377333cdd20a833",
-      "avibaseId": "EE8206E7",
-      "code": "spofly1",
-      "candidateIds": "B142856F",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "EE8206E7",
+      "acceptedTargets": [
+        {
+          "avibaseId": "EE8206E7",
+          "code": "spofly1",
+          "category": "slash",
+          "status": 5
+        },
+        {
+          "avibaseId": "B142856F",
+          "code": "spofly2",
+          "category": "species",
+          "status": 5
+        }
+      ]
     },
     {
       "source": "aba",
       "sourceKey": "f2c50e50172a1a8577ab37f3e0f99d5eb4514380e8b0867bfd27b6f649cd90e8",
-      "avibaseId": "C809B2B9",
-      "code": "y01408",
-      "candidateIds": "E68C3C70",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "C809B2B9",
+      "acceptedTargets": [
+        {
+          "avibaseId": "C809B2B9",
+          "code": "y01408",
+          "category": "slash",
+          "status": 5
+        },
+        {
+          "avibaseId": "E68C3C70",
+          "code": "eurrob1",
+          "category": "species",
+          "status": 5
+        }
+      ]
     },
     {
       "source": "fr",
       "sourceKey": "2170363285a6482634af640c096bbc581d6453d9cc5fb482da554b37283cdda0",
-      "avibaseId": "D209A90C",
-      "code": "",
-      "candidateIds": "4D28A0CD",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "D209A90C",
+      "acceptedTargets": [
+        {
+          "avibaseId": "6B552CE9",
+          "code": "litswi2",
+          "category": "issf",
+          "status": 1
+        },
+        {
+          "avibaseId": "C0240117",
+          "code": "litswi3",
+          "category": "issf",
+          "status": 1
+        },
+        {
+          "avibaseId": "B2F1B315",
+          "code": "litswi4",
+          "category": "issf",
+          "status": 1
+        }
+      ]
     },
     {
       "source": "fr",
       "sourceKey": "ce69d04f75956afeacbe638003e1dd739886e6257065285e29a08320e0da7bff",
-      "avibaseId": "E7A14E91",
-      "code": "willet1",
-      "candidateIds": "6D372C9F",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "E7A14E91",
+      "acceptedTargets": [
+        {
+          "avibaseId": "E7A14E91",
+          "code": "willet1",
+          "category": "slash",
+          "status": 1
+        },
+        {
+          "avibaseId": "6D372C9F",
+          "code": "willet2",
+          "category": "species",
+          "status": 1
+        },
+        {
+          "avibaseId": "750C014A",
+          "code": "willet3",
+          "category": "species",
+          "status": 1
+        }
+      ]
     },
     {
       "source": "de",
       "sourceKey": "0d2361bbcd4907019b4edc457476f0e7f251d353c9f788510b6410700d5a9166",
-      "avibaseId": "D209A90C",
-      "code": "",
-      "candidateIds": "4D28A0CD",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "D209A90C",
+      "acceptedTargets": [
+        {
+          "avibaseId": "6B552CE9",
+          "code": "litswi2",
+          "category": "issf",
+          "status": 1
+        },
+        {
+          "avibaseId": "C0240117",
+          "code": "litswi3",
+          "category": "issf",
+          "status": 1
+        },
+        {
+          "avibaseId": "B2F1B315",
+          "code": "litswi4",
+          "category": "issf",
+          "status": 1
+        }
+      ]
     },
     {
       "source": "ch",
       "sourceKey": "c255de90bf7349b02af387828dfe11f77c60b5edf5cf8678364774ea4d05593f",
-      "avibaseId": "EE8206E7",
-      "code": "spofly1",
-      "candidateIds": "B142856F",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "EE8206E7",
+      "acceptedTargets": [
+        {
+          "avibaseId": "EE8206E7",
+          "code": "spofly1",
+          "category": "slash",
+          "status": 1
+        }
+      ]
     },
     {
       "source": "ch",
       "sourceKey": "349f95da06b1dcdfb9978a355f1564ca679cc29e43db466d87e1743146651900",
-      "avibaseId": "C809B2B9",
-      "code": "y01408",
-      "candidateIds": "E68C3C70",
-      "review": "category-or-report-as-changed",
       "previousCategory": "species",
-      "previousReportAs": ""
+      "previousReportAs": "",
+      "previousAvibaseId": "C809B2B9",
+      "acceptedTargets": [
+        {
+          "avibaseId": "C809B2B9",
+          "code": "y01408",
+          "category": "slash",
+          "status": 1
+        }
+      ]
     }
   ],
-  "retainedExplicitUnresolved": 7,
-  "comparisonNote": "Counts compare API categories for reportable taxa. The full concept-changes.csv also flags differences between integrated-checklist rank labels and workbook category labels; those are not necessarily biological rank changes."
+  "pendingRegionalBindings": [],
+  "generation": {
+    "version": 2026,
+    "abaIssfInheritance": "issf-report-as",
+    "inheritedAbaGroups": 885,
+    "accepted": 2077,
+    "unresolved": 7,
+    "counts": {
+      "taxo.json": 18631,
+      "aba-taxonomy.json": 1080,
+      "french-rarity-taxonomy.json": 254,
+      "german-taxonomy.json": 223,
+      "swiss-taxonomy.json": 137
+    }
+  }
 }

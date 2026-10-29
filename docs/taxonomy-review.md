@@ -1,6 +1,6 @@
-# Taxonomy review — issue #39
+# Taxonomy review — issues #39 and #72
 
-Implementation is tracked in [issue #39](https://github.com/Zoziologie/global-rare-ebird/issues/39) and [draft PR #42](https://github.com/Zoziologie/global-rare-ebird/pull/42). The Avibase workflow, refreshed application lookups, and Swiss 2026 status definitions are implemented for review. Seven source entries remain unresolved after checking every previously unmatched subspecies against reportable eBird groups: two French entries and five German entries.
+The eBird 2026 update is tracked in [issue #72](https://github.com/Zoziologie/global-rare-ebird/issues/72) and [PR #73](https://github.com/Zoziologie/global-rare-ebird/pull/73). All 11 changed regional bindings have been reviewed and the application lookups regenerated. Seven older source entries remain explicitly unresolved: two French entries and five German entries. The original Avibase workflow and Swiss 2026 status definitions were introduced in [issue #39](https://github.com/Zoziologie/global-rare-ebird/issues/39) and [PR #42](https://github.com/Zoziologie/global-rare-ebird/pull/42).
 
 ## Run linearly
 
@@ -8,7 +8,7 @@ Requires Node.js, `uv`, curl, unzip, and Poppler (`pdftotext`). Run `uv sync` on
 
 1. Check the publishers for new regional editions and update `taxonomy/source-inputs.json` if needed. Run `npm run taxonomy:refresh-sources` to download and convert the specified official inputs. Inspect PDFs and CSV counts after changing an edition.
 2. Run `npm run audit:taxonomies -- --fetch` to discover the latest eBird version and download its explicitly versioned English API CSV. This replaces local API snapshots; retain previous snapshots first.
-3. Obtain the same-year [Cornell integrated checklist](https://www.birds.cornell.edu/clementschecklist/introduction/updateindex/october-2025/2025-citation-checklist-downloads/) and save it as `raw-data/taxonomy-review/clements-YYYY-concepts.csv`. The 2025 copy was found in another local project after Cornell downloads returned HTTP 403. Its checksum and citation are recorded in `taxonomy/concept-source.json`.
+3. Obtain the same-year Cornell integrated checklist or extract the eBird workbook as described below. Record the reviewed source path and checksums in `taxonomy/concept-source.json`, which supplies the default crosswalk input. For an unreviewed candidate, set `TAXONOMY_CONCEPT_CHECKLIST` to its CSV path. The original 2025 integrated file was found in another local project after Cornell downloads returned HTTP 403.
 4. Run `npm run taxonomy:update` offline. Stages run top-to-bottom: source audit, versioned code/concept crosswalk, persistent regional matching, local JSON generation. Each stage also has a separate npm command.
 5. Inspect `output/taxonomy-review/crosswalk-summary.json`, `concept-matches.csv`, `concept-review.csv`, and `generation-summary.json`. Local generated lookups are in `output/taxonomy-review/generated/`.
 6. Record exceptions in `taxonomy/mapping-decisions.json` with source key, exact Avibase ID, accepted/unresolved disposition, reason, and evidence. Run the workflow again. Proposed or invalid accepted rows block generation. Explicit unresolved rows are retained in the report and omitted from app lookups.
@@ -30,11 +30,20 @@ TAXONOMY_CONCEPT_CHECKLIST=raw-data/taxonomy-review/ebird-2026-concepts.csv \
   npm run taxonomy:update
 ```
 
-`TAXONOMY_CONCEPT_CHECKLIST` overrides the integrated CSV input for the complete workflow; omitting it retains the existing integrated-checklist default. The 2026 workbook matches all 18,631 API codes, categories, scientific names, and primary common names, with 100% concept-ID coverage and no ambiguous reportable IDs. The crosswalk takes REPORT_AS from the API, whose empty/self-parent conventions differ from the workbook.
+`TAXONOMY_CONCEPT_CHECKLIST` overrides the concept CSV input for the complete workflow; omitting it uses the reviewed path in `taxonomy/concept-source.json`. The 2026 workbook matches all 18,631 API codes, categories, scientific names, and primary common names, with 100% concept-ID coverage and no ambiguous reportable IDs. The crosswalk takes REPORT_AS from the API, whose empty/self-parent conventions differ from the workbook.
 
 This workbook contains reportable taxa only. Comparison with the 2025 integrated crosswalk cannot establish disappearance of a nonreportable subspecies. Existing explicit unresolved decisions stay unresolved, and new nonreportable matches require the integrated checklist or separate concept evidence. Do not approve a same-name replacement when its concept ID has changed.
 
-The initial 2026 run stops before generation with 11 accepted regional bindings needing review: six ABA, two French, one German, and two Swiss. They involve Willet, Great Horned Owl, Tufted Flycatcher, Marsh Wren, Spotted Flycatcher, European Robin, and Little Swift. The seven previously explicit unresolved entries remain unresolved. See `docs/taxonomy-2026-review.json` for the candidate-source provenance, coverage, and focused queue. The published application baseline and reviewed 2025 registry remain unchanged pending these decisions.
+All 11 flagged 2026 bindings have been reviewed: six ABA, two French, one German, and two Swiss. The accepted registry and application data now use eBird 2026. The seven previously explicit unresolved entries remain unresolved. See `docs/taxonomy-2026-review.json` for provenance, complete reportable coverage, and the accepted targets for each reviewed row; `docs/taxonomy-data-diff.json` compares the regenerated data against 2025.
+
+The decisions preserve regional scope:
+
+- Willet: the old concept becomes the Saltmarsh/Prairie slash. France also includes both daughter species explicitly. ABA retains both species at its existing default code 1. The same explicit treatment covers both ABA Marsh Wren species and their combined slash.
+- Great Horned Owl and Tufted Flycatcher: [ABA's 2026 review](https://www.aba.org/2026-checklist-redux/) identifies the relevant North American concepts. Tawny Tufted-Flycatcher retains ABA code 4; Lemon-bellied Tufted-Flycatcher and its groups do not inherit it.
+- Spotted Flycatcher and European Robin: retain each exact pre-split concept as its new slash. ABA also maps the recorded restricted species to code 5. The [Alaska checklist](https://americanornithologistsunion.org/bulletin/Withrow_et_al_2025_Bull_Amer_Ornithol_Union_Birds_of_Alaska.pdf) identifies Spotted Flycatcher neumanni; the [ABA committee report](https://www.birdpop.org/docs/pubs/Pyle_et_al_2018_29th_Report_of_the_ABA_Checklist_Committee.pdf) documents European Robin. No new ABA code is inferred for Mediterranean Flycatcher or Canary Islands Robin. Swiss status 1 is retained on the exact combined concepts; the old Swiss rows do not establish separate occurrence-period statuses for the daughter species.
+- Little Swift: [the former species](https://avibase.bsc-eoc.org/species.jsp?avibaseid=D209A90C) comprises the affinis group, bannermani, and singalensis. France and Germany map these three retained reportable concepts explicitly. The new full species and House group are excluded because they include populations outside the source scope.
+
+Generation has zero pending mappings. Regenerated lookups contain 18,631 eBird, 1,080 ABA, 254 French, 223 German, and 137 Swiss codes. Regional source editions remain those checked on 2026-10-03; this review updates their mapping into the new eBird taxonomy, not the publishers' underlying rarity decisions.
 
 ## Latest official inputs, checked 2026-10-03
 
@@ -47,9 +56,9 @@ The initial 2026 run stops before generation with 11 accepted regional bindings 
 
 Download/conversion provenance is in `docs/taxonomy-source-provenance.json`; normalized input hashes and the legacy audit are in `docs/taxonomy-audit-summary.json`. Germany's 223 names and restrictions agree with the old CSV. Switzerland previously had 414 rows; current occurrence periods are 2015–2024 and 1975–2024. The UI now uses these periods and labels status 4 “Historical”.
 
-## Concept coverage and review
+## Historical 2025 concept coverage and review
 
-The 2025 integrated file contains 35,853 coded rows. Joining by exact Cornell code to the API gives **100% concept-ID coverage** for all 17,891 reportable taxa: species 11,167; issf 3,952; slash 1,035; hybrid 792; spuh 722; form 156; domestic 25; intergrade 42. No ID maps to multiple reportable codes in this snapshot. Summary: `docs/taxonomy-crosswalk-summary.json`.
+The 2025 integrated file contains 35,853 coded rows. Joining by exact Cornell code to the API gives **100% concept-ID coverage** for all 17,891 reportable taxa: species 11,167; issf 3,952; slash 1,035; hybrid 792; spuh 722; form 156; domestic 25; intergrade 42. No ID maps to multiple reportable codes in this snapshot. The current 2026 summary is in `docs/taxonomy-crosswalk-summary.json`.
 
 | Source | Accepted bindings | Explicit unresolved | Pending proposals |
 | --- | ---: | ---: | ---: |

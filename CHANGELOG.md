@@ -16,8 +16,17 @@ User-visible changes are recorded here. Versions follow Semantic Versioning. The
 
 ### Added
 
-- Accept a five-tab eBird taxonomy workbook as a concept source for the annual review workflow, with edition verification and source checksums.
 - Combine sightings of the same species at the same location and checklist start date/time, keeping the maximum individual count and joining observer names.
+
+## [0.7.2] - 2026-10-29
+
+### Fixed
+
+- Update application lookups to eBird 2026 and review changed regional concepts, preserving Little Swift scope after its lump with House Swift and limiting Tufted Flycatcher ABA code 4 to Tawny Tufted-Flycatcher.
+
+### Added
+
+- Accept the five-tab eBird taxonomy workbook as a reproducible concept source with edition verification and source checksums.
 
 ## [0.7.1] - 2026-10-03
 

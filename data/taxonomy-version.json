@@ -1,6 +1,6 @@
 {
-  "ebirdVersion": 2025,
-  "verifiedOn": "2026-10-03",
-  "verification": "Avibase crosswalk, exact regional mappings, explicit unresolved entries, and user-approved ABA issf inheritance",
+  "ebirdVersion": 2026,
+  "verifiedOn": "2026-10-29",
+  "verification": "User-supplied eBird 2026 workbook: complete exact Avibase crosswalk, 11 reviewed regional bindings, explicit unresolved entries, and approved ABA issf inheritance",
   "conceptCrosswalkReviewed": true
 }
